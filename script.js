@@ -434,7 +434,7 @@ function(input) {
       "constructor#(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*\\[(true|false)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
         return (eval(c)? a + ".this = {};\n  ": "") + a + ".constructor = function\b28 \b29 " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1").replace(/\b(@|this|super)\b/g, a + ".$1") + ";\n  " + a + ".constructor.apply\b28null, arguments\b29;\n  "
       },
-      "prototype#(\\j)/:(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
+      "prototype#(\\j)\\:(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
         return a + ".this." + b + " = function\b28 \b29 " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(c) + ";$1")
       },
       "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c) {
