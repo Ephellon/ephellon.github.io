@@ -496,11 +496,11 @@ function(input) {
         return a + ".__lookupSetter__\b28\"" + b + "\"\b29"
       },
       // (parenthesis)
-      "(\\j\\s*[\\:\\=]?\\s*)?\\((.*?)\\)\\s*\\=>\\s*(brace\\.\\d+)": function(e, a, b, c) {
+      "(\\j\\s*[\\:\\=]\\s*)?\\((.*?)\\)\\s*\\=>\\s*(brace\\.\\d+)": function(e, a, b, c) {
+        a = a || "";
+        b = b || "";
         return runtime.has("1.6")?
-          /[\:\=]/.test(a)?
-          a + "\b28" + b + "\b29 =>" + c:
-        a + "= \b28" + b + "\b29 =>" + c:
+          a + "\b28" + b + "\b29 => " + c:
         compile("arrow#[" + a + "] [" + b + "] " + c)
       },
       "@(\\j[\\:\\=]?\\s*)\\((.*?)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
