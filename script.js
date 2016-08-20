@@ -440,6 +440,15 @@ function(input) {
       "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c) {
         return (a == "undefined"? "": a) + "function\b28 \b29 " + decompile(c, 'brace').replace(/\{(\s*)/, "{\n$1var " + argify(b) + ";$1return\b ")
       },
+      // reserved words
+      // statement {}
+      "\\b(do|else|finally|return|try|typeof|while)\\b\\s*(brace\\.\\d+)": function(e, a, b) {
+        return "\b" + a + "\b \b" + b + "\b"
+      },
+      // statement () {}
+      "\\b(catch|for|function|if|switch|while|with)\\b\\s*\\((.*)\\)": function(e, a, b) {
+        return "\b" + a + "\b \b28" + (b || " ").replace(/\(/g, "\b28").replace(/\)/g, "\b29") + "\b29"
+      },
       // functions
       "(\\j)\\s*\\((.*)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
         return "function " + a + "\b28 \b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == "")? "{$1": "{$1var " + argify(b) + ";$1")
@@ -485,15 +494,6 @@ function(input) {
       },
       "(\\j)\\s*<set\\?\\s*(\\j)>": function(e, a, b) {
         return a + ".__lookupSetter__\b28\"" + b + "\"\b29"
-      },
-      // reserved words
-      // statement {}
-      "\\b(do|else|finally|return|try|typeof|while)\\b\\s*(brace\\.\\d+)": function(e, a, b) {
-        return a + "\b28" + b + "\b29 "
-      },
-      // statement () {}
-      "\\b(catch|for|function|if|switch|while|with)\\b\\s*\\((.*)\\)": function(e, a, b) {
-        return a + "\b28" + b + "\b29 "
       },
       // (parenthesis)
       "(\\j\\s*[\\:\\=]?\\s*)?\\((.*?)\\)\\s*\\=>\\s*(brace\\.\\d+)": function(e, a, b, c) {
