@@ -258,16 +258,19 @@ function(input) {
     function Tuple() {
     var c = {
       'index': 0,
+      'arguments': [],
       'TupleArray': []
     };
     Tuple.tuples = Tuple.tuples || [];
 
     for(var x = 0; x < arguments.length; x++) {
       c['TupleArray'].push(arguments[x]);
+      c['arguments'].push(arguments[x].constructor.name || arguments.constructor);
     }
+    c['arguments'] = c['TupleArray'];
 
-    if(Tuple['tuples'][c] !== undefined)
-      return Tuple['tuples'][c].TupleIterator;
+    if(Tuple['tuples'][c.arguments] !== undefined)
+      return Tuple['tuples'][c.arguments].TupleIterator;
 
     var TupleItem = c, TupleIndex = c.index;
 
@@ -303,7 +306,7 @@ function(input) {
       return c['TupleArray'][c.index++]
     });
 
-    return Tuple['tuples'][c] = c
+    return Tuple['tuples'][c.arguments] = c
   };
 
   function argify(args) {
