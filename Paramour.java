@@ -54,6 +54,6 @@ public class Paramour {
    file.close();
 
    // done
-   System.out.println ("Tuxedo Script has compiled \"" + f.getName() + "\"\nA file named \"" + newName +"\" has been made");
+   System.out.println ("Paramour has compiled \"" + f.getName() + "\"\nA file named \"" + newName +"\" has been made");
   }
 }
