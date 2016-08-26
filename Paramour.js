@@ -249,8 +249,10 @@ function(input) {
   };
 
   Paramour.push = function(func, args) {
+    for(var k = /(^\s*|,\s*)([a-z\$-][\w\$]*\.{0,3})\s*(,|$)/i; k.test(args);)
+      args = args.replace(k, "$1* $2$3");
     Paramour.dockets[func] = (Paramour.dockets[func] === undefined)? []: Paramour.dockets[func];
-    return Paramour.dockets[func].push(args.replace(/(\*|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*)/gi, "$1").split(','));
+    return Paramour.dockets[func].push(args.replace(/(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, "$1").split(','));
   };
 
   window.Tuple =
@@ -309,11 +311,12 @@ function(input) {
     return Tuple['tuples'][c.arguments] = c
   };
 
-  function argify(args) {
+  function argify(args, types) {
+    types = (types || []).join(",").replace(/\s/g, "").split(",");
     if(typeof args == 'string')
       args = args.split(',');
     for(var x = 0, y = []; x < args.length; x++)
-      y.push(args[x].replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, "$1 = arguments[" + x + "] || $2").replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, "$1 = arguments[" + x + "]"));
+      y.push(args[x].replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (types[x] == "..."? "$1 = arguments.slice(" + x + "," + (args.length - x) + ") || $2": "$1 = arguments[" + x + "] || $2")).replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (types[x] == "..."? "$1 = arguments.slice(" + x + "," + (args.length - x) + ")": "$1 = arguments[" + x + "]") ));
     return y.join(',')
   }
 
@@ -395,8 +398,8 @@ function(input) {
         break;
       case 'quasi':
         return runtime.has("1.6")?
-          '`' + spil + '`':
-        "'" + spil.replace(/'/g, "\\'") + "'";
+          spil:
+        "'" + spil.replace(/\n/g, "").replace(/^`|`$/g, "").replace(/'/g, "\\'") + "'";
         break;
       case 'tuple':
         return "Tuple\b28" + spil + "\b29";
@@ -458,6 +461,9 @@ function(input) {
       "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c) {
         return (a == "undefined"? "": a) + "function\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1return\b ")
       },
+      "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(\\j)": function(e, a, b, c) {
+        return (a == "undefined"? "": a) + "function\b28\b29 {var " + argify(b) + "; return " + c + "}"
+      },
       // reserved words
       // statement {}
       "\\b(do|else|finally|return|try|typeof|while)\\b\\s*(brace\\.\\d+)": function(e, a, b) {
@@ -469,10 +475,10 @@ function(input) {
       },
       // functions
       "(\\j\\s*[\\:\\=]?\\s*)\\(([^\\(\\)\\n\\r]*?)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        var r = /(\*|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*)/gi, x;
+        var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, x;
         if(r.test(b)) {
-          x = Paramour.push(a, b);
-          return "function " + a + "__" + Paramour.pull(a)[x - 1].join('_').replace(/\s+/g, "").replace(/\*/g, "Any") + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2")).split(',').join(',$1    ') + ";$1"));
+          x = Paramour.push(a, b) - 1;
+          return "function " + a + "__" + Paramour.pull(a)[x].join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread") + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2"), Paramour.pull(a)[x]).split(',').join(',$1    ') + ";$1"));
         }
         return /[\:\=]/.test(a)?
           a + "function\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1")):
@@ -521,7 +527,7 @@ function(input) {
         return a + ".__lookupSetter__\b28\"" + b + "\"\b29"
       },
       // (parenthesis)
-      "(\\j\\s*[\\:\\=]\\s*)?\\(([^\\(\\)\\n\\r]*?)\\)\\s*\\=>\\s*(brace\\.\\d+)": function(e, a, b, c) {
+      "(\\j\\s*[\\:\\=]\\s*)?\\(([^\\(\\)\\n\\r]*?)\\)\\s*\\=>\\s*(\\j|brace\\.\\d+)": function(e, a, b, c) {
         a = a || "";
         b = b || "";
         return runtime.has("1.6")?
@@ -604,15 +610,19 @@ function(input) {
   for(var docket in Paramour.dockets) {
     input +=
       "\nfunction \\docket() {\n" +
-      "  var args = arguments;\n" +
+      "  var args = arguments, types = Paramour.types.apply(null, arguments);\n" +
       "  switch(Paramour.types.apply(null, args)) {\n";
     for(var x = 0; x < Paramour.dockets[docket].length; x++) {
       var h, g = ((function(s){
-        h = s.join('_').replace(/\s+/g, "").replace(/\*/g, "Any");
+        h = s.join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread");
         for(var e = 0; e < s.length; e++)
-          s[e] = s[e].replace(/\*/, function() {
-            return "' + args[" + e + "] + '"
-          });
+          s[e] = s[e]
+            .replace(/\*/, function() {
+              return "' + types[" + e + "] + '"
+            })
+            .replace(/\.{3}/, function() {
+              return "' + types.slice(" + e + ", " + s.length + ") + '"
+            });
         return s
       })(Paramour.pull(docket)[x]));
 
