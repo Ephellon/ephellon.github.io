@@ -623,7 +623,7 @@ function(input) {
     }
     input +=
       "    default:\n" +
-      "      throw TypeError('" + docket + " (' + [].slice.call(arguments) + ') is undefined')\n" +
+      "      throw TypeError('" + docket + " (' + Paramour.types.apply(null, args) + ') is undefined')\n" +
       "      break;\n" +
       "  }\n" +
       "}\n";
