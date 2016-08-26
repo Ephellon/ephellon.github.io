@@ -2,7 +2,7 @@
   author: Ephellon Dantzler
   A majority of the language was built in just 48h!
   What wasn't built within the 48h:
-    custom operators (stil looking into that)
+    custom operators (still looking into that)
 */
 
 var window = (window === undefined || window === null)? {}: window;
@@ -38,7 +38,7 @@ function(input) {
   var runtime = {
     /*
       ECMAScript features
-      (All info. provided by the MDN: https:/\\developer.mozilla.org/en-US\\docs/Web/JavaScript/New_in_JavaScript)
+      (All info. provided by the MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript)
     */
     is: function(e) {
       switch (e + "") {
@@ -209,7 +209,7 @@ function(input) {
         return Paramour.support.indexOf(e) > -1;
       var r = [ "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.8.1", "1.8.5" ], t = 0;
       return t = r.slice(0, r.indexOf(runtime.is("*")) + 1),
-        Paramour.runtime = t.slice(t.length - 1, t.length)[0],
+        Paramour.runtime = t[t.length - 1],
         (Paramour.support = t).indexOf(e) > -1;
     },
     emulate: function(e) {
@@ -240,7 +240,7 @@ function(input) {
       else if(args[x].constructor.name !== undefined)
         y.push(args[x].constructor.name)
         else
-          y.push(args[x]);
+          y.push(typeof args[x]);
     return y.join(', ')
   };
 
@@ -250,12 +250,12 @@ function(input) {
 
   Paramour.push = function(func, args) {
     Paramour.dockets[func] = (Paramour.dockets[func] === undefined)? []: Paramour.dockets[func];
-    return Paramour.dockets[func].push(args.replace(/([a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*)/gi, "$1").split(','));
+    return Paramour.dockets[func].push(args.replace(/(\*|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*)/gi, "$1").split(','));
   };
 
   window.Tuple =
-    Paramour.Tuple =
-    function Tuple() {
+  Paramour.Tuple =
+  function Tuple() {
     var c = {
       'index': 0,
       'arguments': [],
@@ -330,17 +330,21 @@ function(input) {
       brace = [],
       tuple = [],
       emus = [],
+      caches = [],
       patterns = {
         "double_quote": /("[^"\n\r]*?")/,
         "single_quote": /('[^'\n\r]*?')/,
         "regexp": /(\/.*?\/[igmuy]*)/, // // -> /(?:)/
         "quasi": /(`[^`]*?`)/,
-        "tuple": /\{\{\s*([^;]*?)\s*\}\}/,
-        "brace": /(\{[^\{\}]*?\})/,
         "multi_line": /###([\s\S]*?)###/,
         "emus": /#\s*@([\d\.]+)/,
-        "single_line": /#(.*)/
+        "caches": /#\s*\$(.+)/,
+        "single_line": /#(.*)/,
+        "tuple": /\{\{\s*([^;]*?)\s*\}\}/,
+        "brace": /(\{[^\{\}]*?\})/
       };
+
+  caches.kids = [];
 
   for(var x = /(\n\r\t)/; x.test(input);)
     input = input.replace(x, function(e) {
@@ -369,36 +373,45 @@ function(input) {
     runtime.emulate(emus[x]);
 
   function handle(type, index) {
+    var spil = eval(type)[index];
     switch(type) {
       case 'multi_line':
-        return '/*' + eval(type)[index] + '*/';
+        return '/*' + spil + '*/';
         break;
       case 'emus':
-        return '// JavaScript Emulation from "' + runtime.original + '" to "' + eval(type)[index] + '"'
+        return '// JavaScript Emulation from "' + runtime.original + '" to "' + spil + '"'
+        break;
+      case 'caches':
+        var r = /\->/, s = /\=>/, o = {};
+        var R = spil.split(/\s*\->\s*/), S = spil.split(/\s*\=>\s*/);
+        if(r.test(spil))
+          caches.kids.push((o[R[0]] = R[1], o));
+        else if(s.test(spil))
+          caches.kids.push((o[S[0]] = eval(S[1]), o));
+        return '// ' + spil;
         break;
       case 'single_line':
-        return '//' + eval(type)[index];
+        return '//' + spil;
         break;
       case 'quasi':
         return runtime.has("1.6")?
-          '`' + eval(type)[index] + '`':
-        "'" + eval(type)[index].replace(/'/g, "\\'") + "'";
+          '`' + spil + '`':
+        "'" + spil.replace(/'/g, "\\'") + "'";
         break;
       case 'tuple':
-        return "Tuple\b28" + eval(type)[index] + "\b29";
+        return "Tuple\b28" + spil + "\b29";
         break;
       case 'regexp':
-        return eval(type)[index].replace(/^\/\/$/, "/(?:)/");
+        return spil.replace(/^\/\/$/, "/(?:)/");
         break;
       case 'single_quote':
       case 'double_quote':
-        return eval(type)[index];
+        return spil;
         break;
       default:
-        return compile(eval(type)[index]);
+        return compile(spil);
         break;
     }
-
     return input;
   }
 
@@ -443,7 +456,7 @@ function(input) {
         return a + ".this." + b + " = function\b28\b29 " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(c) + ";$1")
       },
       "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        return (a == "undefined"? "": a) + "function\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, "{\n$1var " + argify(b) + ";$1return\b ")
+        return (a == "undefined"? "": a) + "function\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1return\b ")
       },
       // reserved words
       // statement {}
@@ -455,8 +468,15 @@ function(input) {
         return "\b" + a + "\b \b28" + (b || " ").replace(/\(/g, "\b28").replace(/\)/g, "\b29") + "\b29"
       },
       // functions
-      "(\\j)\\s*\\((.*)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        return "function " + a + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == "")? "{$1": "{$1var " + argify(b) + ";$1")
+      "(\\j\\s*[\\:\\=]?\\s*)\\(([^\\(\\)\\n\\r]*?)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
+        var r = /(\*|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*)/gi, x;
+        if(r.test(b)) {
+          x = Paramour.push(a, b);
+          return "function " + a + "__" + Paramour.pull(a)[x - 1].join('_').replace(/\s+/g, "").replace(/\*/g, "Any") + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2")).split(',').join(',$1    ') + ";$1"));
+        }
+        return /[\:\=]/.test(a)?
+          a + "function\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1")):
+        "function " + a + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b)) + ";$1")
       },
       // classes
       "(\\j)\\.(\\j)\\s*(brace\\.\\d+)": function(e, a, b, c) {
@@ -501,22 +521,12 @@ function(input) {
         return a + ".__lookupSetter__\b28\"" + b + "\"\b29"
       },
       // (parenthesis)
-      "(\\j\\s*[\\:\\=]\\s*)?\\((.*?)\\)\\s*\\=>\\s*(brace\\.\\d+)": function(e, a, b, c) {
+      "(\\j\\s*[\\:\\=]\\s*)?\\(([^\\(\\)\\n\\r]*?)\\)\\s*\\=>\\s*(brace\\.\\d+)": function(e, a, b, c) {
         a = a || "";
         b = b || "";
         return runtime.has("1.6")?
           a + "\b28" + b + "\b29 => " + c:
         compile("arrow#[" + a + "] [" + b + "] " + c)
-      },
-      "@(\\j[\\:\\=]?\\s*)\\((.*?)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        var r = /([a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*)/gi, x;
-        if(r.test(b)) {
-          x = Paramour.push(a, b);
-          return "function " + a + "__" + Paramour.pull(a)[x - 1].join('_').replace(/\s+/g, "") + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2")) + ";$1"));
-        }
-        return /[\:\=]/.test(a)?
-          a + "function\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1")):
-        "function " + a + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b)) + ";$1")
       },
       "\\((!?)(\\s*\\j\\s*)\\)\\s*\\=\\s*([^;]+);": function(e, a, b, c) {
         return (a == "!"? "const ": "var ") + b.replace(/\(/g, "\b28").replace(/\)/g, "\b29").replace(/([a-z\$_][\w\$]*)/i, "$1 = " + c) + ";"
@@ -540,8 +550,17 @@ function(input) {
       "@": function(e, a) {
         return "this"
       },
-      "\\bvar\\b\\s+([a-z\\$_][\\w\\$])(\\s+[a-z\\$_][\\w\\$]*\\s*,)+": function(e, a, b) {
-        return "var " + b + " = \b28" + b + ".constructor === " + a + " || " + b + ".constructor === " + a + ".constructor\b29? " + b + ": undefined;"
+      "\\bvar\\b\\s+(\\j\\s+\\j.*;)": function(e, a) {
+        a = a.replace(/;/g, "").split(",");
+        for(var b = [], c = [], d = [], e = "", f = 0; f < a.length; f++)
+          (e = a[f].replace(/^\s+|\s+$/g, "").split(/\s/)).length > 1?
+            (b.push(e[0]), c.push(e[1])):
+            d.push(e[0]);
+
+        for(var e = 0, f = []; e < b.length; e++)
+          f.push(c[e] + " = \b28" + c[e] + ".constructor === " + b[e] + " || " + c[e] + ".constructor === " + b[e] + ".constructor\b29? " + c[e] + ": undefined");
+
+        return "var " + f.join(",\n    ") + d.join(",\n    ") + ";"
       },
       "\\bvar\\b(.*\\.\\.\\..*)": function(e, a) {
         a = a.split(",");
@@ -573,6 +592,10 @@ function(input) {
 
   input = decompile(input, undefined, true);
 
+  for(var x = 0; x < caches.kids.length; x++)
+    for(var kid in caches.kids[x])
+      input = input.replace(RegExp("\\$" + kid, "g"), caches.kids[x][kid]);
+
   for(var x = /[\b]0x([0-9a-f]{2})[\b]/; x.test(input);)
     input = input.replace(x, "\\" + String.fromCharCode(eval("0x" + RegExp.$1)));
   for(var x = /[\b]([0-9a-f]{2})/; x.test(input);)
@@ -581,11 +604,21 @@ function(input) {
   for(var docket in Paramour.dockets) {
     input +=
       "\nfunction \\docket() {\n" +
-      "  switch(Paramour.types.apply(null, arguments)) {\n";
+      "  var args = arguments;\n" +
+      "  switch(Paramour.types.apply(null, args)) {\n";
     for(var x = 0; x < Paramour.dockets[docket].length; x++) {
+      var h, g = ((function(s){
+        h = s.join('_').replace(/\s+/g, "").replace(/\*/g, "Any");
+        for(var e = 0; e < s.length; e++)
+          s[e] = s[e].replace(/\*/, function() {
+            return "' + args[" + e + "] + '"
+          });
+        return s
+      })(Paramour.pull(docket)[x]));
+
       input +=
-        "    case '" + Paramour.pull(docket)[x] + "':\n" +
-        "      return " + docket + "__" + Paramour.pull(docket)[x].join('_').replace(/\s+/g, "") + ".apply(null, arguments);\n" +
+        "    case '" + g + "':\n" +
+        "      return " + docket + "__" + h + ".apply(null, args);\n" +
         "      break;\n";
     }
     input +=
