@@ -600,7 +600,7 @@ function(input) {
 
   for(var x = 0; x < caches.kids.length; x++)
     for(var kid in caches.kids[x])
-      input = input.replace(RegExp("\\$" + kid, "g"), caches.kids[x][kid]);
+      input = input.replace(RegExp("(\\W)\\$" + kid + "(\\W)", "g"), "$1" + caches.kids[x][kid] + "$2");
 
   for(var x = /[\b]0x([0-9a-f]{2})[\b]/; x.test(input);)
     input = input.replace(x, "\\" + String.fromCharCode(eval("0x" + RegExp.$1)));
