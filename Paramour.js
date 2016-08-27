@@ -436,7 +436,7 @@ function(input) {
       "class#(\\j)\\s*(brace)\\.(\\d+)": function(e, a, b, c) {
         var d = a;
         return "function " + a + "\b28\b29 " + eval(b)[c]
-          .replace(/<init>\s*\((.*)\)\s*(brace\.\d+)/, function(e, a, b) {
+          .replace(/<init>\s*(\(.*\))?\s*(brace\.\d+)/, function(e, a, b) {
           return "constructor#" + d + " [" + a + "] [true] " + b
         })
           .replace(/([a-z\$_][\w\$]*)\s*\((.*)\)\s*(brace\.\d+)/gi, "prototype#" + a + ":$1 [$2] $3")
@@ -453,7 +453,7 @@ function(input) {
           .replace(/(\s*)\}$/, "\n  " + b + ".this <get constructor> brace." + (brace.push("{\n    -> " + b + ";\n  }") - 1) + "\n  " + b + ".this <set constructor> brace." + (brace.push("{\n    -> " + b + ", constructor;\n  }") - 1) + "\n  return " + b + ".this;\n}")
       },
       "constructor#(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*\\[(true|false)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
-        return (eval(c)? a + ".this = {};\n  ": "") + a + ".constructor = function\b28\b29 " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1").replace(/\b(@|this|super)\b/g, a + ".$1") + ";\n  " + a + ".constructor.apply\b28null, arguments\b29;\n  "
+        return (eval(c)? a + ".this = {};\n  ": "") + a + ".constructor = function\b28\b29 " + decompile(d, 'brace').replace(/\{(\s*)/, (b === "undefined")? "{$1": "{$1" + argify(b) + ";$1").replace(/\b(@|this|super)\b/g, a + ".$1") + ";\n  " + a + ".constructor.apply\b28null, arguments\b29;\n  "
       },
       "prototype#(\\j)\\:(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
         return a + ".this." + b + " = function\b28\b29 " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(c) + ";$1")
@@ -478,7 +478,7 @@ function(input) {
         var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, x;
         if(r.test(b)) {
           x = Paramour.push(a, b) - 1;
-          return "function " + a + "__" + Paramour.pull(a)[x].join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread") + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2"), Paramour.pull(a)[x]).split(',').join(',$1    ') + ";$1"));
+          return "function " + a + "__" + Paramour.pull(a)[x].join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").replace(/([a-z\$_][\w\$]*).*$/i, "$1") + "\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2"), Paramour.pull(a)[x]).split(',').join(',$1    ') + ";$1"));
         }
         return /[\:\=]/.test(a)?
           a + "function\b28\b29 " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1")):
@@ -555,7 +555,8 @@ function(input) {
       },
       "@": function(e, a) {
         return "this"
-      },
+      }
+      /*,
       "\\bvar\\b\\s+(\\j\\s+\\j.*;)": function(e, a) {
         a = a.replace(/;/g, "").split(",");
         for(var b = [], c = [], d = [], e = "", f = 0; f < a.length; f++)
@@ -585,6 +586,7 @@ function(input) {
             .replace(/\.\.\.([a-z\$_][\w\$]*)/i, "var $1 = [].slice.apply\b28null, arguments\b29.slice\b280, " + x + "\b29");
         return a.join(",");
       }
+      */
     };
 
     for(var pattern in patterns)
@@ -613,10 +615,11 @@ function(input) {
       "  var args = arguments, types = Paramour.types.apply(null, arguments);\n" +
       "  switch(Paramour.types.apply(null, args)) {\n";
     for(var x = 0; x < Paramour.dockets[docket].length; x++) {
-      var h, g = ((function(s){
-        h = s.join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread");
+      var h, g = (function(s){
+        h = s.join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").replace(/([a-z\$_][\w\$]*).*$/i, "$1");
         for(var e = 0; e < s.length; e++)
           s[e] = s[e]
+            .replace(/([a-z\$_][\w\$]*).*$/i, "$1")
             .replace(/\*/, function() {
               return "' + types[" + e + "] + '"
             })
@@ -624,7 +627,7 @@ function(input) {
               return "' + types.slice(" + e + ", " + s.length + ") + '"
             });
         return s
-      })(Paramour.pull(docket)[x]));
+      })(Paramour.pull(docket)[x]);
 
       input +=
         "    case '" + g + "':\n" +
