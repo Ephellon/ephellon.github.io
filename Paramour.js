@@ -586,8 +586,8 @@ function(input) {
       },
       "\\b(un)?defined\\b\\s+(\\j)": function(e, a, b) {
         return (a === "un")?
-          "(typeof " + b + " === 'undefined' || " + b + " === null)":
-        "(typeof " + b + " !== 'undefined' && " + b + " !== null)"
+          "\b28\btypeof " + b + " === 'undefined' || " + b + " === null\b29\b":
+        "\b28\btypeof " + b + " !== 'undefined' && " + b + " !== null\b29\b"
       }
       /*,
       "\\bvar\\b\\s+(\\j\\s+\\j.*;)": function(e, a) {
