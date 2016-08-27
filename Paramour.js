@@ -358,9 +358,14 @@ function(input) {
       }[e])
     });
 
-  for(var x = /\\(.)/; x.test(input);)
+  for(var x = /\\([^\d\$])/; x.test(input);)
     input = input.replace(x, function(e, a) {
       return "\b0x" + a.charCodeAt(0).toString(16) + "\b"
+    });
+
+  for(var x = /([\$\\])([\d\$\&\+'`_])/; x.test(input);)
+    input = input.replace(x, function(e, a, b) {
+      return a + "\b0x" + b.charCodeAt(0).toString(16) + "\b"
     });
 
   // get rid of everything before staring Paramour
@@ -399,17 +404,17 @@ function(input) {
       case 'quasi':
         return runtime.has("1.6")?
           spil:
-        "'" + spil.replace(/\n/g, "").replace(/^`|`$/g, "").replace(/'/g, "\\'") + "'";
+        "'" + spil.replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/\n/g, "").replace(/^`|`$/g, "").replace(/'/g, "\\'") + "'";
         break;
       case 'tuple':
         return "Tuple\b28" + spil + "\b29";
         break;
       case 'regexp':
-        return spil.replace(/^\/\/$/, "/(?:)/");
+        return spil.replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/^\/\/$/, "/(?:)/");
         break;
       case 'single_quote':
       case 'double_quote':
-        return spil;
+        return spil.replace(/\b0x(.+?)\b/g, "\b\\0x$1\b");
         break;
       default:
         return compile(spil);
@@ -605,7 +610,7 @@ function(input) {
       input = input.replace(RegExp("(\\W)\\$" + kid + "(\\W)", "g"), "$1" + caches.kids[x][kid] + "$2");
 
   for(var x = /[\b]0x([0-9a-f]{2})[\b]/; x.test(input);)
-    input = input.replace(x, "\\" + String.fromCharCode(eval("0x" + RegExp.$1)));
+    input = input.replace(x, String.fromCharCode(eval("0x" + RegExp.$1)));
   for(var x = /[\b]([0-9a-f]{2})/; x.test(input);)
     input = input.replace(x, String.fromCharCode(eval("0x" + RegExp.$1)));
 
