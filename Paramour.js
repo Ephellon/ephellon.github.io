@@ -251,7 +251,8 @@ function(input) {
   Paramour.push = function(func, args) {
     for(var k = /(^\s*|,\s*)([a-z\$-][\w\$]*\.{0,3})\s*(,|$)/i; k.test(args);)
       args = args.replace(k, "$1* $2$3");
-    Paramour.dockets[func] = (Paramour.dockets[func] === undefined)? []: Paramour.dockets[func];
+    func = func.name || func;
+    Paramour.dockets[func] = (Paramour.dockets[func] === undefined || Paramour.dockets[func].length === undefined || Paramour.dockets[func].length === 0)? []: Paramour.dockets[func];
     return Paramour.dockets[func].push(args.replace(/(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, "$1").split(','));
   };
 
@@ -480,6 +481,23 @@ function(input) {
       "\\b(catch|for|function|if|switch|while|with|\\.\\j)\\b\\s*\\((.*)\\)": function(e, a, b) {
         return "\b" + a + "\b \b28\b" + (b || " ").replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b") + "\b29\b"
       },
+      "(\\s*)case\\s*\\((.*)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
+        var f = [a || ""];
+        b = (b || "").split(/,|\s+/);
+        for(var x = 0; x < b.length; x++)
+          if(!/^\s*$/.test(b[x]))
+            f.push(a + "case " + b[x] + ":");
+        return f.join("") + decompile(c, 'brace').replace(/^\{/, "").replace(/\}$/, a + "  break;")
+      },
+      "(\\s*)default\\s*(\\(.*\\))?\\s*(brace\\.\\d+)": function(e, a, b, c) {
+        var f = [a || ""];
+        b = (b || "").replace(/^\(|\)$/g, "").split(/,|\s+/);
+        for(var x = 0; x < b.length; x++)
+          if(!/^\s*$/.test(b[x]))
+            f.push(a + "case " + b[x] + ":");
+        f.push(a + "default:");
+        return f.join("") + decompile(c, 'brace').replace(/^\{/, "").replace(/\}$/, a + "  break;")
+      },
       // functions
       "(\\j\\s*[\\:\\=]?\\s*)\\(([^\\(\\)\\n\\r]*?)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
         var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, x;
@@ -521,6 +539,9 @@ function(input) {
           "constructor\b28\b\b29\b " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1"):
         "constructor = function\b28\b\b29\b " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1")
       },
+      "(\\j)\\s*<proto\\s+(\\j)>\\s*(brace\\.\\d+)": function(e, a, b, c) {
+        return a + ".prototype." + b + " = function\b28\b\b29\b " + c
+      },
       "(\\j)\\s*<get\\s+(\\j)>\\s*(brace\\.\\d+)": function(e, a, b, c) {
         return a + ".__defineGetter__\b28\b\"" + b + "\", function\b28\b\b29\b " + c + "\b29\b"
       },
@@ -542,10 +563,10 @@ function(input) {
         compile("arrow#[" + a + "] [" + b + "] " + c)
       },
       "\\((!?)(\\s*\\j\\s*)\\)\\s*\\=\\s*([^;]+);": function(e, a, b, c) {
-        return (a == "!"? "const ": "var ") + b.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b").replace(/([a-z\$_][\w\$]*)/i, "$1 = " + c) + ";"
+        return (a == "!"? "const ": "var ") + b.replace(/([a-z\$_][\w\$]*)/i, "$1 = " + c.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b")) + ";"
       },
       "\\((!?)(\\s*\\j.*?\\s*)\\)\\s*\\=\\s*([^;]+);": function(e, a, b, c) {
-        return (a == "!"? "const ": "var ") + b.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b").replace(/([a-z\$_][\w\$]*)(\s*,|\s*$)/gi, "$1 = " + c + "$2") + ";"
+        return (a == "!"? "const ": "var ") + b.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b").replace(/([,\u0008]\s*)([a-z\$_][\w\$]*)(\s*[,\u0008])/gi, "$1$2 = " + c.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b") + "$3") + ";"
       },
       "(\\W)\\((!?)([^;]*)\\);": function(e, a, b, c) {
         return a + (b == "!"? "const ": "var ") + c.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b") + ";"
@@ -562,6 +583,11 @@ function(input) {
       },
       "@": function(e, a) {
         return "this"
+      },
+      "\\b(un)?defined\\b\\s+(\\j)": function(e, a, b) {
+        return (a === "un")?
+          "(typeof " + b + " === 'undefined' || " + b + " === null)":
+        "(typeof " + b + " !== 'undefined' && " + b + " !== null)"
       }
       /*,
       "\\bvar\\b\\s+(\\j\\s+\\j.*;)": function(e, a) {
