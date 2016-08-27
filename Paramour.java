@@ -1,7 +1,5 @@
 package paramour;
 
-//ScriptDemo5.java
-
 import java.io.*;
 import java.util.Scanner;
 import javax.script.*;
@@ -10,50 +8,61 @@ public class Paramour {
   private static Scanner input = new Scanner(System.in);
   private static String JAVA_STRING = "JAVA_STRING = ";
   private static String Paramour = "\n\n";
-  
+  private static Scanner ParamourJS;
+  private static File from;
+  // Obtain a ScriptEngine that supports the JavaScript short name
+  public static ScriptEngineManager manager = new ScriptEngineManager();
+  public static ScriptEngine engine = manager.getEngineByName("JavaScript");
+
   public static void main (String [] args) throws ScriptException, FileNotFoundException {
-   // pre-compile the file
-   System.out.println("Enter your file directory/name: ");
-   File f = new File(input.nextLine());
-   Scanner F = new Scanner(new File("Paramour.js"));
-   System.out.println("Compiling: " + f.getAbsolutePath() + "\n");
+    ParamourJS = new Scanner(new File("Paramour.js"));
+  
+    for(;ParamourJS.hasNextLine();) {
+      Paramour += ParamourJS.nextLine() + '\n';
+    } ParamourJS.close();
 
-   Scanner file = new Scanner(f);
-   String newName = f.getAbsolutePath().replace(".par", ".par.js");
+    // if a list was given, parse it
+    if(args.length > 0) {
+      for(int x = 0; x < args.length; x++) {
+        from = new File(args[x]);
+        eval(from);
+      }
+    }
+    // if a list wasn't given, ask for a file
+    else {
+      System.out.println("Enter your file directory/name: ");
+      from = new File(input.nextLine());
+      eval(from);
+    }
 
-   PrintStream out = new PrintStream(new FileOutputStream( newName ));
+    // done
+    System.out.println ("Paramour has compiled the files");
+  }
 
-   for(;file.hasNextLine();) {
-     JAVA_STRING += '"' + file.nextLine().replace("\\", "\\\\").replace("\"", "\\\"") + "\\n\" + \n";
-   } JAVA_STRING += "\"\"";
+  private static String eval(File from) throws ScriptException, FileNotFoundException {
+    Scanner medium = new Scanner(from);
+    String to = from.getAbsolutePath().replace(".par", ".par.js");
+  
+    PrintStream out = new PrintStream(new FileOutputStream(to));
+  
+    for(;medium.hasNextLine();) {
+      JAVA_STRING += '"' + medium.nextLine().replace("\\", "\\\\").replace("\"", "\\\"") + "\\n\" + \n";
+    } JAVA_STRING += "\"\"";
+  
+    // Redirect the engine's standard output to a StringWriter instance
+    StringWriter writer = new StringWriter();
+    PrintWriter printer = new PrintWriter(writer, true);
+    engine.getContext().setWriter(printer);
+  
+    // Evaluate the script
+    System.out.println("Compiling: " + from.getAbsolutePath() + "\n");
+    engine.eval(JAVA_STRING + Paramour);
 
-   for(;F.hasNextLine();) {
-     Paramour += F.nextLine() + '\n';
-   } F.close();
-
-   // Create a ScriptEngineManager that discovers all script engine
-   // factories (and their associated script engines) that are visible to
-   // the current thread's class loader
-   ScriptEngineManager manager = new ScriptEngineManager();
-
-   // Obtain a ScriptEngine that supports the JavaScript short name
-   ScriptEngine engine = manager.getEngineByName("JavaScript");
-
-   // Redirect the engine's standard output to a StringWriter instance
-   StringWriter writer = new StringWriter();
-   PrintWriter printer = new PrintWriter(writer, true);
-   engine.getContext().setWriter(printer);
-
-   // Evaluate a script
-   engine.eval(JAVA_STRING + Paramour);
-
-   // Obtain the string buffer's contents
-   String PAR = writer.getBuffer().toString();
-   out.print(PAR);
-   out.close();
-   file.close();
-
-   // done
-   System.out.println ("Paramour has compiled \"" + f.getName() + "\"\nA file named \"" + newName +"\" has been made");
+    // Obtain the string buffer's contents
+    String PAR = writer.getBuffer().toString();
+    out.print(PAR);
+    out.close();
+    medium.close();
+    return to;
   }
 }

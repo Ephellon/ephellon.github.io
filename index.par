@@ -1,5 +1,3 @@
-<body onload="document.getElementById('output').value = Paramour(document.getElementById('input').value)">
-<textarea id="input" oninput="document.getElementById('output').value = Paramour(this.value)">
 ### Paramour 1.0
   author: Ephellon Dantzler
   date: Fri Aug 5, 2016
@@ -64,6 +62,3 @@ Employee.Manager {
   age: 41,
   role: "Cashier"
 });
-</textarea>
-<textarea id="output" disabled></textarea>
-</body>
