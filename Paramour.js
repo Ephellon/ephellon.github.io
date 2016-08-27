@@ -404,7 +404,7 @@ function(input) {
       case 'quasi':
         return runtime.has("1.6")?
           spil:
-        "'" + spil.replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/\n/g, "").replace(/^`|`$/g, "").replace(/'/g, "\\'") + "'";
+        "'" + spil.replace(/[\b]\$[\b]\{([^\{\}`]*)\}/g, "' + ($1) + '").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/\n/g, "").replace(/^`|`$/g, "").replace(/^''\s*\+|\+\s*''$/g, "").replace(/'/g, "\\'") + "'";
         break;
       case 'tuple':
         return "Tuple\b28\b" + spil + "\b29\b";
@@ -413,8 +413,10 @@ function(input) {
         return spil.replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/^\/\/$/, "/(?:)/");
         break;
       case 'single_quote':
+        return spil.replace(/[\b]\$[\b]\{([^\{\}']*)\}/g, "' + ($1) + '").replace(/^''\s*\+|\+\s*''$/g, "").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b");
+        break;
       case 'double_quote':
-        return spil.replace(/\b0x(.+?)\b/g, "\b\\0x$1\b");
+        return spil.replace(/[\b]\$[\b]\{([^\{\}"]*)\}/g, '" + ($1) + "').replace(/^""\s*\+|\+\s*""$/g, "").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b");
         break;
       default:
         return compile(spil);
@@ -463,11 +465,11 @@ function(input) {
       "prototype#(\\j)\\:(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
         return a + ".this." + b + " = function\b28\b\b29\b " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(c) + ";$1")
       },
-      "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        return (a == "undefined"? "": a) + "function\b28\b\b29\b " + decompile(c, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1return\b ")
-      },
-      "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(\\j)": function(e, a, b, c) {
-        return (a == "undefined"? "": a) + "function\b28\b\b29\b {var " + argify(b) + "; return " + c + "}"
+      "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+|\\j(\\.\\d+)?)": function(e, a, b, c) {
+        if(/^brace\.\d+/.test(c))
+          return (a == "undefined"? "": a) + "function\b28\b\b29\b " + decompile(c, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1return\b ");
+        else
+          return (a == "undefined"? "": a) + "function\b28\b\b29\b {var " + argify(b) + "; return " + c + "}";
       },
       // reserved words
       // statement {}
@@ -532,7 +534,7 @@ function(input) {
         return a + ".__lookupSetter__\b28\b\"" + b + "\"\b29\b"
       },
       // (parenthesis)
-      "(\\j\\s*[\\:\\=]\\s*)?\\(([^\\(\\)\\n\\r]*?)\\)\\s*\\=>\\s*(\\j|brace\\.\\d+)": function(e, a, b, c) {
+      "(\\j\\s*[\\:\\=]\\s*)?\\(([^\\(\\)\\n\\r]*?)\\)\\s*\\=>\\s*(brace\\.\\d+|\\j(\\.\\d+)?)": function(e, a, b, c) {
         a = a || "";
         b = b || "";
         return runtime.has("1.6")?
