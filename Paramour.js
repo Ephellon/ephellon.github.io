@@ -408,7 +408,7 @@ function(input) {
         "'" + spil.replace(/[\b]\$[\b]\{([^\{\}`]*)\}/g, "' + ($1) + '").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/\n/g, "").replace(/^`|`$/g, "").replace(/^''\s*\+|\+\s*''$/g, "").replace(/'/g, "\\'") + "'";
         break;
       case 'tuple':
-        return "Tuple\b28\b" + spil + "\b29\b";
+        return "Tuple(" + spil + ")";
         break;
       case 'regexp':
         return spil.replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/^\/\/$/, "/(?:)/");
@@ -443,7 +443,7 @@ function(input) {
       // rehandlers
       "class#(\\j)\\s*(brace)\\.(\\d+)": function(e, a, b, c) {
         var d = a;
-        return "function " + a + "\b28\b\b29\b " + eval(b)[c]
+        return "function " + a + "() " + eval(b)[c]
           .replace(/<init>\s*(\(.*\))?\s*(brace\.\d+)/, function(e, a, b) {
           return "constructor#" + d + " [" + a + "] [true] " + b
         })
@@ -456,21 +456,21 @@ function(input) {
           .replace(/<init>\s*\((.*)\)\s*(brace\.\d+)/, function(e, a, b) {
           return "constructor#" + d + " [" + a + "] [false] " + b
         })
-          .replace(/\{(\s*)/, "\b28\b\b29\b {$1" + b + ".super = " + a + ";$1" + b + ".this = " + a + ".apply(null, arguments) || {};$1")
+          .replace(/\{(\s*)/, "() {$1" + b + ".super = " + a + ";$1" + b + ".this = " + a + ".apply(null, arguments) || {};$1")
           .replace(/([a-z\$_][\w\$]*)\s*\((.*)\)\s*(brace\.\d+)/gi, "prototype#" + b + ":$1 [$2] $3")
           .replace(/(\s*)\}$/, "\n  " + b + ".this <get constructor> brace." + (brace.push("{\n    -> " + b + ";\n  }") - 1) + "\n  " + b + ".this <set constructor> brace." + (brace.push("{\n    -> " + b + ", constructor;\n  }") - 1) + "\n  return " + b + ".this;\n}")
       },
       "constructor#(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*\\[(true|false)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
-        return (eval(c)? a + ".this = {};\n  ": "") + a + ".constructor = function\b28\b\b29\b " + decompile(d, 'brace').replace(/\{(\s*)/, (b === "undefined")? "{$1": "{$1" + argify(b) + ";$1").replace(/\b(@|this|super)\b/g, a + ".$1") + ";\n  " + a + ".constructor.apply\b28\bnull, arguments\b29\b;\n  "
+        return (eval(c)? a + ".this = {};\n  ": "") + a + ".constructor = function() " + decompile(d, 'brace').replace(/\{(\s*)/, (b === "undefined")? "{$1": "{$1" + argify(b) + ";$1").replace(/\b(@|this|super)\b/g, a + ".$1") + ";\n  " + a + ".constructor.apply(null, arguments);\n  "
       },
       "prototype#(\\j)\\:(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
-        return a + ".this." + b + " = function\b28\b\b29\b " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(c) + ";$1")
+        return a + ".this." + b + " = function() " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(c) + ";$1")
       },
       "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+|\\j(\\.\\d+)?)": function(e, a, b, c) {
         if(/^brace\.\d+/.test(c))
-          return (a == "undefined"? "": a) + "function\b28\b\b29\b " + decompile(c, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1return\b ");
+          return (a == "undefined"? "": a) + "function() " + decompile(c, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1return\b ");
         else
-          return (a == "undefined"? "": a) + "function\b28\b\b29\b {var " + argify(b) + "; return " + c + "}";
+          return (a == "undefined"? "": a) + "function() {var " + argify(b) + "; return " + c + "}";
       },
       // reserved words
       // statement {}
@@ -479,7 +479,7 @@ function(input) {
       },
       // statement () {}
       "\\b(catch|for|function|if|switch|while|with|\\.\\j)\\b\\s*\\((.*)\\)": function(e, a, b) {
-        return "\b" + a + "\b \b28\b" + (b || " ").replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b") + "\b29\b"
+        return "\b" + a + "\b (" + (b || " ").replace(/\(/g, "(").replace(/\)/g, ")") + ")"
       },
       "(\\s*)case\\s*\\((.*)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
         var f = [a || ""];
@@ -503,11 +503,11 @@ function(input) {
         var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, x;
         if(r.test(b)) {
           x = Paramour.push(a, b) - 1;
-          return "function " + a + "__" + Paramour.pull(a)[x].join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").replace(/([a-z\$_][\w\$]*).*$/i, "$1") + "\b28\b\b29\b " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2"), Paramour.pull(a)[x]).split(',').join(',$1    ') + ";$1"));
+          return "function " + a + "__" + Paramour.pull(a)[x].join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").replace(/([a-z\$_][\w\$]*).*$/i, "$1") + "() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2"), Paramour.pull(a)[x]).split(',').join(',$1    ') + ";$1"));
         }
         return /[\:\=]/.test(a)?
-          a + "function\b28\b\b29\b " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1")):
-        "function " + a + "\b28\b\b29\b " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b)) + ";$1")
+          a + "function() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1")):
+        "function " + a + "() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b)) + ";$1")
       },
       // classes
       "(\\j)\\.(\\j)\\s*(brace\\.\\d+)": function(e, a, b, c) {
@@ -515,7 +515,7 @@ function(input) {
         return runtime.has("1.6")?
           "class " + b + " extends " + a + " " + decompile(c, 'brace')
           .replace(/([a-z\$_][\w\$]*)\s*\((.*)\)\s*(brace\.\d+)/gi, function(e, a, b, c) {
-          return d + "." + a + " = function\b28\b\b29\b " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1"))
+          return d + "." + a + " = function() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1"))
         }):
         compile("extends#" + a + ":" + b + " " + c, [a, b]);
       },
@@ -524,52 +524,46 @@ function(input) {
         return runtime.has("1.6")?
           "class " + a + decompile(b, 'brace')
           .replace(/([a-z\$_][\w\$]*)\s*\((.*)\)\s*(brace\.\d+)/gi, function(e, a, b, c) {
-          return d + "." + a + " = function\b28\b\b29\b " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1"))
+          return d + "." + a + " = function() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1"))
         }):
         compile("class#" + a + " " + b, [a]);
       },
       // <thans>
       "<init>\\s*(brace\\.\\d+)": function(e, a) {
         return runtime.has("1.6")?
-          "constructor\b28\b\b29\b " + decompile(a, 'brace'):
-        "constructor = function\b28\b\b29\b " + decompile(a, 'brace')
+          "constructor() " + decompile(a, 'brace'):
+        "constructor = function() " + decompile(a, 'brace')
       },
       "<init>\\s*\\((.*)\\)\\s*(brace\\.\\d+)": function(e, a, b) {
         return runtime.has("1.6")?
-          "constructor\b28\b\b29\b " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1"):
-        "constructor = function\b28\b\b29\b " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1")
+          "constructor() " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1"):
+        "constructor = function() " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1")
       },
       "(\\j)\\s*<proto\\s+(\\j)>\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        return a + ".prototype." + b + " = function\b28\b\b29\b " + c
+        return a + ".prototype." + b + " = function() " + c
       },
       "(\\j)\\s*<get\\s+(\\j)>\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        return a + ".__defineGetter__\b28\b\"" + b + "\", function\b28\b\b29\b " + c + "\b29\b"
+        return a + ".__defineGetter__(\"" + b + "\", function() " + c + ")"
       },
       "(\\j)\\s*<get\\?\\s*(\\j)>": function(e, a, b) {
-        return a + ".__lookupGetter__\b28\b\"" + b + "\"\b29\b"
+        return a + ".__lookupGetter__(\"" + b + "\")"
       },
       "(\\j)\\s*<set\\s+(\\j)>\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        return a + ".__defineSetter__\b28\b\"" + b + "\", function\b28\b" + b + "\b29\b " + c + "\b29\b"
+        return a + ".__defineSetter__(\"" + b + "\", function(" + b + ") " + c + ")"
       },
       "(\\j)\\s*<set\\?\\s*(\\j)>": function(e, a, b) {
-        return a + ".__lookupSetter__\b28\b\"" + b + "\"\b29\b"
+        return a + ".__lookupSetter__(\"" + b + "\")"
       },
       // (parenthesis)
       "(\\j\\s*[\\:\\=]\\s*)?\\(([^\\(\\)\\n\\r]*?)\\)\\s*\\=>\\s*(brace\\.\\d+|\\j(\\.\\d+)?)": function(e, a, b, c) {
         a = a || "";
         b = b || "";
         return runtime.has("1.6")?
-          a + "\b28\b" + b + "\b29\b => " + c:
+          a + "(" + b + ") => " + c:
         compile("arrow#[" + a + "] [" + b + "] " + c)
       },
-      "\\((!?)(\\s*\\j\\s*)\\)\\s*\\=\\s*([^;]+);": function(e, a, b, c) {
-        return (a == "!"? "const ": "var ") + b.replace(/([a-z\$_][\w\$]*)/i, "$1 = " + c.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b")) + ";"
-      },
-      "\\((!?)(\\s*\\j.*?\\s*)\\)\\s*\\=\\s*([^;]+);": function(e, a, b, c) {
-        return (a == "!"? "const ": "var ") + b.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b").replace(/([,\u0008]\s*)([a-z\$_][\w\$]*)(\s*[,\u0008])/gi, "$1$2 = " + c.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b") + "$3") + ";"
-      },
-      "(\\W)\\((!?)([^;]*)\\);": function(e, a, b, c) {
-        return a + (b == "!"? "const ": "var ") + c.replace(/\(/g, "\b28\b").replace(/\)/g, "\b29\b") + ";"
+      "(brace\\.\\d+)\\s*(\\=|\\:)\\s*([^\=][^;]+);": function(e, a, b, c) {
+        return (b == ":"? "const ": "var ") + decompile(a, 'brace').replace(/^\{\s*|\s*\}$/g, "").replace(/(^\s*|,\s*)([a-z\$_][\w\$]*)(\s*,|\s*$)/gi, "$1$2 = " + c + "$3").replace(/(^\s*|,\s*)([a-z\$_][\w\$]*)(\s*,|\s*$)/gi, "$1$2 = " + c + "$3") + ";"
       },
       // statements and handlers
       "->": function(e) {
@@ -586,8 +580,8 @@ function(input) {
       },
       "\\b(un)?defined\\b\\s+(\\j)": function(e, a, b) {
         return (a === "un")?
-          "\b28\btypeof " + b + " === 'undefined' || " + b + " === null\b29\b":
-        "\b28\btypeof " + b + " !== 'undefined' && " + b + " !== null\b29\b"
+          "(typeof " + b + " === 'undefined' || " + b + " === null)":
+        "(typeof " + b + " !== 'undefined' && " + b + " !== null)"
       }
       /*,
       "\\bvar\\b\\s+(\\j\\s+\\j.*;)": function(e, a) {
@@ -598,7 +592,7 @@ function(input) {
             d.push(e[0]);
 
         for(var e = 0, f = []; e < b.length; e++)
-          f.push(c[e] + " = \b28\b" + c[e] + ".constructor === " + b[e] + " || " + c[e] + ".constructor === " + b[e] + ".constructor\b29\b? " + c[e] + ": undefined");
+          f.push(c[e] + " = (" + c[e] + ".constructor === " + b[e] + " || " + c[e] + ".constructor === " + b[e] + ".constructor)? " + c[e] + ": undefined");
 
         return "var " + f.join(",\n    ") + d.join(",\n    ") + ";"
       },
@@ -607,16 +601,16 @@ function(input) {
         if(a.length == 1)
           return a.join("")
             .replace(/^\.\.\.$/, "")
-            .replace(/([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)\.\.\./, "var $2 = \b28\b$2.construstor === $1 || $2.constructor === $1.constructor\b29\b? $2: undefined;")
-            .replace(/\.\.\.([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)/, "var $2 = \b28\b$2.construstor === $1 || $2.constructor === $1.constructor\b29\b? $2: undefined;")
+            .replace(/([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)\.\.\./, "var $2 = ($2.construstor === $1 || $2.constructor === $1.constructor)? $2: undefined;")
+            .replace(/\.\.\.([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)/, "var $2 = ($2.construstor === $1 || $2.constructor === $1.constructor)? $2: undefined;")
             .replace(/([a-z\$_][\w\$]*)?\.\.\.([a-z\$_][\w\$]*)?/, "var $1$2 = [].slice.apply(null, arguments)");
 
         for(var x = 0; x < a.length; x++)
           a[x] = a[x]
-            .replace(/([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)\.\.\./, "var $2 = \b28\b$2.construstor === $1 || $2.constructor === $1.constructor\b29\b? [].slice.apply\b28\bnull, arguments\b29\b.slice\b28\b" + x + ", " + (a.length - x) + "\b29\b: undefined;")
-            .replace(/\.\.\.([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)/, "var $2 = \b28\b$2.construstor === $1 || $2.constructor === $1.constructor\b29\b? [].slice.apply\b28\bnull, arguments\b29\b.slice\b28\b0, " + x + "\b29\b: undefined;")
-            .replace(/([a-z\$_][\w\$]*)\.\.\./i, "var $1 = [].slice.apply\b28\bnull, arguments\b29\b.slice\b28\b" + x + ", " + (a.length - x) + "\b29\b")
-            .replace(/\.\.\.([a-z\$_][\w\$]*)/i, "var $1 = [].slice.apply\b28\bnull, arguments\b29\b.slice\b28\b0, " + x + "\b29\b");
+            .replace(/([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)\.\.\./, "var $2 = ($2.construstor === $1 || $2.constructor === $1.constructor)? [].slice.apply(null, arguments).slice(" + x + ", " + (a.length - x) + "): undefined;")
+            .replace(/\.\.\.([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)/, "var $2 = ($2.construstor === $1 || $2.constructor === $1.constructor)? [].slice.apply(null, arguments).slice(0, " + x + "): undefined;")
+            .replace(/([a-z\$_][\w\$]*)\.\.\./i, "var $1 = [].slice.apply(null, arguments).slice(" + x + ", " + (a.length - x) + ")")
+            .replace(/\.\.\.([a-z\$_][\w\$]*)/i, "var $1 = [].slice.apply(null, arguments).slice(0, " + x + ")");
         return a.join(",");
       }
       */
