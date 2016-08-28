@@ -493,7 +493,7 @@ function(input) {
   }
 
   function strip(string) {
-    return (string || "").replace(/^\(\s*|\s*\)/g, "")
+    return (string || "").replace(/^\(|\)/g, "")
   }
 
   function compile(input, args) {
@@ -573,10 +573,10 @@ function(input) {
       // classes
       "(\\j)\\.(\\j)\\s*(brace\\.\\d+)": function(e, a, b, c) {
         if(runtime.has("1.6")) {
-          c = unhandle(decompile(c, 'brace').replace(/^\{|\}$/g, ""));
+          c = unhandle(strip(decompile(c, 'brace')));
           for(var k = /function\s+([a-z\$_][\w\$]*)\s*(paren\.\d+)\s*(brace\.\d+)/i; k.test(c);) {
             c = c.replace(k, function(_e, _a, _b, _c) {
-              return "\b" + _a + "\b(" + _b + ") \b" + _c + "\b"
+              return "\b" + _a + "\b" + _b + " \b" + _c + "\b"
             })
           }
           return "class " + b + " extends " + a + " {" + c + "}"
@@ -588,8 +588,8 @@ function(input) {
         if(runtime.has("1.6")) {
           b = unhandle(decompile(b, 'brace').replace(/^\{|\}$/g, ""));
           for(var k = /function\s+([a-z\$_][\w\$]*)\s*(paren\.\d+)\s*(brace\.\d+)/i; k.test(b);) {
-            b = b.replace(k, function(e, a, b, c) {
-              return "\b" + a + "\b(" + b + ") \b" + c + "\b"
+            b = b.replace(k, function(_e, _a, _b, _c) {
+              return "\b" + _a + "\b" + _b + " \b" + _c + "\b"
             })
           }
           return "class " + a + " {" + (b) + "}"
@@ -603,7 +603,7 @@ function(input) {
         "constructor = function() " + decompile(a, 'brace')
       },
       "<init>\\s*(paren\\.\\d+)\\s*(brace\\.\\d+)": function(e, a, b) {
-        a = strip(decompile(b, 'paren'));
+        a = strip(decompile(a, 'paren'));
         return runtime.has("1.6")?
           "constructor() " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1"):
         "constructor = function() " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1")
