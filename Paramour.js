@@ -493,7 +493,7 @@ function(input) {
   }
 
   function strip(string) {
-    return string.replace(/^\(\s*|\s*\)/g, "")
+    return (string || "").replace(/^\(\s*|\s*\)/g, "")
   }
 
   function compile(input, args) {
