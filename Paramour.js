@@ -532,12 +532,12 @@ function(input) {
       },
       // reserved words
       // statement {}
-      "\\b(do|else|finally|return|try|typeof|while)\\b\\s*(brace\\.\\d+)": function(e, a, b) {
+      "\\b(do|else|finally|return|try|typeof|while)\\s*(brace\\.\\d+)": function(e, a, b) {
         return "\b" + a + "\b \b" + b + "\b"
       },
       // statement () {}
-      "\\b(catch|for|function|if|switch|while|with|\\.\\j)\\b\\s*(paren\\.\\d+)": function(e, a, b) {
-        return "\b" + a + "\b (" + (b || "") + ")"
+      "\\b(catch|for|function|if|switch|while|with|\\.\\j)\\s*(paren\\.\\d+)": function(e, a, b) {
+        return "\b" + a + "\b" + b + "\b"
       },
       "(\\s*)case\\s*(paren\\.\\d+)\\s*(brace\\.\\d+)": function(e, a, b, c) {
         var f = [a || ""];
