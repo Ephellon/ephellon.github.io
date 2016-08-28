@@ -69,6 +69,10 @@ var(Bob) = Employee({
 });
 
 # Custom Operators ----------------
+# These behave as a sort-of "get" for operators
+# custom operators can take up to 4 spaces
+# = up to ====, for a grand total of 50,625 possible operators
+# ~ ! % ^ & | * - + = : < > ? /
 <operator ^ [Number, Number]> {
   -> Math.pow($1, $2)
 }
@@ -79,9 +83,12 @@ var(Bob) = Employee({
 
 <suffix-operator ? [Boolean]> {
   if($1)
-    ->;
+    -> $1;
   else
-    +> SyntaxError("? Operator, given 'false'");
+    +> SyntaxError("? Operator was given 'false'");
 }
 
-var four => ((2^2) = 4)?
+# also accepts name => ()
+if(=> ((2^2) = 4)?) {
+  $con.log("Why, hello")
+}
