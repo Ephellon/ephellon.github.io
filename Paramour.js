@@ -733,10 +733,7 @@ function(input) {
         "(typeof " + b + " !== 'undefined' && " + b + " !== null)"
       },
       "(\\j)\\s*(paren\\.\\d+)": function(e, a, b) {
-        if(reserved.test(a) && !/\b(catch|for|function|if|switch|while|with)\b/.test(a))
-          return a + " " + strip(decompile(b, 'paren'))
-        else
-          return a + "(" + strip(decompile(b, 'paren')) + ")"
+        return a + decompile(b, 'paren')
       }
     };
 
