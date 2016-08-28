@@ -11,6 +11,56 @@ var Paramour =
 window.Paramour =
 function(input) {
 
+  var backup = input,
+      exps = [],
+      errors = /(\s*var\s*;|[\b])/g,
+      reserved = /\b(abstract|arguments|boolean|break|byte|case|catch|char|class|const|continue|debugger|default|delete|do|double|else|enum|eval|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|let|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|undefined|var|void|volatile|while|with|yield)\b/,
+      operators = "~!?%^&|*-+=<>:".split(""),
+      oprs = {
+        "~": "Tilde_",
+        "!": "Exclamation_",
+        "?": "Question_Mark_",
+        "%": "Percent_",
+        "^": "Caret_",
+        "&": "And_",
+        "|": "Or_",
+        "*": "Asterik_",
+        "-": "Subtraction_",
+        "+": "Addition_",
+        "=": "Equals_",
+        "<": "Less_Than_",
+        ">": "Greater_Than_",
+        ":": "Colon_"
+      },
+      multi_line = [],
+      single_line = [],
+      regexp = [],
+      double_quote = [],
+      single_quote = [],
+      quasi = [],
+      paren = [],
+      brack = [],
+      brace = [],
+      tuple = [],
+      emus = [],
+      phantoms = [],
+      patterns = {
+        "double_quote": /("[^"\n\r]*?")/,
+        "single_quote": /('[^'\n\r]*?')/,
+        "regexp": /(\/.*?\/[igmuy]*)/, // // -> /(?:)/
+        "quasi": /(`[^`]*?`)/,
+        "multi_line": /###([\s\S]*?)###/,
+        "emus": /#\s*@([\d\.]+)/,
+        "phantoms": /#\s*\$(.+)/,
+        "single_line": /#(.*)/,
+        "paren": /(\([^\(\)]*?\))/,
+        "tuple": /\{\{\s*([^;]*?)\s*\}\}/,
+        "brack": /(\[[^\[\]]*?\])/,
+        "brace": /(\{[^\{\}]*?\})/
+      };
+
+  phantoms.kids = [];
+
   switch(typeof input) {
     case "string":
       break;
@@ -253,18 +303,25 @@ function(input) {
       args = args.replace(k, "$1* $2$3");
     func = func.name || func;
     Paramour.dockets[func] = (Paramour.dockets[func] === undefined || Paramour.dockets[func].length === undefined || Paramour.dockets[func].length === 0)? []: Paramour.dockets[func];
-    return Paramour.dockets[func].push(args.replace(/(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, "$1").split(','));
+    return Paramour.dockets[func].push(args.replace(/(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, "$1").split(/,\s*/));
   };
 
+  var Tuple =
   window.Tuple =
   Paramour.Tuple =
-  function Tuple() {
+  function() {
+    Tuple.__defineGetter__("constructor", function() {
+      return Tuple
+    });
     var c = {
       'index': 0,
       'arguments': [],
       'TupleArray': []
     };
     Tuple.tuples = Tuple.tuples || [];
+    Tuple.__defineGetter__("constructor", function() {
+      return Function
+    });
 
     for(var x = 0; x < arguments.length; x++) {
       c['TupleArray'].push(arguments[x]);
@@ -277,34 +334,24 @@ function(input) {
 
     var TupleItem = c, TupleIndex = c.index;
 
-    Tuple.__defineGetter__("constructor", function() {
-      return Tuple
-    });
-
     c.__defineGetter__('every', function() {
       return function(_function) { for(var iterator = 0, TupleArray = this.TupleArray, response = true; iterator < TupleArray.length && response; iterator++) response = _function.call(null, TupleArray[iterator]); return response }
     });
-
     c.__defineGetter__('forEach', function() {
       return function(_function) { for(var iterator = 0, TupleArray = this.TupleArray, response; iterator < TupleArray.length; iterator++) response = _function.call(null, TupleArray[iterator]); return response }
     });
-
     c.__defineGetter__('join', function() {
       return function(symbols) { return this.TupleArray.join(symbols) }
     });
-
     c.__defineGetter__('length', function(){
       return c['TupleArray'].length
     });
-
     c.__defineGetter__('next', function(){
       return function() { return this.TupleIterator }
     });
-
     c.__defineGetter__('toString', function() {
       return function() { return this.TupleArray.toString() }
     });
-
     c.__defineGetter__('TupleIterator', function(){
       return c['TupleArray'][c.index++]
     });
@@ -312,43 +359,22 @@ function(input) {
     return Tuple['tuples'][c.arguments] = c
   };
 
-  function argify(args, types) {
-    types = (types || []).join(",").replace(/\s/g, "").split(",");
-    if(typeof args == 'string')
-      args = args.split(',');
-    for(var x = 0, y = []; x < args.length; x++)
-      y.push(args[x].replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (types[x] == "..."? "$1 = arguments.slice(" + x + "," + (args.length - x) + ") || $2": "$1 = arguments[" + x + "] || $2")).replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (types[x] == "..."? "$1 = arguments.slice(" + x + "," + (args.length - x) + ")": "$1 = arguments[" + x + "]") ));
-    return y.join(',')
+  var Operator =
+  window.Operator =
+  Paramour.Operator =
+  function(o, t, f, n, r) {
+    Operator.__defineGetter__("constructor", function() {
+      return Operator
+    });
+    Operator.kids = Operator.kids || [];
+    Operator.kids.push({
+      "operator": o,
+      "argument-types": t,
+      "fix": f,
+      "function": n,
+      "brace": r
+    })
   }
-
-  var backup = input,
-      exps = [],
-      errors = /(\s*var\s*;|[\b])/g,
-      reserved = /\b(abstract|arguments|boolean|break|byte|case|catch|char|class|const|continue|debugger|default|delete|do|double|else|enum|eval|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|let|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|undefined|var|void|volatile|while|with|yield)\b/,
-      multi_line = [],
-      single_line = [],
-      regexp = [],
-      double_quote = [],
-      single_quote = [],
-      quasi = [],
-      brace = [],
-      tuple = [],
-      emus = [],
-      phantoms = [],
-      patterns = {
-        "double_quote": /("[^"\n\r]*?")/,
-        "single_quote": /('[^'\n\r]*?')/,
-        "regexp": /(\/.*?\/[igmuy]*)/, // // -> /(?:)/
-        "quasi": /(`[^`]*?`)/,
-        "multi_line": /###([\s\S]*?)###/,
-        "emus": /#\s*@([\d\.]+)/,
-        "phantoms": /#\s*\$(.+)/,
-        "single_line": /#(.*)/,
-        "tuple": /\{\{\s*([^;]*?)\s*\}\}/,
-        "brace": /(\{[^\{\}]*?\})/
-      };
-
-  phantoms.kids = [];
 
   for(var x = /(\n\r\t)/; x.test(input);)
     input = input.replace(x, function(e) {
@@ -359,14 +385,39 @@ function(input) {
       }[e])
     });
 
-  // get rid of everything before staring Paramour
-  for(var pattern in patterns) {
+  for(var pattern in patterns)
     exps.push(pattern);
-    for(var l, k = patterns[pattern]; k.test(input);) {
-      l = (eval("(window." + pattern + " = " + pattern + ")")).push(RegExp.$1) - 1;
-      input = input.replace(k, pattern + "." + l);
-    }
+
+  function argify(args, types) {
+    types = (types || []).join(",").replace(/\s/g, "").split(",");
+    if(typeof args == 'string')
+      args = args.split(',');
+    for(var x = 0, y = []; x < args.length; x++)
+      y.push(args[x]
+             .replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (types[x] === "Spread"? "$1 = arguments.slice(" + x + "\b0x2c\b arguments.length - 1) || $2": "$1 = arguments[" + x + "] || $2"))
+             .replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (types[x] === "Spread"? "$1 = arguments.slice(" + x + "\b0x2c\b arguments.length - 1)": "$1 = arguments[" + x + "]"))
+            .replace(/\$/g, "\b$\b"));
+    return y.join(',')
   }
+
+  // get rid of everything before staring Paramour
+  function unhandle(string, type) {
+    if(type === undefined)
+      type = exps;
+    else if(typeof type === "string")
+      type = type.split(/\s|,/);
+    for(var pattern in patterns) {
+      if(RegExp(type.join("|")).test(pattern)) {
+        for(var l, k = patterns[pattern]; k.test(string);) {
+          l = (eval("(window." + pattern + " = " + pattern + ")")).push(RegExp.$1) - 1;
+          string = string.replace(k, pattern + "." + l);
+        }
+      }
+    }
+    return string
+  }
+
+  input = unhandle(input);
 
   for(var x = /\\([^\d\$])/; x.test(input);)
     input = input.replace(x, function(e, a) {
@@ -427,46 +478,53 @@ function(input) {
   }
 
   function decompile(input, expressions, all) {
+    var max = Infinity;
+    if(typeof all === "number")
+      max = all;
     expressions =
-      (expressions === undefined || all)?
+      (expressions === undefined || all === true)?
       exps:
     (expressions.constructor === Array)?
       expressions:
     [expressions];
-    for(var expression = RegExp("(" + expressions.join("|") + ")\\.(\\d+)"); expression.test(input);)
+    for(var expression = RegExp("(" + expressions.join("|") + ")\\.(\\d+)"); expression.test(input) && max > 0; max--)
       input = input.replace(expression, handle(RegExp.$1, +RegExp.$2));
     return input
+  }
+
+  function strip(string) {
+    return string.replace(/^\(\s*|\s*\)/g, "")
   }
 
   function compile(input, args) {
     var patterns = {
       // rehandlers
       "class#(\\j)\\s*(brace)\\.(\\d+)": function(e, a, b, c) {
-        var d = a;
-        return "function " + a + "() " + eval(b)[c]
-          .replace(/<init>\s*(\(.*\))?\s*(brace\.\d+)/, function(e, a, b) {
-          return "constructor#" + d + " [" + a + "] [true] " + b
+        return "function \b" + a + "()\b " + eval(b)[c]
+          .replace(/<init>\s*(paren\.\d+)?\s*(brace\.\d+)/, function(e, _a, _b) {
+          return "constructor#" + a + " [" + _a + "] [true] " + _b
         })
-          .replace(/([a-z\$_][\w\$]*)\s*\((.*)\)\s*(brace\.\d+)/gi, "prototype#" + a + ":$1 [$2] $3")
+          .replace(/([a-z\$_][\w\$]*)\s*(paren\.\d+)\s*(brace\.\d+)/gi, "prototype#" + a + ":$1 [$2] $3")
           .replace(/(\s*)\}$/, "\n  " + a + ".this <get constructor> brace." + (brace.push("{\n    -> " + a + ";\n  }") - 1) + "\n  " + a + ".this <set constructor> brace." + (brace.push("{\n    -> " + a + ", constructor;\n  }") - 1) + "\n  return " + a + ".this;\n}")
       },
-      "extends#(\\j)\\:(\\j)\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        var d = b;
-        return "function " + b + (brace[c.replace(/.*(\d+)/, "$1")])
-          .replace(/<init>\s*\((.*)\)\s*(brace\.\d+)/, function(e, a, b) {
-          return "constructor#" + d + " [" + a + "] [false] " + b
+      "extends#(\\j)\\:(\\j)\\s*(brace)\\.(\\d+)": function(e, a, b, c, d) {
+        return "function \b" + b + "()\b " + eval(c)[d]
+          .replace(/<init>\s*(paren\.\d+)\s*(brace\.\d+)/, function(_e, _a, _b) {
+          return "constructor#" + b + " [" + _a + "] [false] " + _b
         })
-          .replace(/\{(\s*)/, "() {$1" + b + ".super = " + a + ";$1" + b + ".this = " + a + ".apply(null, arguments) || {};$1")
-          .replace(/([a-z\$_][\w\$]*)\s*\((.*)\)\s*(brace\.\d+)/gi, "prototype#" + b + ":$1 [$2] $3")
+          .replace(/\{(\s*)/, "{$1" + b + ".super = " + a + ";$1" + b + ".this = " + a + ".apply(null, arguments) || {};$1")
+          .replace(/([a-z\$_][\w\$]*)\s*(paren\.\d+)\s*(brace\.\d+)/gi, "prototype#" + b + ":$1 [$2] $3")
           .replace(/(\s*)\}$/, "\n  " + b + ".this <get constructor> brace." + (brace.push("{\n    -> " + b + ";\n  }") - 1) + "\n  " + b + ".this <set constructor> brace." + (brace.push("{\n    -> " + b + ", constructor;\n  }") - 1) + "\n  return " + b + ".this;\n}")
       },
-      "constructor#(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*\\[(true|false)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
-        return (eval(c)? a + ".this = {};\n  ": "") + a + ".constructor = function() " + decompile(d, 'brace').replace(/\{(\s*)/, (b === "undefined")? "{$1": "{$1" + argify(b) + ";$1").replace(/\b(@|this|super)\b/g, a + ".$1") + ";\n  " + a + ".constructor.apply(null, arguments);\n  "
+      "constructor#(\\j)\\s*\\[(paren\\.\\d+)?\\]\\s*\\[(true|false)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
+        b = b != undefined? strip(decompile(b, 'paren')): "";
+        return (eval(c)? a + ".this = {};\n  ": "") + a + ".constructor = function() " + decompile(d, 'brace').replace(/\{(\s*)/, (b == "")? "{$1": "{$1var " + argify(b) + ";$1").replace(/\b(@|this|super)\b/g, a + ".$1") + ";\n  " + a + ".constructor.apply(null, arguments);"
       },
-      "prototype#(\\j)\\:(\\j)\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
+      "prototype#(\\j)\\:(\\j)\\s*\\[(.*)\\]\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
+        c = strip(decompile(c, 'paren'));
         return a + ".this." + b + " = function() " + decompile(d, 'brace').replace(/\{(\s*)/, "{$1var " + argify(c) + ";$1")
       },
-      "arrow#\\[(.*)\\]\\s*\\[([^\\[\\]]*?)\\]\\s*(brace\\.\\d+|\\j(\\.\\d+)?)": function(e, a, b, c) {
+      "arrow#\\[(.*)\\]\\s*\\[(.*)\\]\\s*(brace\\.\\d+|\\j(\\.\\d+)?)": function(e, a, b, c) {
         if(/^brace\.\d+/.test(c))
           return (a == "undefined"? "": a) + "function() " + decompile(c, 'brace').replace(/\{(\s*)/, "{$1var " + argify(b) + ";$1return\b ");
         else
@@ -478,20 +536,20 @@ function(input) {
         return "\b" + a + "\b \b" + b + "\b"
       },
       // statement () {}
-      "\\b(catch|for|function|if|switch|while|with|\\.\\j)\\b\\s*\\((.*)\\)": function(e, a, b) {
-        return "\b" + a + "\b (" + (b || " ").replace(/\(/g, "(").replace(/\)/g, ")") + ")"
+      "\\b(catch|for|function|if|switch|while|with|\\.\\j)\\b\\s*(paren\\.\\d+)": function(e, a, b) {
+        return "\b" + a + "\b (" + (b || "") + ")"
       },
-      "(\\s*)case\\s*\\((.*)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
+      "(\\s*)case\\s*(paren\\.\\d+)\\s*(brace\\.\\d+)": function(e, a, b, c) {
         var f = [a || ""];
-        b = (b || "").split(/,|\s+/);
+        b = strip(decompile(b, 'paren')).split(/,|\s+/);
         for(var x = 0; x < b.length; x++)
           if(!/^\s*$/.test(b[x]))
             f.push(a + "case " + b[x] + ":");
         return f.join("") + decompile(c, 'brace').replace(/^\{/, "").replace(/\}$/, a + "  break;")
       },
-      "(\\s*)default\\s*(\\(.*\\))?\\s*(brace\\.\\d+)": function(e, a, b, c) {
+      "(\\s*)default\\s*(paren\\.\\d+)?\\s*(brace\\.\\d+)": function(e, a, b, c) {
         var f = [a || ""];
-        b = (b || "").replace(/^\(|\)$/g, "").split(/,|\s+/);
+        b = strip(decompile(b, 'paren')).split(/,|\s+/);
         for(var x = 0; x < b.length; x++)
           if(!/^\s*$/.test(b[x]))
             f.push(a + "case " + b[x] + ":");
@@ -499,11 +557,14 @@ function(input) {
         return f.join("") + decompile(c, 'brace').replace(/^\{/, "").replace(/\}$/, a + "  break;")
       },
       // functions
-      "(\\j\\s*[\\:\\=]?\\s*)\\(([^\\(\\)\\n\\r]*?)\\)\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, x;
+      "(\\j\\s*[\\:\\=]?\\s*)(paren\\.\\d+)\\s*(brace\\.\\d+)": function(e, a, b, c) {
+        var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, s, t, x;
+        b = strip(decompile(b, 'paren')).replace(/[\b]/g, "");
         if(r.test(b)) {
           x = Paramour.push(a, b) - 1;
-          return "function " + a + "__" + Paramour.pull(a)[x].join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").replace(/([a-z\$_][\w\$]*).*$/i, "$1") + "() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b.replace(r, "$2"), Paramour.pull(a)[x]).split(',').join(',$1    ') + ";$1"));
+          s = Paramour.pull(a)[x].join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread");
+          t = Paramour.pull(a)[x].join(',').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").split(',');
+          return "function " + a + "__" + s.replace(/([a-z\$_][\w\$]*).*$/i, "$1") + "() " + decompile(c, 'brace').replace(/\{(\s*)/, (/^\s*$/.test(b)? "{$1": "{$1var " + argify(b.replace(r, "$2"), t).split(/,\s*/).join(',$1    ') + ";$1"));
         }
         return /[\:\=]/.test(a)?
           a + "function() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1")):
@@ -511,22 +572,29 @@ function(input) {
       },
       // classes
       "(\\j)\\.(\\j)\\s*(brace\\.\\d+)": function(e, a, b, c) {
-        var d = b;
-        return runtime.has("1.6")?
-          "class " + b + " extends " + a + " " + decompile(c, 'brace')
-          .replace(/([a-z\$_][\w\$]*)\s*\((.*)\)\s*(brace\.\d+)/gi, function(e, a, b, c) {
-          return d + "." + a + " = function() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1"))
-        }):
-        compile("extends#" + a + ":" + b + " " + c, [a, b]);
+        if(runtime.has("1.6")) {
+          c = unhandle(decompile(c, 'brace').replace(/^\{|\}$/g, ""));
+          for(var k = /function\s+([a-z\$_][\w\$]*)\s*(paren\.\d+)\s*(brace\.\d+)/i; k.test(c);) {
+            c = c.replace(k, function(_e, _a, _b, _c) {
+              return "\b" + _a + "\b(" + _b + ") \b" + _c + "\b"
+            })
+          }
+          return "class " + b + " extends " + a + " {" + c + "}"
+        }
+        return compile("extends#" + a + ":" + b + " " + c);
       },
       "(\\j)\\s*(brace\\.\\d+)": function(e, a, b) {
         var d = a;
-        return runtime.has("1.6")?
-          "class " + a + decompile(b, 'brace')
-          .replace(/([a-z\$_][\w\$]*)\s*\((.*)\)\s*(brace\.\d+)/gi, function(e, a, b, c) {
-          return d + "." + a + " = function() " + decompile(c, 'brace').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(b) + ";$1"))
-        }):
-        compile("class#" + a + " " + b, [a]);
+        if(runtime.has("1.6")) {
+          b = unhandle(decompile(b, 'brace').replace(/^\{|\}$/g, ""));
+          for(var k = /function\s+([a-z\$_][\w\$]*)\s*(paren\.\d+)\s*(brace\.\d+)/i; k.test(b);) {
+            b = b.replace(k, function(e, a, b, c) {
+              return "\b" + a + "\b(" + b + ") \b" + c + "\b"
+            })
+          }
+          return "class " + a + " {" + (b) + "}"
+        }
+        return compile("class#" + a + " " + b, [a]);
       },
       // <thans>
       "<init>\\s*(brace\\.\\d+)": function(e, a) {
@@ -534,7 +602,8 @@ function(input) {
           "constructor() " + decompile(a, 'brace'):
         "constructor = function() " + decompile(a, 'brace')
       },
-      "<init>\\s*\\((.*)\\)\\s*(brace\\.\\d+)": function(e, a, b) {
+      "<init>\\s*(paren\\.\\d+)\\s*(brace\\.\\d+)": function(e, a, b) {
+        a = strip(decompile(b, 'paren'));
         return runtime.has("1.6")?
           "constructor() " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1"):
         "constructor = function() " + decompile(b, 'brace').replace(/\{(\s*)/, "{$1var " + argify(a) + ";$1")
@@ -554,26 +623,106 @@ function(input) {
       "(\\j)\\s*<set\\?\\s*(\\j)>": function(e, a, b) {
         return a + ".__lookupSetter__(\"" + b + "\")"
       },
+      "<(prefix-|suffix-|media-)?operator\\s+([~\\!\\?%\\^\\&\\|\\*\\-\\+\\=<>\\:]+|\\j)\\s*(brack\\.\\d+)?>\\s*(brace\\.\\d+)": function(e, a, b, c, d) {
+        a = a || "media-";
+        c = decompile(c, 'brack');
+        var r = /[a-z\$_][\w\$]*/i.test(b), s = "";
+        switch(a) {
+          case "prefix-":
+            c = c || "Any";
+            s = "Prefix_";
+            break;
+          case "media-":
+            c = c || "Any, Any";
+            break;
+          case "suffix-":
+            c = c || "Any";
+            s = "Suffix_";
+            break;
+        }
+        // ~!?%^&|*-+=<>:
+        var l = oprs;
+
+        var n = [], f = "", g = [];
+        c = c.replace(/^\[\s*|\s*\]$/g, "").split(/;/);
+
+        for(var x = 0; x < b.length; x++)
+          for(var m in l)
+            if(m == b[x])
+              n.push(l[m]);
+        n.push(s, "Operator");
+
+        if(c.length > 1)
+          for(var x = 0; x < c.length; x++)
+            g.push(c[x].split(/,\s*/));
+        else
+          g.push(c[0].split(/,\s*/));
+
+        for(var x = 0; x < g.length; x++) {
+          for(var y = 0; y < g[x].length; y++)
+            g[x][y] = g[x][y].replace(/^\s*(\*|\.{3}|[a-z\$\_][\w\$]*)/i, "$1 \b$\b" + (y + 1));
+          g[x] = g[x].join(", ")
+        }
+
+        f = n.join("") + "paren." + (paren.push("(" + (g.join(", ")) + ")") - 1) + " " + d;
+        Operator(b, c, a, decompile(f, 'brace'), r);
+        return compile(f)
+      },
+      "(\\j)\\s*\\=>\\s*([~\\!\\?%\\^\\&\\|\\*\\-\\+\\=<>\\:]+)?\\s*(paren\\.\\d+)\\s*([~\\!\\?%\\^\\&\\|\\*\\-\\+\\=<>\\:]+)?": function(e, a, b, c, d) {
+        var l = oprs, history = [];
+
+        function hand(string) {
+          for(var s in l)
+            if(RegExp("^\\" + s).test(string))
+              string = string.replace(RegExp("^\\" + s + "(.*)$"), l[s] + "Prefix_Operator($1)");
+            else if(RegExp("\\" + s + "$").test(string))
+              string = string.replace(RegExp("^(.*)\\" + s + "$"), l[s] + "Suffix_Operator($1)");
+            else if(RegExp("\\" + s).test(string))
+              string = string.replace(RegExp("^(.*)\\" + s + "(.*)$"), l[s] + "Operator($1, $2)");
+          return string
+        }
+
+        for(var k = /^(.*)(paren\.\d+)(.*)$/, j, i; k.test(c);) {
+          j = c.replace(k, function(e, _a, _b, _c) {
+            c = unhandle(decompile(_b, 'paren').replace(/^\(|\)$/g, ""), 'paren');
+            c = _a + hand(c) + _c;
+            return c
+          });
+          history.push(j);
+        }
+
+        return a + " = " + hand((b || "") + history.reverse()[0] + (d || ""))
+      },
       // (parenthesis)
-      "(\\j\\s*[\\:\\=]\\s*)?\\(([^\\(\\)\\n\\r]*?)\\)\\s*\\=>\\s*(brace\\.\\d+|\\j(\\.\\d+)?)": function(e, a, b, c) {
+      "(\\j\\s*[\\:\\=]\\s*)?(paren\\.\\d+)\\s*\\=>\\s*(brace\\.\\d+|\\j(\\.\\d+)?)": function(e, a, b, c) {
         a = a || "";
         b = b || "";
         return runtime.has("1.6")?
-          a + "(" + b + ") => " + c:
+          a + "(" + strip(decompile(b, 'paren')) + ") => " + c:
         compile("arrow#[" + a + "] [" + b + "] " + c)
       },
-      "(brace\\.\\d+)\\s*(\\=|\\:)\\s*([^\=][^;]+);": function(e, a, b, c) {
-        return (b == ":"? "const ": "var ") + decompile(a, 'brace').replace(/^\{\s*|\s*\}$/g, "").replace(/(^\s*|,\s*)([a-z\$_][\w\$]*)(\s*,|\s*$)/gi, "$1$2 = " + c + "$3").replace(/(^\s*|,\s*)([a-z\$_][\w\$]*)(\s*,|\s*$)/gi, "$1$2 = " + c + "$3") + ";"
+      // variables
+      "var\\s*(paren\\.\\d+)([\\x20\\t]*[\\:\\=][\\x20\\t]*.+)?": function(e, a, b) {
+        var c;
+        b = b || "";
+        b = b.replace(/;$/, "").replace(/^\s*[\:\=]\s*/, (c = RegExp.$1, ""));
+        return (c == ":"? "const ": "var ") + strip(decompile(a, 'paren')).replace(/(^\s*|,\s*)([a-z\$_][\w\$]*)(\s*,|\s*$)/gi, "$1$2 = " + b + "$3").replace(/(^\s*|,\s*)([a-z\$_][\w\$]*)(\s*,|\s*$)/gi, "$1$2 = " + b + "$3") + ";"
       },
       // statements and handlers
-      "->": function(e) {
+      "\\->": function(e) {
         return "return"
       },
       "~>": function(e) {
         return "throw"
       },
-      "@(\\j)": function(e, a) {
-        return "this." + a
+      "\\+>": function(e) {
+        return "throw new"
+      },
+      "@(\\j)(\\.\\d+)?": function(e, a, b) {
+        if(b != undefined)
+          return "this" + a + b
+        else
+          return "this." + a
       },
       "@": function(e, a) {
         return "this"
@@ -582,43 +731,24 @@ function(input) {
         return (a === "un")?
           "(typeof " + b + " === 'undefined' || " + b + " === null)":
         "(typeof " + b + " !== 'undefined' && " + b + " !== null)"
-      }
-      /*,
-      "\\bvar\\b\\s+(\\j\\s+\\j.*;)": function(e, a) {
-        a = a.replace(/;/g, "").split(",");
-        for(var b = [], c = [], d = [], e = "", f = 0; f < a.length; f++)
-          (e = a[f].replace(/^\s+|\s+$/g, "").split(/\s/)).length > 1?
-            (b.push(e[0]), c.push(e[1])):
-            d.push(e[0]);
-
-        for(var e = 0, f = []; e < b.length; e++)
-          f.push(c[e] + " = (" + c[e] + ".constructor === " + b[e] + " || " + c[e] + ".constructor === " + b[e] + ".constructor)? " + c[e] + ": undefined");
-
-        return "var " + f.join(",\n    ") + d.join(",\n    ") + ";"
       },
-      "\\bvar\\b(.*\\.\\.\\..*)": function(e, a) {
-        a = a.split(",");
-        if(a.length == 1)
-          return a.join("")
-            .replace(/^\.\.\.$/, "")
-            .replace(/([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)\.\.\./, "var $2 = ($2.construstor === $1 || $2.constructor === $1.constructor)? $2: undefined;")
-            .replace(/\.\.\.([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)/, "var $2 = ($2.construstor === $1 || $2.constructor === $1.constructor)? $2: undefined;")
-            .replace(/([a-z\$_][\w\$]*)?\.\.\.([a-z\$_][\w\$]*)?/, "var $1$2 = [].slice.apply(null, arguments)");
-
-        for(var x = 0; x < a.length; x++)
-          a[x] = a[x]
-            .replace(/([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)\.\.\./, "var $2 = ($2.construstor === $1 || $2.constructor === $1.constructor)? [].slice.apply(null, arguments).slice(" + x + ", " + (a.length - x) + "): undefined;")
-            .replace(/\.\.\.([a-z\$_][\w\$]*)(\s+[a-z\$_][\w\$]*)/, "var $2 = ($2.construstor === $1 || $2.constructor === $1.constructor)? [].slice.apply(null, arguments).slice(0, " + x + "): undefined;")
-            .replace(/([a-z\$_][\w\$]*)\.\.\./i, "var $1 = [].slice.apply(null, arguments).slice(" + x + ", " + (a.length - x) + ")")
-            .replace(/\.\.\.([a-z\$_][\w\$]*)/i, "var $1 = [].slice.apply(null, arguments).slice(0, " + x + ")");
-        return a.join(",");
+      "(\\j)\\s*(paren\\.\\d+)": function(e, a, b) {
+        if(reserved.test(a) && !/\b(catch|for|function|if|switch|while|with)\b/.test(a))
+          return a + " " + strip(decompile(b, 'paren'))
+        else
+          return a + "(" + strip(decompile(b, 'paren')) + ")"
       }
-      */
     };
 
-    for(var pattern in patterns)
-      for(var reg = RegExp(pattern.replace(/\\j/g, "[a-zA-Z\\$_][\\w\\$]*")); reg.test(input);)
+    for(var pattern in patterns) {
+      var reg = pattern.replace(/\\j/g, "[a-zA-Z\\$_][\\w\\$]*");
+      for(var k = /\$\{([^\}]+?)\}/; k.test(reg);)
+        reg = reg.replace(k, function(e, a) {
+          return eval(a)
+        });
+      for(reg = RegExp(reg); reg.test(input);)
         input = input.replace(reg, patterns[pattern]);
+    }
 
     return input
   }
@@ -634,7 +764,7 @@ function(input) {
 
   for(var x = 0; x < phantoms.kids.length; x++)
     for(var kid in phantoms.kids[x])
-      input = input.replace(RegExp("(\\W)\\$" + kid + "(\\W)", "g"), "$1" + (phantoms.kids[x][kid] + "").replace(/\$/g, "\b$\b") + "$2");
+      input = input.replace(RegExp("(\\W)[\\b]\\$[\\b]" + kid + "(\\W)", "g"), "$1" + (phantoms.kids[x][kid] + "").replace(/\$/g, "\b$\b") + "$2");
 
   for(var docket in Paramour.dockets) {
     input +=
@@ -651,7 +781,7 @@ function(input) {
               return "' + types[" + e + "] + '"
             })
             .replace(/\.{3}/, function() {
-              return "' + types.slice(" + e + ", " + s.length + ") + '"
+              return "' + types.slice(" + e + ", args.length - 1) + '"
             });
         return s
       })(Paramour.pull(docket)[x]);
