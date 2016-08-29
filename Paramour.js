@@ -804,7 +804,7 @@ function(input) {
     input +=
       "\nfunction \\docket() {\n" +
       "  var args = arguments, types = Paramour.types.apply(null, arguments);\n" +
-      "  switch(Paramour.types.apply(null, args)) {\n";
+      "  switch(types) {\n";
     for(var x = 0; x < Paramour.dockets[docket].length; x++) {
       var h, g = (function(s){
         h = s.join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").replace(/([a-z\$_][\w\$]*).*$/i, "$1");
@@ -827,7 +827,7 @@ function(input) {
     }
     input +=
       "    default:\n" +
-      "      throw TypeError('" + docket + " (' + Paramour.types.apply(null, args) + ') is undefined')\n" +
+      "      throw TypeError('" + docket + " (' + types + ') is undefined')\n" +
       "      break;\n" +
       "  }\n" +
       "}\n";
