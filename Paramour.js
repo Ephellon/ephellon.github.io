@@ -292,7 +292,7 @@ function(input) {
         y.push(args[x].constructor.name)
         else
           y.push(typeof args[x]);
-    return y.join(', ')
+    return y.join(',')
   };
 
   Paramour.pull = function(func) {
