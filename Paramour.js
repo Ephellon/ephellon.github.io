@@ -497,7 +497,7 @@ function(input) {
     return (string || "").replace(/^\(|\)/g, "")
   }
 
-  function hand(string) {
+  function hand(string, def) {
     var o, m = ["", "Double_", "Triple_", "Quadruple_"], l = oprs,
         n = function(v, t) {
           if(+v === v) {
@@ -527,6 +527,11 @@ function(input) {
         string = string.replace(RegExp("^(.*)\\" + (o = RegExp.$1) + "$"), n(o, l[s]) + "Suffix_Operator($1)");
       else if(RegExp("([\\" + s + "][~\\!\\?\\/%\\^\\&\\|\\*\\-\\+\\=<>\\:]{0,3})").test(string))
         string = string.replace(RegExp("^(.*)\\" + (o = RegExp.$1) + "(.*)$"), n(o, l[s]) + "Operator($1, $2)");
+    if(def !== undefined && /(prefix|suffix|media)-/.test(def)) {
+      def.replace(/^(\w)/, "");
+      def = def.replace(/^(\w)/, RegExp.$1.toUpperCase()).replace(/-$/, "_");
+      string = string.replace(/(Pre|Suf)fix_/, (def != "Media_")? def: "");
+    }
     return string
   }
 
@@ -679,7 +684,13 @@ function(input) {
         var n = [], f = "", g = [];
         c = c.replace(/^\[\s*|\s*\]$/g, "").split(/;/);
 
-        n.push(hand(b).replace(/\(\)$/, ""));
+        /* TODO: fix operators
+          when "hand" is called, it sets all states as "prefix"
+          FIX: just pass "a" along
+            hand(Operator b, State a)
+          ETC: adjust "hand" to match
+        */
+        n.push(hand(b, a).replace(/\(\)$/, ""));
 
         if(c.length > 1)
           for(var x = 0; x < c.length; x++)
