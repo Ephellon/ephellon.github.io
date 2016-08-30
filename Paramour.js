@@ -500,15 +500,18 @@ function(input) {
   function hand(string, def) {
     var o, m = ["", "Double_", "Triple_", "Quadruple_"], l = oprs,
         n = function(v, t) {
-          if(+v === v) {
+          if(+v + "" !== "NaN") {
             return m[v] + t
           } else if(/^([~\!\?\/%\^\&\|\*\-\+\=<>\:])\1*$/.test(v)) {
             v = v.length - 1;
             return m[v] + t
           } else {
+            if(v == undefined)
+              return;
             v = v.split("");
-            for(var x = 0, y = {}; x < v.length - 1; x++) {
-              y[v[x]] = y[v[x]] == undefined? 0: y[v[x]];
+            v.push("");
+            for(var x = 0, y = {}; x < v.length; x++) {
+              y[v[x]] = y[v[x]] == undefined && v[x] != ""? 0: y[v[x]];
               if(v[x] === v[x + 1]) {
                 y[v[x]]++;
                 continue
@@ -532,7 +535,7 @@ function(input) {
       def = def.replace(/^(\w)/, RegExp.$1.toUpperCase()).replace(/-$/, "_");
       string = string.replace(/(Pre|Suf)fix_/, (def != "Media_")? def: "");
     }
-    return string
+    return string.replace(/[~\!\?\/%\^\&\|\*\-\+\=<>\:]/g, "")
   }
 
   function compile(input, args) {
