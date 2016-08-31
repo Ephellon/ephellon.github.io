@@ -786,8 +786,10 @@ function(input) {
       },
       // statements and handlers
       "@(\\j)\\#?": function(e, a, b) {
-        if(b != undefined)
+        if(b != undefined && /^[A-Z]+$/.test(b))
           return "this" + a + b
+        else if(b != undefined)
+          return "this." + a + b
         else
           return "this." + a
       },
