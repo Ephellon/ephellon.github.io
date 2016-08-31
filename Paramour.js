@@ -374,7 +374,7 @@ function(input) {
       "argument-types": t,
       "fix": f,
       "function": n,
-      "BRACE": r
+      "brace": r
     };
   }
 
@@ -421,14 +421,14 @@ function(input) {
 
   input = unhandle(input);
 
-  for(var x = /\\([^\d\$])/; x.test(input);)
+  for(var x = /\\([^\d])/; x.test(input);)
     input = input.replace(x, function(e, a) {
       return "\b0x" + a.charCodeAt(0).toString(16) + "\b"
     });
 
-  for(var x = /([\$\\])([\d\$])/; x.test(input);)
+  for(var x = /([\$\\])(\d+)/; x.test(input);)
     input = input.replace(x, function(e, a, b) {
-      return a + "\b0x" + b.charCodeAt(0).toString(16) + "\b"
+      return "\b" + a + "\b\b" + b + "\b"
     });
 
   for(var x = 0; x < EMUS.length; x++)
@@ -547,7 +547,7 @@ function(input) {
           .replace(/<init>\s*(PAREN\.\d+)?\s*(BRACE\.\d+)/, function(e, _a, _b) {
           return "constructor#" + a + " [" + _a + "] [true] " + _b
         })
-          .replace(/([a-z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/gi, "prototype#" + a + ":$1 [$2] $3")
+          .replace(/\.?([a-z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/gi, "prototype#" + a + ":$1 [$2] $3")
           .replace(/(\s*)\}$/, "\n  " + a + ".this <get constructor> BRACE." + (BRACE.push("{\n    -> " + a + ";\n  }") - 1) + "\n  " + a + ".this <set constructor> BRACE." + (BRACE.push("{\n    -> " + a + ", constructor;\n  }") - 1) + "\n  -> " + a + ".this;\n}")
       },
       "extends#(\\j)\\:(\\j)\\s*(BRACE)\\.(\\d+)": function(e, a, b, c, d) {
@@ -556,7 +556,7 @@ function(input) {
           return "constructor#" + b + " [" + _a + "] [false] " + _b
         })
           .replace(/\{(\s*)/, "{$1" + b + ".super = " + a + ";$1" + b + ".this = " + a + ".apply(null, arguments) || {};$1")
-          .replace(/([a-z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/gi, "prototype#" + b + ":$1 [$2] $3")
+          .replace(/\.?([a-z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/gi, "prototype#" + b + ":$1 [$2] $3")
           .replace(/(\s*)\}$/, "\n  " + b + ".this <get constructor> BRACE." + (BRACE.push("{\n    -> " + b + ";\n  }") - 1) + "\n  " + b + ".this <set constructor> BRACE." + (BRACE.push("{\n    -> " + b + ", constructor;\n  }") - 1) + "\n  -> " + b + ".this;\n}")
       },
       "constructor#(\\j)\\s*\\[(PAREN\\.\\d+)?\\]\\s*\\[(true|false)\\]\\s*(BRACE\\.\\d+)": function(e, a, b, c, d) {
@@ -600,7 +600,9 @@ function(input) {
         return f.join("") + decompile(c, 'BRACE').replace(/^\{/, "").replace(/\}$/, a + "  break;")
       },
       // functions
-      "(\\j\\s*[\\:\\=]?\\s*)(PAREN\\.\\d+)\\s*(BRACE\\.\\d+)": function(e, a, b, c) {
+      "\\.?(\\j\\s*[\\:\\=]?\\s*)(PAREN\\.\\d+)\\s*(BRACE\\.\\d+)": function(e, a, b, c) {
+        if(/^\./.test(e))
+          return "\b" + a + "\b" + b + "\b" + c + "\b";
         var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, s, t, x;
         b = strip(decompile(b, 'PAREN')).replace(/[\b]/g, "").replace(/^(.*)\(/, "").replace(/\)(.*)$/, "");
         if(r.test(b)) {
@@ -616,39 +618,39 @@ function(input) {
       // classes
       "(\\j)\\.(\\j)\\s*(BRACE\\.\\d+)": function(e, a, b, c) {
         if(runtime.has("1.6")) {
-          c = unhandle(strip(decompile(c, 'BRACE')));
-          for(var k = /function\s+([a-z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/i; k.test(c);) {
-            c = c.replace(k, function(_e, _a, _b, _c) {
+          c = unhandle(decompile(c, 'BRACE').replace(/^\{|\}$/g, "")) || "";
+          for(var k = /(function\s+)?([a-z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/i; k.test(c);) {
+            c = c.replace(k, function(_e, _f, _a, _b, _c) {
               return "\b" + _a + "\b" + _b + " \b" + _c + "\b"
             })
           }
-          return "class " + b + " extends " + a + " {" + c + "}"
+          return "class " + b + " extends " + a + " {" + (decompile(c, 'brace').replace(/(function\s+)?([a-zA-Z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/g, "\b$2\b$3\b $4")) + "}"
         }
         return compile("extends#" + a + ":" + b + " " + c);
       },
       "(\\j)\\s*(BRACE\\.\\d+)": function(e, a, b) {
         var d = a;
         if(runtime.has("1.6")) {
-          b = unhandle(decompile(b, 'BRACE').replace(/^\{|\}$/g, ""));
-          for(var k = /function\s+([a-z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/i; k.test(b);) {
-            b = b.replace(k, function(_e, _a, _b, _c) {
+          b = unhandle(decompile(b, 'BRACE').replace(/^\{|\}$/g, "")) || "";
+          for(var k = /(function\s+)?([a-z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/i; k.test(b);) {
+            b = b.replace(k, function(_e, _f, _a, _b, _c) {
               return "\b" + _a + "\b" + _b + " \b" + _c + "\b"
             })
           }
-          return "class " + a + " {" + (b) + "}"
+          return "class " + a + " {" + (decompile(b, 'brace').replace(/(function\s+)?([a-zA-Z\$_][\w\$]*)\s*(PAREN\.\d+)\s*(BRACE\.\d+)/g, "\b$2\b$3\b $4")) + "}"
         }
         return compile("class#" + a + " " + b, [a]);
       },
       // <thans>
       "<init>\\s*(BRACE\\.\\d+)": function(e, a) {
         return runtime.has("1.6")?
-          "constructor() " + decompile(a, 'BRACE'):
+          "constructor\b()\b " + decompile(a, 'BRACE'):
         "constructor = function() " + decompile(a, 'BRACE')
       },
       "<init>\\s*(PAREN\\.\\d+)\\s*(BRACE\\.\\d+)": function(e, a, b) {
         a = strip(decompile(a, 'PAREN'));
         return runtime.has("1.6")?
-          "constructor() " + decompile(b, 'BRACE').replace(/\{(\s*)/, "{$1var " + argify(strip(decompile(a, 'PAREN'))) + ";$1"):
+          "constructor\b()\b " + decompile(b, 'BRACE').replace(/\{(\s*)/, "{$1var " + argify(strip(decompile(a, 'PAREN'))) + ";$1"):
         "constructor = function() " + decompile(b, 'BRACE').replace(/\{(\s*)/, "{$1var " + argify(strip(decompile(a, 'PAREN'))) + ";$1")
       },
       "(\\j)\\s*<proto\\s+(\\j)>\\s*(BRACE\\.\\d+)": function(e, a, b, c) {
@@ -698,7 +700,7 @@ function(input) {
 
         for(var x = 0; x < g.length; x++) {
           for(var y = 0; y < g[x].length; y++)
-            g[x][y] = g[x][y].replace(/^\s*(\*|\.{3}|[a-z\$\_][\w\$]*)/i, "$1 \b$\b" + (y + 1));
+            g[x][y] = g[x][y].replace(/^\s*(\*|\.{3}|[a-z\$\_][\w\$]*)/i, "$1 \b$\b" + (y + 1) + "\b");
           g[x] = g[x].join(", ")
         }
 
@@ -786,7 +788,7 @@ function(input) {
       },
       // statements and handlers
       "@(\\j)\\#?": function(e, a, b) {
-        if(b != undefined && /^[A-Z]+$/.test(b))
+        if(b != undefined && /^[A-Z_]+$/.test(a))
           return "this" + a + b
         else if(b != undefined)
           return "this." + a + b
@@ -810,7 +812,7 @@ function(input) {
         reg = reg.replace(k, function(e, a) {
           return eval(a)
         });
-      input = unhandle(input, 'DOUBLE_QUOTE SINGLE_QUOTE REGEXP QUASI MULTI_LINE EMUS PHANTOMS SINGLE_LINE');
+      input = unhandle(input, 'DOUBLE_QUOTE SINGLE_QUOTE REGEXP QUASI MULTI_LINE');
       for(reg = RegExp(reg); reg.test(input);) {
         // ((self.caller || function(){}).name || "anonymous", RegExp.$_)
         input = input.replace(reg, (self = patterns[pattern], self.name = pattern, self))
@@ -827,8 +829,8 @@ function(input) {
 
   for(var x = /[\b]0x([0-9a-f]{1,2})[\b]/; x.test(input);)
     input = input.replace(x, String.fromCharCode(eval("0x" + RegExp.$1)));
-  for(var x = /[\b]([0-9a-f]{1,2})[\b]/; x.test(input);)
-    input = input.replace(x, String.fromCharCode(eval("0x" + RegExp.$1)));
+  for(var x = /[\b](.+)[\b]/; x.test(input);)
+    input = input.replace(x, "$1");
 
   for(var x = 0; x < PHANTOMS.kids.length; x++)
     for(var kid in PHANTOMS.kids[x])
