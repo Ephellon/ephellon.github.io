@@ -396,8 +396,8 @@ function(input) {
       args = args.split(',');
     for(var x = 0, y = []; x < args.length; x++)
       y.push(args[x]
-             .replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (types[x] === "Spread"? "$1 = [].slice.call(null\b0x2c\b arguments).slice(" + x + "\b0x2c\b arguments.length - 1) || $2": "$1 = arguments[" + x + "] || $2"))
-             .replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (types[x] === "Spread"? "$1 = [].slice.call(null\b0x2c\b arguments).slice(" + x + "\b0x2c\b arguments.length - 1)": "$1 = arguments[" + x + "]"))
+             .replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (types[x] === "Spread"? "$1 = [].slice.call(null\b0x2c\b arguments).slice(" + x + "\b0x2c\b arguments.length) || $2": "$1 = arguments[" + x + "] || $2"))
+             .replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (types[x] === "Spread"? "$1 = [].slice.call(null\b0x2c\b arguments).slice(" + x + "\b0x2c\b arguments.length)": "$1 = arguments[" + x + "]"))
             .replace(/\$/g, "\b$\b"));
     return y.join(',')
   }
@@ -851,7 +851,7 @@ function(input) {
               return "' + types[" + e + "] + '"
             })
             .replace(/\.{3}/, function() {
-              return "' + types.slice(" + e + ", args.length - 1) + '"
+              return "' + types.slice(" + e + ", args.length) + '"
             });
         return s
       })(Paramour.pull(docket)[x]);
