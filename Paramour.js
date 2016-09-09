@@ -927,9 +927,9 @@ function(input) {
         var o, p, r = "prefix-", s = "suffix-";
         if(Operator.kids !== undefined)
           if((o = Operator.kids[a]) !== undefined || (p = Operator.kids[d]) !== undefined)
-            if(o.fix == s || p.fix == r)
+            if((o || {}).fix == s || (p || {}).fix == r)
               return a + "(" + d + ")";
-            else if(o.fix == r || p.fix == s)
+            else if((o || {}).fix == r || (p || {}).fix == s)
               return d + "(" + a + ")";
 
         if(reserved.test(a))
