@@ -898,17 +898,20 @@ function(input) {
             c.replace(/([~\!\?\/%\^\&\|\*\-\+\=<>\:]+)/);
             var _d = RegExp.$1, _e;
             if(Operator.kids !== undefined && (_e = Operator.kids[_d]) !== undefined)
-              history.push(c = _a + hand(c, _e.fix) + _c);
+              history.push((c = _a + hand(c, _e.fix) + _c));
             else {
               for(var p = RegExp("(\\" + _d[0] + ")"); p.test(c);)
                 c = c.replace(p, "\b0x" + RegExp.$1.charCodeAt(0).toString(16) + "\b");
-              history.push(c = _a + c + _c);
+              history.push((c = _a + c + _c));
             }
             return c
           });
         }
+        j = history.reverse()[0]
+          .replace(/\s*(\(|\))\s*/g, "$1")
+          .replace(/\s+/g, " ");
 
-        return (a == ""? "": reserved.test(a)? a + " ": a + " = ") + hand((b || "") + history.reverse()[0] + (d || ""))
+        return (a == ""? "": reserved.test(a)? a + " ": a + " = ") + hand((b || "") + j + (d || ""))
       },
       // custom operators
       "(\\j\\#?)(\\s+)(\\j)(\\s+)(\\j\\#?)": function(e, a, b, c, d, f, g, h) {
