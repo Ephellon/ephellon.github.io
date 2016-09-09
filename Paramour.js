@@ -615,7 +615,7 @@ function(input) {
       case 'QUASI':
         return runtime.has("1.6")?
           spil:
-        "'" + spil.replace(/[\b]\$[\b]\{([^\{\}`]*)\}/g, "' + ($1) + '").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/\n/g, "").replace(/^`|`$/g, "").replace(/^''\s*\+|\+\s*''$/g, "").replace(/'/g, "\\'") + "'";
+        "'" + spil.replace(/(DOUBLE_QUOTE\.\d+)/g, '"\' +$1+ \'"').replace(/[\b]\$[\b]\{([^\{\}`]*)\}/g, "' + ($1) + '").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/\n/g, "").replace(/^`|`$/g, "").replace(/^''\s*\+|\+\s*''$/g, "").replace(/'/g, "\\'") + "'";
         break;
       case 'TUPLE':
         return "Tuple(" + spil + ")";
@@ -624,7 +624,8 @@ function(input) {
         return spil.replace(/\b0x(.+?)\b/g, "\b\\0x$1\b").replace(/^\/\/([imguy]*)$/, "/(?:)/$1");
         break;
       case 'SINGLE_QUOTE':
-        return spil.replace(/[\b]\$[\b]\{([^\{\}']*)\}/g, "' + ($1) + '").replace(/^''\s*\+|\+\s*''$/g, "").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b");
+        console.log(spil);
+        return spil.replace(/(DOUBLE_QUOTE\.\d+)/g, '"\' +$1+ \'"').replace(/[\b]\$[\b]\{([^\{\}']*)\}/g, "' + ($1) + '").replace(/^''\s*\+|\+\s*''$/g, "").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b");
         break;
       case 'DOUBLE_QUOTE':
         return spil.replace(/[\b]\$[\b]\{([^\{\}"]*)\}/g, '" + ($1) + "').replace(/^""\s*\+|\+\s*""$/g, "").replace(/\b0x(.+?)\b/g, "\b\\0x$1\b");
