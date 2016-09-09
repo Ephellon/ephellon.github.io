@@ -83,6 +83,9 @@ If you want to modify Paramour, or completely build a new language, here are som
       compile (String input, * arguments)
         the "brain" of Paramour
         var patterns - a list of patterns and how to handle them
+        \j - variable name "[a-z\$_][\w\$]*"
+        \# - number "(\.\d+)"
+        \s - spaces (no newline/carriage return) "[\x20\t\v ]"
           example of functions
           var pattern = {
             // ...

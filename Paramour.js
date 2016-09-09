@@ -1,4 +1,4 @@
-/* Paramour 12.0.1
+/* Paramour 12.0.8
   author: Ephellon Dantzler
   A majority of the language was built in just 48h!
   What wasn't built within the 48h:
@@ -7,7 +7,7 @@
   If you want to modify Paramour, or completely build a new language, here are some things to note:
 ##### below, some variables are given as "Type name", and "Return-Type Type name"
     variables:
-      String input - the oiginal input given to Paramour; often redeclared inside of some functions
+      String input - the original input given to Paramour; often redeclared inside of some functions
       String backup - a backup copy of "input"
       Array exps - all of the patterns used to modify "input," dynamically updated
       RegExp errors - errors to remove
@@ -41,7 +41,7 @@
 ##### Other Paramour goodies
       Object navigator - the original "navigator" object, with some modifications
         String .runtime - runtime.original
-        Boolean paramour - true
+        Boolean .paramour - true
       Paramour - here is a list of methods/properties that may be useful
         Object .dockets - a list of functions that Paramour will format, {"function's name": "function's arguments"}
         String function .types (* item...)
@@ -69,14 +69,18 @@
             returns "name = arguments[0]"
           example argify("String name = 'John'")
             returns "name = arguments[0] || 'John'"
-      unhandle (String input)
-        compressess "input" using Paramour's "medulla"
+      unhandle (String input, String|Array type)
+        compressess "input" using "type" or "exps"
           example unhandle("a = ['abc', 123]")
             returns "a = BRACK.0"
       handle (String input, Number index) - see "function handle" for further detail
         decompressess "input" using Paramour's "medulla" along with it's own "medulla"
           example handle("a = BRACK.0")
             returns "a = [SINGLE_QUOTE.0, 123]"
+      hand (String input, String defenition)
+        returns a formatted operator-string
+          example hand("||", "prefix-")
+            returns "Double_Or_Prefix_Operator_"
       decompile (String input, String|Array expressions, Boolean|Number all)
         searches for and replaces "expressions" using "handle"
           expressions - comma, space, or pipe seperated list
@@ -85,6 +89,9 @@
       compile (String input, * arguments)
         the "brain" of Paramour
         var patterns - a list of patterns and how to handle them
+        \j - variable name "[a-z\$_][\w\$]*"
+        \# - number "(\.\d+)"
+        \s - spaces (no newline/carriage return) "[\x20\t\v ]"
           example of functions
           var pattern = {
             // ...
@@ -960,7 +967,7 @@ function(input) {
     for(var pattern in patterns) {
       var reg = pattern
       .replace(/\\j/g, "[a-zA-Z\\$_][\\w\\$]*")
-      .replace(/\\s/g, "[\\x20\\t ]")
+      .replace(/\\s/g, "[\\x20\\t\\v ]")
       .replace(/\\#/g, "(\\.\\d+)");
       for(var k = /\$\{([^\}]+?)\}/; k.test(reg);)
         reg = reg.replace(k, function(e, a) {
@@ -1031,7 +1038,7 @@ function(input) {
   input = input.replace(errors, "");
 
   var p = {
-    version: "12.0.1",
+    version: "12.0.8",
     get: {
       form: {
         data: function() {
