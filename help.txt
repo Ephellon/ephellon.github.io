@@ -91,7 +91,7 @@ Paramour Crash Course
           var pattern = {
             // ...
             "(\\j)\\s*(PAREN\\.\\#)\\s*(BRACE\\.\\#)": function(e, a, b, c) {
-              return "function " + a + argify(decompile(b)) + decompile(c, "BRACE")
+              return "function " + a + decompile(b) + decompile(c, "BRACE")
             }
           }
 
