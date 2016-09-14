@@ -494,10 +494,10 @@ function(input) {
       return Tuple.objects[it["arguments"]].next();
 
     it.__defineGetter__('every', function() {
-      return function(_function) { for(var iterator = 0, TupleArray = this.arguments, response = true; iterator < TupleArray.length && response; iterator++) response = _function.call(null, TupleArray[iterator]); return response }
+      return function(_function) { for(var iterator = 0, TupleArray = this.arguments, response = true; iterator < TupleArray.length && response; iterator++) response = _function.apply(null, TupleArray[iterator]); return response }
     });
     it.__defineGetter__('forEach', function() {
-      return function(_function) { for(var iterator = 0, TupleArray = this.arguments, response; iterator < TupleArray.length; iterator++) response = _function.call(null, TupleArray[iterator]); return response }
+      return function(_function) { for(var iterator = 0, TupleArray = this.arguments, response; iterator < TupleArray.length; iterator++) response = _function.apply(null, TupleArray[iterator]); return response }
     });
     it.__defineGetter__('join', function() {
       return function(symbols) { return this.arguments.join(symbols) }
@@ -553,8 +553,8 @@ function(input) {
       args = args.split(',');
     for(var x = 0, y = []; x < args.length; x++)
       y.push(args[x]
-             .replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (types[x] === "Spread"? "$1 = [].slice.call(null\b0x2c\b arguments).slice(" + x + "\b0x2c\b arguments.length) || $2": "$1 = arguments[" + x + "] || $2"))
-             .replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (types[x] === "Spread"? (x === 0)? "$1 = arguments": "$1 = [].slice.call(null\b0x2c\b arguments).slice(" + x + "\b0x2c\b arguments.length)": "$1 = arguments[" + x + "]"))
+             .replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (types[x] === "Spread"? "$1 = [].slice.call(arguments).slice(" + x + "\b0x2c\b arguments.length" + (x == args.length - 1? "": " - " + (args.length - (x + 1))) + ") || $2": "$1 = arguments[" + x + "] || $2"))
+             .replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (types[x] === "Spread"? (x === 0)? "$1 = arguments": "$1 = [].slice.call(arguments).slice(" + x + "\b0x2c\b arguments.length" + (x == args.length - 1? "": " - " + (args.length - (x + 1))) + ")": "$1 = arguments[" + x + "]"))
             .replace(/\$/g, "\b$\b"));
     return y.join(',')
   }
@@ -1004,25 +1004,26 @@ function(input) {
   for(var docket in Paramour.dockets) {
     input +=
       "\nfunction \\docket() {\n" +
-      "  var args = arguments, types = Paramour.types.apply(null, arguments);\n" +
-      "  switch(types) {\n";
+      "  var index = 0, args = arguments, types = Paramour.types.apply(null, arguments).split(',');\n" +
+      "  switch(types.toString()) {\n";
     for(var x = 0; x < Paramour.dockets[docket].length; x++) {
       var h, g = (function(s){
         h = s.join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").replace(/([a-z\$_][\w\$]*).*$/i, "$1");
-        for(var e = 0; e < s.length; e++)
+        for(var e = 0, f = false; e < s.length; e++)
           s[e] = s[e]
             .replace(/([a-z\$_][\w\$]*).*$/i, "$1")
             .replace(/\*/, function() {
-              return "' + types[" + e + "] + '"
+              return "' + types[" + (f? e: "index" + (e == s.length - 1? "": "++")) + "] + '"
             })
             .replace(/\.{3}/, function() {
-              return "' + types.slice(" + e + ", args.length) + '"
+              f = f || e == s.length - 1;
+              return "' + types.slice(" + e + ", " + (f? "": "index = ") + "args.length" + (f? "": " - " + (s.length - (e + 1))) + ") + '"
             });
         return s
       })(Paramour.pull(docket)[x]);
 
       input +=
-        "    case '" + g + "':\n" +
+        "    case (" + ("'" + g + "'").replace(/^''\s*\+\s*|\s*\+\s*''$/g, "") + "):\n" +
         "      return " + docket + "__" + h + ".apply(null, args);\n" +
         "      break;\n";
     }
