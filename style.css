@@ -1,0 +1,17 @@
+body {
+  overflow: hidden
+}
+
+html, body, textarea {
+  background: #1d1f20;
+  color: #ae94c0;
+  border: none;
+  height: 100vh;
+  width: 100vw
+}
+
+textarea {
+  border: 1px solid white;
+  height: 50vh;
+  margin: 2.5px auto;
+}
