@@ -25,7 +25,7 @@ var(value_3) = object_catcher.next();
   # value_3 - /def/g
 
 # Functions ----------------
-log(String message, ... details) {
+log(String message, details...) {
   $con.log(message)
 }
 
@@ -40,16 +40,16 @@ Employee {
       @[entry] = data[entry];
   }
 
-  pull(entry) {
+  .pull(entry) {
     -> @[entry]
   }
 
-  push(data) {
+  .push(data) {
     for(var entry in data)
       @[entry] = data[entry];
   }
 
-  remove(entry) {
+  .remove(entry) {
     -> @[entry] = null
   }
 }
@@ -62,7 +62,7 @@ Employee.Manager {
   }
 }
 
-var(Bob) = Employee({
+var Bob = Employee({
   name: "Bob Dylan",
   age: 41,
   role: "Cashier"
@@ -73,6 +73,7 @@ var(Bob) = Employee({
 # custom operators can take up to 4 spaces
 # = up to ====, for a grand total of 50,625 possible operators
 # ~ ! % ^ & | * - + = : < > ? /
+
 <operator ^ [Number, Number]> {
   -> Math.pow($1, $2)
 }
@@ -86,6 +87,10 @@ var(Bob) = Employee({
     -> $1;
   else
     +> SyntaxError("? Operator was given 'false'");
+}
+
+<prefix-operator !> {
+  -> ($1 !== undefined && $1 !== null)
 }
 
 # also accepts name => ()

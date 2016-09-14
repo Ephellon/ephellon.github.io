@@ -1,4 +1,5 @@
-If you want to modify Paramour, or completely build a new language, here are some things to note:
+Paramour Crash Course
+  If you want to modify Paramour, or completely build a new language, here are some things to note:
 ##### below, some variables are given as "Type name", and "Return-Type Type name"
     variables:
       String input - the original input given to Paramour; often redeclared inside of some functions

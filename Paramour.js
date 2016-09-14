@@ -2,129 +2,7 @@
   author: Ephellon Dantzler
   A majority of the language was built in just 48h!
   What wasn't built within the 48h:
-    custom operators (still looking into that)
-
-  If you want to modify Paramour, or completely build a new language, here are some things to note:
-##### below, some variables are given as "Type name", and "Return-Type Type name"
-    variables:
-      String input - the original input given to Paramour; often redeclared inside of some functions
-      String backup - a backup copy of "input"
-      Array exps - all of the patterns used to modify "input," dynamically updated
-      RegExp errors - errors to remove
-      RegExp reserved - reserved words and symbols
-      Array operators - a list of all non-alphanumeric operators
-      Object oprs - a list of each non-alphanumeric operator and a respecting name, {"operator": "name"}
-
-##### Paramour's lists and "medulla"; these are free to change, delete or add onto
-      Array MULTI_LINE - all multiline comments
-      Array SINGLE_LINE - all single line comments
-      Array REGEXP - all Regular Expressions
-      Array DOUBLE_QUOTE - all double quoted strings
-      Array SINGLE_QUOTE - all single quoted strings
-      Array QUASI - all grave quoted strings
-      Array PAREN - all parenthesis expressions
-      Array BRACK - all bracket expressions
-      Array BRACE - all curly brace expressions
-      Array TUPLES - all tuple expressions, double curly brace "{{}}"
-      Array EMUS - all emulation expressions, commented "@version"
-      Array PHANTOMS - all phantom expressions, commented "$variable -> value", or "$variable => value"
-      Object patterns - a list of each expression to look for, with a RegExp to use as the delimiter; the pattern name must macth a variable name that is an array, example {"EMUS": /#\s+@1.5/}
-      Object runtime - a list that detects/modifies the currently running JavaScript version
-        Boolean function .is (String|Number version)
-          returns if the current JavaScript version is "version"
-        Boolean function .has (String|Number version)
-          returns if the current JavaScript version is in the array of supported versions
-        Array function .emulate (String|Number version)
-          emulates a different runtime; but adds an asterik to the emulation number, example "1.8.*"
-        String .original
-          the actual JavaScript version
-##### Other Paramour goodies
-      Object navigator - the original "navigator" object, with some modifications
-        String .runtime - runtime.original
-        Boolean .paramour - true
-      Paramour - here is a list of methods/properties that may be useful
-        Object .dockets - a list of functions that Paramour will format, {"function's name": "function's arguments"}
-        String function .types (* item...)
-          returns a comma seperated list of function names/constructors/object types
-        Array function .pull (String name)
-          returns the array of arguments from Paramour.dockets
-        Number function .push (String name, String arguments)
-          adds the "arguments" to Paramour.dockets["name"], and returns its length
-
-    functions:
-      Tuple (* item...) - "[] with {} for-in/yield iteration"
-        returns a Tuple object, or an item from the Tuple
-          The first call/declaration of a Tuple returns an object
-          Each call after returns an item from the Tuple, until reaching the end--then returns undefined
-      Operator (String operator, String type, String fix, String function, String brace)
-        returns undefined, but modifies Operator.kids
-          operator - the symbol(s) that are going to be used
-          type - how many there are, example "==" -> "double equals"
-          fix - the location of the operator, prefix-, media-, of suffix-
-          function - the function to call on, "==" -> "Double_Equals_Operator"
-          brace - the brace expression that will be used
-      argify (String|Array arguments, String|Array types)
-        returns a formatted list of variable names
-          example argify("String name")
-            returns "name = arguments[0]"
-          example argify("String name = 'John'")
-            returns "name = arguments[0] || 'John'"
-      unhandle (String input, String|Array type)
-        compressess "input" using "type" or "exps"
-          example unhandle("a = ['abc', 123]")
-            returns "a = BRACK.0"
-      handle (String input, Number index) - see "function handle" for further detail
-        decompressess "input" using Paramour's "medulla" along with it's own "medulla"
-          example handle("a = BRACK.0")
-            returns "a = [SINGLE_QUOTE.0, 123]"
-      hand (String input, String defenition)
-        returns a formatted operator-string
-          example hand("||", "prefix-")
-            returns "Double_Or_Prefix_Operator_"
-      decompile (String input, String|Array expressions, Boolean|Number all)
-        searches for and replaces "expressions" using "handle"
-          expressions - comma, space, or pipe seperated list
-          Boolean all - if true, "decompile" replaces all "expressions", otherwise just the first
-          Number all - "decompile" replaces that many "expressions"
-      compile (String input, * arguments)
-        the "brain" of Paramour
-        var patterns - a list of patterns and how to handle them
-        \j - variable name "[a-z\$_][\w\$]*"
-        \# - number "(\.\d+)"
-        \s - spaces (no newline/carriage return) "[\x20\t\v ]"
-          example of functions
-          var pattern = {
-            // ...
-            "(\\j)\\s*(PAREN\\.\\#)\\s*(BRACE\\.\\#)": function(e, a, b, c) {
-              return "function " + a + argify(decompile(b)) + decompile(c, "BRACE")
-            }
-          }
-
-#####
-  and after ~2 weeks of developing:
-    funtions - stable
-    spreads - stable
-    classes - stable
-    tuples - stable
-    variables - stable, but testing
-    custom operators - stable, but testing
-      @prefix vs. suffix operators
-      explanation {
-        "Each operator can only be used once as either prefix, media, or suffix"
-        <suffix-operator ? [String]> {
-          -> $1.indexOf("&") > -1
-        }
-
-        <prefix-operator ? [String]> {
-          -> $1.indexOf("&") === -1
-        }
-
-        => ("apples & bananas")?
-          # returns true
-        => ?("apples & bananas")
-          # returns true, defaults to ?-suffix
-      }
-    yields - theoretical stage
+    custom operators (available, but still looking into that)
 */
 
 var window = (window === undefined || window === null)? {}: window;
@@ -551,11 +429,17 @@ function(input) {
     types = (types || []).join(",").replace(/\s/g, "").split(",");
     if(typeof args == 'string')
       args = args.split(',');
-    for(var x = 0, y = []; x < args.length; x++)
+    for(var x = 0, y = [], f, h, i, j; x < args.length; x++) {
+      f = args.length > (x + 1);
+      i = types[x] === "Spread";
+      j = types.indexOf("Spread");
+      j = j > -1 && j < x;
+
       y.push(args[x]
-             .replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (types[x] === "Spread"? "$1 = [].slice.call(arguments).slice(" + x + "\b0x2c\b arguments.length" + (x == args.length - 1? "": " - " + (args.length - (x + 1))) + ") || $2": "$1 = arguments[" + x + "] || $2"))
-             .replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (types[x] === "Spread"? (x === 0)? "$1 = arguments": "$1 = [].slice.call(arguments).slice(" + x + "\b0x2c\b arguments.length" + (x == args.length - 1? "": " - " + (args.length - (x + 1))) + ")": "$1 = arguments[" + x + "]"))
+             .replace(/^\s*([a-z\$_][\w\$]*)\s*\=\s*(.*)$/i, (i? "$1 = [].slice.call(arguments).slice(" + (i? "arity = ": "") + x + "\b0x2c\b arguments.length - " + x + ") || $2": "$1 = arguments[" + (j? "++arity": x) + "] || $2"))
+             .replace(/^\s*([a-z\$_][\w\$]*)\s*$/i, (i? "$1 = [].slice.call(arguments).slice(" + (i? "arity = ": "") + x + "\b0x2c\b arguments.length - " + x + ")": "$1 = arguments[" + (j? "++arity": x) + "]"))
             .replace(/\$/g, "\b$\b"));
+    }
     return y.join(',')
   }
 
@@ -763,13 +647,15 @@ function(input) {
       "\\.?(\\j\\s*[\\:\\=]?\\s*)(PAREN\\.\\d+)\\s*(BRACE\\.\\d+)": function(e, a, b, c) {
         if(/^\./.test(e))
           return "\b" + a + "\b" + b + "\b" + c + "\b";
-        var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, s, t, x;
+        var r = /(\*|\.{3}|[a-z\$_][\w\$]*)\s+([a-z\$_][\w\$]*\.{0,3})/gi, s, t, x, d;
         b = strip(decompile(b, 'PAREN')).replace(/[\b]/g, "").replace(/^(.*)\(/, "$1 ").replace(/\)(.*)$/, " $1");
         if(r.test(b)) {
+          b = b.replace(/(^\s*|,\s*)([a-z\$_][\w\$]*)\.{3}/gi, "$1... $2");
+          d = /\.{3}/.test(b)
           x = Paramour.push(a, b) - 1;
           s = Paramour.pull(a)[x].join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread");
           t = Paramour.pull(a)[x].join(',').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").split(',');
-          return "function " + a + "__" + s.replace(/([a-z\$_][\w\$]*).*$/i, "$1") + "() " + decompile(c, 'BRACE').replace(/\{(\s*)/, (/^\s*$/.test(b)? "{$1": "{$1var " + argify(b.replace(r, "$2"), t).split(/,\s*/).join(',$1    ') + ";$1"));
+          return "function " + a + "__" + s.replace(/([a-z\$_][\w\$]*).*$/i, "$1") + "() " + decompile(c, 'BRACE').replace(/\{(\s*)/, (/^\s*$/.test(b)? "{$1": "{$1" + (d? "var arity;$1": "") + "var " + argify(b.replace(r, "$2"), t).split(/,\s*/).join(',$1    ') + ";$1"));
         }
         return /[\:\=]/.test(a)?
           a + "function() " + decompile(c, 'BRACE').replace(/\{(\s*)/, (b == ""? "{$1": "{$1var " + argify(strip(decompile(b, 'PAREN'))) + ";$1")):
@@ -1005,20 +891,24 @@ function(input) {
     input +=
       "\nfunction \\docket() {\n" +
       "  var index = 0, args = arguments, types = Paramour.types.apply(null, arguments).split(',');\n" +
-      "  switch(types.toString()) {\n";
+      "  switch(types.join('')) {\n";
     for(var x = 0; x < Paramour.dockets[docket].length; x++) {
       var h, g = (function(s){
         h = s.join('_').replace(/\s+/g, "").replace(/\*/g, "Any").replace(/\.{3}/g, "Spread").replace(/([a-z\$_][\w\$]*).*$/i, "$1");
-        for(var e = 0, f = false; e < s.length; e++)
+        for(var e = 0, f, i, j; e < s.length; e++) {
+          f = s.length > (e + 1);
+          i = !(/^\s*\.{3}[^,]*$/.test(s[e]));
+          j = f && !i;
+
           s[e] = s[e]
             .replace(/([a-z\$_][\w\$]*).*$/i, "$1")
             .replace(/\*/, function() {
-              return "' + types[" + (f? e: "index" + (e == s.length - 1? "": "++")) + "] + '"
+              return "' + types[" + (i? "++index": e) + "] + '"
             })
             .replace(/\.{3}/, function() {
-              f = f || e == s.length - 1;
-              return "' + types.slice(" + e + ", " + (f? "": "index = ") + "args.length" + (f? "": " - " + (s.length - (e + 1))) + ") + '"
+              return "' + types.slice(" + (j? "index = ": "") + e + ", " + "args.length" + (j? " - " + (s.length - (e + 1)): "") + ") + '"
             });
+        }
         return s
       })(Paramour.pull(docket)[x]);
 
