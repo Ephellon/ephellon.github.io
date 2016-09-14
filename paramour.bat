@@ -1,4 +1,4 @@
-:: Ephellon Dantzler - Paramour Java Compiler 2015
+:: Ephellon Dantzler - Paramour Java Compiler 2016
 @ECHO off
 @SET next=a 
 
