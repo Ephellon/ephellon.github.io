@@ -54,9 +54,9 @@ Paramour Crash Course
       Operator (String operator, String type, String fix, String function, String brace)
         returns undefined, but modifies Operator.kids
           operator - the symbol(s) that are going to be used
-          type - how many there are, example "==" -> "double equals"
-          fix - the location of the operator, prefix-, media-, of suffix-
-          function - the function to call on, "==" -> "Double_Equals_Operator"
+          type - how many there are, i.e. "==" -> "double equals"
+          fix - the root of the operator: prefix-, media-, or suffix-
+          function - the function to call on, i.e. "==" -> "Double_Equals_Operator"
           brace - the brace expression that will be used
       argify (String|Array arguments, String|Array types)
         returns a formatted list of variable names
