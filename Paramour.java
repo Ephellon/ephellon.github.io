@@ -47,7 +47,7 @@ public class Paramour {
   
     for(;medium.hasNextLine();) {
       JAVA_STRING += '"' + medium.nextLine().replace("\\", "\\\\").replace("\"", "\\\"") + "\\n\" + \n";
-    } JAVA_STRING += "''; println(Paramour(JAVA_STRING) + '\n/* Ephellon Dantzler - 2016 */');";
+    } JAVA_STRING += "'';";
   
     // Redirect the engine's standard output to a StringWriter instance
     StringWriter writer = new StringWriter();
