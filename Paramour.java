@@ -47,7 +47,7 @@ public class Paramour {
   
     for(;medium.hasNextLine();) {
       JAVA_STRING += '"' + medium.nextLine().replace("\\", "\\\\").replace("\"", "\\\"") + "\\n\" + \n";
-    } JAVA_STRING += "''";
+    } JAVA_STRING += "\"\";";
   
     // Redirect the engine's standard output to a StringWriter instance
     StringWriter writer = new StringWriter();
@@ -56,7 +56,7 @@ public class Paramour {
   
     // Evaluate the script
     System.out.println("Compiling: " + from.getAbsolutePath() + "\n");
-    engine.eval(JAVA_STRING + Paramour);
+    engine.eval(JAVA_STRING + Paramour + "\nprintln(Paramour(JAVA_STRING) + '\n/* Ephellon Dantzler - 2016 */');");
 
     // Obtain the string buffer's contents
     String PAR = writer.getBuffer().toString();
