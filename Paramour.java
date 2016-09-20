@@ -23,8 +23,8 @@ public class Paramour {
 
     // if a list was given, parse it
     if(args.length > 0) {
-      for(int x = 0; x < args.length; x++) {
-        from = new File(args[x]);
+      for(String arg : args) {
+        from = new File(arg);
         eval(from);
       }
     }
@@ -56,11 +56,9 @@ public class Paramour {
   
     // Evaluate the script
     System.out.println("Compiling: " + from.getAbsolutePath() + "\n");
-    engine.eval(JAVA_STRING + Paramour + "\nprintln(Paramour(JAVA_STRING) + '\n/* Ephellon Dantzler - 2016 */');");
 
-    // Obtain the string buffer's contents
-    String PAR = writer.getBuffer().toString();
-    out.print(PAR);
+    // Obtain the string buffer's contents and write it
+    out.print(engine.eval(JAVA_STRING + Paramour + ";\nJAVA_STRING = Paramour(JAVA_STRING);").toString());
     out.close();
     medium.close();
     return to;
