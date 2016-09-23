@@ -10,6 +10,7 @@ Paramour Crash Course
       Array operators - a list of all non-alphanumeric operators
       Object oprs - a list of each non-alphanumeric operator and a respecting name, {"operator": "name"}
       Boolean tabs - a boolean that replaces tabs/spaces after Paramour has completed
+      Boolean JavaScript_Manager - an attempt to detect if Paramour is being run via Java
       Function self - the expression handler once its pattern has been executed by RegExp in Paramour's "brain" (compile)
         example
           "(\\j)\\.(\\d+)": function(e, a, b) {
