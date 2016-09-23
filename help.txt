@@ -1,7 +1,7 @@
 Paramour Crash Course
   If you want to modify Paramour, or completely build a new language, here are some things to note:
 ##### below, some variables are given as "Type name", and "Return-Type Type name"
-    variables:
+    @Paramour Variables: #####
       String input - the original input given to Paramour; often redeclared inside of some functions
       String backup - a backup copy of "input"
       Array exps - all of the patterns used to modify "input," dynamically updated
@@ -66,7 +66,7 @@ Paramour Crash Course
         Array.prototype.toTable - see <[].toTable.DOCSTRING>
         Number.prototype.toTime - see <0..toTime.DOCSTRING>
 
-    functions:
+    @Paramour Functions: #####
       Tuple (* item...) - "[] with {} for-in/yield iteration"
         * returns a Tuple object, or an item from the Tuple
           The first call/declaration of a Tuple returns an object
