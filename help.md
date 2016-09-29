@@ -22,7 +22,8 @@
     // self refers to the current function being executed
     // the function's name is changed from anonymous -> "(\j)\.(\d+)"
   return "// Error: " + e
-}```
+}
+```
 
 - Null now - TBD
 - Null later - TBD
@@ -97,27 +98,32 @@ __here is a list of methods/properties that may be useful__
 ### String.prototype.toDocument
   see
   ```js
-    ("").toDocument.DOCSTRING```
+    ("").toDocument.DOCSTRING
+  ```
 
 ### String.prototype.SI
   see
   ```js
-    ("").SI.DOCSTRING```
+    ("").SI.DOCSTRING
+  ```
 
 ### String.prototype.toTable
   see
   ```js
-    ("").toTable.DOCSTRING```
+    ("").toTable.DOCSTRING
+  ```
 
 ### Array.prototype.toTable
   see
   ```js
-    ([]).toTable.DOCSTRING```
+    ([]).toTable.DOCSTRING
+  ```
 
 ### Number.prototype.toTime
   see
   ```js
-    (0).toTime.DOCSTRING```
+    (0).toTime.DOCSTRING
+  ```
 
 ## Paramour Functions:
 
@@ -138,43 +144,53 @@ __here is a list of methods/properties that may be useful__
   __returns a formatted list of variable names__
   example
   ```js
-    argify("String name")```
+    argify("String name")
+  ```
     returns
     ```js
-    name = arguments[0]```
+    name = arguments[0]
+    ```
   example
   ```js
-  argify("String name = 'John'")```
+  argify("String name = 'John'")
+  ```
     returns
     ```js
-    name = arguments[0] || 'John'```
+    name = arguments[0] || 'John'
+    ```
 
 ### unhandle (String input, String|Array type)
   __compressess "input" using "type" or "exps"__
   example
   ```js
-  unhandle("a = ['abc', 123]")```
+  unhandle("a = ['abc', 123]")
+  ```
     returns
     ```js
-    "a = BRACK.0"```
+    "a = BRACK.0"
+    ```
 
 ### handle (String input, Number index) _see "function handle" for further detail_
   __decompressess "input" using Paramour's "medulla" along with it's own "medulla"__
   example
   ```js
-  handle("a = BRACK.0")```
+  handle("a = BRACK.0")
+  ```
     returns
     ```js
-    "a = [SINGLE_QUOTE.0, 123]"```
+    "a = [SINGLE_QUOTE.0, 123]"
+    ```
 
 ### hand (String input, String defenition)
   __returns a formatted operator-string__
   example
   ```js
-  hand("||", "prefix-")```
+  hand("||", "prefix-")
+  ```
     returns
     ```js
-    "Double_Or_Prefix_Operator_"```
+    "Double_Or_Prefix_Operator_"
+    ```
 
 ### decompile (String input, String|Array expressions, Boolean|Number all)
   __searches for and replaces "expressions" using "handle"__
