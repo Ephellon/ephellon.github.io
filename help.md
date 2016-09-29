@@ -28,40 +28,26 @@
 - Null now - TBD
 - Null later - TBD
 
+----
+
 ## Paramour's lists and "medulla"; (_these are free to change, delete or otherwise add onto_)
 
-- Array MULTI_LINE
-  all multiline comments
-- Array SINGLE_LINE
-  all single line comments
-- Array REGEXP
-  all Regular Expressions
-- Array DOUBLE_QUOTE
-  all double quoted strings
-- Array SINGLE_QUOTE
-  all single quoted strings
-- Array QUASI
-  all grave quoted strings
-- Array PAREN
-  all parenthesis expressions
-- Array BRACK
-  all bracket expressions
-- Array BRACE
-  all curly brace expressions
-- Array TUPLES
-  all tuple expressions, double curly brace "{{}}"
-- Array EMUS
-  all emulation expressions, commented "@version"
-- Array PHANTOMS
-  all phantom expressions, commented "$variable -> value", or "$variable => value"
-- Array DOCSTRING
-  all of the docstrings
-- Array IGNORED
-  temporary spot for ignored expressions
-- Object patterns
-  a list of each expression to look for, with a RegExp to use as the delimiter; the pattern name must macth a variable name that is an array, example {"EMUS": /#\s+@1.5/}
-- Object runtime
-  __a list that detects/modifies the currently running JavaScript version__
+- Array MULTI_LINE - all multiline comments
+- Array SINGLE_LINE - all single line comments
+- Array REGEXP - all Regular Expressions
+- Array DOUBLE_QUOTE - all double quoted strings
+- Array SINGLE_QUOTE - all single quoted strings
+- Array QUASI - all grave quoted strings
+- Array PAREN - all parenthesis expressions
+- Array BRACK - all bracket expressions
+- Array BRACE - all curly brace expressions
+- Array TUPLES - all tuple expressions, double curly brace "{{}}"
+- Array EMUS - all emulation expressions, commented "@version"
+- Array PHANTOMS - all phantom expressions, commented "$variable -> value", or "$variable => value"
+- Array DOCSTRING - all of the docstrings
+- Array IGNORED - temporary spot for ignored expressions
+- Object patterns - a list of each expression to look for, with a RegExp to use as the delimiter; the pattern name must macth a variable name that is an array, example {"EMUS": /#\s+@1.5/}
+- Object runtime - __a list that detects/modifies the currently running JavaScript version__
   - Boolean function .is (String|Number version)
       returns if the current JavaScript version is "version"
   - Boolean function .has (String|Number version)
@@ -73,6 +59,8 @@
   - Boolean .manned - ```true``` if Paramour is being run via a Java Script Manager
   - Boolean .unmanned - ```!runtime.manned```
 
+----
+
 ## Other Paramour goodies
 
 ### Object navigator
@@ -81,19 +69,18 @@ __the original "navigator" object, with some modifications__
 - String .runtime - ```runtime.original```
 - Boolean .paramour - ```true```
 
+----
+
 ### Paramour
 
 __here is a list of methods/properties that may be useful__
-- Object .dockets
-  a list of functions that Paramour will format, {"function's name": "function's arguments"}
-- String function .types (* item...)
-  returns a comma seperated list of function names/constructors/object types
-- Array function .pull (String name)
-  returns the array of arguments from Paramour.dockets
-- Number function .push (String name, String arguments)
-  adds the "arguments" to Paramour.dockets["name"], and returns its length
-- Array .docstrings
-  a list of all docstrings
+- Object .dockets - a list of functions that Paramour will format, {"function's name": "function's arguments"}
+- String function .types (* item...) - returns a comma seperated list of function names/constructors/object types
+- Array function .pull (String name) - returns the array of arguments from Paramour.dockets
+- Number function .push (String name, String arguments) - adds the "arguments" to Paramour.dockets["name"], and returns its length
+- Array .docstrings - a list of all docstrings
+
+----
 
 ### String.prototype.toDocument
   see
@@ -124,6 +111,8 @@ __here is a list of methods/properties that may be useful__
   ```js
     (0).toTime.DOCSTRING
   ```
+
+----
 
 ## Paramour Functions:
 
@@ -214,7 +203,9 @@ __here is a list of methods/properties that may be useful__
       }
     }```
 
-# And after ~2 weeks of developing:
+----
+
+## And after ~2 weeks of developing:
   - funtions - stable
   - spreads - stable
   - classes - stable
