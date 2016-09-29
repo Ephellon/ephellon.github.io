@@ -30,7 +30,7 @@
 
 ----
 
-## Paramour's lists and "medulla"; (_these are free to change, delete or otherwise add onto_)
+## Paramour's lists and "medulla" (_these are free to change, delete or otherwise add onto_)
 
 - Array MULTI_LINE - all multiline comments
 - Array SINGLE_LINE - all single line comments
@@ -164,6 +164,7 @@ __here is a list of methods/properties that may be useful__
 
 ### handle (String input, Number index)
   "_see "function handle" for further detail_"
+
   __decompressess "input" using Paramour's "medulla" along with it's own "medulla"__
   example
   ```js
@@ -173,6 +174,7 @@ __here is a list of methods/properties that may be useful__
 
 ### hand (String input, String defenition)
   __returns a formatted operator-string__
+
   example
   ```js
   hand("||", "prefix-")
@@ -188,6 +190,7 @@ __here is a list of methods/properties that may be useful__
 ### compile (String input, * arguments)
   __the "brain" of Paramour__
   - var patterns - a list of patterns and how to handle them
+
   __given as {String pattern: function expression_handler}__
 
   ```\j``` - variable name "[a-z\$_][\w\$]*"
@@ -220,7 +223,7 @@ __here is a list of methods/properties that may be useful__
 
   explanation
   ```paramour
-    "Each operator can only be used once as either prefix, media, or suffix"
+    # Each operator can only be used once as either prefix, media, or suffix
     <suffix-operator ? [String]> {
       -> $1.indexOf("&") > -1
     }
