@@ -145,18 +145,20 @@ __here is a list of methods/properties that may be useful__
   ```js
     argify("String name")
   ```
-    returns
-    ```js
-    name = arguments[0]
-    ```
+
+  returns
+  ```js
+  name = arguments[0]
+  ```
   example
   ```js
   argify("String name = 'John'")
   ```
-    returns
-    ```js
-    name = arguments[0] || 'John'
-    ```
+
+  returns
+  ```js
+  name = arguments[0] || 'John'
+  ```
 
 ### unhandle (String input, String|Array type)
   __compressess "input" using "type" or "exps"__
@@ -164,10 +166,11 @@ __here is a list of methods/properties that may be useful__
   ```js
   unhandle("a = ['abc', 123]")
   ```
-    returns
-    ```js
-    "a = BRACK.0"
-    ```
+
+  returns
+  ```js
+  "a = BRACK.0"
+  ```
 
 ### handle (String input, Number index)
   "_see "function handle" for further detail_"
@@ -176,10 +179,11 @@ __here is a list of methods/properties that may be useful__
   ```js
   handle("a = BRACK.0")
   ```
-    returns
-    ```js
-    "a = [SINGLE_QUOTE.0, 123]"
-    ```
+
+  returns
+  ```js
+  "a = [SINGLE_QUOTE.0, 123]"
+  ```
 
 ### hand (String input, String defenition)
   __returns a formatted operator-string__
@@ -187,10 +191,11 @@ __here is a list of methods/properties that may be useful__
   ```js
   hand("||", "prefix-")
   ```
-    returns
-    ```js
-    "Double_Or_Prefix_Operator_"
-    ```
+
+  returns
+  ```js
+  "Double_Or_Prefix_Operator_"
+  ```
 
 ### decompile (String input, String|Array expressions, Boolean|Number all)
   __searches for and replaces "expressions" using "handle"__
@@ -212,7 +217,8 @@ __here is a list of methods/properties that may be useful__
       "(\\j)\\s*(PAREN\\.\\#)\\s*(BRACE\\.\\#)": function(e, a, b, c) {
         return "function " + a + decompile(b) + decompile(c, "BRACE")
       }
-    }```
+    }
+    ```
 
 ----
 
