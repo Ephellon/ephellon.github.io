@@ -55,7 +55,7 @@
   - Array function .emulate (String|Number version)
       emulates a different runtime; but adds an asterik to the emulation number, example "1.8.*"
   - String .original - the actual JavaScript version
-  - String .emu- ```the emulated version```
+  - String .emu- the emulated version
   - Boolean .manned - ```true``` if Paramour is being run via a Java Script Manager
   - Boolean .unmanned - ```!runtime.manned```
 
@@ -86,9 +86,10 @@ __here is a list of methods/properties that may be useful__
 
 ### String.prototype.repeat
   repeats the string ```x``` many times
+  example
   ```js
     "abc".repeat(3)
-    // abcabcabc
+    // returns: "abcabcabc"
   ```
 
 ### String.prototype.toDocument
@@ -144,20 +145,13 @@ __here is a list of methods/properties that may be useful__
   example
   ```js
     argify("String name")
+    // returns: name = arguments[0]
   ```
 
-  returns
-  ```js
-  name = arguments[0]
-  ```
   example
   ```js
   argify("String name = 'John'")
-  ```
-
-  returns
-  ```js
-  name = arguments[0] || 'John'
+  // returns: name = arguments[0] || 'John'
   ```
 
 ### unhandle (String input, String|Array type)
@@ -165,11 +159,7 @@ __here is a list of methods/properties that may be useful__
   example
   ```js
   unhandle("a = ['abc', 123]")
-  ```
-
-  returns
-  ```js
-  "a = BRACK.0"
+  // returns: "a = BRACK.0"
   ```
 
 ### handle (String input, Number index)
@@ -178,11 +168,7 @@ __here is a list of methods/properties that may be useful__
   example
   ```js
   handle("a = BRACK.0")
-  ```
-
-  returns
-  ```js
-  "a = [SINGLE_QUOTE.0, 123]"
+  // returns: "a = [SINGLE_QUOTE.0, 123]"
   ```
 
 ### hand (String input, String defenition)
@@ -190,11 +176,7 @@ __here is a list of methods/properties that may be useful__
   example
   ```js
   hand("||", "prefix-")
-  ```
-
-  returns
-  ```js
-  "Double_Or_Prefix_Operator_"
+  // returns: "Double_Or_Prefix_Operator_"
   ```
 
 ### decompile (String input, String|Array expressions, Boolean|Number all)
