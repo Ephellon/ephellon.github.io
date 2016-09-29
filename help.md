@@ -82,6 +82,15 @@ __here is a list of methods/properties that may be useful__
 
 ----
 
+# .prototype methods
+
+### String.prototype.repeat
+  repeats the string ```x``` many times
+  ```js
+    "abc".repeat(3)
+    // abcabcabc
+  ```
+
 ### String.prototype.toDocument
   see
   ```js
@@ -116,7 +125,8 @@ __here is a list of methods/properties that may be useful__
 
 ## Paramour Functions:
 
-### Tuple (* item...) _[] with {} for-in/yield iteration_
+### Tuple (* item...)
+  "_[] with {} for-in/yield iteration_"
   __returns a Tuple object, or an item from the Tuple__
   - The first call/declaration of a Tuple returns an object
   - Each call after returns an item from the Tuple, until reaching the end; then returns ```undefined```
@@ -159,7 +169,8 @@ __here is a list of methods/properties that may be useful__
     "a = BRACK.0"
     ```
 
-### handle (String input, Number index) _see "function handle" for further detail_
+### handle (String input, Number index)
+  "_see "function handle" for further detail_"
   __decompressess "input" using Paramour's "medulla" along with it's own "medulla"__
   example
   ```js
