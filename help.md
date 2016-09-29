@@ -188,19 +188,23 @@ __here is a list of methods/properties that may be useful__
 ### compile (String input, * arguments)
   __the "brain" of Paramour__
   - var patterns - a list of patterns and how to handle them
-    __given as {String pattern: function expression_handler}__
-    ```\j``` - variable name "[a-z\$_][\w\$]*"
-    ```\#``` - number "(\.\d+)"
-    ```\s``` - spaces (no newline/carriage return) "[\x20\t\v ]"
-    example of functions
-    ```js
-    var pattern = {
-      // ...
-      "(\\j)\\s*(PAREN\\.\\#)\\s*(BRACE\\.\\#)": function(e, a, b, c) {
-        return "function " + a + decompile(b) + decompile(c, "BRACE")
-      }
+  __given as {String pattern: function expression_handler}__
+
+  ```\j``` - variable name "[a-z\$_][\w\$]*"
+
+  ```\#``` - number "(\.\d+)"
+
+  ```\s``` - spaces (no newline/carriage return) "[\x20\t\v ]"
+
+  example of functions
+  ```js
+  var pattern = {
+    // ...
+    "(\\j)\\s*(PAREN\\.\\#)\\s*(BRACE\\.\\#)": function(e, a, b, c) {
+      return "function " + a + decompile(b) + decompile(c, "BRACE")
     }
-    ```
+  }
+  ```
 
 ----
 
@@ -211,21 +215,23 @@ __here is a list of methods/properties that may be useful__
   - tuples - stable
   - variables - stable, but testing
   - custom operators - stable, but testing
-    @prefix vs. suffix operators
-    explanation
-    ```paramour
-      "Each operator can only be used once as either prefix, media, or suffix"
-      <suffix-operator ? [String]> {
-        -> $1.indexOf("&") > -1
-      }
 
-      <prefix-operator ? [String]> {
-        -> $1.indexOf("&") === -1
-      }
+  ### @prefix vs. suffix operators
 
-      => ("apples & bananas")?
-        # returns true
-      => ?("apples & bananas")
-        # returns true, defaults to ?-suffix
-    ```
+  explanation
+  ```paramour
+    "Each operator can only be used once as either prefix, media, or suffix"
+    <suffix-operator ? [String]> {
+      -> $1.indexOf("&") > -1
+    }
+
+    <prefix-operator ? [String]> {
+      -> $1.indexOf("&") === -1
+    }
+
+    => ("apples & bananas")?
+      # returns true
+    => ?("apples & bananas")
+      # returns true, defaults to ?-suffix
+  ```
   - yields - theoretical stage
