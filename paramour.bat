@@ -1,6 +1,6 @@
 :: Ephellon Dantzler - Paramour Java Compiler 2016
 @ECHO off
-@SET next=a 
+@SET next=a
 
 :mas
   @IF [%1]==[] GOTO media
@@ -10,8 +10,8 @@
     @GOTO mas
 
 :media
-  @CHOICE /M "Would you like to compile %next%Paramour file?"
-  @SET next=another 
+  @CHOICE /M "Would you like to compile %next% Paramour file?"
+  @SET next=another
   @GOTO %ERRORLEVEL%
 
 :2
