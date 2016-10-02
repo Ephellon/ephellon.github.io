@@ -60,6 +60,11 @@ Employee.Manager {
       @[entry] = data[entry];
     @role = "Manager"
   }
+
+  remove(entries...) {
+    for(var x = 0; x < entries.length; x++)
+      super entries[x]
+  }
 }
 
 var Bob = Employee({

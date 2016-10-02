@@ -60,8 +60,8 @@
   - Array function .emulate (String|Number version)
       emulates a different runtime; but adds an asterik to the emulation number, example "1.8.*"
   - String .original - the actual JavaScript version
-  - String .emu- the emulated version
-  - Boolean .manned - ```true``` if Paramour is being run via a Java Script Manager
+  - String .emu - the emulated version
+  - Boolean .manned - ```true``` if Paramour is being run via a JavaScript Manager
   - Boolean .unmanned - ```!runtime.manned```
 
 ----
