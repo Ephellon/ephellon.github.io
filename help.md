@@ -91,6 +91,7 @@ __here is a list of methods/properties that may be useful__
 
 ### String.prototype.repeat
   repeats the string ```x``` many times
+
   example
   ```js
     "abc".repeat(3)
