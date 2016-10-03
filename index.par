@@ -67,7 +67,7 @@ Employee.Manager {
   }
 }
 
-var Bob = Employee({
+var Bob = new Employee({
   name: "Bob Dylan",
   age: 41,
   role: "Cashier"
