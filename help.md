@@ -1,6 +1,8 @@
 # Paramour Crash Course
   _This document is for help on how to edit Paramour's source code_
+
   _For examples of how to use Paramour without editing the source code, see "index.par"_
+
   _If you want to modify Paramour, or completely build a new language, here are some things to note:_
 
   __below, some variables are given as "Type name", and "Return-Type Type name"__
