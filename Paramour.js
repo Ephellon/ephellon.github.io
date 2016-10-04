@@ -1,4 +1,4 @@
-// Paramour 15.0.5 "Krogstad" - Ephellon Dantzler 2016
+// Paramour 15.1.5 "Krogstad" - Ephellon Dantzler 2016
 // Unminified: //codepen.io/ephellon/pen/XKPVgw
 /* Uglify Options: http://skalman.github.io/UglifyJS-online/
 {
