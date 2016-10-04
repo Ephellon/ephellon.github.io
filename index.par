@@ -24,7 +24,7 @@ var(value_2, value_3) = Tuple.next;
   value_3 - /def/g
 ###
 
-var(value_4) = catcher.next();
+var value_4 = catcher.next();
   # value_4 - [123, 456, 789]
 
 # Functions ----------------
