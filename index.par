@@ -11,18 +11,21 @@
 # $win => window
 
 # Tuples ----------------
-var(object_catcher, value_1, value_2) = {{
-  "abc", 123, /def/g
+var(catcher, value_1) = {{
+  "abc", 123, /def/g, [123, 456, 789]
 }};
 
+var(value_2, value_3) = Tuple.next;
+
 ###
-  object_catcher - the Tuple itself
+  catcher - the Tuple itself
   value_1 - "abc"
   value_2 - 123
+  value_3 - /def/g
 ###
 
-var(value_3) = object_catcher.next();
-  # value_3 - /def/g
+var(value_4) = object_catcher.next();
+  # value_4 - [123, 456, 789]
 
 # Functions ----------------
 log(String message, details...) {
@@ -73,11 +76,12 @@ var Bob = new Employee({
   role: "Cashier"
 });
 
-# Custom Operators ----------------
-# These behave as a sort-of "get" for operators
-# custom operators can take up to 4 spaces
-# = up to ====, for a grand total of 50,625 possible operators
-# ~ ! % ^ & | * - + = : < > ? /
+### Custom Operators ----------------
+ These behave as a sort-of "get" for operators
+ custom operators can take up to 4 spaces
+ ! up to ====, for a grand total of 50,625 possible operators
+ ! ~ * / % + - < > & ^ | ? : =
+###
 
 <operator ^ [Number, Number]> {
   -> Math.pow($1, $2)
