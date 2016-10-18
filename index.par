@@ -28,7 +28,7 @@ var value_4 = catcher.next();
   # value_4 - [123, 456, 789]
 
 # Functions ----------------
-/* (String message, * details...)
+/** (String message, * details...)
  * logs a message and it's details
  * @param {String} message The message to log
  * @param {Spread} details The arguments that are condisdered extra details
@@ -88,22 +88,22 @@ var Bob = new Employee({
  ! ~ * / % + - < > & ^ | ? : =
 ###
 
-<operator ^ [Number, Number]> {
+operator ^ [Number, Number] {
   -> Math.pow($1, $2)
 }
 
-<operator = [Number, Number]> {
+operator = [Number, Number] {
   -> $1 === $2
 }
 
-<suffix-operator ? [Boolean]> {
+suffix-operator ? [Boolean] {
   if($1)
     -> $1;
   else
     +> SyntaxError("? Operator was given 'false'");
 }
 
-<prefix-operator !> {
+prefix-operator ! {
   -> ($1 !== undefined && $1 !== null)
 }
 
