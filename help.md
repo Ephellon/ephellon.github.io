@@ -234,11 +234,11 @@ __here is a list of methods/properties that may be useful__
   explanation
   ```paramour
     # Each operator can only be used once as either prefix, media, or suffix
-    suffix-operator ? [String] {
+    [String?] {
       -> $1.indexOf("&") > -1
     }
 
-    prefix-operator ? [String] {
+    [?String] {
       -> $1.indexOf("&") === -1
     }
 
