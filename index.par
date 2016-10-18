@@ -88,22 +88,22 @@ var Bob = new Employee({
  ! ~ * / % + - < > & ^ | ? : =
 ###
 
-operator ^ [Number, Number] {
+[Number ^ Number] {
   -> Math.pow($1, $2)
 }
 
-operator = [Number, Number] {
+[Number = Number] {
   -> $1 === $2
 }
 
-suffix-operator ? [Boolean] {
+[Boolean?] {
   if($1)
     -> $1;
   else
     +> SyntaxError("? Operator was given 'false'");
 }
 
-prefix-operator ! {
+[!Any] {
   -> ($1 !== undefined && $1 !== null)
 }
 
