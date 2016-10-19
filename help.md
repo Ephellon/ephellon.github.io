@@ -229,15 +229,33 @@ __here is a list of methods/properties that may be useful__
 
   __given as {String pattern: function expression_handler}__
 
-  ```\j``` - variable name "[a-z\$_][\w\$]*"
+  ```\#++``` - (# = [0-9abcdefjknrstuvxABDEJKS]) "repeat a sequence"
 
-  ```\#``` - number "(\.\d+)"
+  ```\a``` - "alpha characters" [a-zA-Z]
 
-  ```\s``` - spaces (no newline/carriage return) "[\x20\t\v ]"
+  ```\A``` - "non-alpha characters" [^a-zA-Z]
+
+  ```\j``` - "JavaScript compliant name" [a-zA-Z\$_][\w\$]*
+
+  ```\J``` - "non-JavaScript compliant name" [^a-zA-Z\$_][\w\$]*
+
+  ```\e``` - "alpha/greek characters" [a-z\u03b1-\u03c9_A-Z\u0391-\u03a9]
+
+  ```\E``` - "non-alpha/greek characters" [^a-z\u03b1-\u03c9_A-Z\u0391-\u03a9]
+
+  ```\k[...]``` - "to lowercase"
+
+  ```\K[...]``` - "to uppercase"
+
+  ```\N``` - "number" [\-0]{0,2}[box]?[\d\.]+[\-\d\.e]*
+
+  ```\q``` - "terminating character" [\n\r,;$\{\}\(\)\[\]]
+
+  ```\Q``` - "non-terminating character" [^\n\r,;\{\}\(\)\[\]]
 
   example of functions
   ```js
-  var pattern = {
+  var patterns = {
     // ...
     "(\\j)\\s*(PAREN\\.\\#)\\s*(BRACE\\.\\#)": function(e, a, b, c) {
       return "function " + a + decompile(b) + decompile(c, "BRACE")
