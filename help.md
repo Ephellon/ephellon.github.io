@@ -5,7 +5,7 @@
 
   _If you want to modify Paramour, or completely build a new language, here are some things to note:_
 
-  __below, some variables are given as "Input-Type name" for properties, and "Output-Type .name" for methods__
+  __below, some variables are given as "Type name" for properties, and "Return-Type .name" for methods__
 
 ## Paramour Variables:
 - String input - the original input given to Paramour; often redeclared inside of some functions
