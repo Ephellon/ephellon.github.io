@@ -21,16 +21,16 @@
 
 ### __example__
 ```js
-// variable_name.number
-// .number is an error in this case
+// example of "variable_name.number"
+// ".number" is an error in this case
 "(\\j)\\.(\\d+)": function(e, a, b) {
-  // when using RegExp -> Functions
+  // when using, RegExp -> Functions
   // arguments are given as (RegExp.$_[, RegExp.$1[, RegExp.$2[, ...[, RegExp.$9]]]])
-  console.log("Error@" + self.name, e)
-      // Error@(\j)\.(\d+) abc.123
+  console.error("@Paramour Error '" + self.name + "'", '->', "'" + e "'")
+      // this would log "@Paramour Error '(\j)\.(\d+)' -> 'abc.123'"
     // self refers to the current function being executed
     // the function's name is changed from anonymous -> "(\j)\.(\d+)"
-  return "// Error: " + e
+  return "// @Paramour Error: " + e
 }
 ```
 
