@@ -176,6 +176,14 @@ __here is a list of methods/properties that may be useful__
   - function - the function to call on, i.e. ```=>(a == b)``` -> ```Double_Equals_Operator```
   - brace - the brace expression that will be used
 
+### String shock(String input)
+  __returns a reformatted string (converts escaped characters to "ignored sequences")__
+  - String input - the input to convert
+
+### String unshock(String input)
+  __returns a reformatted string (converts "ignored sequences" to escaped characters)__
+  - String input - the input to convert
+
 ### String argify (String|Array arguments, String|Array types)
   __returns a formatted list of variable names__
   example
