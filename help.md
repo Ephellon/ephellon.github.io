@@ -5,7 +5,7 @@
 
   _If you want to modify Paramour, or completely build a new language, here are some things to note:_
 
-  __below, some variables are given as "Type name", and "Return-Type Type name"__
+  __below, some variables are given as "Input-Type name" for properties, and "Output-Type .name" for methods__
 
 ## Paramour Variables:
 - String input - the original input given to Paramour; often redeclared inside of some functions
@@ -55,13 +55,14 @@
 - Array PHANTOMS - all phantom expressions, commented "$variable -> value", or "$variable => value"
 - Array DOCSTRING - all of the docstrings
 - Array IGNORED - temporary spot for ignored expressions
+- Array VERC - the version control comments
 - Object patterns - a list of each expression to look for, with a RegExp to use as the delimiter; the pattern name must macth a variable name that is an array, example {"EMUS": /#\s+@1.5/}
 - Object runtime - __a list that detects/modifies the currently running JavaScript version__
-  - Boolean function .is (String|Number version)
+  - Boolean .is (String|Number version)
       returns if the current JavaScript version is "version"
-  - Boolean function .has (String|Number version)
+  - Boolean .has (String|Number version)
       returns if the current JavaScript version is in the array of supported versions
-  - Array function .emulate (String|Number version)
+  - Array .emulate (String|Number version)
       emulates a different runtime; but adds an asterik to the emulation number, example "1.8.*"
   - String .original - the actual JavaScript version
   - String .emu - the emulated version
@@ -78,15 +79,40 @@ __the original "navigator" object, with some modifications__
 - String .runtime - ```runtime.original```
 - Boolean .paramour - ```true```
 
+### Paramour.compile()
+
+__tell Paramour to load and compile external scripts__
+
+### String Parmour.run(String code, Boolean embed)
+
+__simply run Paramour, without executing the returning string__
+
+- String code - the code to compile (Parmour syntax)
+- Boolean embed - block (true) or allow(false) Paramour's "Was Paramour Helpful" feature
+
+### String Parmour.run(String code, Boolean embed)
+
+__run Paramour, and execute the returning string__
+
+- String code - the code to compile (Parmour syntax)
+- Boolean embed - block (true) or allow(false) Paramour's "Was Paramour Helpful" feature
+
+### Null Paramour.load(String url, Function callback, Object options, Boolean hold)
+
+- String url - the URL of the .par file to load
+- Function callback - the function to call once the script is loaded
+- Object options - options to use (unused)
+- Boolean hold - stall (true) or allow (false) Paramour from compiling the loaded script
+
 ----
 
 ### Paramour
 
 __here is a list of methods/properties that may be useful__
 - Object .dockets - a list of functions that Paramour will format, {"function's name": "function's arguments"}
-- String function .types (* item...) - returns a comma seperated list of function names/constructors/object types
-- Array function .pull (String name) - returns the array of arguments from Paramour.dockets
-- Number function .push (String name, String arguments) - adds the "arguments" to Paramour.dockets["name"], and returns its length
+- String .types (* item...) - returns a comma seperated list of function names/constructors/object types
+- Array .pull (String name) - returns the array of arguments from Paramour.dockets
+- Number .push (String name, String arguments) - adds the "arguments" to Paramour.dockets["name"], and returns its length
 - Array .docstrings - a list of all docstrings
 
 ----
@@ -136,13 +162,13 @@ __here is a list of methods/properties that may be useful__
 
 ## Paramour Functions:
 
-### Tuple (* item...)
+### Object Tuple (* item...)
   "_[] with {} for-in/yield iteration_"
   __returns a Tuple object, or an item from the Tuple__
   - The first call/declaration of a Tuple returns an object
   - Each call after returns an item from the Tuple, until reaching the end; then returns ```undefined```
 
-### Operator (String operator, String type, String fix, String function, String brace)
+### Undefined Operator (String operator, String type, String fix, String function, String brace)
   __returns undefined, but modifies Operator.kids__
   - operator - the symbol(s) that are going to be used
   - type - how many there are, i.e. "==" -> "double equals"
@@ -150,7 +176,7 @@ __here is a list of methods/properties that may be useful__
   - function - the function to call on, i.e. ```=>(a == b)``` -> ```Double_Equals_Operator```
   - brace - the brace expression that will be used
 
-### argify (String|Array arguments, String|Array types)
+### String argify (String|Array arguments, String|Array types)
   __returns a formatted list of variable names__
   example
   ```js
@@ -164,7 +190,7 @@ __here is a list of methods/properties that may be useful__
   // returns: name = arguments[0] || 'John'
   ```
 
-### unhandle (String input, String|Array type)
+### String unhandle (String input, String|Array type)
   __compressess "input" using "type" or "exps"__
   example
   ```js
@@ -172,7 +198,7 @@ __here is a list of methods/properties that may be useful__
   // returns: "a = BRACK.0"
   ```
 
-### handle (String input, Number index)
+### String handle (String input, Number index)
   "_see "function handle" for further detail_"
 
   __decompressess "input" using Paramour's "medulla" along with it's own "medulla"__
@@ -182,7 +208,7 @@ __here is a list of methods/properties that may be useful__
   // returns: "a = [SINGLE_QUOTE.0, 123]"
   ```
 
-### hand (String input, String defenition)
+### String hand (String input, String defenition)
   __returns a formatted operator-string__
 
   example
@@ -191,13 +217,13 @@ __here is a list of methods/properties that may be useful__
   // returns: "Double_Or_Prefix_Operator_"
   ```
 
-### decompile (String input, String|Array expressions, Boolean|Number all)
+### String decompile (String input, String|Array expressions, Boolean|Number all)
   __searches for and replaces "expressions" using "handle"__
   - * expressions - comma, space, or pipe seperated list
   - Boolean all - if true, "decompile" replaces all "expressions", otherwise just the first
   - Number all - "decompile" replaces that many "expressions"
 
-### compile (String input, * arguments)
+### String compile (String input, * arguments)
   __the "brain" of Paramour__
   - var patterns - a list of patterns and how to handle them
 
@@ -221,7 +247,99 @@ __here is a list of methods/properties that may be useful__
 
 ----
 
-## And after ~2 weeks of developing:
+## Object JSUNIT
+
+__Unit testing, all below are porperties/methods of the ```JSUNIT``` object__
+
+### Boolean toconsole
+  __controls the <stdout>__
+  true - logs to the ```console```
+  false - logs to the html element ```#jsunit-stdout```
+
+### Number count
+  __the current test that is running__
+
+### assert(received, expected)
+  __log that you wanted "received"__
+  - received - the received value
+  - expected - the expected value
+
+### assertTrue(received, comment)
+  __log that you wanted ```true```__
+  - received - the received value
+  - comment - an optional comment about the error
+
+### assertFalse(received, comment)
+  __log that you wanted ```false```__
+  - received - the recieved value
+  - comment - an optional comment about the error
+
+### assertEquals(received, expected, comment)
+  __log that you wanted ```received```__
+  - received - the received value
+  - expected - the expected value
+  - comment - an optional comment about the error
+
+### assertNotEquals(received, expected, comment)
+  __log that you did not want ```received```__
+  - received - the received value
+  - expected - the expected value
+  - comment - an optional comment about the error
+
+### assertNull(received, comment)
+  __log that you wanted ```null```__
+  - received - the received value
+  - comment - an optional comment about the error
+
+### assertNotNull(received, comment)
+  __log that you did not want ```null```__
+  - received - the recieved value
+  - comment - an optional comment about the error
+
+### assertUndefined(received, comment)
+  __log that you wanted ```undefined```__
+  - received - the received value
+  - comment - an optional comment about the error
+
+### assertNotUndefined(received, comment)
+  __log that you did not want ```undefined```__
+  - received - the recieved value
+  - comment - an optional comment about the error
+
+### assertNaN(received, comment)
+  __log that you wanted ```NaN```__
+  - received - the received value
+  - comment - an optional comment about the error
+
+### assertNotNaN(received, comment)
+  __log that you did not want ```NaN```__
+  - received - the recieved value
+  - comment - an optional comment about the error
+
+### assertFail(comment)
+  __log a fail__
+  - comment - an optional comment about the error
+
+### out(error)
+  __log an error__
+  - error - the error to log
+
+### log(message)
+  __log a message__
+  - message - the message to log
+
+### stdout(error)
+  __log an error to the <stdout>__
+  - error - the error to log
+
+### stdin(query, default)
+  __get user input via <stdin>__
+  - query - the query to ask the user
+  - default - the default value
+
+----
+
+## And after months of developing:
   - funtions - stable
   - spreads - stable
   - classes - stable
