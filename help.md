@@ -1,5 +1,5 @@
 # Paramour Crash Course
-  _This document is for help on how to edit Paramour's source code, if you want help about writing Paramour scrips, see [this post](https://codepen.io/ephellon/post/paramour)_
+  _This document is for help on how to edit Paramour's source code, if you want help about writing code in Paramour syntax, see [this post](https://codepen.io/ephellon/post/paramour)_
 
   _For examples of how to use Paramour without editing the source code, see "index.par"_
 
