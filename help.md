@@ -354,7 +354,11 @@ __Unit testing, all below are porperties/methods of the ```JSUNIT``` object__
   __log a message__
   - message - the message to log
 
-### stdout(error)
+### stdout(message)
+  __log a message to the <stdout>__
+  - message - the message to log
+
+### stderr(error)
   __log an error to the <stdout>__
   - error - the error to log
 
