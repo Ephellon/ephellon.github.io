@@ -68,6 +68,7 @@
   - String .emu - the emulated version
   - Boolean .manned - ```true``` if Paramour is being run via a JavaScript Manager
   - Boolean .unmanned - ```!runtime.manned```
+- Array SnapShot - __a list of snapshots (semi-compiled code) captured by Paramour__
 
 ----
 
