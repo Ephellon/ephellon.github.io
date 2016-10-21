@@ -69,6 +69,7 @@
   - Boolean .manned - ```true``` if Paramour is being run via a JavaScript Manager
   - Boolean .unmanned - ```!runtime.manned```
 - Array SnapShot - __a list of snapshots (semi-compiled code) captured by Paramour__
+- Array .SEA - __a list of SEAs (Self Evaluation Articles)__
 
 ----
 
@@ -80,9 +81,10 @@ __the original "navigator" object, with some modifications__
 - String .runtime - ```runtime.original```
 - Boolean .paramour - ```true```
 
-### Paramour.compile()
+### Paramour.compile(Boolean run)
 
-__tell Paramour to load and compile external scripts__
+__tell Paramour to load and compile external/html-tag scripts__
+- Boolean run - eval the scripts or not
 
 ### String Parmour.run(String code, Boolean embed)
 
