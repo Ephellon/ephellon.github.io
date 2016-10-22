@@ -240,7 +240,7 @@ __here is a list of methods/properties that may be useful__
 
   __given as {String pattern: function expression_handler}__
 
-  ```\#++``` - (# = [0-9abcdefjknrstuvxABDEJKS]) "repeat a sequence"
+  ```\#++``` - (# = [0-9abcdefjknqrstuvxABDEJKNQS]) "repeat a sequence"
 
   ```\a``` - "alpha characters" [a-zA-Z]
 
