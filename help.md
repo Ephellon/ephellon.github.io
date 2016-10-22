@@ -281,9 +281,9 @@ __here is a list of methods/properties that may be useful__
 __Unit testing, all below are porperties/methods of the ```JSUNIT``` object__
 
 ### Boolean toconsole
-  __controls the <stdout>__
-  true - logs to the ```console```
-  false - logs to the html element ```#jsunit-stdout```
+  __controls the &lt;stdout&gt;__
+  - ```true``` - logs to the ```console```
+  - ```false``` - logs to the html element ```#jsunit-stdout```
 
 ### Number count
   __the current test that is running__
@@ -358,15 +358,15 @@ __Unit testing, all below are porperties/methods of the ```JSUNIT``` object__
   - message - the message to log
 
 ### stdout(message)
-  __log a message to the <stdout>__
+  __log a message to the &lt;stdout&gt;__
   - message - the message to log
 
 ### stderr(error)
-  __log an error to the <stdout>__
+  __log an error to the &lt;stdout&gt;__
   - error - the error to log
 
 ### stdin(query, default)
-  __get user input via <stdin>__
+  __get user input via &lt;stdin&gt;__
   - query - the query to ask the user
   - default - the default value
 
