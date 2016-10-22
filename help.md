@@ -268,7 +268,7 @@ __here is a list of methods/properties that may be useful__
   ```js
   var patterns = {
     // ...
-    "(\\j)\\s*(PAREN\\.\\#)\\s*(BRACE\\.\\#)": function(e, a, b, c) {
+    "(\\j)\\s*(PAREN\\.\\d+)\\s*(BRACE\\.\\d+)": function(e, a, b, c) {
       return "function " + a + decompile(b) + decompile(c, "BRACE")
     }
   }
