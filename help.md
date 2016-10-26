@@ -376,7 +376,7 @@ __Unit testing, all below are porperties/methods of the ```JSUNIT``` object__
 ----
 
 ## And after months of developing:
-  - funtions - stable
+  - functions - stable
   - spreads - stable
   - classes - stable
   - tuples - stable
