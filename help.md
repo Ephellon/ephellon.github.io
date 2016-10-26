@@ -8,16 +8,16 @@
   __below, some variables are given as "Type name" for properties, and "Return-Type .name" for methods__
 
 ## Paramour Variables:
-- String input - the original input given to Paramour; often redeclared inside of some functions
-- String backup - a backup copy of "input"
-- Array exps - all of the patterns used to modify "input," dynamically updated
-- RegExp errors - errors to remove
-- RegExp reserved - reserved words and symbols
-- Array operators - a list of all non-alphanumeric operators
-- Object oprs - a list of each non-alphanumeric operator and a respecting name, {"operator": "name"}
-- Boolean tabs - a boolean that replaces tabs/spaces after Paramour has completed
-- Boolean JavaScript_Manager - an attempt to detect if Paramour is being run via Java
-- Function self - the expression handler once its pattern has been executed by RegExp in Paramour's "brain" (compile)
+- String ```input``` - the original input given to Paramour; often redeclared inside of some functions
+- String ```backup``` - a backup copy of "input"
+- Array ```exps``` - all of the patterns used to modify "input," dynamically updated
+- RegExp ```errors``` - errors to remove
+- RegExp ```reserved``` - reserved words and symbols
+- Array ```operators``` - a list of all non-alphanumeric operators
+- Object ```oprs``` - a list of each non-alphanumeric operator and a respecting name, {"operator": "name"}
+- Boolean ```tabs``` - a boolean that replaces tabs/spaces after Paramour has completed
+- Boolean ```JavaScript_Manager``` - an attempt to detect if Paramour is being run via Java
+- Function ```self``` - the expression handler once its pattern has been executed by RegExp in Paramour's "brain" (compile)
 
 ### __example__
 ```js
@@ -34,42 +34,42 @@
 }
 ```
 
-- Null now - TBD
-- Null later - TBD
+- Null ```now``` - TBD
+- Null ```later``` - TBD
 
 ----
 
 ## Paramour's lists and "medulla" (_these are free to change, delete or otherwise add onto_)
 
-- Array MULTI_LINE - all multiline comments
-- Array SINGLE_LINE - all single line comments
-- Array REGEXP - all Regular Expressions
-- Array DOUBLE_QUOTE - all double quoted strings
-- Array SINGLE_QUOTE - all single quoted strings
-- Array QUASI - all grave quoted strings
-- Array PAREN - all parenthesis expressions
-- Array BRACK - all bracket expressions
-- Array BRACE - all curly brace expressions
-- Array TUPLES - all tuple expressions, double curly brace "{{}}"
-- Array EMUS - all emulation expressions, commented "@version"
-- Array PHANTOMS - all phantom expressions, commented "$variable -> value", or "$variable => value"
-- Array DOCSTRING - all of the docstrings
-- Array IGNORED - temporary spot for ignored expressions
-- Array VERC - the version control comments
-- Object patterns - a list of each expression to look for, with a RegExp to use as the delimiter; the pattern name must macth a variable name that is an array, example {"EMUS": /#\s+@1.5/}
-- Object runtime - __a list that detects/modifies the currently running JavaScript version__
-  - Boolean .is (String|Number version)
+- Array ```MULTI_LINE``` - all multiline comments
+- Array ```SINGLE_LINE``` - all single line comments
+- Array ```REGEXP``` - all Regular Expressions
+- Array ```DOUBLE_QUOTE``` - all double quoted strings
+- Array ```SINGLE_QUOTE``` - all single quoted strings
+- Array ```QUASI``` - all grave quoted strings
+- Array ```PAREN``` - all parenthesis expressions
+- Array ```BRACK``` - all bracket expressions
+- Array ```BRACE``` - all curly brace expressions
+- Array ```TUPLES``` - all tuple expressions, double curly brace "{{}}"
+- Array ```EMUS``` - all emulation expressions, commented "@version"
+- Array ```PHANTOMS``` - all phantom expressions, commented "$variable -> value", or "$variable => value"
+- Array ```DOCSTRING``` - all of the docstrings
+- Array ```IGNORED``` - temporary spot for ignored expressions
+- Array ```VERC``` - the version control comments
+- Object ```patterns``` - a list of each expression to look for, with a RegExp to use as the delimiter; the pattern name must macth a variable name that is an array, example {"EMUS": /#\s+@1.5/}
+- Object ```runtime``` - __a list that detects/modifies the currently running JavaScript version__
+  - Boolean ```.is``` (String|Number version)
       returns if the current JavaScript version is "version"
-  - Boolean .has (String|Number version)
+  - Boolean ```.has``` (String|Number version)
       returns if the current JavaScript version is in the array of supported versions
-  - Array .emulate (String|Number version)
+  - Array ```.emulate``` (String|Number version)
       emulates a different runtime; but adds an asterik to the emulation number, example "1.8.*"
-  - String .original - the actual JavaScript version
-  - String .emu - the emulated version
-  - Boolean .manned - ```true``` if Paramour is being run via a JavaScript Manager
-  - Boolean .unmanned - ```!runtime.manned```
-- Array SnapShot - __a list of snapshots (semi-compiled code) captured by Paramour__
-- Array .SEA - __a list of SEAs (Self Evaluation Articles)__
+  - String ```.original``` - the actual JavaScript version
+  - String ```.emu``` - the emulated version
+  - Boolean ```.manned``` - ```true``` if Paramour is being run via a JavaScript Manager
+  - Boolean ```.unmanned``` - ```!runtime.manned```
+- Array ```SnapShot``` - __a list of snapshots (semi-compiled code) captured by Paramour__
+- Array ```.SEA``` - __a list of SEAs (Self Evaluation Articles)__
 
 ----
 
@@ -78,45 +78,45 @@
 ### Object navigator
 
 __the original "navigator" object, with some modifications__
-- String .runtime - ```runtime.original```
-- Boolean .paramour - ```true```
+- String ```.runtime``` - ```runtime.original```
+- Boolean ```.paramour``` - ```true```
 
 ### Paramour.compile(Boolean run)
 
 __tell Paramour to load and compile external/html-tag scripts__
-- Boolean run - eval the scripts or not
+- Boolean ```run``` - eval the scripts or not
 
 ### String Parmour.run(String code, Boolean embed)
 
 __simply run Paramour, without executing the returning string__
 
-- String code - the code to compile (Parmour syntax)
-- Boolean embed - block (true) or allow(false) Paramour's "Was Paramour Helpful" feature
+- String ```code``` - the code to compile (Parmour syntax)
+- Boolean ```embed``` - block (true) or allow(false) Paramour's "Was Paramour Helpful" feature
 
 ### String Parmour.run(String code, Boolean embed)
 
 __run Paramour, and execute the returning string__
 
-- String code - the code to compile (Parmour syntax)
-- Boolean embed - block (true) or allow(false) Paramour's "Was Paramour Helpful" feature
+- String ```code``` - the code to compile (Parmour syntax)
+- Boolean ```embed``` - block (true) or allow(false) Paramour's "Was Paramour Helpful" feature
 
 ### Null Paramour.load(String url, Function callback, Object options, Boolean hold)
 
-- String url - the URL of the .par file to load
-- Function callback - the function to call once the script is loaded
-- Object options - options to use (unused)
-- Boolean hold - stall (true) or allow (false) Paramour from compiling the loaded script
+- String ```url``` - the URL of the .par file to load
+- Function ```callback``` - the function to call once the script is loaded
+- Object ```options``` - options to use (unused)
+- Boolean ```hold``` - stall (true) or allow (false) Paramour from compiling the loaded script
 
 ----
 
 ### Paramour
 
 __here is a list of methods/properties that may be useful__
-- Object .dockets - a list of functions that Paramour will format, {"function's name": "function's arguments"}
-- String .types (* item...) - returns a comma seperated list of function names/constructors/object types
-- Array .pull (String name) - returns the array of arguments from Paramour.dockets
-- Number .push (String name, String arguments) - adds the "arguments" to Paramour.dockets["name"], and returns its length
-- Array .docstrings - a list of all docstrings
+- Object ```.dockets``` - a list of functions that Paramour will format, {"function's name": "function's arguments"}
+- String ```.types``` (* item...) - returns a comma seperated list of function names/constructors/object types
+- Array ```.pull``` (String name) - returns the array of arguments from Paramour.dockets
+- Number ```.push``` (String name, String arguments) - adds the "arguments" to Paramour.dockets["name"], and returns its length
+- Array ```.docstrings``` - a list of all docstrings
 
 ----
 
@@ -181,14 +181,15 @@ __here is a list of methods/properties that may be useful__
 
 ### String shock(String input)
   __returns a reformatted string (converts escaped characters to "ignored sequences")__
-  - String input - the input to convert
+  - String ```input``` - the input to convert
 
 ### String unshock(String input)
   __returns a reformatted string (converts "ignored sequences" to escaped characters)__
-  - String input - the input to convert
+  - String ```input``` - the input to convert
 
 ### String argify (String|Array arguments, String|Array types)
   __returns a formatted list of variable names__
+
   example
   ```js
     argify("String name")
@@ -203,6 +204,7 @@ __here is a list of methods/properties that may be useful__
 
 ### String unhandle (String input, String|Array type)
   __compressess "input" using "type" or "exps"__
+
   example
   ```js
   unhandle("a = ['abc', 123]")
@@ -213,6 +215,7 @@ __here is a list of methods/properties that may be useful__
   "_see "function handle" for further detail_"
 
   __decompressess "input" using Paramour's "medulla" along with it's own "medulla"__
+
   example
   ```js
   handle("a = BRACK.0")
@@ -230,9 +233,9 @@ __here is a list of methods/properties that may be useful__
 
 ### String decompile (String input, String|Array expressions, Boolean|Number all)
   __searches for and replaces "expressions" using "handle"__
-  - * expressions - comma, space, or pipe seperated list
-  - Boolean all - if true, "decompile" replaces all "expressions", otherwise just the first
-  - Number all - "decompile" replaces that many "expressions"
+  - * ```expressions``` - comma, space, or pipe seperated list
+  - Boolean ```all``` - if true, "decompile" replaces all "expressions", otherwise just the first
+  - Number ```all``` - "decompile" replaces that many "expressions"
 
 ### String compile (String input, * arguments)
   __the "brain" of Paramour__
@@ -267,7 +270,7 @@ __here is a list of methods/properties that may be useful__
   example of functions
   ```js
   var patterns = {
-    // ...
+    // function_name(...) {...}
     "(\\j)\\s*(PAREN\\.\\d+)\\s*(BRACE\\.\\d+)": function(e, a, b, c) {
       return "function " + a + decompile(b) + decompile(c, "BRACE")
     }
