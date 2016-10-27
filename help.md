@@ -291,7 +291,7 @@ __Unit testing, all below are porperties/methods of the ```JSUNIT``` object__
 ### Number count
   __the current test that is running__
 
-### assert(received, expected)
+### assert(expected, received)
   __log that you wanted "received"__
   - received - the received value
   - expected - the expected value
@@ -306,13 +306,13 @@ __Unit testing, all below are porperties/methods of the ```JSUNIT``` object__
   - received - the recieved value
   - comment - an optional comment about the error
 
-### assertEquals(received, expected, comment)
+### assertEquals(expected, received, comment)
   __log that you wanted ```received```__
   - received - the received value
   - expected - the expected value
   - comment - an optional comment about the error
 
-### assertNotEquals(received, expected, comment)
+### assertNotEquals(expected, received, comment)
   __log that you did not want ```received```__
   - received - the received value
   - expected - the expected value
