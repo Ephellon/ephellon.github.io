@@ -1,7 +1,7 @@
 # Paramour Crash Course
-  _This document is for help on how to edit Paramour's source code, if you want help about writing code in Paramour syntax, see [this post](https://codepen.io/ephellon/post/paramour)_
+  _This document is for help on how to edit Paramour's source code, if you want help about writing code in Paramour syntax, see [this post](https://codepen.io/ephellon/post/paramour)_.
 
-  _For examples of how to use Paramour without editing the source code, see "index.par"_
+  _For documentation and examples, see [Paramour](http://paramour-minkcbos.codeanyapp.com)._
 
   _If you want to modify Paramour, or completely build a new language, here are some things to note:_
 
