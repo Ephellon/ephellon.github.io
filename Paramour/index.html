@@ -877,7 +877,7 @@ Animal.Cat {
 <textarea class="compile-paramour" type="text/paramour" id="E21">
 "PI = ${Math.PI}" # interpolation
 
-var bqua = # bottom-level quasi
+var bqua = # bottom-level quasi (parsed after comments)
 `
 # comment
 var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
@@ -885,13 +885,14 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
 # otherwise, Paramour handles it
 `
 
-var tqua = # top-level quasi
+var tqua = # top-level quasi (parsed before everything, even comments)
 """
 # comment
 var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
 # * if the JS version handles quasis, Paramour let's JS do its thing,
 # otherwise, Paramour handles it
 """
+
 ###
   Top level - ["'`]{3}
   Bottom level - `
