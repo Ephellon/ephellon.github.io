@@ -10,11 +10,11 @@
 # $next -> continue
 
 # Numbers
- /** [Number ^ Number] -> Math.pow $1, $2
-  * Return a number to the power of another number
-  * Number $1 - The base number
-  * Number $2 - The exponent to raise the base by
-  */
+/** [Number ^ Number] -> Math.pow $1, $2
+ * Return a number to the power of another number
+ * Number $1 - The base number
+ * Number $2 - The exponent to raise the base by
+ */
 [Number ^ Number] => Math.pow($1, $2);
 
 /** [~Number] -> Math.round $1
