@@ -96,7 +96,7 @@
     var v = console.getValue();
     for(var x = 0, y; x < arguments.length; x++)
       v += ((y = arguments[x]) !== undefined && y !== null? Paramour["typeof"](y): typeof y).toString() + " ";
-    return console.setValue("\n" + v);
+    return console.setValue(v + "\n");
   };
 
   console.clear =
