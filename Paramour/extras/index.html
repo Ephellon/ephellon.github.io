@@ -42,10 +42,10 @@
 
   <p><i>Below is the <b class="paramour logo">Parmour code (left)</b>, and <b class="javascript logo">JavaScript Code (right)</b></i></p>
     <div class='code'>
-      <pre><textarea class="compile-paramour" type="text/paramour" id="text"></textarea></pre>
+      <pre><textarea class="compile-paramour" type="text/paramour" id="input"></textarea></pre>
       <pre><textarea class="compile-javascript" type="text/javascript" id="output"></textarea></pre>
       <script>
-        window.example = document.querySelector("#text").value;
+        window.example = document.querySelector("#input").value;
       </script>
       <div class='minibutton ok' onclick='eval(example)'>run</div>
       <br class='clear' />
@@ -66,7 +66,8 @@
         new window.ActiveXObject('Microsoft.XMLHTTP'):
       new window.XMLHttpRequest();
 
-      hold = hold || falinput      options = options || {};
+      hold = hold || false;
+      options = options || {};
       options.sourceFiles = [url];
       xhr.open('GET', url, true);
 
@@ -152,7 +153,7 @@
     lineSeperator: "\n",
     theme: "tomorrow-night-bright"
   },
-  poptions = options, joptions = options, Peditor, Jeditor, $ = function(e){return document.querySelector(e)}, p, j;
+  poptions = options, joptions = options, Peditor, Jeditor, $ = function(e){return window.document.querySelector(e)}, p, j;
   poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
 
   Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
