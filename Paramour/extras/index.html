@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="../../paramour/paramour.js"></script>
+</head>
+<body>
+  <script type="text/par"></script>
+  <script>
+  (function(exec) {
+
+    if (window === undefined || window === null) return;
+
+    function run(code, embed) {
+      return Paramour(code, embed || false);
+    }
+
+    function load(url, callback, options, hold) {
+      var
+      xhr = (window.ActiveXObject)?
+        new window.ActiveXObject('Microsoft.XMLHTTP'):
+      new window.XMLHttpRequest();
+
+      hold = hold || false;
+      options = options || {};
+      options.sourceFiles = [url];
+      xhr.open('GET', url, true);
+
+      if ('overrideMimeType' in xhr)
+        xhr.overrideMimeType('text/plain');
+
+      xhr.onreadystatechange = function() {
+        var sts;
+        if (xhr.readyState === 4) {
+          if ((sts = xhr.status) === 0 || sts === 200) {
+            if (!hold)
+              run(xhr.responseText);
+          } else {
+            throw new Error("Unable to load: " + url)
+          }
+          if(callback)
+            return callback(xhr.responseText);
+        }
+      };
+      return xhr.send(null);
+    }
+
+    function runScripts() {
+      var
+      types = ['text/paramour', 'text/par'],
+      index = 0,
+      scripts = window.document.getElementsByTagName('script'),
+      paramours = (function() {
+        for (var j = 0, k, r = [], s; j < scripts.length; j++)
+          if (k = (s = scripts[j]).type, types.indexOf(k) > -1)
+            r.push(s);
+        return r;
+      })();
+
+      function execute() {
+        var input = paramours[index];
+        if (input !== undefined && input.constructor === String) {
+          run(input);
+          index++;
+          return execute();
+        }
+      }
+
+      function fn(script, i) {
+        var options, source, compile, input;
+        options = {
+          short: script.type === types[1]
+        };
+
+        source = script.src = ((location.hash + "").slice(1, 255).replace(/_/g, " ") + ".par");
+        input = script.innerText = "";
+
+        if (source)
+          return load(source, function(input) {
+            return paramours[i] = input, execute();
+          }, options, true);
+        else if (exec)
+          return options.sourceFiles = ['embedded'], script.innerText = paramours[i] = input, script.options = options, execute();
+        else
+          return options.sourceFiles = ['embedded'], paramours[i] = [script.innerText = input, script.options = options], execute();
+      }
+
+      for (var i = 0, j = 0, len = paramours.length; j < len; i = ++j)
+        fn(paramours[i], i);
+
+      return execute();
+    }
+
+    if (window.addEventListener)
+      window.addEventListener('DOMContentLoaded', runScripts, false);
+    else
+      window.attachEvent('onload', runScripts);
+
+  })(true);
+  </script>
+</body>
+</html>
