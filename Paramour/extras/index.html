@@ -83,6 +83,8 @@
   (c = $("#console")).innerText = "";
   console = CodeMirror.fromTextArea(c, joptions);
 
+  console["[[Value]]"] = "";
+
   console.log =
   console.dir =
   console.dirxml =
@@ -90,20 +92,44 @@
   console.warn =
   console.info =
   function() {
-    for(var x = 0; x < arguments.length; x++)
-      console.setValue(console.getValue() + " " + arguments[x].toString());
+    for(var x = 0, y; x < arguments.length; x++)
+      console.setValue(console["[[Value]]"] += " " + ((y = arguments[x]) !== undefined? y: typeof y).toString());
   };
 
   console.clear =
   function() {
-    console.setValue("Console was cleared");
+    console.setValue(console["[[Value]]"] = "Console was cleared");
   };
 
   console.debug =
   function() {
-    for(var x = 0; x < arguments.length; x++)
-      console.setValue(console.getValue() + " " + arguments[x].toString());
+    for(var x = 0, y; x < arguments.length; x++)
+      console.setValue(console["[[Value]]"] += " " + ((y = arguments[x]) !== undefined? y: typeof y).toString());
   }
+
+  console.on("keydown", function(c, e) {
+    if(e.which === 13 && e.shiftKey)
+      console["[[Value]]"] += "\n";
+    else if(e.which === 13)
+      run(console["[[Value]]"]), console["[[Value]]"] = "";
+    else
+      switch(e.which) {
+        case 8:
+        case 9:
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+        case 20:
+        case 27:
+          break;
+        default:
+          console["[[Value]]"] += e.shiftKey?
+            String.fromCharCode(e.which).toUpperCase():
+            String.fromCharCode(e.which).toLowerCase();          
+          break;
+      }
+  });
 
   function run(value) {
     with(console) {
@@ -210,7 +236,7 @@
 
   with(window)
   with(Peditor) {
-    on("keyup", function() {
+    on("update", function() {
       clearTimeout(timeout);
       setTimeout(function() {
         Jeditor.setValue(Paramour(getValue(), true));
