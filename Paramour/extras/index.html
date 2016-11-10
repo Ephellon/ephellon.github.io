@@ -95,7 +95,7 @@
   function() {
     var v = console.getValue();
     for(var x = 0, y; x < arguments.length; x++)
-      v += " " + ((y = arguments[x]) !== undefined && y !== null? y: typeof y).toString();
+      v += " " + ((y = arguments[x]) !== undefined && y !== null? Paramour["typeof"](y): typeof y).toString();
     console.setValue(y + "\n");
   };
 
