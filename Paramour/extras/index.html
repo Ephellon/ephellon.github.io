@@ -86,7 +86,7 @@
   (j = $("#output")).innerText = Paramour(p.innerText, true);
   Jeditor = CodeMirror.fromTextArea(j, joptions);
 
-  (c = $("#console")).innerText = "// JavaScript Console";
+  (c = $("#console")).innerText = "// JavaScript Console\n";
   console = CodeMirror.fromTextArea(c, joptions);
 
   console["[[Value]]"] = "";
@@ -107,7 +107,7 @@
 
   console.clear =
   function() {
-    console.setValue("// Console was cleared");
+    console.setValue("// Console was cleared\n");
   };
 
   console.on("keyup", function(c, e) {
