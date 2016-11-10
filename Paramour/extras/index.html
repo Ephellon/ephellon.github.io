@@ -54,6 +54,26 @@
 
   <script type="text/par" id="script"></script>
   <script>
+  var options = {
+    lineNumbers: false,
+    styleActiveLine: true,
+    matchBrackets: true,
+    indentUnit: 2,
+    tabsize: 2,
+    indentWithTabs: false,
+    readOnly: true,
+    autofocus: false,
+    lineSeperator: "\n",
+    theme: "tomorrow-night-bright"
+  },
+  poptions = options, joptions = options, Peditor, Jeditor, $ = function(e){return window.document.querySelector(e)}, p, j;
+  poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
+
+  Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
+
+  (j = $("#output")).innerText = Paramour(p.innerText, true);
+  Jeditor = CodeMirror.fromTextArea(j, joptions);
+
   (function(exec) {
 
     if (window === undefined || window === null) return;
@@ -126,8 +146,7 @@
         input = script.innerText = "";
 
         return load(source, function(input) {
-          console.log(IN.value = input);
-          return IN.value = paramours[i] = input, OUT.value = Paramour(input), execute();
+          return Peditor.setValue(IN.value = paramours[i] = input), Jeditor.setValue(OUT.value = Paramour(input)), execute();
         }, options, true);
       }
 
@@ -143,28 +162,6 @@
       window.attachEvent('onload', runScripts);
 
   })(true);
-
-  var options = {
-    lineNumbers: false,
-    styleActiveLine: true,
-    matchBrackets: true,
-    indentUnit: 2,
-    tabsize: 2,
-    indentWithTabs: false,
-    readOnly: true,
-    autofocus: false,
-    lineSeperator: "\n",
-    theme: "tomorrow-night-bright"
-  },
-  poptions = options, joptions = options, Peditor, Jeditor, $ = function(e){return window.document.querySelector(e)}, p, j;
-  poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
-
-  Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
-  Peditor.setValue(p.value);
-
-  (j = $("#output")).innerText = Paramour(p.innerText, true);
-  Jeditor = CodeMirror.fromTextArea(j, joptions);
-  Jeditor.setValue(j.value);
 
   window.Peditor = Peditor, window.Jeditor = Jeditor;
   window.timeout = window.timeout || 0;
