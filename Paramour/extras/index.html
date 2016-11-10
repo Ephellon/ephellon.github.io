@@ -72,7 +72,7 @@
     lineSeperator: "\n",
     theme: "tomorrow-night-bright"
   },
-  poptions = options, joptions = options, Peditor, Jeditor, console, $ = window.$ = function(e){return window.document.querySelector(e)}, p, j, c;
+  poptions = options, joptions = options, Peditor, Jeditor, console, Console = console, $ = window.$ = function(e){return window.document.querySelector(e)}, p, j, c;
   poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
 
   Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
@@ -92,6 +92,7 @@
   console.warn =
   console.info =
   function() {
+    console["[[Value]]"] = "";
     for(var x = 0, y; x < arguments.length; x++)
       console.setValue(console["[[Value]]"] += " " + ((y = arguments[x]) !== undefined? y: typeof y).toString());
   };
@@ -103,6 +104,7 @@
 
   console.debug =
   function() {
+    console["[[Value]]"] = "";
     for(var x = 0, y; x < arguments.length; x++)
       console.setValue(console["[[Value]]"] += " " + ((y = arguments[x]) !== undefined? y: typeof y).toString());
   }
@@ -110,19 +112,24 @@
   console.on("keydown", function(c, e) {
     if(e.which === 13 && e.shiftKey === false)
       run(console["[[Value]]"]),
-      console["[[Value]]"] = "";
+      console.setValue(console["[[Value]]"] = "");
     else
       console["[[Value]]"] = console.getValue();
   });
+
+  console.release =
+  function() {
+    return console = Console
+  }
 
   function run(value) {
     with(console) {
       try {
         value = eval(value);
       } catch(e) {
-        return error("\n" + e);
+        return error(e);
       }
-      return log("\n" + value);
+      return log(value);
     }
   }
 
