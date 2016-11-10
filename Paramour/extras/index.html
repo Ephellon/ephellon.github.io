@@ -2,16 +2,10 @@
 <html>
 <head>
   <script src="par.min.js"></script>
-  <style>
-    #pass {
-      background: inherit;
-      color: inherit;
-      display: inherit;
-    }
-  </style>
 </head>
 <body>
-  <script type="text/par" id="pass"></script>
+  <textarea type="text/par" id="text"></textarea>
+  <script type="text/par" id="script"></script>
   <script>
   (function(exec) {
 
@@ -55,7 +49,7 @@
       var
       types = ['text/paramour', 'text/par'],
       index = 0,
-      scripts = window.document.getElementsByTagName('script'),
+      scripts = window.document.querySelectorAll('#script'),
       paramours = (function() {
         for (var j = 0, k, r = [], s; j < scripts.length; j++)
           if (k = (s = scripts[j]).type, types.indexOf(k) > -1)
@@ -73,7 +67,7 @@
       }
 
       function fn(script, i) {
-        var options, source, compile, input;
+        var options, source, compile, input, textarea = window.document.querySelector("#text");
         options = {
           short: script.type === types[1]
         };
@@ -83,12 +77,12 @@
 
         if (source)
           return load(source, function(input) {
-            return script.innerHTML = paramours[i] = input, execute();
+            return textarea.value = paramours[i] = input, execute();
           }, options, true);
         else if (exec)
-          return options.sourceFiles = ['embedded'], script.innerHTML = paramours[i] = input, script.options = options, execute();
+          return options.sourceFiles = ['embedded'], textarea.value = paramours[i] = input, textarea.options = options, execute();
         else
-          return options.sourceFiles = ['embedded'], paramours[i] = [script.innerHTML = input, script.options = options], execute();
+          return options.sourceFiles = ['embedded'], paramours[i] = [textarea.value = input, textarea.options = options], execute();
       }
 
       for (var i = 0, j = 0, len = paramours.length; j < len; i = ++j)
