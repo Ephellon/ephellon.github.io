@@ -42,15 +42,16 @@
   <h2 id="title">Loading...</h2>
 
   <p><i>Below is the <b class="paramour logo">Parmour code (left)</b>, and <b class="javascript logo">JavaScript Code (right)</b></i></p>
-    <div class='code'>
-      <pre><textarea class="compile-paramour" type="text/paramour" id="input"></textarea></pre>
-      <pre><textarea class="compile-javascript" type="text/javascript" id="output"></textarea></pre>
-      <script>
-        window.example = document.querySelector("#input").value;
-      </script>
-      <div class='minibutton ok' onclick='eval(example)'>run</div>
-      <br class='clear' />
-    </div>
+  <div class='code'>
+    <pre><textarea class="compile-paramour" type="text/paramour" id="input"></textarea></pre>
+    <pre><textarea class="compile-javascript" type="text/javascript" id="output"></textarea></pre>
+    <script>
+      window.example = document.querySelector("#input").value;
+    </script>
+    <div class='minibutton ok' onclick='eval(example)'>run</div>
+    <br class='clear' />
+  </div>
+
   <script type="text/par" id="script"></script>
   <script>
   (function(exec) {
@@ -121,11 +122,12 @@
           short: script.type === types[1]
         };
 
-        source = script.src = (location.pathname + "ex/" + ((location.hash + "").slice(1, 255).replace(/_/g, " ") + ".par"));
+        source = script.src = (location.pathname + "ex/" + ((title.innerHTML = (location.hash + "").slice(1, 255).replace(/_/g, " ")) + ".par"));
         input = script.innerText = "";
 
         return load(source, function(input) {
-          return IN.value = title.innerHTML = paramours[i] = input, OUT.value = Paramour(input), execute();
+          console.log(IN.value = input);
+          return IN.value = paramours[i] = input, OUT.value = Paramour(input), execute();
         }, options, true);
       }
 
