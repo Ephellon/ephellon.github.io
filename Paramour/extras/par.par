@@ -1,0 +1,196 @@
+### Paramour Standard Library
+  @author: Ephellon Dantzler
+  @time: 18:13 CST -06:00
+  @date: November 9, 2016 [11 09 2016]
+###
+
+# @1.5
+
+# $Inf -> Infinity
+# $next -> continue
+
+# Numbers
+ /** [Number ^ Number] -> Math.pow $1, $2
+  * Return a number to the power of another number
+  * Number $1 - The base number
+  * Number $2 - The exponent to raise the base by
+  */
+[Number ^ Number] => Math.pow($1, $2);
+
+/** [~Number] -> Math.round $1
+ * Round a number
+ * Number $1 - The number to round
+ */
+[~Number] => Math.round($1);
+
+/** [Number?] -> Math.random * $1
+ * Get a random number
+ * Number $1 - The number to multiply by
+ */
+[Number?] => Math.random() * $1;
+
+/** [Number!] -> $1!
+ * Get a factorial from a number
+ * Number $1 - The factorial [ending number]
+ */
+[Number!] {
+  for(var x = 1, y = []; x < $1; x++)
+    y.push x;
+  -> eval(y.join "*")
+}
+
+# Strings
+/** [String - Any] -> $1.replace $2, ""
+ * Replace a sequence of characters from a string via an operator
+ * String $1 - The string to replace from
+ * Any $2 - The sequence to replace
+ */
+[String - Any] => $1.replace($2, "");
+
+/** [String * Number] -> $1.repeat $2
+ * Repeat a string a number of times
+ * String $1 -The string to repeat
+ * Number 2 - The number of times to repeat the string
+ */
+[String * Number] => $1.repeat($2);
+
+/** [String / Any] -> $1.split $2
+ * Split an array
+ * Array $1 - The array to split
+ * Any $2 - The sequence to split on
+ */
+[String / Any] => $1.split($2);
+
+ # Arrays
+/** [Array = Array] -> eval $1[@] = $2[@]
+ * Destructor for !1.7 JavaScript versions
+ * Array $1 - The array of varibale names to use
+ * Array $2 - The values to use
+ */
+[Array = Array] {
+  for(var x = 0; x < $1.length; ++x)
+    eval "var ${$1[x]} = ${$2[x]};";
+}
+
+/** [Array + Any] -> $1.concat $2
+ * Concat an item to an array
+ * Array $1 - The array to concat to
+ * Any $2 - The item to concat
+ */
+[Array + Any] => $1.concat($2);
+
+/** [Array += Any] -> $1.push $2
+ * Push an item to an array
+ * Array $1 - The array to push to
+ * Any $2 - The item to push
+ */
+[Array += Any] => $1.push($2), $1;
+
+/** [Array--] -> $1.push $1[$1.length - 1]
+ * Push the last item into the same array
+ * Array $1 - The array to push to
+ */
+[Array++] => $1.push($1[$1.length - 1]);
+
+/** [Array - Any] -> $1.pop $2
+ * Remove an item from an array once
+ * Array $1 - The array to remove from
+ * Any $2 - The item to remove
+ */
+[Array - Any] {
+  for(var i = 0, j = [], k = true; i < $1.length; i++)
+    if($1[i] === $2 && k)
+      k = !k,
+      $next;
+    else
+      j.push($1[i]);
+  -> j
+}
+
+/** [Array -= Any] -> $1.pop $2*
+ * Remove an item from an array for each occurence
+ * Array $1 - The array to remove from
+ * Any $2 - The item to remove
+ */
+[Array -= Any] {
+  for(var i = 0, j = []; i < $1.length; i++)
+    if($1[i] === $2)
+      $next;
+    else
+      j.push($1[i]);
+  -> j
+}
+
+/** [Array--] -> $1.pop
+ * Pop an item from an array
+ * Array $1 - The array to pop from
+ */
+[Array--] => $1.pop();
+
+# Objects
+/** [Object = Object] -> $1[@] = $2[@]
+ * Destructor for !1.7 JavaScript versions
+ * Object $1 - The object to use
+ * Object $2 - The values to use
+ */
+[Object = Object] {
+  for(var x in $2)
+    $1[x] = $2[x];
+  -> $1
+}
+
+/** [Object == Object] -> $1 == $2
+ * Test to see if two objects are loosely identical
+ * Object $1 - An object to test
+ * Object $2 - An object to test
+ */
+[Object == Object] {
+  var p = [true];
+  for(var x in $1) {
+    var _1 = $1[x], _2 = $2[x];
+    if(typeof _1 != typeof _2)
+      -> false;
+    else if(_1 == _2 || (NaN _1 && NaN _2))
+      $next;
+    else if(typeof _1 == "object")
+      => (p += (_1 == _2));
+  }
+  -> eval(p.join "&&")
+}
+
+/** [Object === Object] -> $1 === $2
+ * Test to see if two objects are strictly identical
+ * Object $1 - An object to test
+ * Object $2 - An object to test
+ */
+[Object === Object] {
+  var p = [true];
+  for(var x in $1) {
+    var _1 = $1[x], _2 = $2[x];
+    if(typeof _1 !== typeof _2)
+      -> false;
+    else if(_1 === _2 || (NaN _1 && NaN _2))
+      $next;
+    else if(typeof _1 === "object")
+      => (p += (_1 === _2));
+  }
+  -> eval(p.join "&&")
+}
+
+/** [Object - Any] -> $1[$2] = undefined
+ * Remove an item from an object
+ * Object $1 - The object to remove from
+ * Any $2 - The item to remove
+ */
+[Object - Any] => $1[$2] = undefined;
+
+# Any
+/** [Any!?] -> $1 === NaN
+ * Better testing with NaN, versus /\j ===? NaN/
+ * Any $1 - The variable to test
+ * *********************************************
+ * NaN:
+ *   Nan = 0/0
+ *   Infinity < NaN < Infinity
+ */
+[Any!?] => !($1 <= $Inf);
