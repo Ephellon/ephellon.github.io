@@ -72,7 +72,7 @@
     lineSeperator: "\n",
     theme: "tomorrow-night-bright"
   },
-  poptions = options, joptions = options, Peditor, Jeditor, console, Console = console, $ = window.$ = function(e){return window.document.querySelector(e)}, p, j, c;
+  poptions = options, joptions = options, Peditor, Jeditor, __Console__ = console, console, $ = window.$ = function(e){return window.document.querySelector(e)}, p, j, c;
   poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
 
   Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
@@ -91,25 +91,19 @@
   console.error =
   console.warn =
   console.info =
+  console.debug =
   function() {
-    console["[[Value]]"] = "";
     for(var x = 0, y; x < arguments.length; x++)
-      console.setValue(console["[[Value]]"] += " " + ((y = arguments[x]) !== undefined? y: typeof y).toString());
+      console.setValue(console.getValue() + " " + ((y = arguments[x]) !== undefined && y !== null? y: typeof y).toString());
+    console.setValue(console.getValue() + "\n");
   };
 
   console.clear =
   function() {
-    console.setValue(console["[[Value]]"] = "Console was cleared");
+    console.setValue("// Console was cleared");
   };
 
-  console.debug =
-  function() {
-    console["[[Value]]"] = "";
-    for(var x = 0, y; x < arguments.length; x++)
-      console.setValue(console["[[Value]]"] += " " + ((y = arguments[x]) !== undefined? y: typeof y).toString());
-  }
-
-  console.on("keydown", function(c, e) {
+  console.on("keyup", function(c, e) {
     if(e.which === 13 && e.shiftKey === false)
       run(console["[[Value]]"]),
       console.setValue(console["[[Value]]"] = "");
@@ -119,18 +113,17 @@
 
   console.release =
   function() {
-    return console = Console
+    console.setValue("// The console has been changed back to the native object");
+    return console = __Console__
   }
 
   function run(value) {
-    with(console) {
-      try {
-        value = eval(value);
-      } catch(e) {
-        return error(e);
-      }
-      return log(value);
+    try {
+      value = eval(value);
+    } catch(e) {
+      return console.error(e);
     }
+    return console.log(value);
   }
 
   (function(exec) {
