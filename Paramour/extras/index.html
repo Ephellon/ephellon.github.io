@@ -119,11 +119,11 @@
 
   function run(value) {
     try {
-      value = (eval(value) + "");
+      value = eval(value);
     } catch(e) {
-      return console.error("// " + e);
+      return console.error("//", e);
     }
-    return console.log("// " + value);
+    return console.log("//", value);
   }
 
   (function(exec) {
