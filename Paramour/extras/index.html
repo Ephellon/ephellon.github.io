@@ -220,11 +220,13 @@
 
   with(window)
   with(Peditor) {
-    on("keyup", function() {
+    on("keyup", function(c, e) {
       clearTimeout(timeout);
-      setTimeout(function() {
-        Jeditor.setValue(Paramour(getValue(), true));
-      }, 500);
+      // Shift Ctrl Alt CapsLock PgUp PgDn End Home Left Up Right Down Insert F1 ... F12
+      if([16, 17, 18, 20, 33, 34, 35, 36, 37, 38, 39, 40, 45, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123].indexOf(e.which) > -1)
+        setTimeout(function() {
+          Jeditor.setValue(Paramour(getValue(), true));
+        }, 500);
     });
   }
   </script>
