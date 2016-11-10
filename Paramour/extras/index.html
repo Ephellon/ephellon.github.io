@@ -45,10 +45,16 @@
 <body>
   <h2 id="title">Loading...</h2>
 
-  <p><i>Below is the <b class="paramour logo">Parmour code (left)</b>, and <b class="javascript logo">JavaScript Code (right)</b></i></p>
+  <p><i>Below is the <b class="paramour logo">Parmour Code (left)</b>, and <b class="javascript logo">JavaScript Code (right)</b></i></p>
   <div class='code'>
-    <pre><textarea class="compile-paramour" type="text/paramour" id="input"></textarea></pre>
-    <pre><textarea class="compile-javascript" type="text/javascript" id="output"></textarea></pre>
+    <pre>
+      <b class="paramour logo">Parmour</b>
+      <textarea class="compile-paramour" type="text/paramour" id="input"></textarea>
+    </pre>
+    <pre>
+      <b class="javascript logo">JavaScript</b>
+      <textarea class="compile-javascript" type="text/javascript" id="output"></textarea>
+    </pre>
     <div class='minibutton ok' onclick='run($("#output").value)'>run</div>
     <br class='clear' />
   </div>
