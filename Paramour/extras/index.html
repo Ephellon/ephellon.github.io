@@ -36,7 +36,7 @@
     .logo.paramour {
       color: #f42424;
     }
-    iframe {
+    #console {
       width: 100%;
       height: 50%;
     }
@@ -55,8 +55,8 @@
 
   <hr>
 
-  <h2>Results</h2>
-  <iframe id="results" srcdoc="">Oops, Paramour results don't work here</iframe>
+  <h2>Console</h2>
+  <textarea id="console" type="text/javascript"></textarea>
 
   <script type="text/par" id="script"></script>
   <script>
@@ -72,7 +72,7 @@
     lineSeperator: "\n",
     theme: "tomorrow-night-bright"
   },
-  poptions = options, joptions = options, Peditor, Jeditor, $ = window.$ = function(e){return window.document.querySelector(e)}, p, j;
+  poptions = options, joptions = options, Peditor, Jeditor, console, $ = window.$ = function(e){return window.document.querySelector(e)}, p, j, c;
   poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
 
   Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
@@ -80,8 +80,40 @@
   (j = $("#output")).innerText = Paramour(p.innerText, true);
   Jeditor = CodeMirror.fromTextArea(j, joptions);
 
+  (c = $("#console")).innerText = "";
+  console = CodeMirror.fromTextArea(c, joptions);
+
+  console.log =
+  console.dir =
+  console.dirxml =
+  console.error =
+  console.warn =
+  console.info =
+  function() {
+    for(var x = 0; x < arguments.length; x++)
+      console.setValue(console.getValue() + " " + arguments[x].toString());
+  };
+
+  console.clear =
+  function() {
+    console.setValue("Console was cleared");
+  };
+
+  console.debug =
+  function() {
+    for(var x = 0; x < arguments.length; x++)
+      console.setValue(console.getValue() + " " + arguments[x].toString());
+  }
+
   function run(value) {
-    $("iframe").srcdoc = "<scr" + "ipt src='par.min.js'></scr" +"ipt><scr" + "ipt>try {" + value + "} catch(e) { alert(e) }</scr" + "ipt>"
+    with(console) {
+      try {
+        value = eval(value);
+      } catch(e) {
+        return error(e);
+      }
+      return log(value);
+    }
   }
 
   (function(exec) {
