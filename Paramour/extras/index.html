@@ -1,10 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="par.min.js"></script>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Paramour - The perfect rendezvous" />
+
+  <title>Paramour Examples</title>
+  <link rel="shortcut icon" href="../documentation/images/Paramour.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="canonical" href="https://ephellon.github.com/Paramour" />
+
+  <link rel="stylesheet" type="text/css" href="index.css" />
+  <link rel="stylesheet" type="text/css" href="../documentation/css/docs.css" />
+  <link rel="stylesheet" type="text/css" href="../documentation/css/tomorrow-night.css" />
+  <link rel="stylesheet" type="text/css" href="https://codemirror.net/lib/codemirror.css" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900,400italic,700italic" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Product+Sans:400,900,400italic,700italic" />
+
+  <script src='https://codemirror.net/lib/codemirror.js'></script>
+  <script src='https://codemirror.net/addon/mode/simple.js'></script>
+  <script src='https://codemirror.net/mode/javascript/javascript.js'></script>
+  <script src='../paramour/paramour.js'></script>
+
+  <style>
+    .CodeMirror, .CodeMirror-gutter {
+      background: #1d1f20;
+      color: #666;
+    }
+    .logo.javascript {
+      color: #f7df1e;
+    }
+    .logo.paramour {
+      color: #f42424;
+    }
+  </style>
 </head>
 <body>
-  <textarea type="text/par" id="text"></textarea>
+  <h2 id="title">Loading...</h2>
+
+  <p><i>Below is the <b class="paramour logo">Parmour code (left)</b>, and <b class="javascript logo">JavaScript Code (right)</b></i></p>
+    <div class='code'>
+      <pre><textarea class="compile-paramour" type="text/paramour" id="text"></textarea></pre>
+      <pre><textarea class="compile-javascript" type="text/javascript" id="output"></textarea></pre>
+      <script>
+        window.example = document.querySelector("#text").value;
+      </script>
+      <div class='minibutton ok' onclick='eval(example)'>run</div>
+      <br class='clear' />
+    </div>
   <script type="text/par" id="script"></script>
   <script>
   (function(exec) {
@@ -21,8 +66,7 @@
         new window.ActiveXObject('Microsoft.XMLHTTP'):
       new window.XMLHttpRequest();
 
-      hold = hold || false;
-      options = options || {};
+      hold = hold || falinput      options = options || {};
       options.sourceFiles = [url];
       xhr.open('GET', url, true);
 
@@ -67,7 +111,10 @@
       }
 
       function fn(script, i) {
-        var options, source, compile, input, textarea = window.document.querySelector("#text");
+        var options, source, compile, input,
+            IN = window.document.querySelector("#input"),
+            OUT = window.document.querySelector("#output"),
+            title = window.document.querySelector("#title");
         options = {
           short: script.type === types[1]
         };
@@ -75,14 +122,9 @@
         source = script.src = (location.pathname + "ex/" + ((location.hash + "").slice(1, 255).replace(/_/g, " ") + ".par"));
         input = script.innerText = "";
 
-        if (source)
-          return load(source, function(input) {
-            return textarea.value = paramours[i] = input, execute();
-          }, options, true);
-        else if (exec)
-          return options.sourceFiles = ['embedded'], textarea.value = paramours[i] = input, textarea.options = options, execute();
-        else
-          return options.sourceFiles = ['embedded'], paramours[i] = [textarea.value = input, textarea.options = options], execute();
+        return load(source, function(input) {
+          return IN.value = title.innerHTML = paramours[i] = input, OUT.value = Paramour(input), execute();
+        }, options, true);
       }
 
       for (var i = 0, j = 0, len = paramours.length; j < len; i = ++j)
@@ -97,6 +139,39 @@
       window.attachEvent('onload', runScripts);
 
   })(true);
+
+  var options = {
+    lineNumbers: false,
+    styleActiveLine: true,
+    matchBrackets: true,
+    indentUnit: 2,
+    tabsize: 2,
+    indentWithTabs: false,
+    readOnly: true,
+    autofocus: false,
+    lineSeperator: "\n",
+    theme: "tomorrow-night-bright"
+  },
+  poptions = options, joptions = options, Peditor, Jeditor, $ = function(e){return document.querySelector(e)}, p, j;
+  poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
+
+  Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
+
+  (j = $("#output")).innerText = Paramour(p.innerText, true);
+  Jeditor = CodeMirror.fromTextArea(j, joptions);
+
+  window.Peditor = Peditor, window.Jeditor = Jeditor;
+  window.timeout = window.timeout || 0;
+
+  with(window)
+  with(Peditor) {
+    on("keyup", function() {
+      clearTimeout(timeout);
+      setTimeout(function() {
+        Jeditor.setValue(Paramour(getValue(), true));
+      }, 500);
+    });
+  }
   </script>
 </body>
 </html>
