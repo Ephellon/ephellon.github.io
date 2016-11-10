@@ -1,0 +1,27 @@
+### Toggle-able Class
+  @author: Ephellon Dantzler
+###
+
+Toggle {
+  <init>(on, off, state) {
+    @on = on
+    @off = off
+    @state = state || false
+    @locked = false
+  }
+
+  .toggle(state) {
+    if(undefined state && @locked === false)
+      -> @state = (@state === @on)? @off: @on;
+    -> @state = state
+  }
+
+  .lock(state) {
+    if(defined state)
+      @state = state;
+    @ set state {
+      -> @state
+    }
+    -> @locked !== true
+  }
+}

@@ -1,0 +1,12 @@
+out(v) {
+  document.write v;
+}
+
+for(var i = 99, s, t; i > 0 && (s => (i)?) && (t => (i - 1)?); i--)
+  out "${i} bottle${s} of beer on the wall, ${i} bottle${s} of beer. You take one down, pass it around, ${i - 1} bottle${t} of beer on the wall.";
+
+out 'No more bottles of beer on the wall, no more bottles of beer. You go to the store and buy some more, 99 bottles of beer on the wall.';
+
+[Number?] {
+  -> ($1 === 1? '': 's')
+}

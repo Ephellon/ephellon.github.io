@@ -1,0 +1,362 @@
+### String Radix
+  @author: Ephellon Dantzler
+###
+
+# $R -> Math.random()
+# $C -> charCodeAt(0)
+# $from -> fromCharCode
+# $win -> window
+# @1.5
+
+# 62, 69, 181, 223
+var(
+t = [
+  [0x00c0, 0x00d7, '00'],
+  [0x00d8, 0x00f7, '00'],
+  [0x00f8, 0x1000, '00'],
+  [0x0391, 0x03aa, '0'],
+  [0x03b1, 0x03ca, '0']
+], t_, t__) = "";
+
+for(var x = 0; x < t.length; x++)
+  for(var y = t[x][0]; y < t[x][1]; y++)
+    t_ += eval("'\\u${t[x][2] + y.toString(16)}'");
+
+for(x = 33; x < 223; x++)
+  t__ += String.$from(x);
+
+var
+characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+characters_ = characters + "#$-./@_",
+characters__ = characters_ + t_,
+characters___ = t__,
+secure = Math.floor(220 * $R) + 2;
+
+Password {
+  <init>(value) {
+    if((+value + "") === "NaN") {
+      var u = [];
+      for(var x = 0; x < value.length; x++)
+        u.push((@[x] = toNumber((MD5 || atob)(value[x]).slice(0, 8), 32).toString(32), value[x]).$C.toString(16));
+      @.length = x
+      value = (MD5 || atob)(u.join(""))
+    } else {
+      value = ((MD5 || atob)(value + ""))
+    }
+    -> @["[[PrimitiveValue]]"] = value
+  }
+
+  toString(type, compress) {
+    if(undefined type)
+      -> @["[[PrimitiveValue]]"] + "";
+    if(type < 2 || type > 222)
+      +> RangeError("toString(Radix @${type}) Radix argument must be between 2 and 222");
+    compress = compress || (type > 62);
+    -> toString(@["[[PrimitiveValue]]"], type, compress)
+  }
+}
+
+# toString
+/** (* value, Number type, Boolean compress)
+ * Converts a value into a radix (such as 23 -> 0x17)
+ * @return {String}
+ */
+toString(value, Number type, Boolean compress) {
+  if(undefined type || type < 2 || type > 222)
+    +> RangeError("toString(Radix @${type}) Radix argument must be between 2 and 222");
+  if(+value === -Infinity || + value === +Infinity)
+    +> RangeError("toString(Number @${value}) Number argument must be between (10e-324, 10e308)");
+  value = +value || value;
+  var output = [], x = value, c = characters, h = false;
+  if(!compress && type > 62)
+    c = characters_;
+  if(!compress && type > 69)
+    c = characters__;
+  if(compress && type > 181)
+    c = characters___;
+  if(value > 10e300) {
+    output.push(toString(10e300, type, compress));
+    while(value > 10e300) {
+      output.push(toString(value / 10e300, type, compress));
+      value /= 10e300
+    }
+    -> output.join(" ")
+  }
+  if((value + "").indexOf(".") > -1) {
+    h = (value + "").split(".");
+    for(var x = 0; x  <h.length; x++)
+      output.push(toString(+h[x], type, compress));
+    -> output.join(" ")
+  }
+  while(x > type) {
+    y = x % type;
+    output.push(c[y]);
+    x = Math.floor(x/type)
+  }
+  output.push(c[x]);
+  if(h !== false)
+    output.push(" ${h}");
+  output = output.reverse();
+  if(+output[0] >= type)
+    output[0] = c[+output[0] - 1];
+  -> output.join("")
+}
+
+toString(Number value, String characters) => toString(value, characters.split(""));
+
+toString(Number value, Array characters) {
+  if(characters.length < 2)
+    +> SyntaxError("toString(String input, Array characters) 'characters' must contain more than 1 character [${characters}]");
+  value = +value || value;
+  var output = [], x = value, y = 0, c = characters, type = c.length;
+  while(x > type) {
+    y = x % type;
+    output.push(c[y]);
+    x = math.floor(x/type);
+  }
+  output.push(c[x]);
+  output = output.reverse();
+  if(+output[0] >= type)
+    output[0] = c[+output[0] - 1];
+  -> output.join("")
+}
+
+toString(Number value, Number type) => toString(value, type, type > 62);
+
+toString(Number value, Boolean compress) => toString(value, ((compress)? 181: 62), compress);
+
+toString(Number value) => (((value + "").length > 21)? value.toPrecision(21): value + "");
+
+toString(String value, String type) {
+  switch(type) {
+    case('b', '0b', 'bin', 'binary')
+      type = 2;
+    case('o', '0', 'oct', 'octal')
+      type = 8;
+    case('h', '0x', 'hex', 'hexadecimal')
+      type = 16;
+    default
+      type = ((type > 62)? 181: 32);
+  }
+  -> toString(+value || value, type, type > 62)
+}
+
+toString(String value, Boolean compress) => toString(value, ((compress)? 181: 32), compress);
+
+toString(String value) => toString(value, true);
+
+toString(String value, Number type) => toString(value, type, type > 62);
+
+# toNumber
+/** (String value, Number type, Boolean compressed)
+ * Converts a radix into a value (such as 0x17 -> 23)
+ * @return {Number}
+ */
+toNumber(String value, Number type, Boolean compressed) {
+  var output = [], x, y = 0, c = characters, h = false;
+  if((!compressed && type > 62) || (/^[0-9a-zA-Z\#\$\-\.\/@_]+$/).test(value))
+    c = characters_;
+  if((!compressed && type > 69) || (/^[0-9a-zA-Z\#\$\-\.\/@_\u00c0-\u00ff\u0391-\u03a9\u03b1-\u03c9]+$/).test(value))
+    c = characters__;
+  if(type > 181)
+    c = characters___;
+  if(value.indexOf("  ") > -1) {
+    h = value.split("  ");
+    for(x = 0; x < h.length; x++)
+      output.push(toNumber(h[x], type, compressed));
+    -> eval("(${output.join(')*(')})")
+  }
+  if(value.indexOf(" ") > -1) {
+    h = value.split(" ");
+    for(x = 0; x < h.length; x++)
+      output.push(toNumber(h[x], type, compressed));
+    -> output.join(".")
+  }
+  value = value.split("").reverse();
+  for(x = 0; x < value.length; x++) {
+    y = +(c.indexOf(value[x]));
+    y *= (x > 0)? Math.pow(type, x): 1;
+    output.push(y)
+  }
+  -> eval(output.reverse().join("+"))
+}
+
+toNumber(String value, String characters) {
+  var output = [], x = 0, y = 0, h = false, c = characters,type = c.length;
+  value = value.split("").reverse();
+  for(; x < value.length; x++) {
+    y = +(c.indexOf(value[x]));
+    y *= (x > 0)? Math.pow(type, x): 1;
+    output.push(y)
+  }
+  -> eval(output.reverse().join("+"))
+}
+
+toNumber(String value, Number type) => toNumber(value, type, type > 62);
+
+toNumber(String value, Boolean compressed) => toNumber(value, ((compressed)? 181: 32), compressed);
+
+toNumber(String value) {
+  if(/^[01]+$/.test(value))
+    -> toNumber(value, 2, true);
+  # 1.8?*
+  if(/^[0-7]+$/.test(value))
+    -> toNumber(value, 8, true);
+  #?
+  if(/^[0-9a-f]+$/.test(value))
+    -> toNumber(value, 16, true);
+  if(/^[0-9a-z]+$/.test(value))
+    -> toNumber(value, 32, true);
+  if(/^[0-9a-zA-Z]+$/.test(value))
+    -> toNumber(value, 62, true);
+  if(/^[0-9a-zA-Z\#\$\-\.\/@_]+$/.test(value))
+    -> toNumber(value, 69, true);
+  if(/^[0-9a-zA-Z\#\$\-\.\/@_\u00c0-\u00ff\u0391-\u03a9\u03b1-\u03c9]+$/.test(value))
+    -> toNumber(value, 181, true);
+  -> toNumber(value, 222, true);
+}
+
+toNumber(String value, type) => toNumber(value, type, +type > 62);
+
+Number@toString =
+(type, compress) {
+  -> toString(@, type, compress || false)
+}
+
+String@toNumber =
+(type, compressed) {
+  -> tonumber(@, type, compressed || false)
+}
+
+# MAC
+/** (Number address, String symbol, Number seed)
+ * Returns a MAC address
+ * @param {Number} address The address to turn into a MAC address (default is a random number)
+ * @param {String} symbol The synbol to use as a seperator (default is ":")
+ * @param {Number} seed The number to start at [14 < seed < 57] (default is 16); if address = 0, the result will be seed^12
+ */
+MAC(address, symbol, seed) {
+  address = +(address || Math.floor($R * 999999999));
+  symbol = ((symbol || ":") + "")[0];
+  seed = +(seed || 16);
+  if(seed < 14 || seed > 56)
+    +> RangeError("MAC(address: '${address}', symbol: '${symbol}', seed: '${seed}') 'seed' must be between (14, 56)");
+  if((address + "") === "NaN")
+    +> TypeError("MAC(address: '${address}', symbol: '${symbol}', seed: '${seed}') 'address' must be a Number");
+  if((seed + "") === "NaN")
+    +> TypeError("MAC(address: '${address}', symbol: '${symbol}', seed: '${seed}') 'seed' must be a Number");
+
+  -> toString(Math.pow(seed, 12) + address, 15).replace(/(\w\w)/g, "$1" + symbol).replace(/(\W)(\w)(\W|$)/g, "$10$2$3").slice(0, 20).toUpperCase()
+}
+
+# MAS
+/** (String|Number address, String symbol)
+ * Hash a MAC address
+ * @param {String} address The address to hash
+ * @param {Number} address The address to hash
+ * @param {String} symbol The symbol to use as a seperator 
+ */
+MAS(address, symbol) {
+  var mac;
+  if(typeof address === "string")
+    mac = address;
+  else if(typeof address === "number")
+    mac = MAC(address, symbol);
+  else if(undefined address)
+    mac = MAC(address, symbol);
+  else
+    +> TypeError("MAC(address: '${address}', symbol: '${symbol}') 'address' must be of types String or Number");
+  if(undefined symbol)
+    symbol = mac.slice(2, 1);
+  if(symbol === "")
+    symbol = ":";
+
+  mac = mac.replace(RegExp("\\${symbol}", "g"), "");
+
+  for(var x = 0, m = [], k = 0; x < mac.length; x++)
+    m.push((
+      (x < 2)?
+        (k = +("0x" + mac[x])) >= 2?
+          k << mac[x + 12]:
+          k << x + 1:
+      (x < 4)?
+        (k = +("0x" + mac[x])) >= 4?
+          k << mac[x + 10]:
+          k << x + 3:
+      (x < 6)?
+        (k = +("0x" + mac[x])) >= 6?
+          k << mac[x + 8]:
+          k << x + 5:
+      (x < 8)?
+        (k = +("0x" + mac[x])) >= 8?
+          k << mac[x + 6]:
+          k << x + 7:
+      (x < 10)?
+        (k = +("0x" + mac[x])) >= 10?
+          k << mac[x + 4]:
+          k << x + 9:
+      (x < 12)?
+        (k = +("0x" + mac[x])) >= 12?
+          k << mac[x + 2]:
+          k << x + 11:
+      +("0x" + mac[x]) << 16
+    ).toString(15));
+  -> m.join("").replace(/(\w\w)/g, "$1" + symbol).toUpperCase().slice(0, 20)
+}
+
+# toLetter
+/** (Number number)
+ * Convert a number into a Greek/Roman number
+ * @param {Number} number The number to convert
+ */
+toLetter(Number number) {
+  ### Greek/Roman Numbering System
+    O - 500,000,000,000 [11th from last Greek character, Omicron]
+    T - 100,000,000,000 [6th from last Greek character, Tau]
+    K - 50,000,000,000 [11th Greek character, Kappa]
+    Z - 10,000,000,000 [6th Greek character, Zeta]
+    Y - 5,000,000,000 [5th from last Greek character, Upsilon]
+    Omega - 1,000,000,000 [Last Greek character, Omega]
+    E - 500,000,000 [5th Greek character, Epsilon]
+    A - 100,000,000 [1st Greek character, Alpha]
+    P - 50,000,000 [Greek 50,000 = Gamma-Mu; M, Mu, L, and Lambda are used: {index} = 5, 5 more Greek characters, Ro]
+    N - 10,000,000 [Greek 10,000 = M; M, X, and Xi are used; {index} = 1, 1 more Greek character, Nu]
+    Sigma - 5,000,000 [Greek 5,000 = Gamma-Xi; V, X, and Xi are used; Greek "V" is Sigma; Sigma]
+    Xi - 1,000,000 [Greek 1,000 = Xi, Xi]
+    G - 500,000 [Greek 500 = Gamma-Eta; D, Delta, and Gamma are used; G]
+    H - 100,000 [Greek 100 = Eta, H]
+    Lambda - 50,000 [Greek 50 = Lambda, Lambda]
+    Delta - 10,000 [Greek 10 = Delta, Delta]
+    Gamma - 5,000 [Greek 5 = Gamma, Gamma]
+    M - 1,000
+    D - 500
+    C - 100
+    L - 50
+    X - 10
+    V - 5
+    I - 1
+  ###
+  if(+number > 5e11)
+    -> "O" + toLetter(number % 5e11);
+  var m = "O T K Z Y \u03a9 E A P N \u03a3 \u039e G H \u039b \u0394 \u0393 M D C L X V I".split(" "),
+      M = "5e11 1e11 5e10 5e10 5e9 1e9 5e8 1e8 5e7 1e7 5e6 1e6 5e5 1e5 5e4 1e4 5e3 1e3 5e2 1e2 50 10 5 1".split(" "),
+      n = +number;
+  for(var x = 0, N = []; n > 0 && x < m.length;)
+    if(n >= +M[x])
+      if((n + "")[0] === "9" && (+M[x] + "")[0] === "5")
+        n -= 9 * (+M[x] / 5), N.push(m[x + 1], m[x - 1]);
+      else if((n + "")[0] === "4" && (+M[x] + "")[0] === "1")
+        n -= 4 * (+M[x] / 5), N.push(m[x + 1], m[x - 1]);
+      else
+        n -= +M[x], N.push(m[x]);
+    else
+      x++;
+  -> N.join("")
+}
+
+$win.Password = Password;
+$win.toString = toString;
+$win.toNumber = toNumber;
+$win.toLetter = toLetter;
+$win.MAC = MAC;
+$win.MAS = MAS;

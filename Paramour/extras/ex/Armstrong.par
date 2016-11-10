@@ -1,0 +1,28 @@
+###
+  Armstrong Number
+  Translated from Python - "Programming Hub (Android) | Python | All | Armstrong Number within Range"
+###
+
+# Get user input
+{{"Lower", "Upper"}}
+
+var(lower, upper, results = []) = +prompt("${Tuple.next} range limit?")
+
+for(var x = lower; x < upper; x++) {
+  for(var y = x, z, w = 0; y > 0; y => (y % 10)) {
+    z = y % 10
+    w +=> (z ^ 3)
+  }
+  if(x === w)
+    results.push(x);
+}
+
+alert "Armstrong numbers between ${lower} and ${upper} are (${results.join(', ')})"
+
+[Number % Number] {
+  -> Math.floor($1 / $2)
+}
+
+[Number ^ Number] {
+  -> Math.pow($1, $2)
+}

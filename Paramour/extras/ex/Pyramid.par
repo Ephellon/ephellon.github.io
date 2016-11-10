@@ -1,0 +1,32 @@
+### Pyramid Builder
+  @author: Ephellon Dantzler
+  @about: Builds pyramids based on the number of faces and levels [from 3 to 5 so far]
+###
+
+Pyramid {
+  <init>(.faces = 4, .levels = 3) {
+    var(x = 1, y = [])
+    @levels = ++levels;
+
+    for(; x < levels; x++)
+      if(faces === 2)
+        y.push(x);
+      else if(faces === 3)
+        y.push(=> ((2 ^ (x - 1)) + ((x > 1)? (x > 2)? x: 1: 0)));
+      else if(faces === 4)
+        y.push(=> (x ^ 2));
+      else if(faces === 5)
+        y.push(=> ((x ^ x) + (x - 1)));
+
+    @blocks = eval(y.join("+")), # Number of Blocks [total]
+    @blocksPerLevel = y; # Number of: Blocks Per Level
+
+    @levels = --levels;
+
+    -> @
+  }
+}
+
+[Number ^ Number] {
+  -> Math.pow($1, $2)
+}
