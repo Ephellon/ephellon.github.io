@@ -93,9 +93,10 @@
   console.info =
   console.debug =
   function() {
+    var v = console.getValue();
     for(var x = 0, y; x < arguments.length; x++)
-      console.setValue(console.getValue() + " " + ((y = arguments[x]) !== undefined && y !== null? y: typeof y).toString());
-    console.setValue(console.getValue() + "\n");
+      v += " " + ((y = arguments[x]) !== undefined && y !== null? y: typeof y).toString();
+    console.setValue(y + "\n");
   };
 
   console.clear =
@@ -105,8 +106,7 @@
 
   console.on("keyup", function(c, e) {
     if(e.which === 13 && e.shiftKey === false)
-      run(console["[[Value]]"]),
-      console.setValue(console["[[Value]]"] = "");
+      run(console["[[Value]]"]);
     else
       console["[[Value]]"] = console.getValue();
   });
@@ -119,7 +119,7 @@
 
   function run(value) {
     try {
-      value = eval(value);
+      value = (eval(value) + "");
     } catch(e) {
       return console.error(e);
     }
