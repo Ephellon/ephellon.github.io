@@ -108,9 +108,7 @@
   }
 
   console.on("keydown", function(c, e) {
-    if(e.which === 13 && e.shiftKey)
-      console["[[Value]]"] += "\n";
-    else if(e.which === 13)
+    if(e.which === 13 && e.shiftKey === false)
       run(console["[[Value]]"]), console["[[Value]]"] = "";
     else
       console["[[Value]]"] = console.getValue();
