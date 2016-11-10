@@ -95,7 +95,7 @@
   function() {
     var v = console.getValue();
     for(var x = 0, y; x < arguments.length; x++)
-      v += ((y = arguments[x]) !== undefined && y !== null? Paramour["typeof"](y): typeof y).toString() + " ";
+      v += ((y = arguments[x]) !== undefined && y !== null? y.__comment__? "//": Paramour["typeof"](y): typeof y).toString() + " ";
     return console.setValue("\n" + v);
   };
 
@@ -121,9 +121,9 @@
     try {
       value = eval(value);
     } catch(e) {
-      return console.error("//", e);
+      return console.error({__comment__: true}, e);
     }
-    return console.log("//", value);
+    return console.log({__comment__: true}, value);
   }
 
   (function(exec) {
