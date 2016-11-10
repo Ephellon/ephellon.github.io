@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <script type="text/par"></script>
+  <script type="text/par" id="pass"></script>
   <script>
   (function(exec) {
 
@@ -83,12 +83,12 @@
 
         if (source)
           return load(source, function(input) {
-            return script.innerText = paramours[i] = input, script.id = "pass", execute();
+            return script.innerHTML = paramours[i] = input, execute();
           }, options, true);
         else if (exec)
-          return options.sourceFiles = ['embedded'], script.innerText = paramours[i] = input, script.options = options, execute();
+          return options.sourceFiles = ['embedded'], script.innerHTML = paramours[i] = input, script.options = options, execute();
         else
-          return options.sourceFiles = ['embedded'], paramours[i] = [script.innerText = input, script.options = options], execute();
+          return options.sourceFiles = ['embedded'], paramours[i] = [script.innerHTML = input, script.options = options], execute();
       }
 
       for (var i = 0, j = 0, len = paramours.length; j < len; i = ++j)
