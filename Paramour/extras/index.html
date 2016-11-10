@@ -112,13 +112,8 @@
       console["[[Value]]"] += "\n";
     else if(e.which === 13)
       run(console["[[Value]]"]), console["[[Value]]"] = "";
-    else if(e.which < 32)
-      console["[[Value]]"] = console.getValue();
-    else if(e.altKey || e.ctrlKey || e.metaKey);
     else
-      console["[[Value]]"] += e.shiftKey?
-        String.fromCharCode(e.which).toUpperCase():
-      String.fromCharCode(e.which).toLowerCase(); 
+      console["[[Value]]"] = console.getValue();
   });
 
   function run(value) {
