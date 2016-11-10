@@ -56,7 +56,7 @@
   <hr>
 
   <h2>Console</h2>
-  <textarea id="console" type="text/javascript">// JavaScript Console</textarea>
+  <textarea id="console" type="text/javascript"></textarea>
 
   <script type="text/par" id="script"></script>
   <script>
@@ -80,7 +80,7 @@
   (j = $("#output")).innerText = Paramour(p.innerText, true);
   Jeditor = CodeMirror.fromTextArea(j, joptions);
 
-  (c = $("#console")).innerText = "";
+  (c = $("#console")).innerText = "// JavaScript Console";
   console = CodeMirror.fromTextArea(c, joptions);
 
   console["[[Value]]"] = "";
@@ -113,7 +113,7 @@
 
   console.release =
   function() {
-    console.log("// The console has been changed back to the native object");
+    console.log("The console has been changed back to the native object");
     return console = __Console__
   }
 
