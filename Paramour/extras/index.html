@@ -111,24 +111,12 @@
     if(e.which === 13 && e.shiftKey)
       console["[[Value]]"] += "\n";
     else if(e.which === 13)
-      run(console["[[Value]]"]), console["[[Value]]"] = "\n";
+      run(console["[[Value]]"]), console["[[Value]]"] = "";
+    else if(e.which < 32);
     else
-      switch(e.which) {
-        case 8:
-        case 9:
-        case 16:
-        case 17:
-        case 18:
-        case 19:
-        case 20:
-        case 27:
-          break;
-        default:
-          console["[[Value]]"] += e.shiftKey?
-            String.fromCharCode(e.which).toUpperCase():
-            String.fromCharCode(e.which).toLowerCase();          
-          break;
-      }
+      console["[[Value]]"] += e.shiftKey?
+        String.fromCharCode(e.which).toUpperCase():
+      String.fromCharCode(e.which).toLowerCase(); 
   });
 
   function run(value) {
