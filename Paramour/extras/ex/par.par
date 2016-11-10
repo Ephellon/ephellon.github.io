@@ -193,4 +193,4 @@
  *   Nan = 0/0
  *   Infinity < NaN < Infinity
  */
-[Any!?] => !($1 <= $Inf);
+[Any!?] => !$1 <= $Inf;
