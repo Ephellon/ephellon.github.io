@@ -71,7 +71,7 @@
           short: script.type === types[1]
         };
 
-        source = script.src = ((location.hash + "").slice(1, 255).replace(/_/g, " ") + ".par");
+        source = script.src = ("/ex/" + (location.hash + "").slice(1, 255).replace(/_/g, " ") + ".par");
         input = script.innerText = "";
 
         if (source)
