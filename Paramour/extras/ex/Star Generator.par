@@ -1,0 +1,52 @@
+### Star Generator
+  @aut: Ephellon Dantzler
+  @lie: none
+  @tie: 14:22 CST -05:00
+  @dat: Nov 11, 2015
+###
+
+# @1.5
+
+# $win -> window
+# $doc -> document
+# $set -> setAttribute
+# $get -> getAttribute
+# $add -> appendChild
+# $make -> createElement
+# $may -> Paramour.random()
+
+var classes = "obafgkmlt".split "";
+
+(() {
+  var r = random 500 + 250;
+
+  for(var s = 0; s < r; s++) {
+    var(x, y, z = random 9, k = $doc.$make "b") = random 100;
+
+    $doc.body.$add k;
+    k.$set("style", "top: ${x}vw; left: ${y}vw;")
+    k.$set("class", classes[z])
+
+    if($may)
+      wise(1, k);
+    else if($may)
+      wise(2, k);
+    else if($may)
+      wise(3, k);
+    else if($may)
+      wise(4, k);
+    else if($may)
+      wise(5, k)
+    else
+      k.$set("style",
+        k.$get("style") + " opacity: ${Math.random()}");
+	}
+
+})();
+
+random(x) => Math.floor(x * Math.random());
+
+wise(x, k) {
+  k.$set("class",
+    k.$get("class") + ' ' + 'wwwww'.split(1, x))
+}
