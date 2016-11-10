@@ -86,7 +86,7 @@
   (j = $("#output")).innerText = Paramour(p.innerText, true);
   Jeditor = CodeMirror.fromTextArea(j, joptions);
 
-  (c = $("#console")).innerText = "// JavaScript Console\n";
+  (c = $("#console")).innerText = "// JavaScript Console\n// console.release() to switch consoles";
   console = CodeMirror.fromTextArea(c, joptions);
 
   console["[[Value]]"] = "";
