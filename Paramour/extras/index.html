@@ -56,7 +56,7 @@
   <hr>
 
   <h2>Console</h2>
-  <textarea id="console" type="text/javascript"></textarea>
+  <textarea id="console" type="text/javascript">// JavaScript Console</textarea>
 
   <script type="text/par" id="script"></script>
   <script>
@@ -95,8 +95,8 @@
   function() {
     var v = console.getValue();
     for(var x = 0, y; x < arguments.length; x++)
-      v += " " + ((y = arguments[x]) !== undefined && y !== null? Paramour["typeof"](y): typeof y).toString();
-    console.setValue(y + "\n");
+      v += ((y = arguments[x]) !== undefined && y !== null? Paramour["typeof"](y): typeof y).toString() + " ";
+    return console.setValue("\n" + v);
   };
 
   console.clear =
@@ -121,9 +121,9 @@
     try {
       value = (eval(value) + "");
     } catch(e) {
-      return console.error(e);
+      return console.error("// " + e);
     }
-    return console.log(value);
+    return console.log("// " + value);
   }
 
   (function(exec) {
