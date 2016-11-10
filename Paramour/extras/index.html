@@ -2,6 +2,13 @@
 <html>
 <head>
   <script src="par.min.js"></script>
+  <style>
+    #pass {
+      background: inherit;
+      color: inherit;
+      display: inherit;
+    }
+  </style>
 </head>
 <body>
   <script type="text/par"></script>
@@ -76,7 +83,7 @@
 
         if (source)
           return load(source, function(input) {
-            return paramours[i] = input, execute();
+            return script.innerText = paramours[i] = input, script.id = "pass", execute();
           }, options, true);
         else if (exec)
           return options.sourceFiles = ['embedded'], script.innerText = paramours[i] = input, script.options = options, execute();
