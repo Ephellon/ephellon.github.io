@@ -18,7 +18,7 @@ Pyramid {
       else if(faces === 5)
         y.push(=> ((x ^ x) + (x - 1)));
 
-    @blocks = eval(y.join("+")), # Number of Blocks [total]
+    @blocks = eval(y.join "+"), # Number of Blocks [total]
     @blocksPerLevel = y; # Number of: Blocks Per Level
 
     @levels = --levels;
