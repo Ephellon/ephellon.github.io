@@ -220,7 +220,7 @@
 
   with(window)
   with(Peditor) {
-    on("update", function() {
+    on("keyup", function() {
       clearTimeout(timeout);
       setTimeout(function() {
         Jeditor.setValue(Paramour(getValue(), true));
