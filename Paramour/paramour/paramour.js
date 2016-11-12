@@ -12,9 +12,8 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Comments
     {
-      regex: /###/,
-      token: "comment",
-      next: "comment"
+      regex: /###(?:[\s\S]*?)###/,
+      token: "comment"
     },
     {
       regex: /(#\s*)(\$[a-z\$][\w\$]*)(\s*[\-\=]>\s*)(.*)/i,
@@ -38,7 +37,7 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Docstrings
     {
-      regex: /\/\*/,
+      regex: /\/\*(?:[\s\S]*?)\*\//,
       token: "string",
       next: "docstring"
     },
@@ -47,6 +46,10 @@ CodeMirror.defineSimpleMode("paramour", {
       regex: /`/,
       token: "string",
       next: "quasi"
+    },
+    {
+      regex: /(["'`]{3})(?:[^\\]:\\.)*?\1/,
+      token: "string"
     },
     // Get and Set
     {
@@ -118,19 +121,7 @@ CodeMirror.defineSimpleMode("paramour", {
     }
   ],
 
-  // Multi-line Comments
-  comment: [
-    {
-      regex: /###/,
-      token: "comment",
-      next: "start"
-    },
-    {
-      regex: /^.*$/,
-      token: "comment"
-    }
-  ],
-  // Quaisi Strings
+  // Quasi Strings
   quasi: [
     {
       regex: /`/,
@@ -138,22 +129,15 @@ CodeMirror.defineSimpleMode("paramour", {
       next: "start"
     },
     {
+      regex: /\$\{(?:[^\{\}]*?)\}/,
+      mode: "start"
+    },
+    {
       regex: /^(?:[^\\]|\\.)*?$/,
       token: "string"
     }
   ],
-  // Docstrings
-  docstring: [
-    {
-      regex: /\s*\*\//,
-      token: "string",
-      next: "start"
-    },
-    {
-      regex: /.*/,
-      token: "string"
-    }
-  ],
+
   // "The meta property contains global information about the mode. It
   // can contain properties like lineComment, which are supported by
   // all modes, and also directives like dontIndentStates, which are
