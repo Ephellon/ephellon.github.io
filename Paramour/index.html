@@ -170,8 +170,13 @@
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E1">
 # Assignment
-var(G = "Gumball", D = "Darwin", A = "Anais", N, R)
-  = array[i++], age = 12, i = 0, array = ["Nicole", "Richard"];
+var(array = ["Nicole", "Richard"], N, R)
+    = array[i++],
+  G = "Gumball",
+  D = "Darwin",
+  A = "Anais",
+  i = 0,
+age = 12;
 # $doc -> document
 # $R => Math.random()
 
@@ -195,11 +200,11 @@ var Gumball = {
 };
 
 # Functions
-$doc.writeln =
-  (message) => $doc.body.innerHTML += message + "<br>";
+$doc.writeln = (message)
+  => $doc.body.innerHTML += message + "<br>";
 
-write(message) =>
-  $doc.writeln(message);
+write(message)
+  => $doc.writeln(message);
 
 # Spreads
 race(winner, ...runners) =>
@@ -210,6 +215,7 @@ var tobias, penny;
 # Existence
 if(defined tobias)
   alert "Penny will be mine!--Tobias";
+
 if(undefined penny)
   alert "I don't exist yet--Penny";
 </textarea>
@@ -267,7 +273,7 @@ if(undefined penny)
 # -> is a simple copy
 # => is an eval copy
 
-var(Gumball = "Gumball", Darwin = "Darwin", Anais = "Anais");
+var Gumball = "Gumball", Darwin = "Darwin", Anais = "Anais";
 
 var $R = Math.random(); # a random, "private" variable name
 
@@ -427,15 +433,15 @@ fn(args...) {
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E8">
-write(message) =>
-  document.write(message);
-
 writeln(message) {
   -> write(message + '\n')
 }
 
-var writeun =
-  (message) => write(message + "\b");
+write(message) =>
+  document.write(message);
+
+var writeun = (message)
+  => write(message + "\b");
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -452,8 +458,8 @@ var writeun =
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E9">
-run(from = "Tina Rex") =>
-  "${from} is moving, run!";
+run(from = "Tina Rex")
+  => "${from} is moving, run!";
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -470,11 +476,11 @@ run(from = "Tina Rex") =>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E10">
-write(String message = "Hello World!") =>
-  document.write(message);
+write(String message = "Hello World!")
+  => document.write(message);
 
-write(Cat cat) =>
-  write "${cat.name} wants to tell you something...";
+write(Cat cat)
+  => write "${cat.name} wants to tell you something...";
 
 # * and ... can be put either in front or behind the variable name
 # * means "Any"
@@ -616,7 +622,7 @@ gumball.eval = ()
 <textarea class="compile-paramour" type="text/paramour" id="E14">
 var countdown = [9, 8, 7, 6, 5, 4, 3, 2, 1];
 
-var(first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3]);
+var first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3];
 
 # working on: countdown[3, 3] = [-6, -5, -4];
 </textarea>
@@ -685,8 +691,8 @@ getClass(gumball) {
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E16">
 var(penny, gumball)
-  = {love: true}, tobias = {};
-
+       = {love: true},
+tobias = {};
 
 if(defined (gumball.love) && defined (penny.love))
   alert "She loves you back!";
@@ -774,7 +780,7 @@ Animal {
     name = name.split " "
     @name = {
       first: name[0],
-      middle: name.length > 2? name[1]: "",
+      middle: (name.length > 2)? name[1]: "",
       last: name[name.length - 1]
     }
   }
