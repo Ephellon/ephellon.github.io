@@ -162,7 +162,8 @@
     </h2>
 
   <p>
-    <i>The basics of Paramour.</i> <b>(Follow the same rules for line terminators as JavaScript)</b>.
+    <i>The basics of Paramour.</i> <b>(Follow the same rules for line terminators as JavaScript)</b>.<br>
+    <i>When omitting parenthesis, only the closest token is taken, not the whole line (besides <code>super</code> in <code>.prototype</code> methods)</i>
     <b class="paramour logo">Paramour is on the left</b>,
     <b class="javascript logo">JavaScript on the right</b>
   </p>
@@ -204,7 +205,7 @@ $doc.writeln = (message)
   => $doc.body.innerHTML += message + "<br>";
 
 write(message)
-  => $doc.writeln(message);
+  => $doc.writeln message;
 
 # Spreads
 race(winner, ...runners) =>
@@ -438,7 +439,7 @@ writeln(message) {
 }
 
 write(message) =>
-  document.write(message);
+  document.write message;
 
 var writeun = (message)
   => write(message + "\b");
@@ -477,7 +478,7 @@ run(from = "Tina Rex")
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E10">
 write(String message = "Hello World!")
-  => document.write(message);
+  => document.write message;
 
 write(Cat cat)
   => write "${cat.name} wants to tell you something...";
@@ -489,7 +490,7 @@ write(* item) =>
 
 # ... means "Spread"
 write(item, ... items) =>
-  write([item, items]);
+  write [item, items];
 
 # Anonymous Functions with types will default to "__"
 (args...) {
