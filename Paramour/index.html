@@ -170,8 +170,8 @@
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E1">
 # Assignment
-var age = 12, i = 0, array = ["Nicole", "Richard"];
-var(G = "Gumball", D = "Darwin", A = "Anais", N, R) = array[i++];
+var(G = "Gumball", D = "Darwin", A = "Anais", N, R)
+  = array[i++], age = 12, i = 0, array = ["Nicole", "Richard"];
 # $doc -> document
 # $R => Math.random()
 
@@ -179,7 +179,8 @@ var(G = "Gumball", D = "Darwin", A = "Anais", N, R) = array[i++];
 var chars = [G, D, A, N, R];
 
 # Tuples ([] + {})
-var(list = {{G, D, A, N, R}}, gummball, darwin, anais, nicole, richard) = Tuple.next;
+var(list = {{G, D, A, N, R}}, gummball, darwin, anais, nicole, richard)
+  = Tuple.next;
 
 # Objects
 var Gumball = {
@@ -195,14 +196,14 @@ var Gumball = {
 
 # Functions
 $doc.writeln =
-(message) {
-  -> $doc.body.innerHTML += message + "<br>"
-}
+  (message) => $doc.body.innerHTML += message + "<br>";
 
-write(message) => $doc.writeln(message);
+write(message) =>
+  $doc.writeln(message);
 
 # Spreads
-race(winner, ...runners) => write(winner, runners);
+race(winner, ...runners) =>
+  write(winner, runners);
 
 var tobias, penny;
 
@@ -266,7 +267,7 @@ if(undefined penny)
 # -> is a simple copy
 # => is an eval copy
 
-var(Gumball = "Gumball", Darwin = "Darwin", Anais = "Anais")
+var(Gumball = "Gumball", Darwin = "Darwin", Anais = "Anais");
 
 var $R = Math.random(); # a random, "private" variable name
 
@@ -422,19 +423,19 @@ fn(args...) {
       Functions
     </h2>
 
-    <p><i>Functions are defined by a "mini" version of the JavaScript syntax.</i></p>
+    <p><i>Functions are defined by a "mini" version of the JavaScript syntax. (They do not rely on indentation, that's only apart of the Paramour syntax conventions)</i></p>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E8">
-write(message) => document.write(message);
+write(message) =>
+  document.write(message);
 
 writeln(message) {
   -> write(message + '\n')
 }
 
-var writeun = (message) {
-  -> write(message + "\b")
-}
+var writeun =
+  (message) => write(message + "\b");
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -451,9 +452,8 @@ var writeun = (message) {
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E9">
-run(from = "Tina Rex") {
-  -> "${from} is moving, run!"
-}
+run(from = "Tina Rex") =>
+  "${from} is moving, run!";
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -470,16 +470,20 @@ run(from = "Tina Rex") {
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E10">
-write(String message = "Hello World!") => document.write(message);
+write(String message = "Hello World!") =>
+  document.write(message);
 
-write(Cat cat) => write("${cat.name} wants to tell you something...");
+write(Cat cat) =>
+  write "${cat.name} wants to tell you something...";
 
 # * and ... can be put either in front or behind the variable name
 # * means "Any"
-write(* item) => write(item + "");
+write(* item) =>
+  write(item + "");
 
 # ... means "Spread"
-write(item, ... items) => write([item, items]);
+write(item, ... items) =>
+  write([item, items]);
 
 # Anonymous Functions with types will default to "__"
 (args...) {
@@ -588,9 +592,8 @@ var gumball = {
   class: 6
 }
 
-gumball.eval = () {
-  -> "Not even"
-}
+gumball.eval = ()
+  => "Not even";
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -641,15 +644,19 @@ var(first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3]);
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E15">
-switch(gumball.class) {
-  case(1, 2, 3, 4, 5) {
-    -> "This grade seems a bit low..."
-  }
-  case 6:
-    -> "That seems about right";
-    break;
-  default(7, 8, 9) {
-    -> "That's either too high, or undefined"
+getClass(gumball) {
+  switch(gumball.class) {
+    case(1, 2, 3, 4, 5) {
+      -> "This grade seems a bit low..."
+    }
+    case(6)
+      -> "That seems about right";
+    case 7:
+      -> "Ehh...";
+      break;
+    default(8, 9) {
+      -> "That's either too high, or undefined"
+    }
   }
 }
 </textarea>
@@ -677,8 +684,9 @@ switch(gumball.class) {
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E16">
-var(penny, gumball) = {love: true};
-var tobias = {};
+var(penny, gumball)
+  = {love: true}, tobias = {};
+
 
 if(defined (gumball.love) && defined (penny.love))
   alert "She loves you back!";
@@ -727,7 +735,10 @@ var apples = [
   =>("Darwin")? # Darwin's Apple
 ]
 
-var a => ("Nicole")? # =, +=, -=, etc. work here too
+var a => ("Nicole")?
+# =, +=, -=, etc. work here too
+# var a = "";
+# a +=> ("Nicole")?
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -760,7 +771,7 @@ var cats = [];
 Animal {
   <init>(name, .type) {
     cats.push name
-    name = name.split(" ")
+    name = name.split " "
     @name = {
       first: name[0],
       middle: name.length > 2? name[1]: "",
@@ -890,7 +901,7 @@ Animal.Cat {
 
 var bqua = # bottom-level quasi (parsed after comments)
 `
-# comment
+# comment is handled BEFORE this string
 var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
 # * if the JS version handles quasis, Paramour let's JS do its thing,
 # otherwise, Paramour handles it
@@ -898,7 +909,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
 
 var tqua = # top-level quasi (parsed before everything, even comments)
 """
-# comment
+# comment is handled AFTER this string
 var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
 # * if the JS version handles quasis, Paramour let's JS do its thing,
 # otherwise, Paramour handles it
