@@ -163,7 +163,7 @@
 
   <p>
     <i>The basics of Paramour.</i> <b>(Follow the same rules for line terminators as JavaScript)</b>.<br>
-    <b>When omitting parenthesis, only the closest token is taken, not the whole line (besides <code>super</code> in <code>.prototype</code> methods)</b>.<br>
+    <b>When omitting parenthesis, only the closest string/name token is taken, not the whole line (besides <code>super</code> in <code>.prototype</code> methods)</b>.<br>
     <b class="paramour logo">Paramour is on the left</b>,
     <b class="javascript logo">JavaScript on the right</b>
   </p>
@@ -490,7 +490,7 @@ write(* item) =>
 
 # ... means "Spread"
 write(item, ... items) =>
-  write [item, items];
+  write([item, items]);
 
 # Anonymous Functions with types will default to "__"
 (args...) {
