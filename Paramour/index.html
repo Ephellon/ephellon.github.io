@@ -784,6 +784,7 @@ Animal {
       middle: (name.length > 2)? name[1]: "",
       last: name[name.length - 1]
     }
+    -> @
   }
 
   .getFirstName() {
@@ -805,10 +806,14 @@ Animal.Cat {
     -> new Animal(name, "Cat")
   }
 
+  .getMiddleName(String name) {
+    -> @name.middle = name;
+  }
+
   .getMiddleName(name) {
-    if(undefined (super name))
-      -> @name.middle = name;
-    -> super
+    if(defined (super name))
+      -> @name.middle
+    -> ""
   }
 }
 </textarea>
