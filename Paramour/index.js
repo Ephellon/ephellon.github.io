@@ -13,7 +13,12 @@ options = {
   readOnly: true,
   autofocus: false,
   lineSeperator: "\n",
-  theme: "tomorrow-night-bright"
+  theme: "tomorrow-night-bright",
+  blockCommentStart: "###",
+  blockCommentEnd: "###",
+  lineComment: "#",
+  fold: "brace",
+  closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ``` ".split(" ")
 },
 poptions = options, joptions = options, Peditor, Jeditor;
 poptions.mode = "paramour", joptions.mode = "javascript";
