@@ -799,7 +799,7 @@ Animal {
   .getMiddleName() {
     -> @name.middle
   }
-}
+};
 
 Animal.Cat {
   <init>(name) {
@@ -815,7 +815,7 @@ Animal.Cat {
       -> @name.middle
     -> ""
   }
-}
+};
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -865,17 +865,17 @@ Animal.Cat {
 <textarea class="compile-paramour" type="text/paramour" id="E20">
 @Before {
   @@name = "Gumball Watterson"
-}
+};
 
 @After {
   # if you want anything to do after, use this
-}
+};
 
 # Basic test
 @Test {
   assertEquals(@@name, "Gumball Watterson") # pass
   assertNull(true) # fail
-}
+};
 
 # Advace test
 @Test(object) {
@@ -886,7 +886,7 @@ Animal.Cat {
 }({
   name: "Rob",
   age: 23
-})
+});
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
