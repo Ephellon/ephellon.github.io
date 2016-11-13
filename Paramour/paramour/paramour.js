@@ -144,12 +144,10 @@ CodeMirror.defineSimpleMode("paramour", {
   // specific to simple modes" - CodeMirror.
   meta: {
     dontIndentStates: ["comment"],
-    lineComment: ["#"]
-  },
-
-  blockCommentStart: "###",
-  blockCommentEnd: "###",
-  lineComment: "#",
-  fold: "brace",
-  closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ```".split(" ")
+    blockCommentStart: "###",
+    blockCommentEnd: "###",
+    lineComment: "#",
+    fold: "brace",
+    closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ```".split(" ")
+  }
 });
