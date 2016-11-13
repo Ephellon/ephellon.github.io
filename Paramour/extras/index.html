@@ -76,7 +76,12 @@
     readOnly: true,
     autofocus: false,
     lineSeperator: "\n",
-    theme: "tomorrow-night-bright"
+    theme: "tomorrow-night-bright",
+    blockCommentStart: "###",
+    blockCommentEnd: "###",
+    lineComment: "#",
+    fold: "brace",
+    closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ```".split(" ")
   },
   poptions = options, joptions = options, Peditor, Jeditor, __Console__ = console, console, $ = window.$ = function(e){return window.document.querySelector(e)}, p, j, c;
   poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
