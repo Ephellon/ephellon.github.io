@@ -874,14 +874,14 @@ Animal.Cat {
 # Basic test
 @Test {
   assertEquals(@@name, "Gumball Watterson") # pass
-  assertNull(true) # fail
+  assertNull true # fail
 };
 
 # Advace test
 @Test(object) {
   toconsole = true # force Paramour to print to the console
   assertNotNull(object.name) # pass
-  stdout(object) # console.log
+  stdout object # console.log
   assertNotEquals(object.name, @@name) # pass
 }({
   name: "Rob",
