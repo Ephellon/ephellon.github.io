@@ -145,5 +145,11 @@ CodeMirror.defineSimpleMode("paramour", {
   meta: {
     dontIndentStates: ["comment"],
     lineComment: ["#"]
-  }
+  },
+
+  blockCommentStart: "###",
+  blockCommentEnd: "###",
+  lineComment: "#",
+  fold: "brace",
+  closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ```".split(" ")
 });
