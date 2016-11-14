@@ -707,6 +707,45 @@ if((+tobias.love) === NaN || NaN (+tobias.love))
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
+        window.example_chained = document.querySelector("#E_chained").value;
+      </script>
+      <div class='minibutton load' onclick='loadConsole(example_chained);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_chained)'>run</div>
+      <br class='clear' />
+    </div>
+
+    <h2>
+      <span id="chained" class="bookmark"></span>
+      Chained Operators
+    </h2>
+
+    <p><i>Chain operators just like algebra (except for => calls).</i></p>
+    <div class='code'>
+      <pre>
+<textarea class="compile-paramour" type="text/paramour" id="E_chained">
+var a = 1, b = 2, c = 3, d = 4, e = 5;
+
+  alert(c < d > b < e != "1" == ((c - b) + "") > (a - b))
+# alert(3 < 4 > 2 < 5 != "1" == ((3 - 2) + "") > (1 - 2))
+# a ? b
+###
+  a, b = next expression,
+///
+[\w\$\.]
+
+(["'`] -> $1)
+  => \1...\1
+
+([ ({[ => ]}) ] -> $1 $2)
+  => \1...\2
+///
+
+  ? = "!== === != == & | ^ < > << >> <<< >>>"
+###
+</textarea>
+      </pre>
+      <pre><textarea class="compile-javascript"></textarea></pre>
+      <script>
         window.example16 = document.querySelector("#E16").value;
       </script>
       <div class='minibutton load' onclick='loadConsole(example16);'>load</div>
@@ -981,10 +1020,17 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
 
     <ul>
       <li>
+        <pre>Calm Down - XXI, 21.0 (G-Eazy: "Calm Down")</pre>
+
+        <ul>
+          <li><code>a &lt; b &gt; c != d == e | f</code> - chained operators syntax</li>
+        </ul>
+      </li>
+      <li>
         <pre>Backseat Freestyle - XX, 20.0 (Kendrick Lamar: "Backseat Freestyle")</pre>
 
         <ul>
-          <li><code>.prototype</code> type-controlled functions (dockets) - "sockets" and "pockets"</li>
+          <li><code>.prototype</code> - type-controlled functions (dockets) - "sockets" and "pockets"</li>
         </ul>
       </li>
       <li>
