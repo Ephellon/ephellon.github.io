@@ -49,7 +49,7 @@ Password {
   toString(type, compress) {
     if(undefined type)
       -> @["[[PrimitiveValue]]"] + "";
-    if(type < 2 || type > 222)
+    if(!(1 < type < 223))
       +> RangeError "toString(Radix @${type}) Radix argument must be between 2 and 222";
     compress = compress || (type > 62);
     -> toString(@["[[PrimitiveValue]]"], type, compress)
@@ -62,7 +62,7 @@ Password {
  * @return {String}
  */
 toString(value, Number type, Boolean compress) {
-  if(undefined type || type < 2 || type > 222)
+  if(undefined type || !(1 < type < 223))
     +> RangeError "toString(Radix @${type}) Radix argument must be between 2 and 222";
   if(+value === -Infinity || + value === +Infinity)
     +> RangeError "toString(Number @${value}) Number argument must be between (10e-324, 10e308)";
@@ -102,7 +102,8 @@ toString(value, Number type, Boolean compress) {
   -> output.join ""
 }
 
-toString(Number value, String characters) => toString(value, characters.split "");
+toString(Number value, String characters)
+  => toString(value, characters.split "");
 
 toString(Number value, Array characters) {
   if(characters.length < 2)
@@ -121,11 +122,14 @@ toString(Number value, Array characters) {
   -> output.join ""
 }
 
-toString(Number value, Number type) => toString(value, type, type > 62);
+toString(Number value, Number type)
+  => toString(value, type, type > 62);
 
-toString(Number value, Boolean compress) => toString(value, ((compress)? 181: 62), compress);
+toString(Number value, Boolean compress)
+  => toString(value, ((compress)? 181: 62), compress);
 
-toString(Number value) => (((value + "").length > 21)? value.toPrecision(21): value + "");
+toString(Number value)
+  => (((value + "").length > 21)? value.toPrecision(21): value + "");
 
 toString(String value, String type) {
   switch(type) {
@@ -141,11 +145,14 @@ toString(String value, String type) {
   -> toString(+value || value, type, type > 62)
 }
 
-toString(String value, Boolean compress) => toString(value, ((compress)? 181: 32), compress);
+toString(String value, Boolean compress)
+  => toString(value, ((compress)? 181: 32), compress);
 
-toString(String value) => toString(value, true);
+toString(String value)
+  => toString(value, true);
 
-toString(String value, Number type) => toString(value, type, type > 62);
+toString(String value, Number type)
+  => toString(value, type, type > 62);
 
 # toNumber
 /** (String value, Number type, Boolean compressed)
@@ -192,9 +199,11 @@ toNumber(String value, String characters) {
   -> eval(output.reverse().join "+")
 }
 
-toNumber(String value, Number type) => toNumber(value, type, type > 62);
+toNumber(String value, Number type)
+  => toNumber(value, type, type > 62);
 
-toNumber(String value, Boolean compressed) => toNumber(value, ((compressed)? 181: 32), compressed);
+toNumber(String value, Boolean compressed)
+  => toNumber(value, ((compressed)? 181: 32), compressed);
 
 toNumber(String value) {
   if(/^[01]+$/.test value)
@@ -216,17 +225,14 @@ toNumber(String value) {
   -> toNumber(value, 222, true);
 }
 
-toNumber(String value, type) => toNumber(value, type, +type > 62);
+toNumber(String value, type)
+  => toNumber(value, type, +type > 62);
 
-Number@toString =
-(type, compress) {
-  -> toString(@, type, compress || false)
-}
+Number@toString = (type, compress)
+  => toString(@, type, compress || false);
 
-String@toNumber =
-(type, compressed) {
-  -> tonumber(@, type, compressed || false)
-}
+String@toNumber = (type, compressed)
+  => toNumber(@, type, compressed || false);
 
 # MAC
 /** (Number address, String symbol, Number seed)
@@ -239,7 +245,7 @@ MAC(address, symbol, seed) {
   address = +(address || Math.floor($R * 999999999));
   symbol = ((symbol || ":") + "")[0];
   seed = +(seed || 16);
-  if(seed < 14 || seed > 56)
+  if(!(14 < seed < 56))
     +> RangeError "MAC(address: '${address}', symbol: '${symbol}', seed: '${seed}') 'seed' must be between (14, 56)";
   if(NaN address)
     +> TypeError "MAC(address: '${address}', symbol: '${symbol}', seed: '${seed}') 'address' must be a Number";
