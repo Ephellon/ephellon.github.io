@@ -31,10 +31,26 @@
       color: #666;
     }
     .logo.javascript {
-      color: #f7df1e;
+      background: #f7df1e;
+      color: #000;
+    }
+    h2.logo.javascript {
+      background: #f7df1e;
+      color: #000;
+      text-align: center;
+      border: 1px solid #000;
+      border-radius: 15px;
     }
     .logo.paramour {
-      color: #f42424;
+      background: #f42424;
+      color: #000;
+    }
+    h2.logo.paramour {
+      background: #f42424;
+      color: #000;
+      text-align: center;
+      border: 1px solid #000;
+      border-radius: 15px;
     }
     #console {
       width: 100%;
@@ -48,11 +64,11 @@
   <p><i>Below is the <b class="paramour logo">Paramour Code (left)</b>, and <b class="javascript logo">JavaScript Code (right)</b></i></p>
   <div class='code'>
     <pre>
-      <b class="paramour logo">Paramour</b>
+      <h2 class="paramour logo">Paramour</h2>
       <textarea class="compile-paramour" type="text/paramour" id="input"></textarea>
     </pre>
     <pre>
-      <b class="javascript logo">JavaScript</b>
+      <h2 class="javascript logo">JavaScript</h2>
       <textarea class="compile-javascript" type="text/javascript" id="output"></textarea>
     </pre>
     <div class='minibutton ok' onclick='run($("#output").value)'>run</div>
