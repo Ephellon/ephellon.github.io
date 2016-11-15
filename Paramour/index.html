@@ -169,8 +169,7 @@
   </p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E1">
-# Assignment
+<textarea class="compile-paramour" type="text/paramour" id="E_overview"># Assignment
 var(array = ["Nicole", "Richard"], N, R)
     = array[i++],
   G = "Gumball",
@@ -223,10 +222,10 @@ if(undefined penny)
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example1 = document.querySelector("#E1").value;
+        window.example_overview = document.querySelector("#E_overview").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example1);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example1)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_overview);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_overview)'>run</div>
       <br class='clear' />
     </div>
 
@@ -242,7 +241,7 @@ if(undefined penny)
     <p><i>Just documenting whatever you're doing.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E2">
+<textarea class="compile-paramour" type="text/paramour" id="E_normal_comments">
 # single line comment
 ### multi-line comments
   blah blah blah
@@ -251,10 +250,10 @@ if(undefined penny)
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example2 = document.querySelector("#E2").value;
+        window.example_normal_comments = document.querySelector("#E_normal_comments").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example2);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example2)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_normal_comments);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_normal_comments)'>run</div>
       <br class='clear' />
     </div>
 
@@ -266,7 +265,7 @@ if(undefined penny)
     <p><i>Use these to shorten code and reduce errors.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E3">
+<textarea class="compile-paramour" type="text/paramour" id="E_phantoms">
 # $win -> window
 # $fav -> prompt("Enter your favorite 'Amazing World of Gumball' character's name", "Anais")
 # $R => "RandomName${(Math.random() + '').replace('0.', '_')}"
@@ -283,10 +282,10 @@ $win.favorite = $fav
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example3 = document.querySelector("#E3").value;
+        window.example_phantoms = document.querySelector("#E_phantoms").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example3);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example3)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_phantoms);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_phantoms)'>run</div>
       <br class='clear' />
     </div>
 
@@ -298,7 +297,7 @@ $win.favorite = $fav
     <p><i>Further detail of what you're doing, fantastic for type controlled functions. (The object being documented will have a <code>DOCSTRING</code> property)</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E4">
+<textarea class="compile-paramour" type="text/paramour" id="E_docstrings">
 /** (message, sender, reciever)
  * Writes to the 'reciever'
  * @param {String} a The first argument
@@ -312,10 +311,10 @@ write(message, sender, reciever) {
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example4 = document.querySelector("#E4").value;
+        window.example_docstrings = document.querySelector("#E_docstrings").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example4);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example4)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_docstrings);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_docstrings)'>run</div>
       <br class='clear' />
     </div>
 
@@ -327,7 +326,7 @@ write(message, sender, reciever) {
     <p><i>Have you ever wanted to write multiple versions of the same code, but not repeat it, such as a <b>destructor</b>? Well "Version Controlling" is here for you.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E5">
+<textarea class="compile-paramour" type="text/paramour" id="E_version_controlling">
 # @1.3
 # run Paramour at JS version 1.3
 
@@ -341,10 +340,10 @@ write(message, sender, reciever) {
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example5 = document.querySelector("#E5").value;
+        window.example_version_controlling = document.querySelector("#E_version_controlling").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example5);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example5)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_version_controlling);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_version_controlling)'>run</div>
       <br class='clear' />
     </div>
 
@@ -356,7 +355,7 @@ write(message, sender, reciever) {
     <p><i>Need to keep versions seperate? Use version querying.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E6">
+<textarea class="compile-paramour" type="text/paramour" id="E_version_querying">
 # Destructor example
 
 var names = ["Gumball", "Darwin", "Anais"];
@@ -383,10 +382,10 @@ console.log "Congratulations, you have at least JavaScript 1.3"
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example6 = document.querySelector("#E6").value;
+        window.example_version_querying = document.querySelector("#E_version_querying").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example6);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example6)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_version_querying);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_version_querying)'>run</div>
       <br class='clear' />
     </div>
 
@@ -403,7 +402,7 @@ console.log "Congratulations, you have at least JavaScript 1.3"
     <p><i>These are escape sequences for JavaScript phrases/words.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E7">
+<textarea class="compile-paramour" type="text/paramour" id="E_keywords">
 fn(args...) {
   if(undefined (args[0]))
     -> "return";
@@ -418,10 +417,10 @@ fn(args...) {
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example7 = document.querySelector("#E7").value;
+        window.example_keywords = document.querySelector("#E_keywords").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example7);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example7)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_keywords);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_keywords)'>run</div>
       <br class='clear' />
     </div>
 
@@ -433,7 +432,7 @@ fn(args...) {
     <p><i>Functions are defined by a "mini" version of the JavaScript syntax. (They do not rely on indentation, that's only apart of the Paramour syntax conventions)</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E8">
+<textarea class="compile-paramour" type="text/paramour" id="E_functions">
 writeln(message) {
   -> write(message + '\n')
 }
@@ -447,10 +446,10 @@ var writeun = (message)
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example8 = document.querySelector("#E8").value;
+        window.example_functions = document.querySelector("#E_functions").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example8);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example8)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_functions);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_functions)'>run</div>
       <br class='clear' />
     </div>
     <p>
@@ -458,17 +457,17 @@ var writeun = (message)
     </p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E9">
+<textarea class="compile-paramour" type="text/paramour" id="E_functions_1">
 run(from = "Tina Rex")
   => "${from} is moving, run!";
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example9 = document.querySelector("#E9").value;
+        window.example_functions_1 = document.querySelector("#E_functions_1").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example9);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example9)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_functions_1);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_functions_1)'>run</div>
       <br class='clear' />
     </div>
     <p>
@@ -476,7 +475,7 @@ run(from = "Tina Rex")
     </p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E10">
+<textarea class="compile-paramour" type="text/paramour" id="E_functions_2">
 write(String message = "Hello World!")
   => document.write message;
 
@@ -500,10 +499,10 @@ write(item, ... items) =>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example10 = document.querySelector("#E10").value;
+        window.example_functions_2 = document.querySelector("#E_functions_2").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example10);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example10)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_functions_2);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_functions_2)'>run</div>
       <br class='clear' />
     </div>
 
@@ -515,7 +514,7 @@ write(item, ... items) =>
     <p><i>Paramour allows the use of Spreads in function declarations, no matter its position.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E11">
+<textarea class="compile-paramour" type="text/paramour" id="E_spreads">
 var gold, silver, bronze, contenders;
 
 place(first, second, thrid, others..., last) {
@@ -542,10 +541,10 @@ alert "In first, we have ${gold}, with ${silver} just moments behind--and here c
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example11 = document.querySelector("#E11").value;
+        window.example_spreads = document.querySelector("#E_spreads").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example11);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example11)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_spreads);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_spreads)'>run</div>
       <br class='clear' />
     </div>
 
@@ -562,7 +561,7 @@ alert "In first, we have ${gold}, with ${silver} just moments behind--and here c
       <p><i>There isn't much difference, other than Tuples, which use double braces <code>{{}}</code>.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E12">
+<textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples">
 var watterson_kids = ["Gumball", "Darwin", "Anais"],
     fitzgerald_kids = ["Penny", "Penny's Sister"];
 
@@ -585,16 +584,16 @@ var families = {{
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example12 = document.querySelector("#E12").value;
+        window.example_arrays_objects_tuples = document.querySelector("#E_arrays_objects_tuples").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example12);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example12)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_arrays_objects_tuples);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples)'>run</div>
       <br class='clear' />
     </div>
       <p><i>Paramour will also, automatically quote reserved words that are meant as properties/methods.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E13">
+<textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples_1">
 var gumball = {
   class: 6
 }
@@ -605,10 +604,10 @@ gumball.eval = ()
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example13 = document.querySelector("#E13").value;
+        window.example_arrays_objects_tuples_1 = document.querySelector("#E_arrays_objects_tuples_1").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example13);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example13)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_arrays_objects_tuples_1);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples_1)'>run</div>
       <br class='clear' />
     </div>
 
@@ -620,7 +619,7 @@ gumball.eval = ()
     <p><i>Slice and Splice more naturally with these shortcuts.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E14">
+<textarea class="compile-paramour" type="text/paramour" id="Eslicing_splicing_ranges">
 var countdown = [9, 8, 7, 6, 5, 4, 3, 2, 1];
 
 var first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3];
@@ -630,10 +629,10 @@ var first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3];
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example14 = document.querySelector("#E14").value;
+        window.exampleslicing_splicing_ranges = document.querySelector("#Eslicing_splicing_ranges").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example14);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example14)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(exampleslicing_splicing_ranges);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(exampleslicing_splicing_ranges)'>run</div>
       <br class='clear' />
     </div>
 
@@ -650,7 +649,7 @@ var first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3];
       <p><i>Paramour allows the use of <code>case</code> and <code>default</code> as parenthesized statements.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E15">
+<textarea class="compile-paramour" type="text/paramour" id="E_case_default">
 getClass(gumball) {
   switch(gumball.class) {
     case(1, 2, 3, 4, 5) {
@@ -670,10 +669,10 @@ getClass(gumball) {
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example15 = document.querySelector("#E15").value;
+        window.example_case_default = document.querySelector("#E_case_default").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example15);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example15)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_case_default);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_case_default)'>run</div>
       <br class='clear' />
     </div>
 
@@ -690,7 +689,7 @@ getClass(gumball) {
     <p><i>Check for the existence of variables more robustly.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E16">
+<textarea class="compile-paramour" type="text/paramour" id="E_existence">
 var(penny, gumball)
        = {love: true},
 tobias = {};
@@ -707,10 +706,10 @@ if((+tobias.love) === NaN || NaN (+tobias.love))
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example_chained = document.querySelector("#E_chained").value;
+        window.example_existence = document.querySelector("#E_existence").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example_chained);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_chained)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_existence);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_existence)'>run</div>
       <br class='clear' />
     </div>
 
@@ -746,10 +745,10 @@ var a = 1, b = 2, c = 3, d = 4, e = 5;
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example16 = document.querySelector("#E16").value;
+        window.example_chained = document.querySelector("#E_chained").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example16);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example16)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_chained);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_chained)'>run</div>
       <br class='clear' />
     </div>
 
@@ -761,7 +760,7 @@ var a = 1, b = 2, c = 3, d = 4, e = 5;
       <p><i>Use operators to your liking, except for <code>//</code>, <code>/*</code>, and <code>*/</code>.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E17">
+<textarea class="compile-paramour" type="text/paramour" id="E_custom">
 [String - *] {
   # * as a type means "Any"
   # ... means "Spread"
@@ -789,10 +788,10 @@ var a => ("Nicole")?
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example17 = document.querySelector("#E17").value;
+        window.example_custom = document.querySelector("#E_custom").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example17);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example17)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_custom);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_custom)'>run</div>
       <br class='clear' />
     </div>
 
@@ -806,7 +805,7 @@ var a => ("Nicole")?
     <p><i>Use classes like they were meant to be.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E18">
+<textarea class="compile-paramour" type="text/paramour" id="E_classes">
 # String.proptotype
 String@add = String@concat;
 String::sub = String::replace;
@@ -815,8 +814,7 @@ String..mul = String..repeat;
 var cats = [];
 
 Animal {
-  <init>(name, .type) {
-    cats.push name
+  <init>(name, .type) _classes    cats.push name
     name = name.split " "
     @name = {
       first: name[0],
@@ -859,10 +857,10 @@ Animal.Cat {
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example18 = document.querySelector("#E18").value;
+        window.example_classes = document.querySelector("#E_classes").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example18);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example18)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_classes);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_classes)'>run</div>
       <br class='clear' />
     </div>
 
@@ -876,7 +874,7 @@ Animal.Cat {
     <p><i>Use generators like they were meant to be.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E19">
+<textarea class="compile-paramour" type="text/paramour" id="E_generators">
 *grab(item) {
   &> item
 }
@@ -884,10 +882,10 @@ Animal.Cat {
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example19 = document.querySelector("#E19").value;
+        window.example_generators = document.querySelector("#E_generators").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example19);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example19)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_generators);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_generators)'>run</div>
       <br class='clear' />
     </div>
 
@@ -901,7 +899,7 @@ Animal.Cat {
     <p><i>If you want to test out some code, or want to find a bug, use this.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E20">
+<textarea class="compile-paramour" type="text/paramour" id="E_jsunit">
 @Before {
   @@name = "Gumball Watterson"
 };
@@ -930,10 +928,10 @@ Animal.Cat {
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example20 = document.querySelector("#E20").value;
+        window.example_jsunit = document.querySelector("#E_jsunit").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example20);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example20)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_jsunit);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_jsunit)'>run</div>
       <br class='clear' />
     </div>
 
@@ -947,7 +945,7 @@ Animal.Cat {
     <p><i>Hopefully you've noticed the <code>${...}</code> inside of some strings above, and recognized it as interpolation. The "Quasi" string family members are the only multiline strings allowed., but all strings allow interpolation.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E21">
+<textarea class="compile-paramour" type="text/paramour" id="E_interpolation">
 "PI = ${Math.PI}" # interpolation
 
 var bqua = # bottom-level quasi (parsed after comments)
@@ -974,10 +972,10 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example21 = document.querySelector("#E21").value;
+        window.example_interpolation = document.querySelector("#E_interpolation").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example21);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example21)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_interpolation);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_interpolation)'>run</div>
       <br class='clear' />
     </div>
 
