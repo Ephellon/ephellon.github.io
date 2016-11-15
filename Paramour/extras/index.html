@@ -25,7 +25,6 @@
   <script src='../paramour/paramour.js'></script>
   <script src="../documentation/vendor/jquery-1.6.4.js"></script>
   <script src='par.min.js'></script>
-  <script src="../index.js"></script>
 
   <style>
     .CodeMirror, .CodeMirror-gutter {
@@ -174,17 +173,17 @@
     blockCommentEnd: "###",
     lineComment: "#",
     fold: "brace",
-    closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ```".split(" ")
+    closeBrackets: "( ) [ ] { } \"\"\" \"\"\" ''' ''' ``` ``` \" \" ' ' ` `".split(" ")
   },
-  poptions = options, joptions = options, Peditor, Jeditor, __Console__ = console, console, $ = window.$ = function(e){return window.document.querySelector(e)}, p, j, c;
+  poptions = options, joptions = options, Peditor, Jeditor, __Console__ = console, console, p, j, c;
   poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
 
-  Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
+  Peditor = CodeMirror.fromTextArea(p = $("#input")[0], poptions);
 
-  (j = $("#output")).innerText = Paramour(p.innerText, true);
+  (j = $("#output")[0]).innerText = Paramour(p.innerText, true);
   Jeditor = CodeMirror.fromTextArea(j, joptions);
 
-  (c = $("#console")).innerText = "// JavaScript Console\n// console.release() to switch consoles";
+  (c = $("#console")[0]).innerText = "// JavaScript Console\n// console.release() to switch consoles";
   console = CodeMirror.fromTextArea(c, joptions);
 
   console["[[Value]]"] = "";
@@ -333,6 +332,116 @@
         }, 500);
     });
   }
+
+  var closeMenus, compileSource, evalJS, hash, sourceFragment, src;
+  sourceFragment = "try:";
+  compileSource = function() {
+    var el, location, message, results, source;
+    source = Peditor.getValue();
+    results = $('#javascript');
+    window.compiledJS = '';
+    try {
+      window.compiledJS = Paramour(source, true);
+      el = results[0];
+      if (el.innerText) {
+        el.innerText = window.compiledJS;
+      } else {
+        results.text(window.compiledJS);
+      }
+      results.removeClass('error');
+      $('.minibutton.run').removeClass('error');
+    } catch (error1) {
+      location = error1.location, message = error1.message;
+      if (location != null) {
+        message = "Error on line " + (location.first_line + 1) + ": " + message;
+      }
+      results.text(message).addClass('error');
+      $('.minibutton.run').addClass('error');
+    }
+    return $('#permalink').attr('href', "#" + sourceFragment + (encodeURIComponent(source)));
+  };
+  $('#paramour').keyup(function() {
+    return compileSource();
+  });
+  evalJS = function() {
+    try {
+      return eval(window.compiledJS);
+    } catch (error) {
+      return alert(error), error;
+    }
+  };
+  window.loadConsole = function(content) {
+    Peditor.setValue(content);
+    Jeditor.setValue(Paramour(content, true));
+    compileSource();
+    $('.navigation.try').addClass('active');
+    Jeditor.focus();
+    Peditor.focus();
+    return false;
+  };
+    window.runConsole = function(content) {
+      loadConsole(content);
+      return evalJS();
+    }
+  closeMenus = function() {
+    return $('.navigation.active').removeClass('active');
+  };
+  $('.minibutton.run').click(function() {
+    return evalJS();
+  });
+  $('.navigation').click(function(e) {
+    if (e.target.tagName.toLowerCase() === 'a') {
+      return;
+    }
+    if ($(e.target).closest('.repl_wrapper').length) {
+      return false;
+    }
+    if ($(this).hasClass('active')) {
+      closeMenus();
+    } else {
+      closeMenus();
+      $(this).addClass('active');
+    }
+    return false;
+  });
+  $(document.body).keydown(function(e) {
+    if (e.which === 27) {
+      closeMenus();
+    }
+    if (e.which === 13 && (e.metaKey || e.ctrlKey) && $('.minibutton.run:visible').length) {
+      return evalJS();
+    }
+  }).click(function(e) {
+    if ($(e.target).hasClass('minibutton')) {
+      return false;
+    }
+    return closeMenus();
+  });
+  $('#sea').click(function() {
+    console.log(Paramour.report, new Date());
+    alert("The SEA was written to your console.");
+    return;
+  });
+  $("#permalink").click(function(e) {
+    window.location = $(this).attr("href");
+    return false;
+  });
+  hash = decodeURIComponent(location.hash.replace(/^#/, ''));
+  if (hash.indexOf(sourceFragment) === 0) {
+    src = hash.substr(sourceFragment.length);
+    loadConsole(src);
+  }
+  window.timeout = window.timeout || 0;
+  with(window)
+  with(Peditor) {
+    on("keyup", function() {
+      clearTimeout(timeout);
+      setTimeout(function() {
+        Jeditor.setValue(Paramour(getValue(), true));
+      }, 500);
+    });
+  }
+  compileSource();
   </script>
 </body>
 </html>
