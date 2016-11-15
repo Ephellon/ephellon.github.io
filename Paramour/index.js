@@ -18,7 +18,7 @@ options = {
   blockCommentEnd: "###",
   lineComment: "#",
   fold: "brace",
-  closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ```".split(" ")
+  closeBrackets: "( ) [ ] { } \"\"\" \"\"\" ''' ''' ``` ``` \" \" ' ' ` `".split(" ")
 },
 poptions = options, joptions = options, Peditor, Jeditor;
 poptions.mode = "paramour", joptions.mode = "javascript";
