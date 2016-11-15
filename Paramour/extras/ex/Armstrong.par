@@ -6,7 +6,7 @@
 # Get user input
 {{"Lower", "Upper"}}
 
-var(lower, upper, results = []) = +prompt "${Tuple.next} range limit?"
+var(lower, upper, results = []) = +prompt("${Tuple.next} range limit?")
 
 for(var x = lower; x < upper; x++) {
   for(var y = x, z, w = 0; y > 0; y => (y % 10)) {
@@ -14,7 +14,7 @@ for(var x = lower; x < upper; x++) {
     w +=> (z ^ 3)
   }
   if(x === w)
-    results.push x;
+    results.push(x);
 }
 
 alert "Armstrong numbers between ${lower} and ${upper} are (${results.join(', ')})"

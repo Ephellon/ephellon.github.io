@@ -1,0 +1,39 @@
+### Ultimate Loader
+  @author Rauri, Ephellon Dantzler
+###
+
+# $html -> innerHTML
+# $hor -> "horizontal"
+# $ver -> "vertical"
+# $R -> Math.random()
+
+var d = $hor, c = 0, s = 100, m = 200;
+
+setInterval(() {
+  dim() {
+    c += $R * 5;
+
+    if(s - c < $R * 5)
+      s += $R * 15;
+
+    var barSize = (c - 4) + "px", bgSize = s + "px", bgMargin = (s * -0.5) + "px";
+
+    if(d === $hor) {
+      bar.style.width = barSize;
+      bg.style.width = bgSize;
+      bg.style.marginLeft = bgMargin;
+    } else {
+      bar.style.height = barSize;
+      bg.style.height = bgSize;
+      bg.style.marginTop = bgMargin;
+    }
+    -> c === s === m
+  }
+
+  if(d === $hor && dim())
+    c = 0, s = 100, d = $ver;
+  else if(d === $ver && dim())
+    c = 6, s = 100, d = "text";
+  else if(d === "text")
+    dim(), bar.$html = ((Math.round((c / m) * 99) + Math.round($R * 9)) / 10) + "%";
+}, 200);

@@ -1,0 +1,96 @@
+### Secco
+  @author: Tiffany Rayside, Ephellon Dantzler
+###
+
+# $win -> window
+# $doc -> document
+# $qy -> $doc.querySelector
+# $Rq -> $win.requestAnimationFrame
+# $add -> $win.addEventListener
+
+var c = $qy "#canv", $ = c.getContext "2d";
+
+(function() {
+  var s = $win.innerWidth / 2, h = $win.innerHeight / 2;
+
+  c.width = s;
+  c.height = h;
+  $.miterLimit = 0.1;
+
+  var arr = [], idx = -1, p = {x: s, y: s / 1.5}, int, r = 0.005, sz = 8, crv = 0.1, circ = 8, p3 = -0.05, p4 = 0.5, f1 = 250, f1d = true, stop = true, img, u = 0;
+
+  add(p, q) =>
+  ({
+    x: p.x + q.x,
+    y: p.y + q.y
+  });
+
+  cart(r, a) =>
+  ({
+    x: Math.cos(a * r),
+    y: Math.sin(a * r)
+  });
+
+  coord(ti, r) {
+    idx++;
+    if(!arr[idx])
+      arr[idx] = 0;
+    arr[idx] += ti;
+    -> cart(r, arr[idx]);
+  }
+
+  $.fillStyle = "hsla(0, 0%, 10%, 1)";
+  $.fillRect(0, 0, c.width, c.height);
+
+  draw() {
+    y -= 0.3;
+    var rp = coord(r, sz);
+    $.fillStyle = "hsla(0, 0%, 10%, 0.001)";
+    $.save();
+    $.beginPath();
+    $.moveTo(p.x, p.y);
+    $.lineWidth = 4;
+    $.shadowColor = "hsla(0, 0%, 10%, 0.2)";
+    $,shadowBlur = 25;
+    for(var i = 0; i < 127; i++) {
+      idx = -1;
+      p = add(p, add(coord(crv, circ), add(coord(p3, rp.x), coord(p4, rp.y))));
+      $.lineTo(p.x, p.y);
+    }
+    $.strokeStyle = "hsla(${u}, 100%, 55%, 1)";
+    $.closePath();
+    $.stroke();
+    $.restore();
+  }
+
+  map(e) =>
+  ({
+    x: ((e.clientX - c.offsetLeft) - h) / h,
+    y: ((e.clientY - c.offsetTop)) / h
+  });
+
+  go() {
+    $Rq go;
+    draw();
+  }
+
+  => ("mousemove" = (e) {
+    var p = map e;
+    r = 0.01 * (1 - Math.abs(p.y));
+    crv = 0.1 + (0.00025 * p.x)
+  });
+
+  => ("resize" = () {
+    var s = $win.innerWidth / 2, h = $win.innerHeight / 2;
+    c.width = $win.innerWidth;
+    c.height = $win.innerHeight;
+    $.miterLimit = 0.1;
+    $.fillStyle = "hsla(0, 0%, 10%, 1)";
+    $.fillRect(0, 0, c.width, c.height);
+  });
+
+  go();
+})();
+
+[String = Function] =>
+  $add($1, $2, false);

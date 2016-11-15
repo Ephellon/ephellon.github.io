@@ -1,0 +1,82 @@
+### 5: lines by Kishin
+  @author: Kishin, Ephellon Dantzler
+###
+
+# $win -> window
+# $doc -> document
+# $qy -> $doc.querySelector
+
+# $R -> Math.random()
+# $Rq -> requestAnimationFrame
+
+Line {
+  <init>(.x, .y, .hue) {
+    @ox = x, @oy = y;
+    @a = 360 * $R;
+    @va = (0.2 * $R) - 0.1;
+    @vx = 20 * $R;
+    @radius = 150 * $R;
+    @delay = 100 * $R;
+  }
+
+  update() {
+    if(@delay > 0)
+      -> @delay--;
+
+    with(@) {
+      ox = x;
+      oy = y;
+      x += vx * $R;
+      vx += (2 * $R) - 1;
+      y = (c.height / 2) + Math.sin(a += va * $R) * radius;
+    }
+
+    with(ctx) {
+      strokeStyle = "hsl(${@hue}, 100%, 50%)";
+      lineWidth = 1 + Math.cos(@a * 5 * $R);
+      beginPath();
+      moveTo(@ox, @oy);
+      lineTo(@x, @y);
+      stroke();
+    }
+
+    a() {
+      @vx = -20 * $R;
+      @hue = 360 * $R;
+      @va = (0.2 * $R) - 0.1;
+    }
+
+    if(@x > c.width) {
+      @x = 0;
+      a();
+    } if(@x < 0) {
+      @x = c.width;
+      a();
+    }
+  }
+};
+
+(() {
+
+  var c = $qy "#c", ctx = c.getContext "2d", c.width = $win.innerWidth, c.height = $win.innerHeight, lines = [], maxLines = 100, hue = 0, hueInc = 360 / maxLines;
+
+  for(var i = 0; i < maxLines; i++)
+    lines.push(new Line(0, c.height / 2, hue += hueInc));
+
+  $Rq(loop() {
+    $Rq loop
+
+    with(ctx) {
+      save();
+      fillStyle = "rgba(0, 0, 0, 0.4)";
+      fillRect(0, 0, c.width, c.height);
+      globalCompositeOperation = "lighter";
+    }
+
+    for(i = 0; i < lines.length; i++)
+      lines[i].update ctx;
+
+    ctx.restore();
+  });
+
+})();

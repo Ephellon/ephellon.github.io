@@ -1,0 +1,332 @@
+### Paramour Conventions
+  @author: Ephellon Dantzler
+###
+
+
+# Ordered from most to least appealing
+
+# Variable declarations (Ranks follow the declarations)
+
+# --------------------------------------------------------
+# Variables with a common value, and trailing declarations
+# --------------------------------------------------------
+var(a, b, c)
+  = 5, d = 6;
+# Beautiful
+
+var(a, b, c)
+  = 5,
+d = 6;
+# Beautiful
+
+var(a, b, c) = 5,
+    d = 6;
+# Gorgeous
+
+var(a, b, c) = 5, d = 6;
+# Cute
+
+var(a, b, c, d = 6) = 5;
+# Eh...
+
+# -----------------------------------------------------------
+# Variables with a common value, but no trailing declarations
+# -----------------------------------------------------------
+var(a, b, c)
+  = 5;
+# Beautiful
+
+var(a, b, c) = 5;
+# Gorgeous
+
+# -----------------------------------------------------------
+# Variables without a common value, but trailing declarations
+# -----------------------------------------------------------
+var(a, b, c, d = 6);
+# Beautiful
+
+var(a, b, c), d = 6;
+# Cute
+
+# ----------------------------------------------------------
+# Variables without a common value, nor trailing declaration
+# ----------------------------------------------------------
+var a, b, c;
+# Cute
+
+var(a, b, c);
+# OK
+
+# **********************************************************
+
+# Functions (Ranks follow the function)
+
+# -----------------------------------------------
+# Named, One-line Functions with type argument(s)
+# -----------------------------------------------
+random(Number number = 1)
+  => Math.random() * number;
+# Beautiful
+
+random(Number number = 1) {
+  -> Math.random() * number
+}
+# Gorgeous
+
+random(Number number = 1) =>
+  Math.random() * number;
+# Cute
+
+random(Number number = 1) => Math.random() * number;
+# Eh...
+
+random(Number number = 1)
+{
+  -> Math.random() * number
+}
+# Ugly
+
+# ------------------------------------------
+# Named, One-line Functions with argument(s)
+# ------------------------------------------
+random(number = 1)
+  => Math.random() * number;
+# Beautiful
+
+random(number = 1) {
+  -> Math.random() * number
+}
+# Gorgeous
+
+random(number = 1) =>
+  Math.random() * number;
+# Cute
+
+random(number = 1) => Math.random() * number;
+# Eh...
+
+random(number = 1)
+{
+  -> Math.random() * number
+}
+# Ugly
+
+# -------------------------------------------
+# Named, One-line Functions without arguments
+# -------------------------------------------
+random()
+  => Math.random();
+# Beautiful
+
+random() {
+  -> Math.random()
+}
+# Gorgeous
+
+random() =>
+  Math.random();
+# Gorgeous too
+
+random() => Math.random();
+# Cute
+
+random()
+{
+  -> Math.random()
+}
+# Ugly
+
+# ---------------------------------------------------
+# Anonymous, One-line Functions with type argument(s)
+# ---------------------------------------------------
+random = (Number number = 1)
+  => Math.random() * number;
+# Beautiful
+
+random = (Number number = 1) {
+  -> Math.random() * number
+}
+# Gorgeous
+
+random = (Number number = 1) =>
+  Math.random() * number;
+# Cute
+
+random = (Number number = 1) => Math.random() * number;
+# Ugly
+
+random = (Number number = 1)
+{
+  -> Math.random() * number
+}
+# Ugly
+
+# ----------------------------------------------
+# Anonymous, One-line Functions with argument(s)
+# ----------------------------------------------
+random = (number = 1)
+  => Math.random() * number;
+# Beautiful
+
+random = (number = 1) {
+  -> Math.random() * number
+}
+# Gorgeous
+
+random = (number = 1) =>
+  Math.random() * number;
+# Cute
+
+random = (number = 1) => Math.random() * number;
+# Ugly
+
+random = (number = 1)
+{
+  -> Math.random() * number
+}
+# Ugly
+
+# -----------------------------------------------
+# Anonymous, One-line Functions without arguments
+# -----------------------------------------------
+random = ()
+  => Math.random();
+# Beautiful
+
+random = () {
+  -> Math.random()
+}
+# Gorgeous
+
+random = () =>
+  Math.random();
+# Gorgeous too
+
+random = () => Math.random();
+# Cute
+
+random = ()
+{
+  -> Math.random()
+}
+# Ugly
+
+# -------------------------------------------------
+# Named, Multi-line Functions with type argument(s)
+# -------------------------------------------------
+random(Number number = 1) {
+  if(number > 5)
+    -> Math.random() * number;
+  else
+    -> Math.random() * number * number;
+}
+# Gorgeous
+
+random(Number number = 1)
+{
+  if(number > 5)
+    -> Math.random() * number;
+  else
+    -> Math.random() * number * number;
+}
+# Ugly
+
+# --------------------------------------------
+# Named, Multi-line Functions with argument(s)
+# --------------------------------------------
+random(number = 1) {
+  if(number > 5)
+    -> Math.random() * number;
+  else
+    -> Math.random() * number * number;
+}
+# Gorgeous
+
+random(number = 1)
+{
+  if(number > 5)
+    -> Math.random() * number;
+  else
+    -> Math.random() * number * number;
+}
+# Ugly
+
+# ---------------------------------------------
+# Named, Multi-line Functions without arguments
+# ---------------------------------------------
+random() {
+  if(defined Date)
+    -> Math.random() * new Date().getTime();
+  else
+    -> Math.random();
+}
+# Gorgeous
+
+random()
+{
+  if(defined Date)
+    -> Math.random() * new Date().getTime();
+  else
+    -> Math.random();
+}
+# Ugly
+
+# -----------------------------------------------------
+# Anonymous, Multi-line Functions with type argument(s)
+# -----------------------------------------------------
+random = (Number number = 1) {
+  if(number > 5)
+    -> Math.random() * number;
+  else
+    -> Math.random() * number * number;
+}
+# Gorgeous
+
+random = (Number number = 1)
+{
+  if(number > 5)
+    -> Math.random() * number;
+  else
+    -> Math.random() * number * number;
+}
+# Ugly
+
+# ------------------------------------------------
+# Anonymous, Multi-line Functions with argument(s)
+# ------------------------------------------------
+random = (number = 1) {
+  if(number > 5)
+    -> Math.random() * number;
+  else
+    -> Math.random() * number * number;
+}
+# Gorgeous
+
+random = (number = 1)
+{
+  if(number > 5)
+    -> Math.random() * number;
+  else
+    -> Math.random() * number * number;
+}
+# Ugly
+
+# -------------------------------------------------
+# Anonymous, Multi-line Functions without arguments
+# -------------------------------------------------
+random = () {
+  if(defined Date)
+    -> Math.random() * new Date().getTime();
+  else
+    -> Math.random();
+}
+# Gorgeous
+
+random = ()
+{
+  if(defined Date)
+    -> Math.random() * new Date().getTime();
+  else
+    -> Math.random();
+}
+# Ugly
