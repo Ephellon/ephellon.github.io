@@ -178,12 +178,12 @@
   poptions = options, joptions = options, Peditor, Jeditor, __Console__ = console, console, p, j, c;
   poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
 
-  Peditor = CodeMirror.fromTextArea(p = $("#input")[0], poptions);
+  Peditor = CodeMirror.fromTextArea(p = $("#input"), poptions);
 
-  (j = $("#output")[0]).innerText = Paramour(p.innerText, true);
+  (j = $("#output")).innerText = Paramour(p.innerText, true);
   Jeditor = CodeMirror.fromTextArea(j, joptions);
 
-  (c = $("#console")[0]).innerText = "// JavaScript Console\n// console.release() to switch consoles";
+  (c = $("#console")).innerText = "// JavaScript Console\n// console.release() to switch consoles";
   console = CodeMirror.fromTextArea(c, joptions);
 
   console["[[Value]]"] = "";
