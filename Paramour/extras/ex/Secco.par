@@ -4,9 +4,9 @@
 
 # $win -> window
 # $doc -> document
-# $qy -> $doc.querySelector
-# $Rq -> $win.requestAnimationFrame
-# $add -> $win.addEventListener
+# $qy -> document.querySelector
+# $Rq -> window.requestAnimationFrame
+# $add -> window.addEventListener
 
 var c = $qy "#canv", $ = c.getContext "2d";
 
