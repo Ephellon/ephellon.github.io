@@ -290,9 +290,9 @@
 
       function fn(script, i) {
         var options, source, compile, input,
-            IN = window.document.querySelector("#input"),
-            OUT = window.document.querySelector("#output"),
-            title = window.document.querySelector("#title");
+            IN = $("#input"),
+            OUT = $("#output"),
+            title = $("#title");
         options = {
           short: script.type === types[1]
         };
