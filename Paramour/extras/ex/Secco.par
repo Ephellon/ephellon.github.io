@@ -2,11 +2,11 @@
   @author: Tiffany Rayside, Ephellon Dantzler
 ###
 
-# $win -> window
+# $Rq -> $win.requestAnimationFrame
+# $add -> $win.addEventListener
+# $qy -> $doc.querySelector
 # $doc -> document
-# $qy -> document.querySelector
-# $Rq -> window.requestAnimationFrame
-# $add -> window.addEventListener
+# $win -> window
 
 var c = $qy "#canv", $ = c.getContext "2d";
 
