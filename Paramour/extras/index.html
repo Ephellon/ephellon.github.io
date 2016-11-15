@@ -57,26 +57,103 @@
   </style>
 </head>
 <body>
-  <h2 id="title">Loading...</h2>
+  <div id="fadeout"></div>
 
-  <p><i>Below is the <b class="paramour logo">Paramour Code (left)</b>, and <b class="javascript logo">JavaScript Code (right)</b></i></p>
-  <div class='code'>
-    <pre>
-      <h2 class="paramour logo">Paramour</h2>
-      <textarea class="compile-paramour" type="text/paramour" id="input"></textarea>
-    </pre>
-    <pre>
-      <h2 class="javascript logo">JavaScript</h2>
-      <textarea class="compile-javascript" type="text/javascript" id="output"></textarea>
-    </pre>
-    <div class='minibutton ok' onclick='run($("#output").value)'>run</div>
-    <br class='clear' />
+  <div id="flybar">
+    <a id="logo" href="#top"><img src="documentation/images/Paramour-Long.png" width="225" height="39" alt="Paramour" /></a>
+    <div class="navigation toc">
+      <div class="button">
+        Table of Contents
+      </div>
+      <div class="contents menu">
+        <a href="#overview">Overview</a>
+        <pre>Comments</pre>
+        <a href="#normal-comments">Normal Comments</a>
+        <a href="#phantoms">Phantoms</a>
+        <a href="#docstrings">Docstrings</a>
+        <a href="#version-controlling">Version Controlling</a>
+        <a href="#version-querying">Version Querying</a>
+        <pre>Functions</pre>
+        <a href="#keywords">Keywords</a>
+        <a href="#functions">Functions</a>
+        <a href="#spreads">Spreads...</a>
+        <pre>Objects</pre>
+        <a href="#arrays-objects-tuples">Arrays, Objects, and Tuples</a>
+        <a href="#slicing-splicing-ranges">Array Slicing, Splicing, and Ranges</a>
+        <pre>Statements</pre>
+        <a href="#case-default">Case &amp; Default Statements</a>
+        <pre>Operators</pre>
+        <a href="#existence">Existence Operators</a>
+        <a href="#custom">Custom Operators</a>
+        <pre>Advance</pre>
+        <a href="#classes">Classes &amp; Prototypes</a>
+        <a href="#generators">Generators</a>
+        <a href="#jsunit">JS-Unit</a>
+        <a href="#interpolation">Interpolation &amp; Block Strings</a>
+        <a href="#script-tags">"text/paramour" Script Tags</a>
+        <a href="#versions">Paramour Versions</a>
+      </div>
+    </div>
+    <div class="navigation try">
+      <div class="button">
+        Try Paramour
+        <div class="repl_bridge"></div>
+      </div>
+      <div class="contents repl_wrapper">
+        <div class='code'>
+          <pre>
+            <textarea id="paramour" class="edit-paramour">alert "Hello Paramour!"</textarea>
+          </pre>
+          <pre>
+            <textarea id="javascript" class="edit-javascript"></textarea>
+          </pre>
+          <div class="minibutton ok run" title="Ctrl-Enter">Run</div>
+          <a class="minibutton permalink" id="permalink">Link</a>
+          <div class="minibutton dark sea" id="sea">SEA</div>
+          <br class="clear" />
+        </div>
+      </div>
+    </div>
+    <div class="navigation annotated">
+      <div class="button">
+        Paramour Examples &amp; Files
+      </div>
+      <div class="contents menu">
+        <pre>Files</pre>
+        <a href="/Paramour/extras/#par" target="_blank">Paramour Standard Library</a>
+        <pre>Examples</pre>
+        <a href="/Paramour/extras/#99" target="_blank" title="The infamous 99 bottles of beer example">99 Bottles of Beer</a>
+        <a href="/Paramour/extras/#Armstrong" target="_blank" title="An Armstrong number finder">Armstrong Number Finder</a>
+        <a href="/Paramour/extras/#Pyramid" target="_blank" title="A pyramid builder--has both a face and level parameters">Pyramid Builder</a>
+        <a href="/Paramour/extras/#Star_Generator" target="_blank" title="The star generator I used for my pen 'Titan Logo' on CodePen">Star Generator</a>
+        <a href="/Paramour/extras/#String_Radii" target="_blank" title="A bunch of radix functions--such as `123..toString(16)`">String Radix</a>
+        <a href="/Paramour/extras/#Toggle" target="_blank" title="A simple 'Toggle' class">Toggle Class</a>
+      </div>
+    </div>
   </div>
 
-  <hr>
+  <div class="container">
+    <h2 id="title">Loading...</h2>
 
-  <h2>Console</h2>
-  <textarea id="console" type="text/javascript"></textarea>
+    <p><i>Below is the <b class="paramour logo">Paramour Code (left)</b>, and <b class="javascript logo">JavaScript Code (right)</b></i></p>
+    <div class='code'>
+      <pre>
+        <h2 class="paramour logo">Paramour</h2>
+        <textarea class="compile-paramour" type="text/paramour" id="input"></textarea>
+      </pre>
+      <pre>
+        <h2 class="javascript logo">JavaScript</h2>
+        <textarea class="compile-javascript" type="text/javascript" id="output"></textarea>
+      </pre>
+      <div class='minibutton ok' onclick='run($("#output").value)'>run</div>
+      <br class='clear' />
+    </div>
+
+    <hr>
+
+    <h2>Console</h2>
+    <textarea id="console" type="text/javascript"></textarea>
+  </div>
 
   <script type="text/par" id="script"></script>
   <script>
