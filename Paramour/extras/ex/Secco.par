@@ -10,7 +10,7 @@
 
 var c = $qy "#canv", $ = c.getContext "2d";
 
-(function() {
+(() {
   var s = $win.innerWidth / 2, h = $win.innerHeight / 2;
 
   c.width = s;
