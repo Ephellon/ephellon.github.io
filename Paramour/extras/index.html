@@ -156,8 +156,8 @@
 
     <hr>
 
-    <h2>Console</h2>
-    <textarea id="console" type="text/javascript"></textarea>
+    <h2>SEA</h2>
+    <textarea id="report" type="text/javascript"></textarea>
   </div>
 
   <script type="text/par" id="script"></script>
@@ -179,7 +179,7 @@
     fold: "brace",
     closeBrackets: "( ) [ ] { } \"\"\" \"\"\" ''' ''' ``` ``` \" \" ' ' ` `".split(" ")
   },
-  poptions = options, joptions = options, Peditor, Jeditor, __Console__ = console, console, p, j, c;
+  poptions = options, joptions = options, Peditor, Jeditor, Seditor, p, j, c;
   poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
 
   Peditor = CodeMirror.fromTextArea(p = $("#input")[0], poptions);
@@ -187,42 +187,8 @@
   (j = $("#output")[0]).innerText = Paramour(p.innerText, true);
   Jeditor = CodeMirror.fromTextArea(j, joptions);
 
-  (c = $("#console")[0]).innerText = "// JavaScript Console\n// console.release() to switch consoles";
-  console = CodeMirror.fromTextArea(c, joptions);
-
-  console["[[Value]]"] = "";
-
-  console.log =
-  console.dir =
-  console.dirxml =
-  console.error =
-  console.warn =
-  console.info =
-  console.debug =
-  function() {
-    var v = console.getValue();
-    for(var x = 0, y; x < arguments.length; x++)
-      v += ((y = arguments[x]) !== undefined && y !== null? Paramour["typeof"](y): typeof y).toString() + " ";
-    return console.setValue(v + "\n");
-  };
-
-  console.clear =
-  function() {
-    console.setValue("// Console was cleared\n");
-  };
-
-  console.on("keyup", function(c, e) {
-    if(e.which === 13 && e.shiftKey === false)
-      run(console["[[Value]]"]);
-    else
-      console["[[Value]]"] = console.getValue();
-  });
-
-  console.release =
-  function() {
-    console.log("The console has been changed back to the native object");
-    return console = __Console__
-  }
+  (c = $("#report")[0]).innerText = "// SEAs will show up here";
+  Seditor = CodeMirror.fromTextArea(c, joptions);
 
   function run(value) {
     try {
@@ -333,6 +299,7 @@
       if([16, 17, 18, 20, 33, 34, 35, 36, 37, 38, 39, 40, 45, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123].indexOf(e.which) < 0)
         setTimeout(function() {
           Jeditor.setValue(Paramour(getValue(), true));
+          Seditor.setValue(Paramour.report);
         }, 500);
     });
   }
