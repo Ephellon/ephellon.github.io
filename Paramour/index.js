@@ -23,11 +23,7 @@ for(var x = 0; x < paramours.length; x++)
   CodeMirror.fromTextArea(paramours[x], poptions);
 
 for(x = 0; x < javascripts.length; x++) {
-  $(javascripts[x])
-  .text("// Click to view output")
-  .click(function() {
-    this.innerText = Paramour(this.innerText, true);
-  });
+  javascripts[x].value = Paramour(paramours[x].value, true);
   CodeMirror.fromTextArea(javascripts[x], joptions);
 }
 
@@ -35,7 +31,7 @@ for(x = 0; x < javascripts.length; x++) {
 poptions.readOnly = false;
 Peditor = CodeMirror.fromTextArea(paramour_textarea, poptions);
 
-javascript_textarea.innerText = Paramour(paramour_textarea.innerText, true);
+javascript_textarea.value = Paramour(paramour_textarea.value, true);
 Jeditor = CodeMirror.fromTextArea(javascript_textarea, joptions);
 
 window.Peditor = Peditor, window.Jeditor = Jeditor;
