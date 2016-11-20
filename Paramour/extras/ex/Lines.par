@@ -12,11 +12,11 @@
 Line {
   <init>(.x, .y, .hue) {
     @ox = x, @oy = y;
-    @a = 360 * $R;
-    @va = (0.2 * $R) - 0.1;
-    @vx = 20 * $R;
-    @radius = 150 * $R;
-    @delay = 100 * $R;
+    @a = 360 $R;
+    @va = (0.2 $R) - 0.1;
+    @vx = 20 $R;
+    @radius = 150 $R;
+    @delay = 100 $R;
   }
 
   update() {
@@ -26,8 +26,8 @@ Line {
     with(@) {
       ox = x;
       oy = y;
-      x += vx * $R;
-      vx += (2 * $R) - 1;
+      x += vx $R;
+      vx += (2 $R) - 1;
       y = (c.height / 2) + Math.sin(a += va * $R) * radius;
     }
 
@@ -41,9 +41,9 @@ Line {
     }
 
     a() {
-      @vx = -20 * $R;
-      @hue = 360 * $R;
-      @va = (0.2 * $R) - 0.1;
+      @vx = -20 $R;
+      @hue = 360 $R;
+      @va = (0.2 $R) - 0.1;
     }
 
     if(@x > c.width) {
