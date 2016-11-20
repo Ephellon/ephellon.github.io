@@ -1,8 +1,8 @@
 var
 paramours = $(".compile-paramour"),
 javascripts = $(".compile-javascript"),
-paramour_editor = $(".edit-paramour")[0],
-javascript_editor = $(".edit-javascript")[0],
+paramour_textarea = $(".edit-paramour")[0],
+javascript_textarea = $(".edit-javascript")[0],
 options = {
   lineNumbers: false,
   styleActiveLine: true,
@@ -33,9 +33,9 @@ for(x = 0; x < javascripts.length; x++)
 
 // Actual scripts
 poptions.readOnly = false;
-Peditor = CodeMirror.fromTextArea(paramour_, poptions);
+Peditor = CodeMirror.fromTextArea(paramour_textarea, poptions);
 
-javascript_.innerText = Paramour(paramour_.innerText, true);
-Jeditor = CodeMirror.fromTextArea(javascript_editor, joptions);
+javascript_textarea.innerText = Paramour(paramour_textarea.innerText, true);
+Jeditor = CodeMirror.fromTextArea(javascript_textarea, joptions);
 
 window.Peditor = Peditor, window.Jeditor = Jeditor;
