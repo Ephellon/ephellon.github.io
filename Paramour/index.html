@@ -156,7 +156,7 @@
         <li><pre>Scripting</pre></li>
         <li><pre>Structured</pre></li>
         <br class="clear"/>
-        <li><pre>Latest Version: <a href="https://codepen.io/ephellon/post/paramour" target="_blank" title="55 Kb">22.3.8</a></pre></li>
+        <li><pre>Latest Version: <a href="https://codepen.io/ephellon/post/paramour" target="_blank" title="56.4 Kb">22.9.5</a></pre></li>
       </ul>
     </p>
 
@@ -1017,7 +1017,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
 
     <h2>
       <span id="versions" class="bookmark"></span>
-      Paramour Versions
+      Paramour Versions (and notes, newest to oldest)
     </h2>
 
     <ul>
@@ -1025,6 +1025,9 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
         <pre>Thursday - XXII, 22.0 (The Weeknd: "Thursday")</pre>
 
         <ul>
+          <li>Fixed operator handling</li>
+          <li><code>new</code> operator syntax, <code>string = *String(123)</code></li>
+          <li>"assigned" brace handling--an assigned brace (<code>= {}</code>, <code>: {}</code>, <code>, {}</code>) do not need commas, as long as they have newline characters</li>
           <li>new <code>NewLine</code> constructor</li>
         </ul>
       </li>
