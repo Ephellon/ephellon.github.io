@@ -13,12 +13,7 @@ options = {
   readOnly: true,
   autofocus: false,
   lineSeperator: "\n",
-  theme: "tomorrow-night-bright",
-  blockCommentStart: "###",
-  blockCommentEnd: "###",
-  lineComment: "#",
-  fold: "brace",
-  closeBrackets: "( ) [ ] { } \"\"\" \"\"\" ''' ''' ``` ``` \" \" ' ' ` `".split(" ")
+  theme: "tomorrow-night-bright"
 },
 poptions = options, joptions = options, Peditor, Jeditor;
 poptions.mode = "paramour", joptions.mode = "javascript";
@@ -27,9 +22,14 @@ poptions.mode = "paramour", joptions.mode = "javascript";
 for(var x = 0; x < paramours.length; x++)
   CodeMirror.fromTextArea(paramours[x], poptions);
 
-for(x = 0; x < javascripts.length; x++)
-  javascripts[x].innerText = Paramour(paramours[x].innerText, true),
+for(x = 0; x < javascripts.length; x++) {
+  $(javascripts[x])
+  .text("// Click to view output")
+  .click(function() {
+    this.innerText = Paramour(this.innerText, true);
+  });
   CodeMirror.fromTextArea(javascripts[x], joptions);
+}
 
 // Actual scripts
 poptions.readOnly = false;
