@@ -30,7 +30,7 @@ characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
 characters_ = characters + "#$-./@_",
 characters__ = characters_ + t_,
 characters___ = t__,
-secure = Math.floor(220 * $R) + 2;
+secure = Math.floor(220 $R) + 2;
 
 Password {
   <init>(value) {
@@ -41,7 +41,7 @@ Password {
       @.length = x
       value = (MD5 || atob)(u.join "")
     } else {
-      value = ((MD5 || atob)(value + ""))
+      value = (MD5 || atob)(value + "")
     }
     -> @["[[PrimitiveValue]]"] = value
   }
@@ -208,7 +208,7 @@ toNumber(String value, Boolean compressed)
 toNumber(String value) {
   if(/^[01]+$/.test value)
     -> toNumber(value, 2, true);
-  # 1.8?*
+  # 1.8.5?!
   if(/^[0-7]+$/.test value)
     -> toNumber(value, 8, true);
   #?
@@ -227,6 +227,8 @@ toNumber(String value) {
 
 toNumber(String value, type)
   => toNumber(value, type, +type > 62);
+
+# Prototype Methods
 
 Number@toString = (type, compress)
   => toString(@, type, compress || false);
