@@ -15,19 +15,22 @@
  * Number $1 - The base number
  * Number $2 - The exponent to raise the base by
  */
-[Number ^ Number] => Math.pow($1, $2);
+[Number ^ Number] =
+  Math.pow($1, $2);
 
 /** [~Number] -> Math.round $1
  * Round a number
  * Number $1 - The number to round
  */
-[~Number] => Math.round($1);
+[~Number] =>
+  Math.round($1);
 
 /** [Number?] -> Math.random * $1
  * Get a random number
  * Number $1 - The number to multiply by
  */
-[Number?] => Math.random() * $1;
+[Number?] =>
+  Math.random() * $1;
 
 /** [Number!] -> $1!
  * Get a factorial from a number
@@ -45,21 +48,24 @@
  * String $1 - The string to replace from
  * Any $2 - The sequence to replace
  */
-[String - Any] => $1.replace($2, "");
+[String - Any] =>
+  $1.replace($2, "");
 
 /** [String * Number] -> $1.repeat $2
  * Repeat a string a number of times
  * String $1 -The string to repeat
  * Number 2 - The number of times to repeat the string
  */
-[String * Number] => $1.repeat($2);
+[String * Number] =>
+  $1.repeat($2);
 
 /** [String / Any] -> $1.split $2
  * Split an array
  * Array $1 - The array to split
  * Any $2 - The sequence to split on
  */
-[String / Any] => $1.split($2);
+[String / Any] =>
+  $1.split($2);
 
  # Arrays
 /** [Array = Array] -> eval $1[@] = $2[@]
@@ -77,20 +83,23 @@
  * Array $1 - The array to concat to
  * Any $2 - The item to concat
  */
-[Array + Any] => $1.concat($2);
+[Array + Any] =>
+  $1.concat($2);
 
 /** [Array += Any] -> $1.push $2
  * Push an item to an array
  * Array $1 - The array to push to
  * Any $2 - The item to push
  */
-[Array += Any] => $1.push($2), $1;
+[Array += Any] =>
+  $1.push($2), $1;
 
 /** [Array--] -> $1.push $1[$1.length - 1]
  * Push the last item into the same array
  * Array $1 - The array to push to
  */
-[Array++] => $1.push($1[$1.length - 1]);
+[Array++] =>
+  $1.push($1[$1.length - 1]);
 
 /** [Array - Any] -> $1.pop $2
  * Remove an item from an array once
@@ -125,7 +134,8 @@
  * Pop an item from an array
  * Array $1 - The array to pop from
  */
-[Array--] => $1.pop();
+[Array--] =>
+  $1.pop();
 
 # Objects
 /** [Object = Object] -> $1[@] = $2[@]
@@ -182,7 +192,8 @@
  * Object $1 - The object to remove from
  * Any $2 - The item to remove
  */
-[Object - Any] => $1[$2] = undefined;
+[Object - Any] =>
+  $1[$2] = undefined;
 
 # Any
 /** [Any!?] -> $1 === NaN
@@ -193,4 +204,5 @@
  *   Nan = 0/0
  *   Infinity < NaN < Infinity
  */
-[Any!?] => !$1 <= $Inf;
+[Any!?] =>
+  !($1 <= $Inf);
