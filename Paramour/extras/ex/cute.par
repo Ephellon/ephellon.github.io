@@ -2,7 +2,6 @@
   @author: Ephellon Dantzler
 ###
 
-
 # Ordered from most to least appealing
 
 # Variable declarations (Ranks follow the declarations)
@@ -59,7 +58,7 @@ var(a, b, c);
 
 # **********************************************************
 
-# Functions (Ranks follow the function)
+# Functions (Ranks follow the function declaration)
 
 # -----------------------------------------------
 # Named, One-line Functions with type argument(s)
