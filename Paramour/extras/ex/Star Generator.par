@@ -39,14 +39,13 @@ var classes = "obafgkmlt".split "";
       wise(5, k)
     else
       k.$set("style",
-        k.$get("style") + " opacity: ${Math.random()}");
-	}
+        k.$get "style" + " opacity: ${Math.random()}");
+  }
 
 })();
 
 random(x) => Math.floor(x * Math.random());
 
-wise(x, k) {
+wise(x, k) =>
   k.$set("class",
-    k.$get("class") + ' ' + 'wwwww'.split(1, x))
-}
+    k.$get "class" + " " + "wwwww".split(1, x));
