@@ -5,7 +5,7 @@ paramour_textarea = $(".edit-paramour")[0],
 javascript_textarea = $(".edit-javascript")[0],
 poptions = {
     mode: "paramour",
-    lineNumbers: true,
+    lineNumbers: false,
     styleActiveLine: true,
     matchBrackets: true,
     indentUnit: 2,
@@ -23,7 +23,7 @@ poptions = {
   },
 joptions = {
     mode: "javascript",
-    lineNumbers: true,
+    lineNumbers: false,
     styleActiveLine: true,
     matchBrackets: true,
     indentUnit: 2,
