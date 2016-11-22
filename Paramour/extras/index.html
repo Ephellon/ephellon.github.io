@@ -260,14 +260,14 @@
 
       function fn(script, i) {
         var options, source, compile, input,
-            IN = $("#input"),
-            OUT = $("#output"),
-            title = $("#title");
+            IN = $("#input")[0],
+            OUT = $("#output")[0],
+            title = $("#title")[0];
         options = {
           short: script.type === types[1]
         };
 
-        source = script.src = (location.pathname + "ex/" + ((title.innerHTML = (location.hash + "").slice(1, 255)) + ".par"));
+        source = script.src = (location.pathname + "ex/" + ((title.innerHTML = (location.hash + "")) + ".par"));
         input = script.innerText = "";
 
         return load(source, function(input) {
