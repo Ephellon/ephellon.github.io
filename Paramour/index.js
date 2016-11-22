@@ -3,20 +3,38 @@ paramours = $(".compile-paramour"),
 javascripts = $(".compile-javascript"),
 paramour_textarea = $(".edit-paramour")[0],
 javascript_textarea = $(".edit-javascript")[0],
-options = {
-  lineNumbers: false,
-  styleActiveLine: true,
-  matchBrackets: true,
-  indentUnit: 2,
-  tabsize: 2,
-  indentWithTabs: false,
-  readOnly: true,
-  autofocus: false,
-  lineSeperator: "\n",
-  theme: "tomorrow-night-bright"
-},
-poptions = options, joptions = options, Peditor, Jeditor;
-poptions.mode = "paramour", joptions.mode = "javascript";
+poptions = {
+    mode: "paramour",
+    lineNumbers: true,
+    styleActiveLine: true,
+    matchBrackets: true,
+    indentUnit: 2,
+    tabsize: 2,
+    indentWithTabs: false,
+    readOnly: false,
+    autofocus: false,
+    lineSeperator: "\n",
+    theme: "tomorrow-night-bright",
+    blockCommentStart: "###",
+    blockCommentEnd: "###",
+    lineComment: "#",
+    fold: "brace",
+    closeBrackets: "( ) [ ] { } \"\"\" \"\"\" ''' ''' ``` ``` \" \" ' ' ` `".split(" ")
+  },
+joptions = {
+    mode: "javascript",
+    lineNumbers: true,
+    styleActiveLine: true,
+    matchBrackets: true,
+    indentUnit: 2,
+    tabsize: 2,
+    indentWithTabs: false,
+    readOnly: true,
+    autofocus: false,
+    lineSeperator: "\n",
+    theme: "tomorrow-night-bright",
+    fold: "brace"
+}, Peditor, Jeditor;
 
 // Duds
 for(var x = 0; x < paramours.length; x++)
