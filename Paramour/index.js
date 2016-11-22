@@ -15,11 +15,7 @@ poptions = {
     autofocus: false,
     lineSeperator: "\n",
     theme: "tomorrow-night-bright",
-    blockCommentStart: "###",
-    blockCommentEnd: "###",
-    lineComment: "#",
-    fold: "brace",
-    closeBrackets: "( ) [ ] { } \"\"\" \"\"\" ''' ''' ``` ``` \" \" ' ' ` `".split(" ")
+    fold: "brace"
   },
 joptions = {
     mode: "javascript",
