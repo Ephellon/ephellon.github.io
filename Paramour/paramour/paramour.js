@@ -37,8 +37,9 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Docstrings
     {
-      regex: /\/\*[\s\S]*?\*\//,
-      token: "string"
+      regex: /\/\*/,
+      token: "string",
+      next: "docstring"
     },
     // Quasi Strings
     {
@@ -133,6 +134,19 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     {
       regex: /^(?:[^\\]|\\.)*?$/,
+      token: "string"
+    }
+  ],
+
+  // Docstrings
+  docstring: [
+    {
+      regex: /\*\//,
+      token: "string",
+      next: "start"
+    },
+    {
+      regex: /^(.*)$/,
       token: "string"
     }
   ],
