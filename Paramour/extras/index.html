@@ -267,7 +267,7 @@
           short: script.type === types[1]
         };
 
-        source = script.src = (location.pathname + "ex/" + ((title.innerHTML = (location.hash + "")) + ".par"));
+        source = script.src = (location.pathname + "ex/" + ((title.innerHTML = (location.hash + "").slice(1)) + ".par"));
         input = script.innerText = "";
 
         return load(source, function(input) {
