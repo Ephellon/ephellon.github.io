@@ -76,12 +76,12 @@ CodeMirror.defineSimpleMode("paramour", {
     // Paramour Operators
     {
       regex: /((?:un)defined\s+)([a-zA-Z\$_][\w\$]*)/,
-      token: ["atom", "variable"]
+      token: ["keyword", "variable"]
     },
     // Atoms and Atom-like
     {
       regex: /(\b(true|false|null|undefined|defined)\b|(\!+[01]))/,
-      token: "atom"
+      token: "keyword"
     },
     // Keywords
     {
