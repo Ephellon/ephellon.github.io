@@ -8,7 +8,7 @@
 
 var (lower, upper, results = []) = +prompt("${Tuple.next} range limit?")
 
-for (var x = lower; x < upper; x++) {
+for(var x = lower; x < upper; x++) {
   for(var y = x, z, w = 0; y > 0; y => (y % 10)) {
     z = y % 10
     w +=> (z ^ 3)
