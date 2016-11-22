@@ -7,13 +7,14 @@ CodeMirror.defineSimpleMode("paramour", {
       token: "string"
     },
     {
-      regex: /(\/(?:[^\\]|\\.)+?\/)([imguy]*)/,
+      regex: /(\B\/(?:[^\\]|\\.)+?\/)([imguy]*)/,
       token: ["string", "variable-2"]
     },
     // Comments
     {
-      regex: /###(?:[\s\S]*?)###/,
-      token: "comment"
+      regex: /###/,
+      token: "comment",
+      next: "comment"
     },
     {
       regex: /(#\s*)(\$[a-z\$][\w\$]*)(\s*[\-\=]>\s*)(.*)/i,
@@ -84,11 +85,11 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Keywords
     {
-      regex: /\b(abstract|arguments|boolean|break|byte|case|catch|char|class|const|continue|debugger|default|delete|do|double|else|enum|eval|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|let|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|var|void|volatile|while|with|yield|[gs]et)\b/,
+      regex: /\b(abstract|boolean|break|byte|case|catch|char|class|const|continue|debugger|default|delete|do|double|else|enum|eval|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|let|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|var|void|volatile|while|with|yield|[gs]et)\b/,
       token: "keyword"
     },
     {
-      regex: /[\-\+\~\&]>|@/,
+      regex: /[^\-\+][\-\+\~\&]>|@/,
       token: "keyword"
     },
     // Variable names
@@ -148,6 +149,19 @@ CodeMirror.defineSimpleMode("paramour", {
     {
       regex: /^(?:[^\*]|\*[^\/])*?$/,
       token: "string"
+    }
+  ],
+
+  // Comments
+  comment: [
+    {
+      regex: /###/,
+      token: "comment",
+      next: "start"
+    },
+    {
+      regex: /^(?:[^#]|#[^#]|##[^#])*?$/,
+      token: "comment"
     }
   ],
 
