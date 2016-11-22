@@ -7,7 +7,7 @@ CodeMirror.defineSimpleMode("paramour", {
       token: "string"
     },
     {
-      regex: /(\B\/(?:[^\\]|\\.)+?\/)([imguy]*)/,
+      regex: /(\/(?:[^\\]|\\.)*?\/)([imguy]*)/,
       token: ["string", "variable-2"]
     },
     // Comments
