@@ -146,7 +146,7 @@ CodeMirror.defineSimpleMode("paramour", {
       next: "start"
     },
     {
-      regex: /^(.*)$/,
+      regex: /^(?:[^\*]|\*[^\/])*?$/,
       token: "string"
     }
   ],
