@@ -162,14 +162,15 @@
 
   <script type="text/par" id="script"></script>
   <script>
-  var options = {
-    lineNumbers: false,
+  var poptions = {
+    mode: "paramour",
+    lineNumbers: true,
     styleActiveLine: true,
     matchBrackets: true,
     indentUnit: 2,
     tabsize: 2,
     indentWithTabs: false,
-    readOnly: true,
+    readOnly: false,
     autofocus: false,
     lineSeperator: "\n",
     theme: "tomorrow-night-bright",
@@ -179,8 +180,21 @@
     fold: "brace",
     closeBrackets: "( ) [ ] { } \"\"\" \"\"\" ''' ''' ``` ``` \" \" ' ' ` `".split(" ")
   },
-  poptions = options, joptions = options, Peditor, Jeditor, Seditor, p, j, c;
-  poptions.mode = "paramour", poptions.readOnly = false, joptions.mode = "javascript";
+  joptions = {
+    mode: "javascript",
+    lineNumbers: true,
+    styleActiveLine: true,
+    matchBrackets: true,
+    indentUnit: 2,
+    tabsize: 2,
+    indentWithTabs: false,
+    readOnly: true,
+    autofocus: false,
+    lineSeperator: "\n",
+    theme: "tomorrow-night-bright",
+    fold: "brace"
+  },
+  Peditor, Jeditor, Seditor, p, j, c;
 
   Peditor = CodeMirror.fromTextArea(p = $("#input")[0], poptions);
 
