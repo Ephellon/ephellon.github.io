@@ -19,17 +19,19 @@ var c = $qy "#canv", $ = c.getContext "2d";
 
   var arr = [], idx = -1, p = {x: s, y: s / 1.5}, int, r = 0.005, sz = 8, crv = 0.1, circ = 8, p3 = -0.05, p4 = 0.5, f1 = 250, f1d = true, stop = true, img, u = 0;
 
-  add(p, q) =>
-  ({
-    x: p.x + q.x,
-    y: p.y + q.y
-  });
+  add(p, q) {
+    -> {
+      x: p.x + q.x,
+      y: p.y + q.y
+    }
+  }
 
-  cart(r, a) =>
-  ({
-    x: Math.cos(a * r),
-    y: Math.sin(a * r)
-  });
+  cart(r, a) {
+    -> {
+      x: Math.cos(a * r),
+      y: Math.sin(a * r)
+    }
+  }
 
   coord(ti, r) {
     idx++;
@@ -64,10 +66,11 @@ var c = $qy "#canv", $ = c.getContext "2d";
   }
 
   map(e) =>
-  ({
-    x: ((e.clientX - c.offsetLeft) - h) / h,
-    y: ((e.clientY - c.offsetTop)) / h
-  });
+    -> {
+      x: ((e.clientX - c.offsetLeft) - h) / h,
+      y: ((e.clientY - c.offsetTop)) / h
+    }
+  }
 
   go() {
     $Rq go;
