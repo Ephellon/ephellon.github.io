@@ -33,7 +33,7 @@ characters___ = t__,
 secure = Math.floor(220 * $R) + 2,
 crazy = "aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ",
 crazier = "aAbB0cCdD1eEfF2gGhH3iIjJ4kKlL5mMnN6oOpP7qQrR8sStT9uUvV_wWxX$yYzZ",
-intwined = "([{<zyxwvutsrqponmlkjihgfedcba/69\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>}])",
+intwined = "([{<zyxwvutsrqponmlkjihgfedcba/+-\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>}])",
 UUENC = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_";
 
 Password {
