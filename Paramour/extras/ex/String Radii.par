@@ -31,9 +31,11 @@ characters_ = characters + "#$-./@_",
 characters__ = characters_ + t_,
 characters___ = t__,
 secure = Math.floor(220 * $R) + 2,
-crazy = "aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ";
+crazy = "aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ",
+crazier = "aAbB0cCdD1eEfF2gGhH3iIjJ4kKlL5mMnN6oOpP7qQrR8sStT9uUvV_wWxX$yYzZ",
+intwined = "([{<zyxwvutsrqponmlkjihgfedcba/69\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>}])",
+UUENC = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_";
 
-# A "password" hasher
 Password {
   <init>(value) {
     if(NaN value) {
@@ -59,14 +61,27 @@ Password {
 }
 
 # Encode [Base 64: Backwards]
-/** (String value, Boolean backwards)
+/** (String value, Number delusion)
  * Converts a value into a base64 encoded string
  * @return {String}
  */
-Encode(String value, Boolean delusional) {
-  var output = [], media = [], c = characters + "+/";
-  if(delusional)
-    c = crazy;
+Encode(String value, Number delusion) {
+  var output = [], media = [], c = characters + "+/", p = "=";
+  switch(delusion) {
+    case 0:
+      c = crazy;
+      break;
+    case 1:
+      c = crazier;
+      break;
+    case 2:
+      c = intwined;
+      break;
+    case 3:
+      c = UUENC;
+      p = "";
+      break;
+  }
 
   for(var i = 0, j; i < value.length; i++)
     media.push("0".repeat(8 - (j = value.charCodeAt i.toString 2).length) + j);
@@ -76,21 +91,34 @@ Encode(String value, Boolean delusional) {
     if((j = media[i]) !== "")
       output.push(c[+("0b" + (j + ("0".repeat(6 - j.length))))]);
 
-  -> output.join "" + ("=".repeat((media.join "".length) % 3))
+  -> output.join "" + (p.repeat((media.join "".length) % 3))
 }
 
 # Decode [Base 64: Backwards]
-/** (String value, Boolean backwards)
+/** (String value, Number delusion)
  * Converts a value into a base64 decoded string
  * @return {String}
  */
-Decode(String value, Boolean delusional) {
-  var output = [], media = [], c = characters + "+/";
-  if(delusional)
-    c = crazy;
+Decode(String value, Number delusion) {
+  var output = [], media = [], c = characters + "+/", p = "=";
+  switch(delusion) {
+    case 0:
+      c = crazy;
+      break;
+    case 1:
+      c = crazier;
+      break;
+    case 2:
+      c = intwined;
+      break;
+    case 3:
+      c = UUENC;
+      p = "";
+      break;
+  }
 
   for(var i = 0, j; i < value.length; i++)
-    if(value[i] === "=")
+    if(value[i] === p)
       media.push "000000";
     else
       media.push("0".repeat(6 - (j = c.indexOf(value[i]).toString 2).length) + j);
