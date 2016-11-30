@@ -339,9 +339,9 @@ MAC(address, symbol, seed) {
  */
 MAS(address, symbol) {
   var mac;
-  if(typeof address === "string")
+  if("string" address)
     mac = address;
-  else if(typeof address === "number")
+  else if("number" address)
     mac = MAC(address, symbol);
   else if(undefined address)
     mac = MAC(address, symbol);
