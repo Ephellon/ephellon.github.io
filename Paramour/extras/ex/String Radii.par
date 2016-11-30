@@ -41,7 +41,7 @@ Password {
     if(NaN value) {
       var u = [];
       for(var x = 0; x < value.length; x++)
-        u.push((@[x] = toNumber((MD5 || atob)(value[x]).slice(0, 8), 32).toString 32, value[x]).$C.toString 16);
+        u.push((@[x] = toNumber((MD5 || atob)(value[x]).slice(0, 8), 36).toString 36, value[x]).$C.toString 16);
       @.length = x
       value = (MD5 || atob)(u.join "")
     } else {
@@ -215,13 +215,13 @@ toString(String value, String type) {
     case('h', '0x', 'hex', 'hexadecimal')
       type = 16;
     default
-      type = ((type > 62)? 181: 32);
+      type = ((type > 62)? 181: 36);
   }
   -> toString(+value || value, type, type > 62)
 }
 
 toString(String value, Boolean compress)
-  => toString(value, ((compress)? 181: 32), compress);
+  => toString(value, ((compress)? 181: 36), compress);
 
 toString(String value)
   => toString(value, true);
@@ -278,7 +278,7 @@ toNumber(String value, Number type)
   => toNumber(value, type, type > 62);
 
 toNumber(String value, Boolean compressed)
-  => toNumber(value, ((compressed)? 181: 32), compressed);
+  => toNumber(value, ((compressed)? 181: 36), compressed);
 
 toNumber(String value) {
   if(/^[01]+$/.test value)
@@ -290,7 +290,7 @@ toNumber(String value) {
   if(/^[0-9a-f]+$/.test value)
     -> toNumber(value, 16, true);
   if(/^[0-9a-z]+$/.test value)
-    -> toNumber(value, 32, true);
+    -> toNumber(value, 36, true);
   if(/^[0-9a-zA-Z]+$/.test value)
     -> toNumber(value, 62, true);
   if(/^[0-9a-zA-Z\#\$\-\.\/@_]+$/.test value)
