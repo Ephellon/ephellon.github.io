@@ -30,8 +30,10 @@ characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
 characters_ = characters + "#$-./@_",
 characters__ = characters_ + t_,
 characters___ = t__,
-secure = Math.floor(220 $R) + 2;
+secure = Math.floor(220 * $R) + 2,
+crazy = "aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ";
 
+# A "password" hasher
 Password {
   <init>(value) {
     if(NaN value) {
@@ -41,7 +43,7 @@ Password {
       @.length = x
       value = (MD5 || atob)(u.join "")
     } else {
-      value = (MD5 || atob)(value + "")
+      value = ((MD5 || atob)(value + ""))
     }
     -> @["[[PrimitiveValue]]"] = value
   }
@@ -54,6 +56,51 @@ Password {
     compress = compress || (type > 62);
     -> toString(@["[[PrimitiveValue]]"], type, compress)
   }
+}
+
+# Encode [Base 64: Backwards]
+/** (String value, Boolean backwards)
+ * Converts a value into a base64 encoded string
+ * @return {String}
+ */
+Encode(String value, Boolean delusional) {
+  var output = [], media = [], c = characters + "+/";
+  if(delusional)
+    c = crazy;
+
+  for(var i = 0, j; i < value.length; i++)
+    media.push("0".repeat(8 - (j = value.charCodeAt i.toString 2).length) + j);
+  media = media.join "".split(/(.{6})/);
+
+  for(var i = 0, j; i < media.length; i++)
+    if((j = media[i]) !== "")
+      output.push(c[+("0b" + (j + ("0".repeat(6 - j.length))))]);
+
+  -> output.join "" + ("=".repeat((media.join "".length) % 3))
+}
+
+# Decode [Base 64: Backwards]
+/** (String value, Boolean backwards)
+ * Converts a value into a base64 decoded string
+ * @return {String}
+ */
+Decode(String value, Boolean delusional) {
+  var output = [], media = [], c = characters + "+/";
+  if(delusional)
+    c = crazy;
+
+  for(var i = 0, j; i < value.length; i++)
+    if(value[i] === "=")
+      media.push "000000";
+    else
+      media.push("0".repeat(6 - (j = c.indexOf(value[i]).toString 2).length) + j);
+  media = media.join "".split(/(.{8})/);
+
+  for(i = 0, j; i < media.length; i++)
+    if((j = media[i]) !== "")
+      output.push(String.fromCharCode(+("0b${j}")));
+
+  -> output.join ""
 }
 
 # toString
@@ -91,7 +138,7 @@ toString(value, Number type, Boolean compress) {
   while(x > type) {
     y = x % type;
     output.push(c[y]);
-    x = Math.floor(x/type)
+    x = Math.floor(x / type)
   }
   output.push(c[x]);
   if(h !== false)
@@ -113,7 +160,7 @@ toString(Number value, Array characters) {
   while(x > type) {
     y = x % type;
     output.push(c[y]);
-    x = math.floor(x/type);
+    x = math.floor(x / type);
   }
   output.push(c[x]);
   output = output.reverse();
@@ -129,7 +176,7 @@ toString(Number value, Boolean compress)
   => toString(value, ((compress)? 181: 62), compress);
 
 toString(Number value)
-  => (((value + "").length > 21)? value.toPrecision(21): value + "");
+  => (((value + "").length > 21)? value.toPrecision 21: value + "");
 
 toString(String value, String type) {
   switch(type) {
@@ -208,7 +255,7 @@ toNumber(String value, Boolean compressed)
 toNumber(String value) {
   if(/^[01]+$/.test value)
     -> toNumber(value, 2, true);
-  # 1.8.5?!
+  # 1.8?*
   if(/^[0-7]+$/.test value)
     -> toNumber(value, 8, true);
   #?
@@ -227,8 +274,6 @@ toNumber(String value) {
 
 toNumber(String value, type)
   => toNumber(value, type, +type > 62);
-
-# Prototype Methods
 
 Number@toString = (type, compress)
   => toString(@, type, compress || false);
@@ -368,3 +413,5 @@ $win.toNumber = toNumber;
 $win.toLetter = toLetter;
 $win.MAC = MAC;
 $win.MAS = MAS;
+$win.Encode = Encode;
+$win.Decode = Decode;
