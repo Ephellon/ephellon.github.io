@@ -1,14 +1,29 @@
+### 99 Bottles of beer on the Wall
+  @author: Ephellon Dantzler
+###
+
 out(v) =>
   document.write v;
 
 for (
-  var i = 99, s, t; # Set the variables to their initial states
-  i > 0 && (s => (i)?) && (t => (i - 1)?); # Stop execution if either is false
-  i-- # decrement after each iteration
+  # Set the variables to their initial states
+  var i = 99, s, t;
+
+  # Stop execution if either is false
+  i > 0 && (s => (i)?) && (t => (i - 1)?);
+    # s => (i)?
+    # s = "?$"(i)
+
+  # decrement after each iteration
+  i--
 )
+  # print the output to the DOM
   out "${i} bottle${s} of beer on the wall, ${i} bottle${s} of beer. You take one down, pass it around, ${i - 1} bottle${t} of beer on the wall.";
 
+# print the last message
 out 'No more bottles of beer on the wall, no more bottles of beer. You go to the store and buy some more, 99 bottles of beer on the wall.';
 
+# custom [Number?] operator
+# function "?$"(Number $1)
 [Number?] =>
   ($1 === 1? '': 's');
