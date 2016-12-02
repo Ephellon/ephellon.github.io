@@ -28,6 +28,7 @@ setInterval(() {
       bg.style.marginTop = bgMargin;
     }
     -> c === s === m
+    # c === s && s === m
   }
 
   if(d === $hor && dim())
