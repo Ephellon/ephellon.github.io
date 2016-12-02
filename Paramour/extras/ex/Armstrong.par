@@ -1,12 +1,11 @@
-###
-  Armstrong Number
+### Armstrong Number
   Translated from Python - "Programming Hub (Android) | Python | All | Armstrong Number within Range"
 ###
 
 # Get user input
 {{"Lower", "Upper"}}
 
-var (lower, upper, results = []) = +prompt("${Tuple.next} range limit?")
+var (lower, upper, results = []) = +prompt "${Tuple.next} range limit?"
 
 for(var x = lower; x < upper; x++) {
   for(var y = x, z, w = 0; y > 0; y => (y % 10)) {
