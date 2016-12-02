@@ -15,15 +15,13 @@
  * Number $1 - The base number
  * Number $2 - The exponent to raise the base by
  */
-[Number ^ Number] =>
-  Math.pow($1, $2);
+[Number ^ Number] =>  Math.pow($1, $2);
 
 /** [~Number] -> Math.round $1
  * Round a number
  * Number $1 - The number to round
  */
-[~Number] =>
-  Math.round $1;
+[~Number] =>  Math.round($1);
 
 /** [Number?] -> Math.random * $1
  * Get a random number
@@ -57,7 +55,7 @@
  * Number 2 - The number of times to repeat the string
  */
 [String * Number] =>
-  $1.repeat $2;
+  $1.repeat($2);
 
 /** [String / Any] -> $1.split $2
  * Split an array
@@ -65,9 +63,9 @@
  * Any $2 - The sequence to split on
  */
 [String / Any] =>
-  $1.split $2;
+  $1.split($2);
 
- # Arrays
+# Arrays
 /** [Array = Array] -> eval $1[@] = $2[@]
  * Destructor for !1.7 JavaScript versions
  * Array $1 - The array of varibale names to use
@@ -83,17 +81,15 @@
  * Array $1 - The array to concat to
  * Any $2 - The item to concat
  */
-[Array + Any] =>
-  $1.concat $2;
+[Array + Any] => $1.concat($2);
 
 /** [Array += Any] -> $1.push $2
  * Push an item to an array
  * Array $1 - The array to push to
  * Any $2 - The item to push
  */
-[Array += Any] {
-  -> $1.push($2), $1;
-}
+[Array += Any] =>
+  $1.push($2), $1;
 
 /** [Array--] -> $1.push $1[$1.length - 1]
  * Push the last item into the same array
