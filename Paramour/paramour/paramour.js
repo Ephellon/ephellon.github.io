@@ -83,8 +83,8 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Get and Set
     {
-      regex: /(\b[gs]et\b\??)\s*([a-zA-Z\$_][\w\$]*)/,
-      token: ["keyword-2", "variable"]
+      regex: /(\b[gs]et\b)(\?)?\s*([a-zA-Z\$_][\w\$]*)/,
+      token: ["keyword-2", "operator", "variable"]
     },
     // Custom Operators
     {
@@ -118,7 +118,7 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Variable names
     {
-      regex: /(\.[a-z\$_][\w\$]*|\.{3}|<init>)/i,
+      regex: /(\.{1,2}[a-z\$_][\w\$]*|\.{3}|<init>)/i,
       token: "variable-2"
     },
     {
