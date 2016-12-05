@@ -820,14 +820,14 @@ String..mul = String..repeat;
 var cats = [];
 
 Animal {
-  <init>(name, .type) _classes    cats.push name
+  <init>(name, .type) {
     name = name.split " "
     @name = {
       first: name[0],
       middle: (name.length > 2)? name[1]: "",
       last: name[name.length - 1]
     }
-    -> @
+    -> cats.push @, @
   }
 
   .getFirstName() {
