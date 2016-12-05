@@ -17,8 +17,9 @@ CodeMirror.defineSimpleMode("paramour", {
       next: "comment"
     },
     {
-      regex: /(#\s*)(\$[a-z\$][\w\$]*)(\s*[\-\=]>\s*)(.*)/i,
-      token: ["comment", "variable", "operator", null]
+      regex: /(#\s*)(\$[a-z\$][\w\$]*)(\s*[\-\=]>\s*)/i,
+      token: ["comment", "variable", "operator"],
+      next: "start"
     },
     {
       regex: /(#\s*)(@)([\d\.]+)/i,
@@ -54,7 +55,7 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Get and Set
     {
-      regex: /([gs]et\b\??)\s*([a-zA-Z\$_][\w\$]*)/,
+      regex: /(\b[gs]et\??)\s*([a-zA-Z\$_][\w\$]*)/,
       token: ["keyword-2", "variable"]
     },
     // Custom Operators
@@ -72,11 +73,6 @@ CodeMirror.defineSimpleMode("paramour", {
       // Suffix Operator
       regex: /(\[\s*)([a-z\$_][\w\$]*\s*)([!\~\*\/%\+\-<>\&\^\|\?\:\=;]+)(\s*\])/i,
       token: [null, "variable", "variable-2", null]
-    },
-    // Paramour Operators
-    {
-      regex: /((?:un)defined\s+)([a-zA-Z\$_][\w\$]*)/,
-      token: ["keyword", "variable"]
     },
     // Atoms and Atom-like
     {
