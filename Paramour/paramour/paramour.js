@@ -7,7 +7,7 @@ end =
 interpolation =
 {
   regex: /\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\}/,
-  token: "variable-2"
+  token: "keyword-2"
 },
 rest =
 {
@@ -83,7 +83,7 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Get and Set
     {
-      regex: /(\b[gs]et\??)\s*([a-zA-Z\$_][\w\$]*)/,
+      regex: /(\b[gs]et\b\??)\s*([a-zA-Z\$_][\w\$]*)/,
       token: ["keyword-2", "variable"]
     },
     // Custom Operators
