@@ -1,11 +1,23 @@
+var quasis = {}, Quasi = [],
+end =
+{
+  regex: /^(?:[^\\\$\{\}]|\\.|\$[^\{\}])*?$/,
+  token: "string"
+},
+interpolation =
+{
+  regex: /\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\}/,
+  token: "variable-2"
+},
+rest =
+{
+  regex: /./,
+  token: "string"
+};
+
 CodeMirror.defineSimpleMode("paramour", {
   // The start state contains the rules that are intially used
   start: [
-    // Strings
-    {
-      regex: /(["'])(?:[^\\]|\\.)*?\1/,
-      token: "string"
-    },
     {
       regex: /(\/(?:[^\\]|\\.)*?\/)([imguy]*)/,
       token: ["string", "variable-2"]
@@ -45,12 +57,28 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Quasi Strings
     {
+      regex: /"{3}/,
+      token: "string",
+      next: "Dquasi"
+    },
+    {
+      regex: /'{3}/,
+      token: "string",
+      next: "Squasi"
+    },
+    {
+      regex: /`{3}/,
+      token: "string",
+      next: "Tquasi"
+    },
+    {
       regex: /`/,
       token: "string",
       next: "quasi"
     },
+    // Strings
     {
-      regex: /(["'`]{3})(?:[^\\]:\\.)*?\1/,
+      regex: /(["'])(?:[^\\\1]|\\.)*?\1/,
       token: "string"
     },
     // Get and Set
@@ -125,14 +153,42 @@ CodeMirror.defineSimpleMode("paramour", {
       token: "string",
       next: "start"
     },
+    end,
+    interpolation,
+    rest
+  ],
+
+  Squasi: [
     {
-      regex: /\$\{(?:[^\{\}]*?)\}/,
-      mode: "start"
+      regex: /'{3}/,
+      token: "string",
+      next: "start"
     },
+    end,
+    interpolation,
+    rest
+  ],
+
+  Dquasi: [
     {
-      regex: /^(?:[^\\]|\\.)*?$/,
-      token: "string"
-    }
+      regex: /"{3}/,
+      token: "string",
+      next: "start"
+    },
+    end,
+    interpolation,
+    rest
+  ],
+
+  Tquasi: [
+    {
+      regex: /`{3}/,
+      token: "string",
+      next: "start"
+    },
+    end,
+    interpolation,
+    rest
   ],
 
   // Docstrings
