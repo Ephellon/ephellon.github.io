@@ -80,12 +80,12 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Atoms and Atom-like
     {
-      regex: /(\b(true|false|null|undefined|defined)\b|(\!+[01]))/,
+      regex: /(\!+[01]\b)/,
       token: "keyword"
     },
     // Keywords
     {
-      regex: /\b(abstract|boolean|break|byte|case|catch|char|class|const|continue|debugger|default|delete|do|double|else|enum|eval|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|let|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|var|void|volatile|while|with|yield|[gs]et)\b/,
+      regex: /\b(abstract|boolean|break|byte|case|catch|char|class|const|continue|debugger|default|delete|do|double|else|enum|eval|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|let|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|undefined|var|void|volatile|while|with|yield|[gs]et|defined)\b/,
       token: "keyword"
     },
     {
