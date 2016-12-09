@@ -1,0 +1,107 @@
+# @strict
+# @1.5
+
+Tuple {
+  <init>(args...) {
+    var types = Paramour.types args..., obj = Tuple.objects = ("defined" Tuple.objects)? Tuple.objects: {}, ext = "undefined" (obj[types]);
+
+    if(ext) {
+      @index = 0;
+      @arguments = [].slice.call args;
+      @length = args.length;
+      obj[types] = @;
+    }
+    Tuple.last = @;
+
+    -> (ext)? Tuple.last: Tuple.next;
+  }
+
+  every(Function __function__) {
+    for(var iterator = 0, TupleArray = @arguments, response = true; iterator < TupleArray.length && response; iterator++)
+      response = __function__.apply(null, TupleArray[iterator]);
+    -> response
+  }
+
+  forEach(Function __function__) {
+    for(var iterator = 0, TupleArray = @arguments, response; iterator < TupleArray.length; iterator++)
+      response = __function__.apply(null, TupleArray[iterator]);
+    -> response
+  }
+
+  indexOf(item) {
+    for(var iterator = 0, TupleArray = @arguments, response, index = -1; response = TupleArray[iterator++];)
+      if(item === response) {
+        -> iterator - 1
+      } else if(item.constructor === response.constructor) {
+        if(item.constructor === Object) {
+          for(var property in item)
+            if(!("object" item[property])? item[property] === response[property]: item[property].constructor === response[property].constructor)
+              -> iterator - 1
+            else
+              -> -1;
+        } else if(item.constructor === Array) {
+          for(var iter = 0; iter < item.length; iter++)
+            if(!("object" item[iter])? item[iter] === response[iter]: item[iter].constructor === response[iter].constructor)
+              -> iterator - 1;
+            else
+              -> -1;
+          if(item.length === response.length)
+            -> iterator - 1;
+        } else if(item.constructor === RegExp) {
+          if(item.source === response.source && item.flags === response.flags)
+            -> iterator - 1
+          else
+            -> -1;
+        }
+      }
+    return index
+  }
+
+  lastIndexOf(item) {
+    for(var iterator = 0, TupleArray = @arguments, response, index = -1; response = TupleArray[iterator++];)
+      if(!("object" item) && item === response) {
+        index = iterator
+      } else if(item.constructor === response.constructor) {
+        if(item.constructor === Object) {
+          for(var property in item)
+            if(!("object" item[property])? item[property] === response[property]: item[property].constructor === response[property].constructor)
+              index = iterator
+        } else if(item.constructor === Array) {
+          for(var iter = 0; iter < item.length; iter++)
+            if(!("object" item[iter])? item[iter] === response[iter]: item[iter].constructor === response[iter].constructor)
+              index = iterator;
+          if(item.length === 0 && response.length === 0)
+            index = iterator;
+        } else if(item.constructor === RegExp) {
+          if(item.source === response.source && item.flags === response.flags)
+            index = iterator
+        }
+      }
+    -> index - 1
+  }
+
+  join(symbols) {
+    -> @arguments.join symbols
+  }
+
+  next(index) {
+    if("number" index && index > @index < @arguments.length)
+      -> @arguments.slice(@index, @index = index);
+    else
+      -> @arguments[@index++];
+  }
+
+  toString() {
+    -> @arguments.toString()
+  }
+
+  *from() {
+    for(var index = 0, object, array = []; (object = arguments[index++]) || index < arguments.length;)
+      array.push(("function" object)? (object.name || object.toString()): (object === window)? "window": object);
+    -> eval("new Tuple(${array})")
+  }
+
+  Tuple get next {
+    -> Tuple.last.next()
+  }
+}
