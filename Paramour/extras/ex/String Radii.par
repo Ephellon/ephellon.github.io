@@ -2,11 +2,13 @@
   @author: Ephellon Dantzler
 ###
 
+# @strict
+# @1.5
+
 # $R -> Math.random()
 # $C -> charCodeAt(0)
 # $from -> fromCharCode
 # $win -> window
-# @1.5
 
 # 62, 69, 181, 223
 var(
