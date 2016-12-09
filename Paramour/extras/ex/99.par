@@ -2,6 +2,9 @@
   @author: Ephellon Dantzler
 ###
 
+# @strict
+# @1.5
+
 out(v) =>
   document.write v;
 
