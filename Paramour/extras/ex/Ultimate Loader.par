@@ -2,6 +2,9 @@
   @author Rauri, Ephellon Dantzler
 ###
 
+# @strict
+# @1.5
+
 # $html -> innerHTML
 # $hor -> "horizontal"
 # $ver -> "vertical"
