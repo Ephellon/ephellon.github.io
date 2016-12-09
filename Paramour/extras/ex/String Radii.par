@@ -34,7 +34,8 @@ secure = Math.floor(220 * $R) + 2,
 crazy = "aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ",
 crazier = "aAbB0cCdD1eEfF2gGhH3iIjJ4kKlL5mMnN6oOpP7qQrR8sStT9uUvV_wWxX$yYzZ",
 intwined = "([{<zyxwvutsrqponmlkjihgfedcba/+-\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>}])",
-UUENC = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_";
+UUENC = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
+B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 Password {
   <init>(value) {
@@ -61,8 +62,16 @@ Password {
 }
 
 # Encode [Base 64: Backwards]
+/** Converts a value into a base64 encoded string
+ * @version {String, Number} Convert the string into a base64, delusional string
+ * @version {String} Convert the string into a base64 string
+ */
+Encode;
+
 /** (String value, Number delusion)
  * Converts a value into a base64 encoded string
+ * @param {String} value The value to convert
+ * @param {Number} delusion The deulsion to use (default is -1)
  * @return {String}
  */
 Encode(String value, Number delusion) {
@@ -81,6 +90,8 @@ Encode(String value, Number delusion) {
       c = UUENC;
       p = "";
       break;
+    default:
+      c = B64;
   }
 
   for(var i = 0, j; i < value.length; i++)
@@ -94,9 +105,34 @@ Encode(String value, Number delusion) {
   -> output.join "" + (p.repeat((media.join "".length) % 3))
 }
 
+/** (String value)
+ * Converts a value into a base64 encded string
+ * @param {String} value The value to convert
+ * @return {String}
+ */
+Encode(String value) =>
+  Encode(value, -1);
+
+/** (* value)
+ * Converts a value into a base64 encoded string
+ * @param {*} value The value to convert
+ * @param {*} delusion The deulsion to use (default is -1)
+ * @retrun {String}
+ */
+Encode(* value, * delusion = -1) =>
+  Encode((undefined value)? "undefined": value.toString(), +delusion);
+
 # Decode [Base 64: Backwards]
+/** Converts a value into a base64 decoded string
+ * @version {String, Number} Convert the string from a base64, delusional string
+ * @version {String} Convert the string from a base64 string
+ */
+Decode;
+
 /** (String value, Number delusion)
  * Converts a value into a base64 decoded string
+ * @param {String} value The value to convert
+ * @param {Number} delusion The deulsion to use (default is -1)
  * @return {String}
  */
 Decode(String value, Number delusion) {
@@ -115,6 +151,8 @@ Decode(String value, Number delusion) {
       c = UUENC;
       p = "";
       break;
+    default:
+      c = B64;
   }
 
   for(var i = 0, j; i < value.length; i++)
@@ -130,6 +168,23 @@ Decode(String value, Number delusion) {
 
   -> output.join ""
 }
+
+/** (String value)
+ * Converts a value into a base64 decoded string
+ * @param {String} value The value to convert
+ * @return {String}
+ */
+Decode(String value) =>
+  Decode(value, -1);
+
+/** (* value, * delusion)
+ * Converts a value into a base64 decoded string
+ * @param {*} value The value to convert
+ * @param {*} delusion The deulsion to use (default is -1)
+ * @retrun {String}
+ */
+Decode(* value, * delusion = -1) =>
+  Decode((undefined value)? "undefined": value.toString(), +delusion);
 
 # toString
 /** (* value, Number type, Boolean compress)
@@ -186,8 +241,7 @@ toString(Number value, Array characters) {
   value = +value || value;
   var output = [], x = value, y = 0, c = characters, type = c.length;
   while(x > type) {
-    y = x % type;
-    output.push(c[y]);
+    output.push(c[y = x % type]);
     x = math.floor(x / type);
   }
   output.push(c[x]);
@@ -281,16 +335,16 @@ toNumber(String value, Boolean compressed)
   => toNumber(value, ((compressed)? 181: 36), compressed);
 
 toNumber(String value) {
-  if(/^[01]+$/.test value)
-    -> toNumber(value, 2, true);
+  if(/^(?:0b\:?)?([01]+)$/.test value)
+    -> toNumber(RegExp.$1, 2, true);
   # 1.8?*
-  if(/^[0-7]+$/.test value)
-    -> toNumber(value, 8, true);
+  if(/^(?:0o\:?)?([0-7]+)$/.test value)
+    -> toNumber(RegExp.$1, 8, true);
   #?
-  if(/^[0-9a-f]+$/.test value)
-    -> toNumber(value, 16, true);
-  if(/^[0-9a-z]+$/.test value)
-    -> toNumber(value, 36, true);
+  if(/^(?:0[hx]\:?)?([0-9a-f]+|[0-9A-F]+)$/.test value)
+    -> toNumber(RegExp.$1, 16, true);
+  if(/^(?:0A\:)?([0-9a-z]+|[0-9A-Z]+)$/.test value)
+    -> toNumber(RegExp.$1, 36, true);
   if(/^[0-9a-zA-Z]+$/.test value)
     -> toNumber(value, 62, true);
   if(/^[0-9a-zA-Z\#\$\-\.\/@_]+$/.test value)
@@ -381,7 +435,7 @@ MAS(address, symbol) {
           k << mac[x + 2]:
           k << x + 11:
       +("0x" + mac[x]) << 16
-    ).toString 15);
+    ).toString 16);
   -> m.join "".replace(/(\w\w)/g, "$1" + symbol).toUpperCase().slice(0, 20)
 }
 
@@ -417,11 +471,11 @@ toLetter(Number number) {
     V - 5
     I - 1
   ###
-  if(+number > 5e11)
+  if(Infinity > number > 5e11)
     -> "O" + toLetter(number % 5e11);
   var m = "O T K Z Y \u03a9 E A P N \u03a3 \u039e G H \u039b \u0394 \u0393 M D C L X V I".split " ",
       M = "5e11 1e11 5e10 5e10 5e9 1e9 5e8 1e8 5e7 1e7 5e6 1e6 5e5 1e5 5e4 1e4 5e3 1e3 5e2 1e2 50 10 5 1".split " ",
-      n = +number;
+      n = number;
   for(var x = 0, N = []; n > 0 && x < m.length;)
     if(n >= +M[x])
       if((n + "")[0] === "9" && (+M[x] + "")[0] === "5")
