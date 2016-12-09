@@ -2,6 +2,9 @@
   @author: Kishin, Ephellon Dantzler
 ###
 
+# @strict
+# @1.5
+
 # $win -> window
 # $doc -> document
 # $qy -> $doc.querySelector
