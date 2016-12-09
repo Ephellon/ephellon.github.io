@@ -2,6 +2,9 @@
   @author: Tiffany Rayside, Ephellon Dantzler
 ###
 
+# @strict
+# @1.5
+
 # $Rq -> $win.requestAnimationFrame
 # $add -> $win.addEventListener
 # $qy -> $doc.querySelector
