@@ -3,6 +3,9 @@
   @about: Builds pyramids based on the number of faces and levels [from 3 to 5 so far]
 ###
 
+# @strict
+# @1.5
+
 Pyramid {
   <init>(.faces = 4, .levels = 3) {
     # var faces = (this.faces = (arguments[0] === undefined)? 4: arguments[0]), ...
