@@ -359,11 +359,11 @@ toNumber(String value) {
 toNumber(String value, type)
   => toNumber(value, type, +type > 62);
 
-Number@toString = (type, compress)
-  => toString(@, type, compress || false);
+Number@asString = (type, compress)
+  => (undefined type)? String @: toString(@, type, compress || false);
 
-String@toNumber = (type, compressed)
-  => toNumber(@, type, compressed || false);
+String@asNumber = (type, compressed)
+  => (undefined type)? Number @: toNumber(@, type, compressed || false);
 
 # MAC
 /** (Number address, String symbol, Number seed)
