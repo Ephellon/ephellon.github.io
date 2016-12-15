@@ -1,13 +1,13 @@
 var quasis = {}, Quasi = [],
 end =
 {
-  regex: /^(?:[^\\\$\{\}]|\\.|\$[^\{\}])*?$/,
+  regex: /^(?:[^\\\$]|\\.|\$[^\{\}])*?$/,
   token: "string"
 },
 interpolation =
 {
-  regex: /\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\}/,
-  token: "keyword-2"
+  regex: /(\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\})/,
+  token: "string-2"
 },
 rest =
 {
@@ -78,12 +78,18 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     // Strings
     {
-      regex: /(["'])(?:[^\\\1]|\\.)*?\1/,
-      token: "string"
+      regex: /"/,
+      token: "string",
+      next: "Dstring"
+    },
+    {
+      regex: /'/,
+      token: "string",
+      next: "Sstring"
     },
     // Get and Set
     {
-      regex: /(\b[gs]et\b)(\?)?\s*([a-zA-Z\$_][\w\$]*)/,
+      regex: /(\b[gs]et\b)(\?\s*|\s+)([a-zA-Z\$_][\w\$]*)/,
       token: ["keyword-2", "operator", "variable"]
     },
     // Custom Operators
@@ -114,12 +120,24 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     {
       regex: /[^\-\+][\-\+\~\&]>|@/,
-      token: "keyword"
+      token: "keyword-2"
     },
     // Variable names
     {
-      regex: /(\.{1,2}[a-z\$_][\w\$]*|\.{3}|<init>)/i,
-      token: "variable-2"
+      regex: /(\.{1,2})(\s*[a-z\$_][\w\$]*)/i,
+      token: [null, "variable-2"]
+    },
+    {
+      regex: /(\.{3}\s*)([a-z\$_][\w\$]*)/i,
+      token: ["variable-2", "variable"]
+    },
+    {
+      regex: /([a-z\$_][\w\$]*)(\.{3})/i,
+      token: ["variable", "variable-2"]
+    },
+    {
+      regex: /<(init)>/,
+      token: ["keyword-2"]
     },
     {
       regex: /([a-z\$_][\w\$]*)/i,
@@ -146,10 +164,31 @@ CodeMirror.defineSimpleMode("paramour", {
     }
   ],
 
+  // Strings
+  Dstring: [
+    {
+      regex: /(?:[^\\]|\\.)*?"/,
+      token: "string",
+      next: "start"
+    },
+    interpolation,
+    rest
+  ],
+
+  Sstring: [
+    {
+      regex: /(?:[^\\]|\\.)*?'/,
+      token: "string",
+      next: "start"
+    },
+    interpolation,
+    rest
+  ],
+
   // Quasi Strings
   quasi: [
     {
-      regex: /`/,
+      regex: /(?:[^\\]|\\.)*?`/,
       token: "string",
       next: "start"
     },
