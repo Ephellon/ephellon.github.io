@@ -119,7 +119,7 @@ CodeMirror.defineSimpleMode("paramour", {
       token: "keyword"
     },
     {
-      regex: /[^\-\+][\-\+\~\&]>|@/,
+      regex: /[^\-\+][\-\+\~\&\=]>|@|\:\:|\.\./,
       token: "keyword-2"
     },
     // Variable names
