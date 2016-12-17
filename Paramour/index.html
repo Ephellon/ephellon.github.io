@@ -197,13 +197,13 @@ var(list = {{G, D, A, N, R}}, gummball, darwin, anais, nicole, richard)
 
 # Objects
 var Gumball = {
-  name: G,
-  age: age,
-  brother: D,
-  sister: A,
-  siblings: [D, A],
-  mother: N,
-  father: R,
+  name: G
+  age: age
+  brother: D
+  sister: A
+  siblings: [D, A]
+  mother: N
+  father: R
   parents: [N, R]
 };
 
@@ -574,8 +574,8 @@ var watterson_kids = ["Gumball", "Darwin", "Anais"],
     fitzgerald_kids = ["Penny", "Penny's Sister"];
 
 var wattersons = {
-  mother: "Nicole Watterson",
-  father: "Richard Watterson",
+  mother: "Nicole Watterson"
+  father: "Richard Watterson"
   kids: watterson_kids
 };
 
@@ -583,8 +583,8 @@ var wattersons = {
 var families = {{
   wattersons,
   {
-    mother: "Mrs. Fitzgerald",
-    father: "Patrick Fitzgerald",
+    mother: "Mrs. Fitzgerald"
+    father: "Patrick Fitzgerald"
     kids: fitzgerald_kids
   }
 }};
@@ -660,7 +660,7 @@ var first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3];
 <textarea class="compile-paramour" type="text/paramour" id="E_type_declarations">
 var "String" string = "hello world!",
     "Object" object = {
-      "Date" date: new Date(),
+      "Date" date: new Date()
       "Object" extra: {}
     };
 </textarea>
@@ -835,8 +835,8 @@ Animal {
   <init>(name, .type) {
     name = name.split " "
     @name = {
-      first: name[0],
-      middle: (name.length > 2)? name[1]: "",
+      first: name[0]
+      middle: (name.length > 2)? name[1]: ""
       last: name[name.length - 1]
     }
     -> cats.push @, @
@@ -939,7 +939,7 @@ Animal.Cat {
   stdout object # console.log
   assertNotEquals(object.name, @@name) # pass
 }({
-  name: "Rob",
+  name: "Rob"
   age: 23
 });
 </textarea>
