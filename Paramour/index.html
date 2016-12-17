@@ -192,7 +192,7 @@ age = 12;
 var chars = [G, D, A, N, R];
 
 # Tuples ([] + {})
-var(list = {{G, D, A, N, R}}, gummball, darwin, anais, nicole, richard)
+var(list = .{G, D, A, N, R}, gummball, darwin, anais, nicole, richard)
   = Tuple.next;
 
 # Objects
@@ -566,7 +566,7 @@ alert "In first, we have ${gold}, with ${silver} just moments behind--and here c
       Arrays, Objects, and Tuples
     </h2>
 
-      <p><i>There isn't much difference, other than Tuples, which use double braces <code>{{}}</code>.</i></p>
+      <p><i>There isn't much difference, other than Tuples, which use a dot-brace pattern <code>.{}</code>.</i></p>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples">
@@ -580,14 +580,14 @@ var wattersons = {
 };
 
 # families.next(), or Tuple.next can be used to traverse the Tuple
-var families = {{
+var families = .{
   wattersons,
   {
     mother: "Mrs. Fitzgerald"
     father: "Patrick Fitzgerald"
     kids: fitzgerald_kids
   }
-}};
+};
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
