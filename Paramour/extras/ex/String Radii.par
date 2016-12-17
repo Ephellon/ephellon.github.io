@@ -2,15 +2,14 @@
   @author: Ephellon Dantzler
 ###
 
-# @strict
-# @1.5
-
 # $R -> Math.random()
 # $C -> charCodeAt(0)
 # $from -> fromCharCode
 # $win -> window
+# @1.5
 
 # 62, 69, 181, 223
+# Greek, Latin and other "visible" Characters
 var(
 t = [
   [0x00c0, 0x00d7, '00'],
@@ -27,6 +26,7 @@ for(var x = 0; x < t.length; x++)
 for(x = 33; x < 223; x++)
   t__ += String.$from x;
 
+# The character sets
 var
 characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
 characters_ = characters + "#$-./@_",
@@ -38,16 +38,19 @@ crazier = "aAbB0cCdD1eEfF2gGhH3iIjJ4kKlL5mMnN6oOpP7qQrR8sStT9uUvV_wWxX$yYzZ",
 intwined = "([{<zyxwvutsrqponmlkjihgfedcba/+-\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>}])",
 UUENC = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
 B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+B94 = B64 + "~!@#$%^&*()_{}|:\"<>?`- []\\;',.";
 
+# Returns a hashed/encoded string from the given value
 Password {
   <init>(value) {
     if(NaN value) {
       var u = [];
       for(var x = 0; x < value.length; x++)
         u.push((@[x] = toNumber((MD5 || atob)(value[x]).slice(0, 8), 36).toString 36, value[x]).$C.toString 16);
-      @.length = x
-      value = (MD5 || atob)(u.join "")
+      @length = x
+      value = ((MD5 || atob)(u.join ""))
     } else {
+      @length = NaN
       value = ((MD5 || atob)(value + ""))
     }
     -> @["[[PrimitiveValue]]"] = value
@@ -78,6 +81,8 @@ Encode;
  */
 Encode(String value, Number delusion) {
   var output = [], media = [], c = characters + "+/", p = "=";
+
+  # The delusion level determines which charater set to use
   switch(delusion) {
     case 0:
       c = crazy;
@@ -98,7 +103,7 @@ Encode(String value, Number delusion) {
 
   for(var i = 0, j; i < value.length; i++)
     media.push("0".repeat(8 - (j = value.charCodeAt i.toString 2).length) + j);
-  media = media.join "".split(/(.{6})/);
+  media = media.join "".split(/(.{6})/).join "/".split(/\/+/);
 
   for(var i = 0, j; i < media.length; i++)
     if((j = media[i]) !== "")
@@ -108,14 +113,14 @@ Encode(String value, Number delusion) {
 }
 
 /** (String value)
- * Converts a value into a base64 encded string
+ * Converts a value into a base64 encoded string
  * @param {String} value The value to convert
  * @return {String}
  */
 Encode(String value) =>
   Encode(value, -1);
 
-/** (* value)
+/** (* value, * delusion)
  * Converts a value into a base64 encoded string
  * @param {*} value The value to convert
  * @param {*} delusion The deulsion to use (default is -1)
@@ -162,7 +167,7 @@ Decode(String value, Number delusion) {
       media.push "000000";
     else
       media.push("0".repeat(6 - (j = c.indexOf(value[i]).toString 2).length) + j);
-  media = media.join "".split(/(.{8})/);
+  media = media.join "".split(/(.{8})/).join "/".split(/\/+/);
 
   for(i = 0, j; i < media.length; i++)
     if((j = media[i]) !== "")
@@ -188,18 +193,14 @@ Decode(String value) =>
 Decode(* value, * delusion = -1) =>
   Decode((undefined value)? "undefined": value.toString(), +delusion);
 
-### toString
-            ..          .
-   .       .  .  .
-  ... ....  .   ... ... . ... ...
-   .  .  .   .   .  .   . . . . .
-   .. .... .  .  .. .   . . . ...
-            ..                 .
-                             ..
-###
+# toString
+/** (* value, Number type, Boolean compress)
+ * Converts a value into a radix (such as 23 -> 0x17)
+ * @return {String}
+ */
 toString(value, Number type, Boolean compress) {
   if(undefined type || !(1 < type < 223))
-    +> RangeError "toString(Radix @${type}) Radix argument must be between 2 and 222";
+    +> RangeError "toString(Radix @${type}) Radix argument must be between (2, 222)";
   if(+value === -Infinity || + value === +Infinity)
     +> RangeError "toString(Number @${value}) Number argument must be between (10e-324, 10e308)";
   value = +value || value;
@@ -289,12 +290,11 @@ toString(String value)
 toString(String value, Number type)
   => toString(value, type, type > 62);
 
-### toNumber
-   .       .  .           .
-  ... .... .. . . . .. .. ... ... ...
-   .  .  . . .. . . . . . . . ..  .
-   .. .... .  . ... .   . ... ... .
-###
+# toNumber
+/** (String value, Number type, Boolean compressed)
+ * Converts a radix into a value (such as 0x17 -> 23)
+ * @return {Number}
+ */
 toNumber(String value, Number type, Boolean compressed) {
   var output = [], x, y = 0, c = characters, h = false;
   if((!compressed && type > 62) || (/^[0-9a-zA-Z\#\$\-\.\/@_]+$/).test value)
@@ -325,7 +325,7 @@ toNumber(String value, Number type, Boolean compressed) {
 }
 
 toNumber(String value, String characters) {
-  var output = [], x = 0, y = 0, h = false, c = characters, type = c.length;
+  var output = [], x = 0, y = 0, h = false, c = characters,type = c.length;
   value = value.split "".reverse();
   for(; x < value.length; x++) {
     y = +(c.indexOf(value[x]));
@@ -364,18 +364,18 @@ toNumber(String value) {
 toNumber(String value, type)
   => toNumber(value, type, +type > 62);
 
-Number@asString = (type, compress)
-  => (undefined type)? String @: toString(@, type, compress || false);
+Number@toString = (type, compress)
+  => toString(@, type, compress || false);
 
-String@asNumber = (type, compressed)
-  => (undefined type)? Number @: toNumber(@, type, compressed || false);
+String@toNumber = (type, compressed)
+  => toNumber(@, type, compressed || false);
 
 # MAC
 /** (Number address, String symbol, Number seed)
  * Returns a MAC address
- * @param {Number} address: The address to turn into a MAC address (default is a random number)
- * @param {String} symbol: The synbol to use as a seperator (default is ":")
- * @param {Number} seed: The number to start at [14 < seed < 57] (default is 16); if address = 0, the result will be seed^12
+ * @param {Number} address The address to turn into a MAC address (default is a random number)
+ * @param {String} symbol The synbol to use as a seperator (default is ":")
+ * @param {Number} seed The number to start at [14 < seed < 57] (default is 16); if address = 0, the result will be seed^12
  */
 MAC(address, symbol, seed) {
   address = +(address || Math.floor($R * 999999999));
@@ -394,9 +394,9 @@ MAC(address, symbol, seed) {
 # MAS
 /** (String|Number address, String symbol)
  * Hash a MAC address
- * @param {String} address: The address to hash
- * @param {Number} address: The address to hash
- * @param {String} symbol: The symbol to use as a seperator 
+ * @param {String} address The address to hash
+ * @param {Number} address The address to hash
+ * @param {String} symbol The symbol to use as a seperator 
  */
 MAS(address, symbol) {
   var mac;
@@ -447,6 +447,10 @@ MAS(address, symbol) {
 }
 
 # toLetter
+/** (Number number)
+ * Convert a number into a Greek/Roman number
+ * @param {Number} number The number to convert
+ */
 toLetter(Number number) {
   ### Greek/Roman Numbering System
     O      - 500,000,000,000 [11th from last Greek character, Omicron]
@@ -481,10 +485,8 @@ toLetter(Number number) {
       n = number;
   for(var x = 0, N = []; n > 0 && x < m.length;)
     if(n >= +M[x])
-      if((n + "")[0] === "9" && (+M[x] + "")[0] === "5")
-        n -= 9 * (+M[x] / 5), N.push(m[x + 1], m[x - 1]);
-      else if((n + "")[0] === "4" && (+M[x] + "")[0] === "1")
-        n -= 4 * (+M[x] / 5), N.push(m[x + 1], m[x - 1]);
+      if(((n + "")[0] === "9" && (+M[x] + "")[0] === "5") || ((n + "")[0] === "4" && (+M[x] + "")[0] === "1"))
+        n -= (+(n + "")[0]) * (+M[x] / 5), N.push(m[x + 1], m[x - 1]);
       else
         n -= +M[x], N.push(m[x]);
     else
@@ -500,87 +502,3 @@ $win.MAC = MAC;
 $win.MAS = MAS;
 $win.Encode = Encode;
 $win.Decode = Decode;
-
-/** [Main Function]
- * Converts a value into a radix (such as 23 -> 0x17)
- * @return {String}
-
- * @main
- * @version {Any, Number, Boolean}
- *   Any value: The value to convert
- *   Number type: The radix type to use (2 - 222)
- *   Boolean compress: Force radix 222
-
- * @version {Number}
- *   Number value: The value to convert
-
- * @version {Number, Array}
- *   Number value: The value to convert
- *   Array characters: The characters to use as the radii
-
- * @version {Number, Boolean}
- *   Number value: The value to convert
- *   Boolean compress: Force radix 222
-
- * @version {Number, Number}
- *   Number value: The value to convert
- *   Number type: The radix type to use (2 - 222)
-
- * @version {Number, String}
- *   Number value: The value to convert
- *   String characters: The characters to use as the radii
-
- * @version {String}
- *   String value: The value to convert
-
- * @version {String, Boolean}
- *   String value: The value to convert
- *   Boolean compress: Force radix 222
-
- * @version {String, Number}
- *   String value: The value to convert
- *   Number type: The radix type to use (2 - 222)
-
- * @version {String, String}
- *   String value: The value to convert
- *   String type: The radix type to use (2 - 222)
- */
-toString;
-
-/** [Main Function]
- * Converts a radix into a value (such as 0x17 -> 23)
- * @return {Number}
-
- * @main
- * @version {String, Number, Boolean}
- *   String value: The value to convert
- *   Number type: The radix type to use (2 - 222)
- *   Boolean compress: Force radix 222
-
- * @version {String}
- *   String value: The value to convert
-
- * @version {String, Any}
- *   String value: The value to convert
- *   Any type: A possible radix type, and/or decompression boolean
-
- * @version {String, Boolean}
- *   String value: The value to convert
- *   Boolean decompress: Force radix 222
-
- * @version {String, Number}
- *   String value: The value to convert
- *   Number type: The radix type to use (2 - 222)
-
- * @version {String, String}
- *   String value: The value toconvert
- *   String characters: The characters to use as the radii
- */
-toNumber;
-
-/** [Main Function]
- * Convert a number into a Greek/Roman number
- * @version {Number}
- *   Number number: The number to convert
- */
-toLetter;
