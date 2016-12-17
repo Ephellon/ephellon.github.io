@@ -1,12 +1,12 @@
 var quasis = {}, Quasi = [],
 end =
 {
-  regex: /^(?:[^\\\$]|\\.|\$[^\{\}])*?$/,
+  regex: /^(?:[^\\\$]|\\\S|\$[^\{\}])*?$/,
   token: "string"
 },
 interpolation =
 {
-  regex: /(\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\})/,
+  regex: /(\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\}|\\\S)/,
   token: "string-2"
 },
 rest =
@@ -19,7 +19,7 @@ CodeMirror.defineSimpleMode("paramour", {
   // The start state contains the rules that are intially used
   start: [
     {
-      regex: /(\/(?:[^\\]|\\.)*?\/)([imguy]*)/,
+      regex: /(\/(?:[^\\]|\\\S)*?\/)([imguy]*)/,
       token: ["string", "variable-2"]
     },
     // Comments
@@ -167,20 +167,22 @@ CodeMirror.defineSimpleMode("paramour", {
   // Strings
   Dstring: [
     {
-      regex: /(?:[^\\]|\\.)*?"/,
+      regex: /(?:[^\\\$])*?"/,
       token: "string",
       next: "start"
     },
+    end,
     interpolation,
     rest
   ],
 
   Sstring: [
     {
-      regex: /(?:[^\\]|\\.)*?'/,
+      regex: /(?:[^\\\$])*?'/,
       token: "string",
       next: "start"
     },
+    end,
     interpolation,
     rest
   ],
@@ -188,7 +190,7 @@ CodeMirror.defineSimpleMode("paramour", {
   // Quasi Strings
   quasi: [
     {
-      regex: /(?:[^\\]|\\.)*?`/,
+      regex: /(?:[^\\\$])*?`/,
       token: "string",
       next: "start"
     },
