@@ -50,4 +50,4 @@ random(x) =>
 
 wise(x, k) =>
   k.$set("class",
-    k.$get "class" + " " + "wwwww".split(1, x));
+    k.$get "class" + " " + "wwwww".slice(0, x));
