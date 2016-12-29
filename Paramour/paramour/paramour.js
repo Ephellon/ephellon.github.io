@@ -1,25 +1,15 @@
 var quasis = {}, Quasi = [],
-end =
-{
-  regex: /^(?:[^\\\$]|\\\S|\$[^\{\}])*?$/,
-  token: "string"
-},
 interpolation =
 {
-  regex: /(\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\}|\\\S)/,
+  regex: /(\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\})/,
   token: "string-2"
-},
-rest =
-{
-  regex: /./,
-  token: "string"
 };
 
 CodeMirror.defineSimpleMode("paramour", {
   // The start state contains the rules that are intially used
   start: [
     {
-      regex: /(\/(?:[^\\]|\\\S)*?\/)([imguy]*)/,
+      regex: /(\B\/(?![\*\+\?])(?:[^\\\n\r]|\\.)*?\/)([imguy]*\b|\B)/,
       token: ["string", "variable-2"]
     },
     // Comments
@@ -166,70 +156,73 @@ CodeMirror.defineSimpleMode("paramour", {
 
   // Strings
   Dstring: [
+    interpolation,
     {
-      regex: /(?:[^\\\$]|\\.)*?"/,
+      regex: /(?:[^\\]|\\.)*?"/,
       token: "string",
       next: "start"
-    },
-    end,
-    interpolation,
-    rest
+    }
   ],
 
   Sstring: [
+    interpolation,
     {
-      regex: /(?:[^\\\$]|\\.)*?'/,
+      regex: /(?:[^\\]|\\.)*?'/,
       token: "string",
       next: "start"
-    },
-    end,
-    interpolation,
-    rest
+    }
   ],
 
   // Quasi Strings
   quasi: [
+    interpolation,
     {
-      regex: /(?:[^\\\$]|\\.)*?`/,
+      regex: /(?:[^\\]|\\.)*?`/,
       token: "string",
       next: "start"
-    },
-    end,
-    interpolation,
-    rest
+    }
   ],
 
   Squasi: [
+    interpolation,
     {
       regex: /'{3}/,
       token: "string",
       next: "start"
     },
-    end,
-    interpolation,
-    rest
+    {
+      regex: /(?:[^\\]|\\.)*?'{3}/,
+      token: "string",
+      next: "start"
+    }
   ],
 
   Dquasi: [
+    interpolation,
     {
       regex: /"{3}/,
       token: "string",
       next: "start"
     },
-    end,
-    interpolation,
-    rest
+    {
+      regex: /(?:[^\\]|\\.)*?"{3}/,
+      token: "string",
+      next: "start"
+    }
   ],
 
   Tquasi: [
+    interpolation,
     {
       regex: /`{3}/,
       token: "string",
       next: "start"
     },
-    end,
-    interpolation,
-    rest
+    {
+      regex: /(?:[^\\]|\\.)*?`{3}/,
+      token: "string",
+      next: "start"
+    }
   ],
 
   // Docstrings
