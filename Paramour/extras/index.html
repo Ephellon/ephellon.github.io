@@ -359,6 +359,7 @@
   window.loadConsole = function(content) {
     Peditor.setValue(content);
     Jeditor.setValue(Paramour(content, true));
+    Seditor.setValue(Paramour.report);
     compileSource();
     $('.navigation.try').addClass('active');
     Jeditor.focus();
