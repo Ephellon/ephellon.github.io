@@ -1,8 +1,7 @@
 var quasis = {}, Quasi = [],
-interpolation =
-{
-  regex: /(\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\})/,
-  token: "string-2"
+interpolation = {
+  regex: /([^\$\{\}]*)(\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\})/,
+  token: ["string", "string-2"]
 };
 
 CodeMirror.defineSimpleMode("paramour", {
