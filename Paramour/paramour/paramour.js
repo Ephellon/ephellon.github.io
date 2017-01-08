@@ -1,8 +1,9 @@
 var quasis = {}, Quasi = [],
-interpolation =
-{
-  regex: /(\$\{(?:[^\{\}])*?\}|\$\{[\s\S]*\})/,
-  token: "string-2"
+interpolation = function(symbol) {
+  return {
+    regex: RegExp("(\\$\\{(?:[^\\{\\}])*?\\}|\\$\\{[\\s\\S]*\\})([^\\$" + symbol + "]*|\\$[^\\{\\}]|[^\\\\][\\$" + symbol + "])"),
+    token: ["string-2", "string"]
+  }
 };
 
 CodeMirror.defineSimpleMode("paramour", {
@@ -156,18 +157,18 @@ CodeMirror.defineSimpleMode("paramour", {
 
   // Strings
   Dstring: [
-    interpolation,
+    interpolation('"'),
     {
-      regex: /(?:[^\\]|\\.)*?"/,
+      regex: /(?:[^\\\$]|\\.|\$[^\{\}])*?"/,
       token: "string",
       next: "start"
     }
   ],
 
   Sstring: [
-    interpolation,
+    interpolation("'"),
     {
-      regex: /(?:[^\\]|\\.)*?'/,
+      regex: /(?:[^\\\$]|\\.|\$[^\{\}])*?'/,
       token: "string",
       next: "start"
     }
@@ -175,51 +176,51 @@ CodeMirror.defineSimpleMode("paramour", {
 
   // Quasi Strings
   quasi: [
-    interpolation,
+    interpolation("`"),
     {
-      regex: /(?:[^\\]|\\.)*?`/,
+      regex: /(?:[^\\\$]|\\.|\$[^\{\}])*?`/,
       token: "string",
       next: "start"
     }
   ],
 
   Squasi: [
-    interpolation,
+    interpolation("'"),
     {
       regex: /'{3}/,
       token: "string",
       next: "start"
     },
     {
-      regex: /(?:[^\\]|\\.)*?'{3}/,
+      regex: /(?:[^\\\$]|\\.|\$[^\{\}])*?'{3}/,
       token: "string",
       next: "start"
     }
   ],
 
   Dquasi: [
-    interpolation,
+    interpolation('"'),
     {
       regex: /"{3}/,
       token: "string",
       next: "start"
     },
     {
-      regex: /(?:[^\\]|\\.)*?"{3}/,
+      regex: /(?:[^\\\$]|\\.|\$[^\{\}])*?"{3}/,
       token: "string",
       next: "start"
     }
   ],
 
   Tquasi: [
-    interpolation,
+    interpolation("`"),
     {
       regex: /`{3}/,
       token: "string",
       next: "start"
     },
     {
-      regex: /(?:[^\\]|\\.)*?`{3}/,
+      regex: /(?:[^\\\$]|\\.|\$[^\{\}])*?`{3}/,
       token: "string",
       next: "start"
     }
