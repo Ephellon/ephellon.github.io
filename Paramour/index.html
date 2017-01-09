@@ -276,14 +276,19 @@ if(undefined penny)
 <textarea class="compile-paramour" type="text/paramour" id="E_phantoms">
 # $win -> window
 # $fav -> prompt("Enter your favorite 'Amazing World of Gumball' character's name", "Anais")
-# $R => "RandomName${(Math.random() + '').replace('0.', '_')}"
+# $R => (Math.random().toString(32) + Math.random().toString(32)).replace(/[\.0-9]/g, '')
 
 # -> is a simple copy
 # => is an eval copy
 
 var Gumball = "Gumball", Darwin = "Darwin", Anais = "Anais";
 
-var $R = Math.random(); # a random, "private" variable name
+var $R = Math.random();
+# a random, "private" variable name
+if($R < Math.random())
+  alert "$R failed";
+else
+  alert "$R passed";
 
 $win.favorite = $fav
 </textarea>
