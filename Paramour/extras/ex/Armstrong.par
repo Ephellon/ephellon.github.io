@@ -6,7 +6,7 @@
 # @1.5
 
 # Get user input
-{{"Lower", "Upper"}}
+.{"Lower", "Upper"}
 
 var (lower, upper, results = []) = +prompt "${Tuple.next} range limit?"
 
