@@ -16,7 +16,7 @@ for(var x = lower; x < upper; x++) {
     w +=> (z ^ 3)
   }
   if(x === w)
-    results.push(x);
+    results.push x;
 }
 
 alert "Armstrong numbers between ${lower} and ${upper} are (${results.join(', ')})"
