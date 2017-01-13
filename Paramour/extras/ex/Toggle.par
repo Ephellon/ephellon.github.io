@@ -6,17 +6,14 @@
 # @1.5
 
 Toggle {
-  <init>(on, off, state) {
-    @on = on
-    @off = off
-    @state = state || false
+  <init>(.on, .off, .state = false) {
     @locked = false
   }
 
   .toggle(state) {
     if(undefined state && @locked === false)
       -> @state = (@state === @on)? @off: @on;
-    -> @state = state
+    -> @state = (@locked === false)? state: @state
   }
 
   .lock(state) {
@@ -25,6 +22,6 @@ Toggle {
     @ set state {
       -> @state
     }
-    -> @locked !== true
+    -> @locked = true
   }
 }
