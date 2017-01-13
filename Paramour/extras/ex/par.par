@@ -136,6 +136,13 @@
  */
 [Object = Object] => Object.assign($1, $2);
 
+/** [Object + Object] -> $1[@] += $2[@]
+ * Destructor for !1.7 JavaScript versions
+ * Object $1 - The object to use
+ * Object $2 - The values to use
+ */
+[Object + Object] => Object.assign($1, $2);
+
 /** [Object == Object] -> $1 == $2
  * Test to see if two objects are loosely identical
  * Object $1 - An object to test
@@ -179,7 +186,7 @@
  * Object $1 - The object to remove from
  * Any $2 - The item to remove
  */
-[Object - Any] => $1[$2] = undefined;
+[Object - Any] => ($1[$2] = undefined, $1);
 
 # Any
 /** [Any!?] -> $1 === NaN
