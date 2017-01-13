@@ -61,7 +61,14 @@ Line {
 
 (() {
 
-  var c = $qy "#c", ctx = c.getContext "2d", c.width = $win.innerWidth, c.height = $win.innerHeight, lines = [], maxLines = 100, hue = 0, hueInc = 360 / maxLines;
+  var c = $qy "#c",
+      ctx = c.getContext "2d",
+      c.width = $win.innerWidth,
+      c.height = $win.innerHeight,
+      lines = [],
+      maxLines = 100,
+      hue = 0,
+      hueInc = 360 / maxLines;
 
   for(var i = 0; i < maxLines; i++)
     lines.push(new Line(0, c.height / 2, hue += hueInc));
