@@ -108,6 +108,10 @@ CodeMirror.defineSimpleMode("paramour", {
       token: "keyword"
     },
     {
+      regex: /([\~\*\/%\+\-<>]|[\&\|]{1,2}|!?\={1,2})\=>/,
+      token: "keyword-2"
+    },
+    {
       regex: /[^\-\+][\-\+\~\&\=]>|@|\:\:|\.\.{1,2}/,
       token: "keyword-2"
     },
