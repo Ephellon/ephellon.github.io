@@ -3,18 +3,12 @@
 # @1.5
 
 Tuple {
-  <init>(args...) {
-    var types = Paramour.types args..., obj = Tuple.objects = ("defined" Tuple.objects)? Tuple.objects: {}, ext = "undefined" (obj[types]);
+  <init>() {
+    @index = 0;
+    @arguments = [].slice.call arguments;
+    @length = arguments.length;
 
-    if(ext) {
-      @index = 0;
-      @arguments = [].slice.call args;
-      @length = args.length;
-      obj[types] = @;
-    }
-    Tuple.last = @;
-
-    -> (ext)? Tuple.last: Tuple.next;
+    -> Tuple.last = @;
   }
 
   every(Function __function__) {
