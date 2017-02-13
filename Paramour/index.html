@@ -626,7 +626,7 @@ gumball.eval = ()
 
     <h2>
       <span id="slicing-splicing-ranges" class="bookmark"></span>
-      Array Slicing and Splicing, and Ranges
+      Array Slicing and Splicing, and Ranges (Deprecated, but supported)
     </h2>
 
     <p><i>Slice and Splice more naturally with these shortcuts.</i></p>
@@ -659,7 +659,7 @@ var first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3];
       Type Controlled Declarations
     </h2>
 
-      <p><i>Paramour allows the use prefixed strings to declare a type for a variable.</i></p>
+      <p><i>Paramour allows the use of prefixed strings to declare a type for a variable.</i></p>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E_type_declarations">
@@ -668,6 +668,13 @@ var "String" string = "hello world!",
       "Date" date: new Date()
       "Object" extra: {}
     };
+
+# Capitalized constructor names can also be used
+var String s = "goodbye nation.",
+    Object o = {
+      Date d: new Date()
+      Object e: {}
+    }
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -693,11 +700,14 @@ getClass(gumball) {
     case(1, 2, 3, 4, 5) {
       -> "This grade seems a bit low..."
     }
+
     case(6)
       -> "That seems about right";
+
     case 7:
       -> "Ehh...";
       break;
+
     default(8, 9) {
       -> "That's either too high, or undefined"
     }
@@ -780,7 +790,7 @@ var a = 1, b = 2, c = 3, d = 4, e = 5;
       Custom Operators
     </h2>
 
-      <p><i>Use operators to your liking, except for <code>//</code>, <code>/*</code>, and <code>*/</code>.</i></p>
+      <p><i>Use operators to your liking, except for <code>=&gt;</code>, <code>-&gt;</code>, <code>+&gt;</code>, <code>&amp;&gt;</code>, <code>//</code>, <code>/*</code>, and <code>*/</code>.</i></p>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E_custom">
@@ -803,10 +813,10 @@ var apples = [
   =>("Darwin")? # Darwin's Apple
 ]
 
-var a => ("Nicole")?
+var a => ("Nicole" - "ic")
 # =, +=, -=, etc. work here too
 # var a = "";
-# a +=> ("Nicole")?
+# a +=> ("Nicole" - "ic")
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -1015,7 +1025,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
     To use this feature, you must have a <code>&lt;script type="text/paramour"&gt;</code> tag,
     or <code>type="text/par"</code> if you feel a bit lazy. You can download the latest version <a href="extras/par.min.js" target="_blank">here</a>, about 62.2 Kb.<br>
 
-    Afterwards, you simply call <code>Paramour.compile()</code> and Paramour will handle the rest from there.<br>
+    Afterwards, you simply call <code>Paramour.compile(true)</code> and Paramour will handle the rest from there.<br>
 
     <b>A simple example:</b>
     </i></p>
@@ -1025,7 +1035,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
   &lt;script src="par.min.js"&gt;&lt;/script&gt;
   &lt;script src="Gumball.par" type="text/par"&gt;&lt;/script&gt;
 &lt;/head&gt;
-&lt;body onload="Paramour.compile()"&gt;
+&lt;body onload="Paramour.compile(true)"&gt;
   &lt;!-- blah blah blah --&gt;
 &lt;/body&gt;</pre>
       </pre>
@@ -1044,6 +1054,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
         <pre>Your Wish - XXV, 25.0 (Majid Jordan: "A Place Like This")</pre>
 
         <ul>
+          <li>New "Type name = value" syntax</li>
           <li>improved syntax recognition</li>
         </ul>
       </li>
