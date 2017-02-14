@@ -276,7 +276,7 @@ if(undefined penny)
 <textarea class="compile-paramour" type="text/paramour" id="E_phantoms">
 # $win -> window
 # $fav -> prompt("Enter your favorite 'Amazing World of Gumball' character's name", "Anais")
-# $R => (Math.random().toString(32) + Math.random().toString(32)).replace(/[\.0-9]/g, '')
+# $R => (Math.random().toString(36) + Math.random().toString(36)).replace(/[\.\d]/g, '')
 
 # -> is a simple copy
 # => is an eval copy
@@ -379,7 +379,7 @@ var [gumball, darwin, anais] = names;
 
 # isnt-version?! code-block #?
 # 1.7?!
-=>(['gumball', 'darwin', 'anais'] = names);
+=> (['gumball', 'darwin', 'anais'] = names);
 
 [Array = Array] {
   for(var i = 0; i < $1.length; i++)
@@ -809,17 +809,22 @@ var a = 1, b = 2, c = 3, d = 4, e = 5;
     "'": "'s"
 }
 
-# =>() to use custom operators
+[Number equ Number] =>
+  $1 === $2;
+
+# => () to use custom symbol operators
 var apples = [
-  =>("Anias")?, # Anias' Apple
-  =>("Gummball")?, # Gumball's Apple
-  =>("Darwin")? # Darwin's Apple
+  => ("Anias")?,    # Anias' Apple
+  => ("Gummball")?, # Gumball's Apple
+  => ("Darwin")?    # Darwin's Apple
 ]
 
 var a => ("Nicole" - "ic")
 # =, +=, -=, etc. work here too
 # var a = "";
 # a +=> ("Nicole" - "ic")
+
+var b = 5 equ 3; # false
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
