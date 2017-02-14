@@ -809,7 +809,7 @@ var a = 1, b = 2, c = 3, d = 4, e = 5;
     "'": "'s"
 }
 
-[Number equ Number] =>
+equ[Number ; Number] => # ";" or "equ" lets Paramour know where the operator belongs
   $1 === $2;
 
 # => () to use custom symbol operators
