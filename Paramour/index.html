@@ -670,14 +670,16 @@ var "String" string = "hello world!",
     };
 
 # Capitalized constructor names can also be used
+### Deprecated
 var String s = "goodbye nation.",
     Object o = {
       Date d: new Date()
       Object e: {}
     }
+###
 
 # Fallback values can also be used
-var Number number = "this is not a number": 25;
+var "Number" number = "this is not a number": 25;
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -1063,7 +1065,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
         <pre>Your Wish - XXV, 25.0 (Majid Jordan: "A Place Like This")</pre>
 
         <ul>
-          <li>New "Type name = value" syntax</li>
+          <li><del>New "Type name = value" syntax</del></li>
           <li>improved syntax recognition</li>
         </ul>
       </li>
