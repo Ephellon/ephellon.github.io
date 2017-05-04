@@ -10,33 +10,37 @@
 # $from -> fromCharCode
 # $win -> window
 
-# 62, 69, 181, 223
-var(
-t = [
-  [0x00c0, 0x00d7, '00'],
-  [0x00d8, 0x00f7, '00'],
-  [0x00f8, 0x1000, '00'],
-  [0x0391, 0x03aa, '0'],
-  [0x03b1, 0x03ca, '0']
-], t_, t__) = "";
+# 64, 74, 128, 256
+var t = .{
+  [0x00c0, 0x00d7],
+  [0x00d8, 0x00f7],
+  [0x0391, 0x03aa],
+  [0x03b1, 0x03da]
+}, t_ = "";
 
-for(var x = 0; x < t.length; x++)
-  for(var y = t[x][0]; y < t[x][1]; y++)
-    t_ += eval "'\\u${t[x][2] + y.toString(16)}'";
-
-for(x = 33; x < 223; x++)
-  t__ += String.$from x;
+[Array?] {
+  for(var x = $1[0], y = ""; x < $1[1]; x++)
+    y += String.$from x;
+  -> y
+}
 
 var
-characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-characters_ = characters + "#$-./@_",
-characters__ = characters_ + t_,
-characters___ = t__,
-crazy = "aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ",
-crazier = "aAbB0cCdD1eEfF2gGhH3iIjJ4kKlL5mMnN6oOpP7qQrR8sStT9uUvV_wWxX$yYzZ",
-intwined = "([{<zyxwvutsrqponmlkjihgfedcba/+-\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>}])",
-UUENC = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_",
-B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_",    # 64
+characters_ = characters + " !\"#%&'()*",                                           # 74
+characters__ = characters_ + "+,-./:;<=>?@[\\]^_`{|}~\t" + (=> ([0x00a1, 0x00c0])?),# 128
+characters___ = characters__ + (=> ([0x00c1, 0x0141])?),                            # 256
+
+# In order of "craziness"
+crazy    = "aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ"  , # 0
+crazier  = "aAbB0cCdD1eEfF2gGhH3iIjJ4kKlL5mMnN6oOpP7qQrR8sStT9uUvV_wWxX$yYzZ"  , # 1
+intwined = "({[<zyxwvutsrqponmlkjihgfedcba/+-\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>]})" , # 2
+UNIX     = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"  , # 3
+UUENC    = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_", # 4
+XXENC    = "+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"  , # 5
+BINHEX   = "!\"#$%&'()*+,-012345689@ABCDEFGHIJKLMNPQRSTUVXYZ[`abcdefhijklmpqr" , # 6
+
+# "Sane"
+B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"       , # -1
 B1024,
 B2048;
 
@@ -48,32 +52,10 @@ if(undefined B2048 || B2048.length < 2048)
   for(var i = 0, B2048 = B1024, s = 0x5200, a; i < 1024; i++)
     B2048 += eval("'\\u" + ("0".repeat(4 - (s + i).toString 16 .length)) + (s + i).toString 16 + "'");
 
-Password {
-  <init>(value) {
-    if(NaN value) {
-      var u = [];
-      for(var x = 0; x < value.length; x++)
-        u.push((@[x] = toNumber((MD5 || atob)(value[x]).slice(0, 8), 36).toString 36, value[x]).$C.toString 16);
-      @.length = x
-      value = (MD5 || atob)(u.join "")
-    } else {
-      value = ((MD5 || atob)(value + ""))
-    }
-    -> @["[[PrimitiveValue]]"] = value
-  }
-
-  toString(type, compress) {
-    if(undefined type)
-      -> @["[[PrimitiveValue]]"] + "";
-    if(!(1 < type < 223))
-      +> RangeError "toString(Radix @${type}) Radix argument must be between 2 and 222";
-    compress = compress || (type > 62);
-    -> Global.toString(@["[[PrimitiveValue]]"], type, compress)
-  }
-}
-
-/** Returns a randomly generated Base-64 character string
+/** Returns a random character string
  * @version {String}
+ * @version {Number}
+ * @version {Number, Number}
  * @version {*}
  */
 Random;
@@ -87,19 +69,32 @@ Random(String characters) {
       a.pop();
     -> c
   } else {
-    var c = characters.split(/(.{256})/);
-    for(var i = 1; i < c.length; i += 2)
+    for(var i = 1, c = characters.split(/(.{1,256})[\n\f\r]/); i < c.length; i += 2)
       c[i] = Random(c[i]);
     -> c.join "";
   }
 }
 
+Random(Number minimum, Number maximum)
+  => minimum + (
+    +("0." + toNumber(
+    	MD5(new Date().getTime())
+      	.slice(0, 12), 32
+      )
+    ) * ((maximum > 1)? maximum - 1: maximum)
+  );
+
+Random(Number minimum)
+  => Random(minimum, 1)
+
 Random(* characters) =>
-  Random((undefined characters)? B64: characters);
+  Random((undefined characters)? B64: (characters + ""));
 
 # Encode [Base 64: Backwards]
 /** Converts a value into a base64 encoded string
  * @version {String, Number} Convert the string into a base64, delusional string
+ * @version {String, String} Convert the string into a unique, base64 string
+ * @version {String String, String} Convert the string into a unique, base64, padded string
  * @version {*} Convert the string into a base64 string
  */
 Encode;
@@ -111,35 +106,44 @@ Encode;
  * @return {String}
  */
 Encode(String value, Number delusion) {
-  var output = [], media = [], c = B64, p = "=";
+  var c = B64, p = (delusion > 2)? "": "=";
   switch(delusion) {
-    case 0:
-      c = crazy;
-      break;
-    case 1:
-      c = crazier;
-      break;
-    case 2:
-      c = intwined;
-      break;
-    case 3:
-      c = UUENC;
-      p = "";
-      break;
+    case(0, 1, 2, 3, 4, 5, 6)
+      c = [crazy, crazier, intwined, UNIX, UUENC, XXENC, BINHEX][delusion];
     default:
       c = B64;
   }
 
-  for(var i = 0, j; i < value.length; i++)
+  -> Encode(value, c)
+}
+
+/** (String value, String delusion)
+ * Converts a value into a base64 encoded string (must provide a delusion)
+ * @param {String} value: The value to convert
+ * @param {String} delusion: The delusion to use (exactly 64 unique characters)
+ * @return {String}
+ */
+ Encode(String value, String delusion) =>
+   Encode(value, delusion, "=");
+
+/** (String value, String delusion, String overflow)
+ * Converts a value into a base64 encoded string (must provide a delusion)
+ * @param {String} value: The value to convert
+ * @param {String} delusion: The delusion to use (exactly 64 unique characters)
+ * @param {String} overflow: The ending character (for overflow)
+ * @return {String}
+ */
+ Encode(String value, String delusion, String overflow) {
+   for(var i = 0, j, media = [], output = []; i < value.length; i++)
     media.push("0".repeat(8 - (j = value.charCodeAt i.toString 2).length) + j);
   media = media.join "".split(/(.{6})/);
 
   for(var i = 0, j; i < media.length; i++)
     if((j = media[i]) !== "")
-      output.push(c[+("0b" + (j + ("0".repeat(6 - j.length))))]);
+      output.push(delusion[+("0b" + (j + ("0".repeat(6 - j.length))))]);
 
-  -> output.join "" + (p.repeat((media.join "".length) % 3))
-}
+  -> output.join "" + (overflow.repeat((media.join "".length) % 3))
+ }
 
 /** (String value)
  * Converts a value into a base64 encoded string
@@ -147,7 +151,7 @@ Encode(String value, Number delusion) {
  * @return {String}
  */
 Encode(* value) =>
-  Encode(((undefined value)? "undefined": (value + "")), -1);
+  Encode((value + ""), -1);
 
 /** (* value)
  * Converts a value into a base64 encoded string
@@ -161,6 +165,8 @@ Encode(* value, * delusion = -1) =>
 # Decode [Base 64: Backwards]
 /** Converts a value into a base64 decoded string
  * @version {String, Number} Convert to a string from a base64, delusional string
+ * @version {String, String} Convert to a string from a unique, base64 string
+ * @version {String, String, String} Convert to a string from a unique, padded, base64 string
  * @version {*} Convert to a string from a base64 string
  */
 Decode;
@@ -172,30 +178,39 @@ Decode;
  * @return {String}
  */
 Decode(String value, Number delusion) {
-  var output = [], media = [], c = characters + "+/", p = "=";
+  var c = characters + "+/", p = (delusion > 2)? "": "=";
   switch(delusion) {
-    case 0:
-      c = crazy;
-      break;
-    case 1:
-      c = crazier;
-      break;
-    case 2:
-      c = intwined;
-      break;
-    case 3:
-      c = UUENC;
-      p = "";
-      break;
+    case(0, 1, 2, 3, 4, 5, 6)
+      c = [crazy, crazier, intwined, UNIX, UUENC, XXENC, BINHEX][delusion];
     default:
       c = B64;
   }
 
-  for(var i = 0, j; i < value.length; i++)
-    if(value[i] === p)
+  -> Decode(value, c)
+}
+
+/** (String value, String delusion)
+ * Converts a value into a base64 decoded string
+ * @param {String} value: The value to convert
+ * @param {String} delusion: The deulsion to use (must be a 64 character string)
+ * @return {String}
+ */
+Decode(String value, String delusion) =>
+   Decode(value, delusion, "=");
+
+/** (String value, String delusion, String overflow)
+ * Converts a value into a base64 decoded string
+ * @param {String} value: The value to convert
+ * @param {String} delusion: The deulsion to use (must be a 64 character string)
+ * @param {String} overflow: The ending character (for overflow)
+ * @return {String}
+ */
+Decode(String value, String delusion, String overflow) {
+  for(var i = 0, j, media = [], output = []; i < value.length; i++)
+    if(value[i] === overflow)
       media.push "000000";
     else
-      media.push("0".repeat(6 - (j = c.indexOf(value[i]).toString 2).length) + j);
+      media.push("0".repeat(6 - (j = delusion.indexOf(value[i]).toString 2).length) + j);
   media = media.join "".split(/(.{8})/);
 
   for(i = 0, j; i < media.length; i++)
@@ -204,6 +219,23 @@ Decode(String value, Number delusion) {
 
   -> output.join ""
 }
+
+/** (String value)
+ * Converts a value into a base64 decoded string
+ * @param {*} value: The value to convert
+ * @return {String}
+ */
+Decode(* value) =>
+  Decode((value + ""), -1);
+
+/** (* value, * delusion)
+ * Converts a value into a base64 decoded string
+ * @param {*} value: The value to convert
+ * @param {*} delusion: The deulsion to use (default is -1)
+ * @retrun {String}
+ */
+Decode(* value, * delusion = -1) =>
+  Decode((value + ""), +delusion);
 
 ### Enc/Dec
   ...             . ...
@@ -214,10 +246,10 @@ Decode(String value, Number delusion) {
 ###
 
 encodeBase(value, type) =>
-  ((type === 2048)? encodeBase2048 value: encodeBase1024 value);
+  ((type === 2048)? encodeBase20 value: encodeBase10 value);
 
 decodeBase(value, type) =>
-  ((type === 2048)? decodeBase2048 value: decodeBase1024 value);
+  ((type === 2048)? decodeBase20 value: decodeBase10 value);
 
 /** encodeBase10
  * Encodes a string using base-1024 (2^10)
@@ -228,6 +260,9 @@ encodeBase10(value) {
   var output = [], media = [], c = B1024, p = "?";
   value += "";
 
+  if(/([^\u0000-\u00ff])/.test value)
+    +> RangeError "The string contains characters (${RegExp.$1}) outside of the Latin range";
+
   for(var i = 0, j; i < value.length; i++)
     media.push("0".repeat(8 - (j = value.charCodeAt i.toString 2).length) + j);
   media = media.join "".split(/(.{10})/);
@@ -236,7 +271,7 @@ encodeBase10(value) {
     if((j = media[i]) !== "")
       output.push(c[+("0b" + (j + ("0".repeat(10 - j.length))))]);
 
-  return output.join "" + (p.repeat((media.join "".length) % 4))
+  -> output.join "" + (p.repeat((media.join "".length) % 5))
 }
 
 /** decodeBase10
@@ -249,7 +284,7 @@ decodeBase10(value) {
 
   for(var i = 0, j; i < value.length; i++)
     if(value[i] === p)
-      media.push "0000";
+      media.push "00000";
     else
       media.push("0".repeat(10 - (j = c.indexOf(value[i]).toString 2).length) + j);
   media = media.join "".split(/(.{8})/);
@@ -258,7 +293,7 @@ decodeBase10(value) {
     if((j = media[i]) !== "")
       output.push(String.fromCharCode(+("0b" + j)));
 
-  return output.join ""
+  -> output.join ""
 }
 
 /** encodeBase20
@@ -270,6 +305,9 @@ encodeBase20(value) {
   var output = [], media = [], c = B2048, p = "?";
   value += "";
 
+  if(/([^\u0000-\u00ff])/.test value)
+    +> RangeError "The string contains characters outside of the Latin range";
+
   for(var i = 0, j; i < value.length; i++)
     media.push("0".repeat(8 - (j = value.charCodeAt i.toString 2).length) + j);
   media = media.join "".split(/(.{11})/);
@@ -278,7 +316,7 @@ encodeBase20(value) {
     if((j = media[i]) !== "")
       output.push(c[+("0b" + (j + ("0".repeat(11 - j.length))))]);
 
-  return output.join "" + (p.repeat((media.join "".length) % 6))
+  -> output.join "" + (p.repeat((media.join "".length) % 11))
 }
 
 /** decodeBase20
@@ -291,7 +329,7 @@ decodeBase20(value) {
 
   for(var i = 0, j; i < value.length; i++)
     if(value[i] === p)
-      media.push "000000";
+      media.push "00000000000";
     else
       media.push("0".repeat(11 - (j = c.indexOf(value[i]).toString 2).length) + j);
   media = media.join "".split(/(.{8})/);
@@ -300,25 +338,8 @@ decodeBase20(value) {
     if((j = media[i]) !== "")
       output.push(String.fromCharCode(+("0b" + j)));
 
-  return output.join ""
+  -> output.join ""
 }
-
-/** (String value)
- * Converts a value into a base64 decoded string
- * @param {*} value: The value to convert
- * @return {String}
- */
-Decode(* value) =>
-  Decode(((undefined value)? "undefined": (value + "")), -1);
-
-/** (* value, * delusion)
- * Converts a value into a base64 decoded string
- * @param {*} value: The value to convert
- * @param {*} delusion: The deulsion to use (default is -1)
- * @retrun {String}
- */
-Decode(* value, * delusion = -1) =>
-  Decode(((undefined value)? "undefined": (value + "")), +delusion);
 
 ### toString
             ..          .
@@ -330,41 +351,40 @@ Decode(* value, * delusion = -1) =>
                              ..
 ###
 toString(value, Number type, Boolean compress) {
-  if(undefined type || !(1 < type < 223))
-    +> RangeError "toString(Radix @${type}) Radix argument must be between 2 and 222";
+  if(undefined type || !(1 < type < 257))
+    +> RangeError "toString(Radix @${type}) Radix argument must be between 2 and 256";
   if(+value === -Infinity || + value === +Infinity)
     +> RangeError "toString(Number @${value}) Number argument must be between (10e-324, 10e308)";
+
   value = +value || value;
   var output = [], x = value, c = characters, h = false;
-  if(!compress && type > 62)
-    c = characters_;
-  if(!compress && type > 69)
-    c = characters__;
-  if(compress && type > 181)
-    c = characters___;
+
+  c = characters___.slice(0, type);
+
   if(value > 10e300) {
     output.push(toString(10e300, type, compress));
-    while(value > 10e300) {
-      output.push(toString(value / 10e300, type, compress));
-      value /= 10e300
-    }
+
+    while(value > 10e300)
+      output.push(toString(value / 10e300, type, compress)),
+      value /= 10e300;
+
     -> output.join " "
   }
+
   if((value + "").indexOf "." > -1) {
     h = (value + "").split ".";
     for(var x = 0; x < h.length; x++)
       output.push(toString(+h[x], type, compress));
-    -> output.join " "
+    -> output.join "."
   }
-  while(x > type) {
-    y = x % type;
-    output.push(c[y]);
-    x = Math.floor(x / type)
-  }
+
+  while(x > type)
+    output.push(c[y = x % type]),
+    x = Math.floor(x / type);
+
   output.push(c[x]);
-  if(h !== false)
-    output.push " ${h}";
   output = output.reverse();
+
   if(+output[0] >= type)
     output[0] = c[+output[0] - 1];
   -> output.join ""
@@ -376,24 +396,27 @@ toString(Number value, String characters)
 toString(Number value, Array characters) {
   if(characters.length < 2)
     +> SyntaxError "toString(String input, Array characters) 'characters' must contain more than 1 character [${characters}]";
+
   value = +value || value;
   var output = [], x = value, y = 0, c = characters, type = c.length;
-  while(x > type) {
-    output.push(c[y = x % type]);
+
+  while(x > type)
+    output.push(c[y = x % type]),
     x = Math.floor(x / type);
-  }
+
   output.push(c[x]);
   output = output.reverse();
+
   if(+output[0] >= type)
     output[0] = c[+output[0] - 1];
   -> output.join ""
 }
 
 toString(Number value, Number type)
-  => toString(value, type, type > 62);
+  => toString(value, type, type > 64);
 
 toString(Number value, Boolean compress)
-  => toString(value, ((compress)? 181: 62), compress);
+  => toString(value, ((compress)? 128: 64), compress);
 
 toString(Number value)
   => (((value + "").length > 21)? value.toPrecision 21: value + "");
@@ -402,24 +425,24 @@ toString(String value, String type) {
   switch(type) {
     case('b', '0b', 'bin', 'binary')
       type = 2;
-    case('o', '0', 'oct', 'octal')
+    case('o', '0o', 'oct', 'octal')
       type = 8;
     case('h', '0x', 'hex', 'hexadecimal')
       type = 16;
     default
-      type = ((+type > 62)? 181: 36);
+      type = ((+type > 64)? 128: 36);
   }
-  -> toString(+value || value, type, type > 62)
+  -> toString(+value || value, type, type > 64)
 }
 
 toString(String value, Boolean compress)
-  => toString(value, ((compress)? 181: 36), compress);
+  => toString(value, ((compress)? 128: 36), compress);
 
 toString(String value)
   => toString(value, true);
 
 toString(String value, Number type)
-  => toString(value, type, type > 62);
+  => toString(value, type, type > 64);
 
 ### toNumber
    .       .  .           .
@@ -429,49 +452,43 @@ toString(String value, Number type)
 ###
 toNumber(String value, Number type, Boolean compressed) {
   var output = [], x, y = 0, c = characters, h = false;
-  if((!compressed && type > 62) || (/^[0-9a-zA-Z\#\$\-\.\/@_]+$/).test value)
-    c = characters_;
-  if((!compressed && type > 69) || (/^[0-9a-zA-Z\#\$\-\.\/@_\u00c0-\u00ff\u0391-\u03a9\u03b1-\u03c9]+$/).test value)
-    c = characters__;
-  if(type > 181)
-    c = characters___;
-  if(value.indexOf "  " > -1) {
-    h = value.split "  ";
-    for(x = 0; x < h.length; x++)
-      output.push(toNumber(h[x], type, compressed));
-    -> eval "(${output.join(')*(')})"
-  }
-  if(value.indexOf " " > -1) {
-    h = value.split " ";
+
+  c = characters___.slice(0, type);
+
+  if(value.indexOf "." > -1) {
+    h = value.split ".";
     for(x = 0; x < h.length; x++)
       output.push(toNumber(h[x], type, compressed));
     -> output.join "."
   }
+
   value = value.split "".reverse();
-  for(x = 0; x < value.length; x++) {
-    y = +(c.indexOf(value[x]));
-    y *= (x > 0)? Math.pow(type, x): 1;
-    output.push y
-  }
+
+  for(x = 0; x < value.length; x++)
+    y = +(c.indexOf(value[x])),
+    y *= ((x > 0)? Math.pow(type, x): 1),
+    output.push y;
+
   -> eval(output.reverse().join "+")
 }
 
 toNumber(String value, String characters) {
   var output = [], x = 0, y = 0, h = false, c = characters, type = c.length;
   value = value.split "".reverse();
-  for(; x < value.length; x++) {
-    y = +(c.indexOf(value[x]));
-    y *= (x > 0)? Math.pow(type, x): 1;
-    output.push y
-  }
+
+  for(; x < value.length; x++)
+    y = +(c.indexOf(value[x])),
+    y *= ((x > 0)? Math.pow(type, x): 1),
+    output.push y;
+
   -> eval(output.reverse().join "+")
 }
 
 toNumber(String value, Number type)
-  => toNumber(value, type, type > 62);
+  => toNumber(value, type, type > 64);
 
 toNumber(String value, Boolean compressed)
-  => toNumber(value, ((compressed)? 181: 36), compressed);
+  => toNumber(value, ((compressed)? 128: 36), compressed);
 
 toNumber(String value) {
   if(/^(?:0b\:?)?([01]+)$/.test value)
@@ -480,33 +497,33 @@ toNumber(String value) {
   if(/^(?:0o\:?)?([0-7]+)$/.test value)
     -> toNumber(RegExp.$1, 8, true);
   #?
-  if(/^(?:0[hx]\:?)?([0-9a-f]+|[0-9A-F]+)$/.test value)
+  if(/^(?:0[hx]\:?)?([0-9a-fA-F]+)$/.test value)
     -> toNumber(RegExp.$1, 16, true);
-  if(/^(?:0A\:)?([0-9a-z]+|[0-9A-Z]+)$/.test value)
+  if(/^(?:0A\:)?([0-9a-zA-Z]+)$/.test value)
     -> toNumber(RegExp.$1, 36, true);
   if(/^[0-9a-zA-Z]+$/.test value)
-    -> toNumber(value, 62, true);
-  if(/^[0-9a-zA-Z\#\$\-\.\/@_]+$/.test value)
-    -> toNumber(value, 69, true);
-  if(/^[0-9a-zA-Z\#\$\-\.\/@_\u00c0-\u00ff\u0391-\u03a9\u03b1-\u03c9]+$/.test value)
-    -> toNumber(value, 181, true);
-  -> toNumber(value, 222, true);
+    -> toNumber(value, 64, true);
+  if(/^[0-9a-zA-Z !"#%&'\(\)\*\+]+$/.test value)
+    -> toNumber(value, 74, true);
+  if(/^[0-9a-zA-Z !"#%&'\(\)\*\+,\-\.\/\:;<=>\?@\[\\\]\^_1\{\|\}~\t\u00a1-\u00c0]+$/.test value)
+    -> toNumber(value, 128, true);
+  -> toNumber(value, 256, true);
 }
 
 toNumber(String value, type)
-  => toNumber(value, type, +type > 62);
+  => toNumber(value, type, +type > 64);
 
 Number@asString = (type, compress)
-  => (undefined type)? String @: toString(@, type, compress || false);
+  => ((undefined type)? String @: toString(@, type, compress || false));
 
 String@asNumber = (type, compressed)
-  => (undefined type)? Number @: toNumber(@, type, compressed || false);
+  => ((undefined type)? Number @: toNumber(@, type, compressed || false));
 
 # MAC
 /** (Number address, String symbol, Number seed)
  * Returns a MAC address
  * @param {Number} address: The address to turn into a MAC address (default is a random number)
- * @param {String} symbol: The synbol to use as a seperator (default is ":")
+ * @param {String} symbol: The symbol to use as a seperator (default is ":")
  * @param {Number} seed: The number to start at [14 < seed < 57] (default is 16); if address = 0, the result will be seed^12
  */
 MAC(address, symbol, seed) {
@@ -591,13 +608,13 @@ toLetter(Number number) {
     A      - 100,000,000     [1st Greek character, Alpha]
     P      - 50,000,000      [Greek 50,000 = Gamma-Mu; M, Mu, L, and Lambda are used: {index} = 5, 5 more Greek characters, Ro]
     N      - 10,000,000      [Greek 10,000 = M; M, X, and Xi are used; {index} = 1, 1 more Greek character, Nu]
-    Sigma  - 5,000,000       [Greek 5,000 = Gamma-Xi; V, X, and Xi are used; Greek "V" is Sigma; Sigma]
-    Xi     - 1,000,000       [Greek 1,000 = Xi, Xi]
-    G      - 500,000         [Greek 500 = Gamma-Eta; D, Delta, and Gamma are used; G]
-    H      - 100,000         [Greek 100 = Eta, H]
-    Lambda - 50,000          [Greek 50 = Lambda, Lambda]
-    Delta  - 10,000          [Greek 10 = Delta, Delta]
-    Gamma  - 5,000           [Greek 5 = Gamma, Gamma]
+    Sigma  - 5,000,000       [Greek 5,000  = Gamma-Xi; V, X, and Xi are used; Greek "V" is Sigma; Sigma]
+    Xi     - 1,000,000       [Greek 1,000  = Xi, Xi]
+    G      - 500,000         [Greek 500    = Gamma-Eta; D, Delta, and Gamma are used; G]
+    H      - 100,000         [Greek 100    = Eta, H]
+    Lambda - 50,000          [Greek 50     = Lambda, Lambda]
+    Delta  - 10,000          [Greek 10     = Delta, Delta]
+    Gamma  - 5,000           [Greek 5      = Gamma, Gamma]
     M      - 1,000
     D      - 500
     C      - 100
@@ -607,10 +624,12 @@ toLetter(Number number) {
     I      - 1
   ###
   if(Infinity > number > 5e11)
-    -> "O" + toLetter(number % 5e11);
+    -> "O" + toLetter(Math.floor(number / 5e11));
+
   var m = "O T K Z Y \u03a9 E A P N \u03a3 \u039e G H \u039b \u0394 \u0393 M D C L X V I".split " ",
       M = "5e11 1e11 5e10 5e10 5e9 1e9 5e8 1e8 5e7 1e7 5e6 1e6 5e5 1e5 5e4 1e4 5e3 1e3 5e2 1e2 50 10 5 1".split " ",
       n = number;
+
   for(var x = 0, y, N = []; n > 0 && x < m.length;)
     if(n >= (y = +M[x]))
       if((n + "")[0] === "9" && (y + "")[0] === "5")
@@ -621,14 +640,41 @@ toLetter(Number number) {
         n -= y, N.push(m[x]);
     else
       x++;
+
   -> N.join ""
 }
 
-forward(string) =>
-  decodeBase20(encodeBase10 string);
+Password {
+  <init>(value) {
+    var val = +value;
+    if(NaN val) {
+      var u = [], value = val;
+      for(var x = 0; x < value.length; x++)
+        u.push((@[x] = toNumber((MD5 || atob)(value[x]).slice(0, 8), 36).toString 36, value[x]).$C.toString 16);
+      value = ((MD5 || atob)(u.join ""))
+    } else {
+      value = ((MD5 || atob)(value + ""))
+    }
+    -> @["[[PrimitiveValue]]"] = value
+  }
 
-backward(string) =>
+  toString(type, compress) {
+    if(undefined type)
+      -> @["[[PrimitiveValue]]"] + "";
+    if(!(1 < type < 257))
+      +> RangeError "toString(Radix @${type}) Radix argument must be between 2 and 256";
+    compress = compress || (type > 64);
+    -> Global.toString(@["[[PrimitiveValue]]"], type, compress)
+  }
+}
+
+encodeBase30(string) =>
+  decodeBase20(encodeBase10 string);
+  # D2(E1 string)
+
+decodeBase30(string) =>
   decodeBase10(encodeBase20 string);
+  # D1(E2 string)
 
 /** [Main Function]
  * Converts a value into a radix (such as 23 -> 0x17)
@@ -637,8 +683,8 @@ backward(string) =>
  * @main
  * @version {Any, Number, Boolean}
  *   Any value: The value to convert
- *   Number type: The radix type to use (2 - 222)
- *   Boolean compress: Force radix 222
+ *   Number type: The radix type to use (2 - 256)
+ *   Boolean compress: Force radix 256
 
  * @version {Number}
  *   Number value: The value to convert
@@ -649,11 +695,11 @@ backward(string) =>
 
  * @version {Number, Boolean}
  *   Number value: The value to convert
- *   Boolean compress: Force radix 222
+ *   Boolean compress: Force radix 256
 
  * @version {Number, Number}
  *   Number value: The value to convert
- *   Number type: The radix type to use (2 - 222)
+ *   Number type: The radix type to use (2 - 256)
 
  * @version {Number, String}
  *   Number value: The value to convert
@@ -664,15 +710,15 @@ backward(string) =>
 
  * @version {String, Boolean}
  *   String value: The value to convert
- *   Boolean compress: Force radix 222
+ *   Boolean compress: Force radix 256
 
  * @version {String, Number}
  *   String value: The value to convert
- *   Number type: The radix type to use (2 - 222)
+ *   Number type: The radix type to use (2 - 256)
 
  * @version {String, String}
  *   String value: The value to convert
- *   String type: The radix type to use (2 - 222)
+ *   String type: The radix type to use (2 - 256)
  */
 toString;
 
@@ -683,8 +729,8 @@ toString;
  * @main
  * @version {String, Number, Boolean}
  *   String value: The value to convert
- *   Number type: The radix type to use (2 - 222)
- *   Boolean compress: Force radix 222
+ *   Number type: The radix type to use (2 - 256)
+ *   Boolean compress: Force radix 256
 
  * @version {String}
  *   String value: The value to convert
@@ -695,11 +741,11 @@ toString;
 
  * @version {String, Boolean}
  *   String value: The value to convert
- *   Boolean decompress: Force radix 222
+ *   Boolean decompress: Force radix 256
 
  * @version {String, Number}
  *   String value: The value to convert
- *   Number type: The radix type to use (2 - 222)
+ *   Number type: The radix type to use (2 - 256)
 
  * @version {String, String}
  *   String value: The value toconvert
@@ -714,5 +760,5 @@ toNumber;
  */
 toLetter;
 
-for(var i = 0, j = "Password toString toNumber toLetter MAC MAS Encode Decode Random encodeBase10 decodeBase10 B1024 encodeBase20 decodeBase20 B2048".split " "; i < j.length; i++)
+for(var i = 0, j = "Password toString toNumber toLetter MAC MAS Encode Decode Random encodeBase10 decodeBase10 encodeBase20 decodeBase20 encodeBase30 decodeBase30 B64 B1024 B2048".split " "; i < j.length; i++)
   $win[j[i]] = eval(j[i]);
