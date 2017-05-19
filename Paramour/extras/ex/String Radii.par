@@ -18,8 +18,8 @@ var t = .{
   [0x03b1, 0x03da]
 }, t_ = "";
 
-[Array?] {
-  for(var x = $1[0], y = ""; x < $1[1]; x++)
+[Number <=> Number] {
+  for(var x = $1, y = ""; x < $2; x++)
     y += String.$from x;
   -> y
 }
@@ -27,8 +27,8 @@ var t = .{
 var
 characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_",    # 64
 characters_ = characters + " !\"#%&'()*",                                           # 74
-characters__ = characters_ + "+,-./:;<=>?@[\\]^_`{|}~\t" + (=> ([0x00a1, 0x00c0])?),# 128
-characters___ = characters__ + (=> ([0x00c1, 0x0141])?),                            # 256
+characters__ = characters_ + "+,-./:;<=>?@[\\]^_`{|}~\t" + (=> (0x00a1 <=> 0x00c0)),# 128
+characters___ = characters__ + (=> (0x00c1 <=> 0x0141)),                            # 256
 
 # In order of "craziness"
 crazy    = "aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ"  , # 0
@@ -53,10 +53,10 @@ if(undefined B2048 || B2048.length < 2048)
     B2048 += eval("'\\u" + ("0".repeat(4 - (s + i).toString 16 .length)) + (s + i).toString 16 + "'");
 
 /** Returns a random character string
- * @version {String}
- * @version {Number}
- * @version {Number, Number}
- * @version {*}
+ * @version {String} Return a randomized version of the provided string
+ * @version {Number} Return a random, real number between x and x+1
+ * @version {Number, Number} Return a random, real number between x and y
+ * @version {*} Return a randomized version of the B64 string or the provided characters/number
  */
 Random;
 
@@ -88,14 +88,24 @@ Random(Number minimum)
   => Random(minimum, 1)
 
 Random(* characters) =>
-  Random((undefined characters)? B64: (characters + ""));
+  Random((undefined characters)? B64: characters);
 
 # Encode [Base 64: Backwards]
 /** Converts a value into a base64 encoded string
  * @version {String, Number} Convert the string into a base64, delusional string
  * @version {String, String} Convert the string into a unique, base64 string
- * @version {String String, String} Convert the string into a unique, base64, padded string
+ * @version {String, String, String} Convert the string into a unique, base64, padded string
  * @version {*} Convert the string into a base64 string
+
+ * Levels of Craziness:
+ * B64:     -1 [ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/] =
+ * crazy:    0 [aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ] =
+ * crazier:  1 [aAbB0cCdD1eEfF2gGhH3iIjJ4kKlL5mMnN6oOpP7qQrR8sStT9uUvV_wWxX$yYzZ] =
+ * intwined: 2 [({[<zyxwvutsrqponmlkjihgfedcba/+-\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>]})] =
+ * UNIX:     3 [./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz] =
+ * UUENC:    4 [ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_] =
+ * XXENC:    5 [+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz] =
+ * BINHEX:   6 [!"#$%&'()*+,-012345689@ABCDEFGHIJKLMNPQRSTUVXYZ[`abcdefhijklmpqr] =
  */
 Encode;
 
@@ -168,6 +178,16 @@ Encode(* value, * delusion = -1) =>
  * @version {String, String} Convert to a string from a unique, base64 string
  * @version {String, String, String} Convert to a string from a unique, padded, base64 string
  * @version {*} Convert to a string from a base64 string
+
+ * Levels of Craziness:
+ * B64:     -1 [ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/] =
+ * crazy:    0 [aAbB~cCdD*eEfF/gGhH%iIjJ+kKlL-mMnN<oOpP>qQrR!sStT&uUvV^wWxX|yYzZ] =
+ * crazier:  1 [aAbB0cCdD1eEfF2gGhH3iIjJ4kKlL5mMnN6oOpP7qQrR8sStT9uUvV_wWxX$yYzZ] =
+ * intwined: 2 [({[<zyxwvutsrqponmlkjihgfedcba/+-\\ABCDEFGHIJKLMNOPQRSTUVWXYZ>]})] =
+ * UNIX:     3 [./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz] =
+ * UUENC:    4 [ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_] =
+ * XXENC:    5 [+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz] =
+ * BINHEX:   6 [!"#$%&'()*+,-012345689@ABCDEFGHIJKLMNPQRSTUVXYZ[`abcdefhijklmpqr] =
  */
 Decode;
 
