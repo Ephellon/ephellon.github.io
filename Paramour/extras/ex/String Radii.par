@@ -149,7 +149,7 @@ Encode(String value, Number delusion) {
   media = media.join "".split(/(.{6})/);
 
   for(var i = 0, j; i < media.length; i++)
-    if((j = media[i]) !== "")
+    if((j = media[i]).length > 0)
       output.push(delusion[+("0b" + (j + ("0".repeat(6 - j.length))))]);
 
   -> output.join "" + (overflow.repeat((media.join "".length) % 3))
@@ -226,15 +226,16 @@ Decode(String value, String delusion) =>
  * @return {String}
  */
 Decode(String value, String delusion, String overflow) {
-  for(var i = 0, j, media = [], output = []; i < value.length; i++)
+  for(var i = 0, j, k, media = [], output = []; i < value.length; i++)
     if(value[i] === overflow)
-      media.push "000000";
+      break;
     else
       media.push("0".repeat(6 - (j = delusion.indexOf(value[i]).toString 2).length) + j);
   media = media.join "".split(/(.{8})/);
+  k = value.replace(RegExp("${overflow}", "g"), "$1").length;
 
   for(i = 0, j; i < media.length; i++)
-    if((j = media[i]) !== "")
+    if((j = media[i]).length > 0 || (k === 1 && /1/.test j))
       output.push(String.fromCharCode(+("0b${j}")));
 
   -> output.join ""
@@ -291,7 +292,7 @@ encodeBase10(value) {
     if((j = media[i]) !== "")
       output.push(c[+("0b" + (j + ("0".repeat(10 - j.length))))]);
 
-  -> output.join "" + (p.repeat((media.join "".length) % 5))
+  -> output.join "" + (p.repeat((media.join "".length) % 3))
 }
 
 /** decodeBase10
@@ -304,7 +305,7 @@ decodeBase10(value) {
 
   for(var i = 0, j; i < value.length; i++)
     if(value[i] === p)
-      media.push "00000";
+      media.push "000000";
     else
       media.push("0".repeat(10 - (j = c.indexOf(value[i]).toString 2).length) + j);
   media = media.join "".split(/(.{8})/);
@@ -336,7 +337,7 @@ encodeBase20(value) {
     if((j = media[i]) !== "")
       output.push(c[+("0b" + (j + ("0".repeat(11 - j.length))))]);
 
-  -> output.join "" + (p.repeat((media.join "".length) % 11))
+  -> output.join "" + (p.repeat((media.join "".length) % 3))
 }
 
 /** decodeBase20
@@ -349,7 +350,7 @@ decodeBase20(value) {
 
   for(var i = 0, j; i < value.length; i++)
     if(value[i] === p)
-      media.push "00000000000";
+      media.push "000000";
     else
       media.push("0".repeat(11 - (j = c.indexOf(value[i]).toString 2).length) + j);
   media = media.join "".split(/(.{8})/);
@@ -415,7 +416,7 @@ toString(Number value, String characters)
 
 toString(Number value, Array characters) {
   if(characters.length < 2)
-    +> SyntaxError "toString(String input, Array characters) 'characters' must contain more than 1 character [${characters}]";
+    +> SyntaxError "toString(Number input, Array characters) 'characters' must contain more than 1 character [${characters}]";
 
   value = +value || value;
   var output = [], x = value, y = 0, c = characters, type = c.length;
@@ -436,7 +437,7 @@ toString(Number value, Number type)
   => toString(value, type, type > 64);
 
 toString(Number value, Boolean compress)
-  => toString(value, ((compress)? 128: 64), compress);
+  => toString(value, ((compress)? 256: 64), compress);
 
 toString(Number value)
   => (((value + "").length > 21)? value.toPrecision 21: value + "");
@@ -450,13 +451,13 @@ toString(String value, String type) {
     case('h', '0x', 'hex', 'hexadecimal')
       type = 16;
     default
-      type = ((+type > 64)? 128: 36);
+      type = ((+type > 64)? 256: 36);
   }
   -> toString(+value || value, type, type > 64)
 }
 
 toString(String value, Boolean compress)
-  => toString(value, ((compress)? 128: 36), compress);
+  => toString(value, ((compress)? 256: 36), compress);
 
 toString(String value)
   => toString(value, true);
@@ -508,7 +509,7 @@ toNumber(String value, Number type)
   => toNumber(value, type, type > 64);
 
 toNumber(String value, Boolean compressed)
-  => toNumber(value, ((compressed)? 128: 36), compressed);
+  => toNumber(value, ((compressed)? 256: 36), compressed);
 
 toNumber(String value) {
   if(/^(?:0b\:?)?([01]+)$/.test value)
@@ -779,6 +780,14 @@ toNumber;
  *   Number number: The number to convert
  */
 toLetter;
+
+Encode.CRA1   = Decode.CRA1   = crazy;
+Encode.CRA2   = Decode.CRA2   = crazier;
+Encode.INTW   = Decode.INTW   = intwined;
+Encode.UNIX   = Decode.UNIX   = UNIX;
+Encode.UUENC  = Decode.UUENC  = UUENC;
+Encode.XXENC  = Decode.XXENC  = XXENC;
+Encode.BINHEX = Decode.BINHEX = BINHEX;
 
 for(var i = 0, j = "Password toString toNumber toLetter MAC MAS Encode Decode Random encodeBase10 decodeBase10 encodeBase20 decodeBase20 encodeBase30 decodeBase30 B64 B1024 B2048".split " "; i < j.length; i++)
   $win[j[i]] = eval(j[i]);
