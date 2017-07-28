@@ -275,10 +275,12 @@ div.code> pre:first-child {
 
 .navigation .button {
   font-weight: bold;
+  color: #fff;
 }
 
 .navigation .button::selection {
   background: transparent;
+  color: #000;
 }
 
 .navigation .contents {
