@@ -1,8 +1,8 @@
 body {
   font-size: 14px;
   line-height: 21px;
-  color: #ddd;
-  background: #1d1f20;
+  color: #333;
+  background: #efefef;
   font-family: "Helvetica Neue", "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
 }
 
@@ -100,10 +100,10 @@ textarea {
   font-family: Monaco, Consolas, "Lucida Console", monospace;
   font-size: 16px;
   line-height: 18px;
-  color: #55f;
+  color: #24248f;
   white-space: pre-wrap;
   word-wrap: break-word;
-  background: #444;
+  background: #eee;
   padding: 1px 3px 2px;
   border-radius: 4px;
 }
@@ -111,7 +111,7 @@ textarea {
 p> code,
 li> code {
   display: inline-block;
-  background: #333;
+  background: #eee;
   border: none;
   padding: 0px 0.2em;
 }
@@ -140,7 +140,7 @@ li> pre {
   border-left: 5px solid #842424;
   padding: 3px 0 3px 12px;
   margin: 0;
-  color: #fff;
+  color: #000;
 }
 
 div.anchor {
