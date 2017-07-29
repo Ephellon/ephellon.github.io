@@ -624,18 +624,40 @@ gumball.eval = ()
 
     <h2>
       <span id="slicing-splicing-ranges" class="bookmark"></span>
-      Array Slicing and Splicing, and Ranges (Deprecated, but supported)
+      Array Slicing and Splicing, and Ranges
     </h2>
 
     <p><i>Slice and Splice more naturally with these shortcuts.</i></p>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="Eslicing_splicing_ranges">
-var countdown = [9, 8, 7, 6, 5, 4, 3, 2, 1];
+var numbers = [9, 8, 7, 6, 5, 4, 3, 2, 1], first3, middle3, last3;
 
-var first3 = numbers[0..2], middle3 = numbers[3...-3], last3 = numbers[-3..3];
+# .. means slice
+# ... means splice
+# [-a..b] is also splice
+# [-a...b] is also splice
+# [a..b] = [...] is also splice
+# [a...b] = [...] is also splice
 
-# working on: countdown[3, 3] = [-6, -5, -4];
+first3 = numbers[0..3];
+  # numbers.SLICE(from 0, towards the end 3 indexs)
+  # "numbers from[0, 2] => [9, 8, 7]"
+
+middle3 = numbers[3..3];
+  # numbers.SLICE(from 3, towards the end 3 indexs)
+  # "numbers from [3, 5] => [6, 5, 4]"
+
+last3 = numbers[-3..3];
+  # negatives only work for SPLICE (negated variable names are ignored)
+  # numbers.SPLICE(from the end 3 places, towards to the end 3 indexs)
+  # "nubers from[6, 8] => [3, 2, 1]
+
+numbers[0..5] = ["nine", "eight", "seven", "six", "five"]
+  # same as: numbers[0..5] = ["nine ... five".split " "]
+  # MUST end with semicolon
+  # numbers.SPLICE(0, 5, "nine", "eight", "seven", "six", "five")
+  # numbers is now: ["nine", "eight", "seven", "six", "five", 4, 3, 2, 1]
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
