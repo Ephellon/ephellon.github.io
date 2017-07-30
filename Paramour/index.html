@@ -558,7 +558,33 @@ alert "In first, we have ${gold}, with ${silver} just moments behind--and here c
       <div class='minibutton ok' onclick='runConsole(example_spreads)'>run</div>
       <br class='clear' />
     </div>
+    <p>
+      <b><i>Spreads can also be controlled by type.</i></b>
+    </p>
+    <div class='code'>
+      <pre>
+<textarea class="compile-paramour" type="text/paramour" id="E_spreads_with_type">
+run(String from...) {
+  -> (from.length > 1)?
+    "A tiny little ${from}.":
+  "OMG! Run away from ${from.join(', ')}!";
+}
 
+console.log(run "bunny");
+# A tiny little bunny.
+
+console.warn(run("bunny", "goblin", "and t-rex"));
+# OMG! Run away from bunny, goblin, and t-rex!
+</textarea>
+      </pre>
+      <pre><textarea class="compile-javascript"></textarea></pre>
+      <script>
+        window.example_spreads_with_type = document.querySelector("#E_spreads_with_type").value;
+      </script>
+      <div class='minibutton load' onclick='loadConsole(example_spreads_with_type);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_spreads_with_type)'>run</div>
+      <br class='clear' />
+    </div>
     <hr>
 
     <h1>Objects</h1>
