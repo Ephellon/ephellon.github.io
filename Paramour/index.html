@@ -1321,7 +1321,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
     results = $('#javascript');
     window.compiledJS = '';
     try {
-      window.compiledJS = Paramour(source, true);
+      window.compiledJS = Paramour(source, {embed: true});
       el = results[0];
       if (el.innerText) {
         el.innerText = window.compiledJS;
@@ -1355,7 +1355,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
 
   window.loadConsole = function(content) {
     Peditor.setValue(content);
-    Jeditor.setValue(Paramour(content, true));
+    Jeditor.setValue(Paramour(content, {embed: true}));
     compileSource();
     $('.navigation.try').addClass('active');
     Jeditor.focus();
@@ -1431,7 +1431,7 @@ var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
     on("keyup", function() {
       clearTimeout(timeout);
       setTimeout(function() {
-        Jeditor.setValue(Paramour(getValue(), true));
+        Jeditor.setValue(Paramour(getValue(), {embed: true}));
       }, 500);
     });
   }
