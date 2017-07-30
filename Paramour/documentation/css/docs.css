@@ -109,6 +109,7 @@ textarea {
 }
 
 p> code,
+i> code,
 li> code {
   display: inline-block;
   background: #ddd;
