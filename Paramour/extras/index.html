@@ -196,7 +196,7 @@
 
   Peditor = CodeMirror.fromTextArea(p = $("#input")[0], poptions);
 
-  (j = $("#output")[0]).innerText = Paramour(p.innerText, true);
+  (j = $("#output")[0]).innerText = Paramour(p.innerText, {embed: true});
   Jeditor = CodeMirror.fromTextArea(j, joptions);
 
   (c = $("#report")[0]).innerText = "// SEAs will show up here";
@@ -283,7 +283,7 @@
         input = script.innerText = "";
 
         return load(source, function(input) {
-          return Peditor.setValue(IN.value = paramours[i] = input), Jeditor.setValue(OUT.value = Paramour(input, true)), execute();
+          return Peditor.setValue(IN.value = paramours[i] = input), Jeditor.setValue(OUT.value = Paramour(input, {embed: true})), execute();
         }, options, true);
       }
 
@@ -310,7 +310,7 @@
       // Shift Ctrl Alt CapsLock PgUp PgDn End Home Left Up Right Down Insert F1 ... F12
       if([16, 17, 18, 20, 33, 34, 35, 36, 37, 38, 39, 40, 45, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123].indexOf(e.which) < 0)
         setTimeout(function() {
-          Jeditor.setValue(Paramour(getValue(), true));
+          Jeditor.setValue(Paramour(getValue(), {embed: true}));
           Seditor.setValue(Paramour.report);
         }, 500);
     });
@@ -324,7 +324,7 @@
     results = $('#javascript');
     window.compiledJS = '';
     try {
-      window.compiledJS = Paramour(source, true);
+      window.compiledJS = Paramour(source, {embed: true});
       el = results[0];
       if (el.innerText) {
         el.innerText = window.compiledJS;
@@ -358,7 +358,7 @@
 
   window.loadConsole = function(content) {
     Peditor.setValue(content);
-    Jeditor.setValue(Paramour(content, true));
+    Jeditor.setValue(Paramour(content, {embed: true}));
     Seditor.setValue(Paramour.report);
     compileSource();
     $('.navigation.try').addClass('active');
@@ -429,7 +429,7 @@
     on("keyup", function() {
       clearTimeout(timeout);
       setTimeout(function() {
-        Jeditor.setValue(Paramour(getValue(), true));
+        Jeditor.setValue(Paramour(getValue(), {embed: true}));
       }, 500);
     });
   }
