@@ -452,6 +452,9 @@ write(message) =>
 
 var writeun = (message)
   => write(message + "\b");
+
+var error(message) +>
+  Error message;
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -613,13 +616,21 @@ var wattersons = {
 
 # families.next(), or Tuple.next can be used to traverse the Tuple
 var families = .{
-  wattersons
+  wattersons,
   {
     mother: "Mrs. Fitzgerald"
     father: "Patrick Fitzgerald"
     kids: fitzgerald_kids
   }
 };
+
+# Quasi RegExps can also have comments and be interpolated
+phoneNo(String number):Boolean =>
+///
+  ^\(?(\d{3})\)? # area code, ignore optional parens
+  [-\s]?(\d{3})  # prefix, ignore optional dash or space
+  -?(\d{4})      # line-number, ignore optional dash
+///.test number;
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
