@@ -628,7 +628,11 @@ var families = .{
 # The example doesn't work here (CodeMirror error)
 # so please see https://codepen.io/ephellon/pen/XKPVgw/
 phoneNo(String number):Boolean =>
-  /^\(?(\d{3})\)?[-\s]?(\d{3})-?(\d{4})/.test number;
+///
+  ^\(?(\d{3})\)? # area code, ignore optional parens
+  [-\s]?(\d{3})  # prefix, ignore optional dash or space
+  -?(\d{4})      # line-number, ignore optional dash
+///.test number;
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
