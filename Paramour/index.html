@@ -626,11 +626,11 @@ var families = .{
 
 # Quasi RegExps can also have comments and be interpolated
 phoneNo(String number):Boolean =>
-\/\/\/
+///
   ^\(?(\d{3})\)? # area code, ignore optional parens
   [-\s]?(\d{3})  # prefix, ignore optional dash or space
   -?(\d{4})      # line-number, ignore optional dash
-\/\/\/.test number;
+///.test number;
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
