@@ -558,12 +558,13 @@ alert "In first, we have ${gold}, with ${silver} just moments behind--and here c
       <br class='clear' />
     </div>
     <p>
-      <b><i>Spreads can also be controlled by type.</i></b>
+      <b><i>Spreads can also be controlled by type, and.or have type annotations (ignored)</i></b>
     </p>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E_spreads_with_type">
-run(String from...) {
+# accepts a spread of strings, returns a string
+run(String from...):String {
   -> (from.length > 1)?
     "A tiny little ${from}.":
   "OMG! Run away from ${from.join(', ')}!";
@@ -594,12 +595,15 @@ console.warn(run("bunny", "goblin", "and t-rex"));
       Arrays, Objects, and Tuples
     </h2>
 
-      <p><i>There isn't much difference, other than Tuples, which use a dot-brace pattern <code>.{}</code>.</i></p>
+      <p><i>There isn't much difference, other than optional commas; Tuples, which use a dot-brace pattern <code>.{}</code>; and Quasi RegExps, with use <code>///...///...</code> like CoffeScript.</i></p>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples">
 var watterson_kids = ["Gumball", "Darwin", "Anais"],
-    fitzgerald_kids = ["Penny", "Penny's Sister"];
+    fitzgerald_kids = [
+      "Penny"
+      "Penny's Sister"
+    ];
 
 var wattersons = {
   mother: "Nicole Watterson"
@@ -609,13 +613,21 @@ var wattersons = {
 
 # families.next(), or Tuple.next can be used to traverse the Tuple
 var families = .{
-  wattersons,
+  wattersons
   {
     mother: "Mrs. Fitzgerald"
     father: "Patrick Fitzgerald"
     kids: fitzgerald_kids
   }
 };
+
+# Quasi RegExps can also contain comments (single line only)
+phoneNo(String number):Boolean ->
+///
+  ^\(?(\d{3})\)? # area code, ignore optional parens
+  [-\s]?(\d{3})  # prefix, ignore optional dash or space
+  -?(\d{4})      # line-number, ignore optional dash
+///.test number;
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
@@ -656,10 +668,10 @@ gumball.eval = ()
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="Eslicing_splicing_ranges">
-var numbers = [9, 8, 7, 6, 5, 4, 3, 2, 1], first3, middle3, last3;
+var numbers = [9..1], first3, middle3, last3;
 
-# .. means slice
-# ... means splice
+# .. means slice (or inclusive, e.g. [1..9] = 1 to 9 by 1)
+# ... means splice (or exclusive, e.g. [1...9] = 1 to 8 by 1)
 # [a..b] = [...] is also splice
 # [a...b] = [...] is also splice
 
@@ -743,18 +755,19 @@ var "Number" number = "this is not a number": 25;
 <textarea class="compile-paramour" type="text/paramour" id="E_case_default">
 getClass(gumball) {
   switch(gumball.class) {
-    case(1, 2, 3, 4, 5) {
+    case[1..5] {
       -> "This grade seems a bit low..."
     }
 
-    case(6)
+    case(6, 7, 8)
       -> "That seems about right";
 
-    case 7:
+    case 9:
       -> "Ehh...";
       break;
 
-    default(8, 9) {
+    # Note: spaces only work with numbers
+    default(10 11 12) {
       -> "That's either too high, or undefined"
     }
   }
@@ -920,6 +933,11 @@ Animal {
 
   .getMiddleName() {
     -> @name.middle
+  }
+
+  # This is a static (parent only) method
+  *.from(String args...) {
+    -> Tuple.from args...;
   }
 };
 
