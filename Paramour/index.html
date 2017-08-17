@@ -634,7 +634,28 @@ var families = .{
       <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples)'>run</div>
       <br class='clear' />
     </div>
-    <h2>
+      <p><i>Paramour will also, automatically quote reserved words that are meant as properties/methods.</i></p>
+    <div class='code'>
+      <pre>
+<textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples_1">
+var gumball = {
+  class: 6
+}
+
+gumball.eval = ()
+  => "Not even";
+</textarea>
+      </pre>
+      <pre><textarea class="compile-javascript"></textarea></pre>
+      <script>
+        window.example_arrays_objects_tuples_1 = document.querySelector("#E_arrays_objects_tuples_1").value;
+      </script>
+      <div class='minibutton load' onclick='loadConsole(example_arrays_objects_tuples_1);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples_1)'>run</div>
+      <br class='clear' />
+    </div>
+
+      <h2>
       <span id="regexps" class="bookmark"></span>
       RegExps
     </h2>
@@ -663,26 +684,6 @@ phoneNo(String number):Boolean =>
       </script>
       <div class='minibutton load' onclick='loadConsole(example_regexps);'>load</div>
       <div class='minibutton ok' onclick='runConsole(example_regexps)'>run</div>
-      <br class='clear' />
-    </div>
-      <p><i>Paramour will also, automatically quote reserved words that are meant as properties/methods.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples_1">
-var gumball = {
-  class: 6
-}
-
-gumball.eval = ()
-  => "Not even";
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_arrays_objects_tuples_1 = document.querySelector("#E_arrays_objects_tuples_1").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_arrays_objects_tuples_1);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples_1)'>run</div>
       <br class='clear' />
     </div>
 
