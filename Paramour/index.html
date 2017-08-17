@@ -53,6 +53,7 @@
         <a href="#overview">Overview</a>
         <pre>Comments</pre>
         <a href="#normal-comments">Normal Comments</a>
+        <a href="#option-controlling-comments">Option Controlling Comments</a>
         <a href="#phantoms">Phantoms</a>
         <a href="#docstrings">Docstrings</a>
         <a href="#version-controlling">Version Controlling</a>
@@ -264,6 +265,35 @@ if(undefined penny)
       </script>
       <div class='minibutton load' onclick='loadConsole(example_normal_comments);'>load</div>
       <div class='minibutton ok' onclick='runConsole(example_normal_comments)'>run</div>
+      <br class='clear' />
+    </div>
+
+    <h2>
+      <span id="option-controlling-comments" class="bookmark"></span>
+      Option Controlling Comments
+    </h2>
+
+    <p><i>These comments change how Paramour is compiled.</i></p>
+    <div class='code'>
+      <pre>
+<textarea class="compile-paramour" type="text/paramour" id="E_option_controlling_comments">
+# below will be written as "option - default value, description"
+# note: "@option" in a single-line comment enables the option
+# e.g. "# @option" or "// @option" if @native is enabled
+
+# deps - true, "loads" all functions used in the compiled code (if Paramour has defined the function)
+# embed - false, adds the SEA comment to the end of the code
+# mini - false, minifies the compiled code
+# native - false, forces comments to be JavaScript executable; donesn't allow "#"
+# strict - false, encloses the compiled code in a function, and changes "var CLASS" to "const CLASS"
+</textarea>
+      </pre>
+      <pre><textarea class="compile-javascript"></textarea></pre>
+      <script>
+        window.example_normal_comments = document.querySelector("#E_option_controlling_comments").value;
+      </script>
+      <div class='minibutton load' onclick='loadConsole(example_option_controlling_comments);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_option_controlling_comments)'>run</div>
       <br class='clear' />
     </div>
 
