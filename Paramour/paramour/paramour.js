@@ -14,7 +14,7 @@ CodeMirror.defineSimpleMode("paramour", {
       next: "Rquasi"
     },
     {
-      regex: /(?:(?:[\(\)\[\]\{\},]|[!\~\*\/%\+\-<>\&\^\|\?\:\=;])\s*)\//,
+      regex: /(?:(?:[\(\)\[\]\{\},\n\r]|[!\~\*\/%\+\-<>\&\^\|\?\:\=;])\s*)\//,
       token: "string",
       next: "Rstring"
     },
