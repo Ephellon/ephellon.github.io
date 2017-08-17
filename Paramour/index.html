@@ -108,11 +108,11 @@ var today = new Date(),
 if(today.$month == 11 && today.$day > 25)
   Xmas.setFullYear(Xmas.$year + 1);
 
-/** (Number days_left):String
+/** ():String
  * Finds the number of days left until Xmas (Dec. 25)
  */
-HowManyDays(days_left = round_up((Xmas.$time - today.$time) / oneDay)):String
-  -> "${days_left} days left until Christmas!";
+HowManyDays():String
+  -> "\${round_up((Xmas.$time - today.$time) / oneDay)} days left until Christmas!";
 
 round_up(Number n) ->
   Math.ceil n;
