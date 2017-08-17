@@ -620,14 +620,6 @@ var families = .{
     kids: fitzgerald_kids
   }
 };
-
-# Quasi RegExps can also contain comments (single line only)
-phoneNo(String number):Boolean =>
-///
-  ^\(?(\d{3})\)? # area code, ignore optional parens
-  [-\s]?(\d{3})  # prefix, ignore optional dash or space
-  -?(\d{4})      # line-number, ignore optional dash
-///.test number;
 </textarea>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
