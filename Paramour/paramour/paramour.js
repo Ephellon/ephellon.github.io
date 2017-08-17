@@ -7,10 +7,6 @@ interpolation = {
 CodeMirror.defineSimpleMode("paramour", {
   // The start state contains the rules that are intially used
   start: [
-    {
-      regex: /(\B\/(?![\*\+\?])(?:[^\\\n\r]|\\.)*?\/)([imguy]*\b|\B)/,
-      token: ["string", "variable-2"]
-    },
     // Comments
     {
       regex: /###/,
@@ -25,6 +21,10 @@ CodeMirror.defineSimpleMode("paramour", {
     {
       regex: /(#\s*)(@)([\d\.]+)/i,
       token: ["comment", null, "number"]
+    },
+    {
+      regex: /(#\s*)(@)(strict|deps|embed|mini)/i,
+      token: ["comment", null, "variable"]
     },
     {
       regex: /(#\s*)([\d\.]+)(\?[\!\*]?)/i,
@@ -61,6 +61,11 @@ CodeMirror.defineSimpleMode("paramour", {
       next: "Tquasi"
     },
     {
+      regex: /\/{3}/,
+      token: "string",
+      next: "Rquasi"
+    },
+    {
       regex: /`/,
       token: "string",
       next: "quasi"
@@ -75,6 +80,10 @@ CodeMirror.defineSimpleMode("paramour", {
       regex: /'/,
       token: "string",
       next: "Sstring"
+    },
+    {
+      regex: /(\B\/(?![\*\+\?])(?:[^\\\n\r]|\\.)*?\/)([imguy]*\b|\B)/,
+      token: ["string", "variable-2"]
     },
     // Get and Set
     {
@@ -228,6 +237,24 @@ CodeMirror.defineSimpleMode("paramour", {
     }
   ],
 
+  Rquasi: [
+    interpolation,
+    {
+      regex: /((?:[^\\\#]|\\.)*?)(#.*)?/,
+      token: ["string", "comment"]
+    },
+    {
+      regex: /\/{3}/,
+      token: "string",
+      next: "start"
+    },
+    {
+      regex: /(?:[^\\]|\\.)*?\/{3}/,
+      token: "string",
+      next: "start"
+    }
+  ],
+
   // Docstrings
   docstring: [
     {
@@ -264,6 +291,6 @@ CodeMirror.defineSimpleMode("paramour", {
     blockCommentEnd: "###",
     lineComment: "#",
     fold: "brace",
-    closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ```".split(" ")
+    closeBrackets: "( ) [ ] { } ' ' \" \" ` ` \"\"\" \"\"\" ''' ''' ``` ``` /// ///".split(" ")
   }
 });
