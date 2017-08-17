@@ -7,9 +7,25 @@ interpolation = {
 CodeMirror.defineSimpleMode("paramour", {
   // The start state contains the rules that are intially used
   start: [
+    // RegExps must be handled first
+    {
+      regex: /\/{3}/,
+      token: "string",
+      next: "Rquasi"
+    },
+    {
+      regex: /(?:(?:[\(\)\[\]\{\},]|[!\~\*\/%\+\-<>\&\^\|\?\:\=;])\s*)\//,
+      token: "string",
+      next: "Rstring"
+    },
+    {
+      regex: /^\s*\//,
+      token: "string",
+      next: "Rstring"
+    },
     // Comments
     {
-      regex: /###/,
+      regex: /#{3}/,
       token: "comment",
       next: "comment"
     },
@@ -24,7 +40,7 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     {
       regex: /(#\s*)(@)(strict|deps|embed|mini)/i,
-      token: ["comment", null, "variable"]
+      token: ["comment", null, "variable-2"]
     },
     {
       regex: /(#\s*)([\d\.]+)(\?[\!\*]?)/i,
@@ -61,11 +77,6 @@ CodeMirror.defineSimpleMode("paramour", {
       next: "Tquasi"
     },
     {
-      regex: /\/{3}/,
-      token: "string",
-      next: "Rquasi"
-    },
-    {
       regex: /`/,
       token: "string",
       next: "quasi"
@@ -80,10 +91,6 @@ CodeMirror.defineSimpleMode("paramour", {
       regex: /'/,
       token: "string",
       next: "Sstring"
-    },
-    {
-      regex: /(\B\/(?![\*\+\?])(?:[^\\\n\r]|\\.)*?\/)([imguy]*\b|\B)/,
-      token: ["string", "variable-2"]
     },
     // Get and Set
     {
@@ -170,7 +177,11 @@ CodeMirror.defineSimpleMode("paramour", {
   Dstring: [
     interpolation,
     {
-      regex: /(?:[^\\]|\\.)*?"/,
+      regex: /[^\\"]|\\./,
+      token: "string"
+    },
+    {
+      regex: /"/,
       token: "string",
       next: "start"
     }
@@ -179,7 +190,28 @@ CodeMirror.defineSimpleMode("paramour", {
   Sstring: [
     interpolation,
     {
-      regex: /(?:[^\\]|\\.)*?'/,
+      regex: /[^\\']|\\./,
+      token: "string"
+    },
+    {
+      regex: /'/,
+      token: "string",
+      next: "start"
+    }
+  ],
+
+  Rstring: [
+    {
+      regex: /[^\\\/]|\\./,
+      token: "string"
+    },
+    {
+      regex: /(\/)([imguy]*\b)/,
+      token: ["string", "variable-2"],
+      next: "start"
+    },
+    {
+      regex: /\//,
       token: "string",
       next: "start"
     }
@@ -189,7 +221,11 @@ CodeMirror.defineSimpleMode("paramour", {
   quasi: [
     interpolation,
     {
-      regex: /(?:[^\\]|\\.)*?`/,
+      regex: /[^\\`]|\\./,
+      token: "string"
+    },
+    {
+      regex: /`/,
       token: "string",
       next: "start"
     }
@@ -198,12 +234,11 @@ CodeMirror.defineSimpleMode("paramour", {
   Squasi: [
     interpolation,
     {
-      regex: /'{3}/,
-      token: "string",
-      next: "start"
+      regex: /[^\\']|\\./,
+      token: "string"
     },
     {
-      regex: /(?:[^\\]|\\.)*?'{3}/,
+      regex: /'{3}/,
       token: "string",
       next: "start"
     }
@@ -212,12 +247,11 @@ CodeMirror.defineSimpleMode("paramour", {
   Dquasi: [
     interpolation,
     {
-      regex: /"{3}/,
-      token: "string",
-      next: "start"
+      regex: /[^\\"]|\\./,
+      token: "string"
     },
     {
-      regex: /(?:[^\\]|\\.)*?"{3}/,
+      regex: /"{3}/,
       token: "string",
       next: "start"
     }
@@ -226,12 +260,11 @@ CodeMirror.defineSimpleMode("paramour", {
   Tquasi: [
     interpolation,
     {
-      regex: /`{3}/,
-      token: "string",
-      next: "start"
+      regex: /[^\\`]|\\./,
+      token: "string"
     },
     {
-      regex: /(?:[^\\]|\\.)*?`{3}/,
+      regex: /`{3}/,
       token: "string",
       next: "start"
     }
@@ -240,16 +273,20 @@ CodeMirror.defineSimpleMode("paramour", {
   Rquasi: [
     interpolation,
     {
-      regex: /((?:[^\\\#]|\\.)*?)(#.*)?/,
-      token: ["string", "comment"]
+      regex: /[^\\\#\/]|\\./,
+      token: "string"
     },
     {
-      regex: /\/{3}/,
-      token: "string",
+      regex: /#.*/,
+      token: "comment"
+    },
+    {
+      regex: /(\/{3})([imguy]*\b)/,
+      token: ["string", "variable-2"],
       next: "start"
     },
     {
-      regex: /(?:[^\\]|\\.)*?\/{3}/,
+      regex: /\/{3}/,
       token: "string",
       next: "start"
     }
