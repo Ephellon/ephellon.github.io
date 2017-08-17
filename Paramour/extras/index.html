@@ -107,7 +107,39 @@
       <div class="contents repl_wrapper">
         <div class='code'>
           <pre>
-            <textarea id="paramour" class="edit-paramour">alert "Hello Paramour!"</textarea>
+            <textarea id="paramour" class="edit-paramour">### Days until Xmas
+  @author: W3 Resource Authors
+  @url: http://www.w3resource.com/javascript-exercises/javascript-basic-exercise-9.php
+###
+# @strict
+
+# $year -> getFullYear()
+# $month -> getMonth()
+# $day -> getDate()
+# $time -> getTime()
+
+var today = new Date(),
+    Xmas = new Date(today.$year, 11, 25), # Xmas Day of this year
+    oneDay = 1000 60 60 24; # spaces between number sare treated as *
+
+if(today.$month == 11 && today.$day > 25)
+  Xmas.setFullYear(Xmas.$year + 1);
+
+/** ():String
+ * Finds the number of days left until Xmas (Dec. 25)
+ */
+HowManyDays():String -> {
+  var days_left = round_up((cmas.$time - today.$time) / one_day);
+  "${days_left} days left until Christmas!"
+}
+
+round_up(Number n) ->
+  Math.ceil n;
+
+"String" days_left = HowManyDays();
+
+alert days_left;
+</textarea>
           </pre>
           <pre>
             <textarea id="javascript" class="edit-javascript"></textarea>
