@@ -591,14 +591,14 @@ console.warn(run("bunny", "goblin", "and t-rex"));
     <hr>
 
     <h1>Objects</h1>
-    <p><i>This includes Arrays, Objects, and Tuples.</i></p>
+    <p><i>This includes Arrays, Objects, RegExps, and Tuples.</i></p>
 
     <h2>
       <span id="arrays-objects-tuples" class="bookmark"></span>
       Arrays, Objects, and Tuples
     </h2>
 
-      <p><i>There isn't much difference, other than optional commas; Tuples, which use a dot-brace pattern <code>.{}</code>; and Quasi RegExps which are like <a href="https://coffeescript-cookbook.github.io/chapters/regular_expressions/heregexes" target="blank_">CoffeScript's Heregexes</a>.</i></p>
+      <p><i>There isn't much difference, other than optional commas; and Tuples, which use a dot-brace pattern <code>.{}</code>.</i></p>
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples">
@@ -623,7 +623,25 @@ var families = .{
     kids: fitzgerald_kids
   }
 };
+</textarea>
+      </pre>
+      <pre><textarea class="compile-javascript"></textarea></pre>
+      <script>
+        window.example_arrays_objects_tuples = document.querySelector("#E_arrays_objects_tuples").value;
+      </script>
+      <div class='minibutton load' onclick='loadConsole(example_arrays_objects_tuples);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples)'>run</div>
+      <br class='clear' />
+    </div>
+    <h2>
+      <span id="regexps" class="bookmark"></span>
+      RegExps
+    </h2>
 
+      <p><i>Quasi RegExps which are like <a href="https://coffeescript-cookbook.github.io/chapters/regular_expressions/heregexes" target="blank_">CoffeScript's Heregexes</a>.</i></p>
+    <div class='code'>
+      <pre>
+<textarea class="compile-paramour" type="text/paramour" id="E_regexps">
 # Quasi RegExps can also have comments and be interpolated
 # The example doesn't work here (CodeMirror error)
 # so please see https://codepen.io/ephellon/pen/XKPVgw/
@@ -637,10 +655,10 @@ phoneNo(String number):Boolean =>
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.example_arrays_objects_tuples = document.querySelector("#E_arrays_objects_tuples").value;
+        window.example_regexps = document.querySelector("#E_regexps").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(example_arrays_objects_tuples);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_regexps);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_regexps)'>run</div>
       <br class='clear' />
     </div>
       <p><i>Paramour will also, automatically quote reserved words that are meant as properties/methods.</i></p>
@@ -672,7 +690,7 @@ gumball.eval = ()
     <p><i>Slice and Splice more naturally with these shortcuts.</i></p>
     <div class='code'>
       <pre>
-<textarea class="compile-paramour" type="text/paramour" id="Eslicing_splicing_ranges">
+<textarea class="compile-paramour" type="text/paramour" id="E_slicing_splicing_ranges">
 var numbers = [9..1], first3, middle3, last3;
 
 # .. means slice (or inclusive, e.g. [1..9] = 1 to 9 by 1)
@@ -700,10 +718,10 @@ numbers[0..5] = ["nine", "eight", "seven", "six", "five"];
       </pre>
       <pre><textarea class="compile-javascript"></textarea></pre>
       <script>
-        window.exampleslicing_splicing_ranges = document.querySelector("#Eslicing_splicing_ranges").value;
+        window.example_slicing_splicing_ranges = document.querySelector("#E_slicing_splicing_ranges").value;
       </script>
-      <div class='minibutton load' onclick='loadConsole(exampleslicing_splicing_ranges);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(exampleslicing_splicing_ranges)'>run</div>
+      <div class='minibutton load' onclick='loadConsole(example_slicing_splicing_ranges);'>load</div>
+      <div class='minibutton ok' onclick='runConsole(example_slicing_splicing_ranges)'>run</div>
       <br class='clear' />
     </div>
 
