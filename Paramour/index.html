@@ -622,7 +622,7 @@ var families = .{
 };
 
 # Quasi RegExps can also contain comments (single line only)
-phoneNo(String number):Boolean ->
+phoneNo(String number):Boolean =>
 ///
   ^\(?(\d{3})\)? # area code, ignore optional parens
   [-\s]?(\d{3})  # prefix, ignore optional dash or space
