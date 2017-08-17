@@ -14,14 +14,8 @@ CodeMirror.defineSimpleMode("paramour", {
       next: "Rquasi"
     },
     {
-      regex: /(?:(?:[\(\)\[\]\{\},\n\r]|[!\~\*\/%\+\-<>\&\^\|\?\:\=;])\s*)\//,
-      token: "string",
-      next: "Rstring"
-    },
-    {
-      regex: /^\s*\//,
-      token: "string",
-      next: "Rstring"
+      regex: /(?:(?:[\(\)\[\]\{\}\!\~\*\/%\+\-<>\&\^\|\?\:\=,;]|[\b\n\r])[\x20\t\v ]*)(\/(?:[^\\\/\*\b\n\r]|\\.)*?\/)((?:[imguy]*\b)?)/,
+      token: ["string", "variable-2"]
     },
     // Comments
     {
@@ -195,23 +189,6 @@ CodeMirror.defineSimpleMode("paramour", {
     },
     {
       regex: /'/,
-      token: "string",
-      next: "start"
-    }
-  ],
-
-  Rstring: [
-    {
-      regex: /[^\\\/]|\\./,
-      token: "string"
-    },
-    {
-      regex: /(\/)([imguy]*\b)/,
-      token: ["string", "variable-2"],
-      next: "start"
-    },
-    {
-      regex: /\//,
       token: "string",
       next: "start"
     }
