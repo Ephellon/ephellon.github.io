@@ -63,6 +63,7 @@
         <a href="#spreads">Spreads...</a>
         <pre>Objects</pre>
         <a href="#arrays-objects-tuples">Arrays, Objects, and Tuples</a>
+        <a href="#regexps">RegExps</a>
         <a href="#slicing-splicing-ranges">Array Slicing, Splicing, and Ranges</a>
         <pre>Statements</pre>
         <a href="#type-declarations">Type Controlled Declaration</a>
@@ -642,6 +643,9 @@ var families = .{
     <div class='code'>
       <pre>
 <textarea class="compile-paramour" type="text/paramour" id="E_regexps">
+# normal regexps behave like normal regexps
+var a = /(?:ignore)/i;
+
 # Quasi RegExps can also have comments and be interpolated
 # The example doesn't work here (CodeMirror error)
 # so please see https://codepen.io/ephellon/pen/XKPVgw/
