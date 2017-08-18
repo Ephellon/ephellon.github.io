@@ -1,12 +1,12 @@
-.prettyprint, .pretty-input {
+.prettyprint, .pretty-input > textarea {
   scroll: auto;
 }
 
-.prettyprint > ol.linenums > li, .prettyprint > code > ol.linenums > li {
+.prettyprint > ol.linenums > li {
   list-style-type: decimal-leading-zero !important;
 }
 
-.pretty-input > * {
+.pretty-input > textarea, .pretty-input > .prettyprint {
   border: none;
   height: 300px;
   width: 640px;
