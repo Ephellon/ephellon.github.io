@@ -1,100 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Paramour</title>
-  <meta charset="utf-8"/>
-  <link rel="shortcut icon" href="https://ephellon.github.io/Paramour/images/favicon.ico"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"/>
-  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/icons.css"/>
-  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/main.css"/>
-  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/tomorrow-night.css"/>
-  <script src="https://ephellon.github.io/Paramour/js/jquery-bundle.js"></script>
-  <script src="https://ephellon.github.io/Paramour/js/prettify.js"></script>
-  <script src="https://ephellon.github.io/Paramour/js/run_prettify.js"></script>
-  <script src="https://ephellon.github.io/Paramour/prettyprint/lang-paramour.js"></script>
-  <style>
-  .prettyprint, .pretty-input > textarea {
-    scroll: auto;
-  }
-
-  .prettyprint > ol.linenums > li {
-    list-style-type: decimal-leading-zero !important;
-  }
-
-  .pretty-input > *, #docs-toolbar-wrapper {
-    border: none;
-    width: 50vw;
-  }
-
-  #docs-toolbar-wrapper {
-    background: #fff;
-    border: none;
-    box-shadow: none; /*0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28)*/
-  }
-
-  #docs-toolbar .button:first-child {
-    margin-left: -56px;
-  }
-
-  .pretty-input > textarea, .pretty-input .prettyprint {
-    height: 20vw; /* Yes, use vw; it's a 2:5 ratio */
-  }
-
-  .pretty-input > textarea {
-    resize: none;
-    position: absolute;
-    opacity: 0 !important;
-    z-index: 9 !important;
-  }
-
-  .pretty-input > .prettyprint {
-    z-index: initial !important;
-  }
-
-  .prettyprint .cursor {
-    background: rgba(255,255,255,0.1); /* default-blue: #0867d7 */
-    border: none;
-    color: #fff;
-    margin: 0;
-    padding: 2px 0;
-    width: 0 !important;
-  }
-
-  .prettyprint .cursor.right {
-    border-right: solid 1px #fff;
-  }
-
-  .prettyprint .cursor.left {
-    border-left: solid 1px #fff;
-  }
-
-  .octicon {
-    box-sizing: border-box;
-    display: inline-block;
-    fill: currentColor;
-    font-size: inherit;
-    overflow: hidden;
-    text-size-adjust: 100%;
-    transform-origin: 64px 64px;
-    vertical-align: text-bottom;
-    white-space: nowrap;
-    word-wrap: break-word;
-  }
-
-  a.devsite-doc-set-nav-tab, a.devsite-top-button {
-    color: rgba(255,255,255,0.7);
-  }
-
-  a {
-    text-decoration: none !important;
-  }
-
-  a.devsite-footer-promo-title {
-    color: rgba(0,0,0,0.9)
-  }
-  </style>
-</head>
 <!-- [CONTENT-TYPE] -->
 <!--
 HEADER
@@ -160,7 +63,7 @@ DEPENDENCIES
         if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
       </script>
     </div>
-    <div id="gc-wrapper" itemscope="" itemtype="https://schema.org/Article">
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
       <div class="devsite-site-mask"></div>
       <div class="devsite-main-content clearfix">
         <!-- NAVIGATION-LEFT -->
@@ -285,7 +188,7 @@ DEPENDENCIES
 
                 Paramour lets you do what you want, when you need.
               </p>
-              <p>If you're new to JavaScript, W3Schools offers a host of <a href="https://w3schools.com/js/" traget="blank_">tutorials</a>.
+              <p>If you're new to JavaScript, W3Schools offers a host of <a href="https://w3schools.com/js/" target="blank_">tutorials</a>.
                 (Note that this service was not developed by and is not associated with myself.)
               </p>
               <h2 id="why_paramour">Why Paramour?</h2>
@@ -309,8 +212,8 @@ DEPENDENCIES
               <ol>
                 <li>Visit <a href="https://ephellon.github.io/Paramour/extras/" target="_blank"><code>/try-paramour/</code></a> to open up the editor (shown below).</li>
                 <li>
-                  <p>Delete any code in the script editor and paste in the code below.</p>                  
-<div class="pretty-input">
+                  <p>Delete any code in the script editor and paste in the code below.</p>
+                  <div class="pretty-input">
 <textarea translate="no" class="notranslate">
 ### Days until Xmas
   @author: W3 Resource Authors
@@ -417,7 +320,6 @@ alert days_left;
                   <!-- :TOOLBAR -->
                   </div>
                 </li>
-                <li>To run the script, click ▶ or press <code>Ctrl+Enter</code></li>
               </ol>
               <h2 id="learn_more">Learn more</h2>
               <p>To continue learning about Paramour, take a look at the following resources:</p>
@@ -428,15 +330,6 @@ alert days_left;
               </ul>
             </div>
             <div class="devsite-content-footer nocontent">
-              <p>
-                Except as otherwise noted, the content of this page is licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>;
-                Paramour, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat">MIT License</a>.
-                Java, and JavsScript are registered trademarks of Oracle inc. and/or its affiliates.
-                Google is a registered trademark of Google inc. and/or its affiliates.
-                CoffeeScript is a registered trademark of "Jeremy Ashkenas."
-                Swift is a registered trademark of Apple inc. and/or its affiliates.
-                Python is a registered trademark of Python Software Foundation org. and/or its affiliates.
-              </p>
               <p itemprop="datePublished" content="2017-05-23T15:26:03.972520" class="devsite-content-footer-date">Last updated August 17, 2017.</p>
             </div>
           </article>
@@ -526,10 +419,18 @@ alert days_left;
       </footer>
       <!-- :FOOTER[LINKS] -->
       <!-- FOOTER[ALTERNATE-SERVICES] -->
-      <footer class="devsite-utility-footer">
-        <nav class="devsite-utility-footer-nav devsite-nav devsite-full-site-width">
-          <div class="devsite-utility-footer-nav-left">
-            
+      <footer class="devsite-content-footer nocontent" style="background: #455a64; color: #fff; margin: -1px; padding-bottom: 10px;">
+        <nav class="devsite-content-footer-nav devsite-nav devsite-full-site-width">
+          <div class="devsite-content-footer-nav-left">
+            <p>
+                Except as otherwise noted, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/" target=blank_"">Creative Commons Attribution 3.0 License</a>;
+                Paramour, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat" target=blank_"">MIT License</a>.
+                Java, and JavsScript are registered trademarks of Oracle inc. and/or its affiliates.
+                Google is a registered trademark of Google inc. and/or its affiliates.
+                CoffeeScript is a registered trademark of "Jeremy Ashkenas."
+                Swift is a registered trademark of Apple inc. and/or its affiliates.
+                Python is a registered trademark of Python Software Foundation org. and/or its affiliates.
+              </p>
           </div>
         </nav>
       </footer>
@@ -542,8 +443,7 @@ alert days_left;
     <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
     <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
     <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
-    <script src="https://ephellon.github.io/Paramour/js/main.js"></script>
+    <script src="https://ephellon.github.io/Paramor/js/main.js">(</script>
     <!-- :DEPENDENCIES -->
   </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
 </body>
-</html>
