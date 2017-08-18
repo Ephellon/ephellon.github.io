@@ -1,96 +1,231 @@
 <!DOCTYPE html>
 <html>
-<!-- From CoffeeScript -->
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Paramour - The perfect rendezvous" />
-
-  <title>Paramour</title>
-  <link rel="shortcut icon" href="documentation/images/Paramour.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <link rel="canonical" href="https://ephellon.github.com/Paramour" />
-
-  <link rel="stylesheet" type="text/css" href="index.css" />
-  <link rel="stylesheet" type="text/css" href="documentation/css/docs.css" />
-  <link rel="stylesheet" type="text/css" href="documentation/css/tomorrow-night.css" />
-  <link rel="stylesheet" type="text/css" href="https://codemirror.net/lib/codemirror.css" />
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900,400italic,700italic" />
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Product+Sans:400,900,400italic,700italic" />
-
-  <script src='https://codemirror.net/lib/codemirror.js'></script>
-  <script src='https://codemirror.net/addon/mode/simple.js'></script>
-  <script src='paramour/paramour.js'></script>
-  <script src='https://codemirror.net/mode/javascript/javascript.js'></script>
-
-  <style>
-    .CodeMirror, .CodeMirror-gutter {
-      background: #1d1f20;
-      color: #666;
-    }
-    .logo.javascript {
-      background: #333;
-      color: #f7df1e;
-    }
-    .logo.paramour {
-      color: #f42424;
-    }
-  </style>
+  <meta charset="utf-8"/>
+  <link rel="shortcut icon" href="https://ephellon.github.io/Paramour/images/favicon.ico"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"/>
+  <script src="https://ephellon.github.io/Paramour/js/jquery-bundle.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/run_prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/prettyprint/lang-paramour.js"></script>
 </head>
-<body>
-
-  <div id="fadeout"></div>
-
-  <div id="flybar">
-    <a id="logo" href="#top"><img src="documentation/images/Paramour-Long.png" width="225" height="39" alt="Paramour" /></a>
-    <div class="navigation toc">
-      <div class="button">
-        Table of Contents
-      </div>
-      <div class="contents menu">
-        <a href="#overview">Overview</a>
-        <pre>Comments</pre>
-        <a href="#normal-comments">Normal Comments</a>
-        <a href="#option-controlling-comments">Option Controlling Comments</a>
-        <a href="#phantoms">Phantoms</a>
-        <a href="#docstrings">Docstrings</a>
-        <a href="#version-controlling">Version Controlling</a>
-        <a href="#version-querying">Version Querying</a>
-        <pre>Functions</pre>
-        <a href="#keywords">Keywords</a>
-        <a href="#functions">Functions</a>
-        <a href="#spreads">Spreads...</a>
-        <pre>Objects</pre>
-        <a href="#arrays-objects-tuples">Arrays, Objects, and Tuples</a>
-        <a href="#regexps">RegExps</a>
-        <a href="#slicing-splicing-ranges">Array Slicing, Splicing, and Ranges</a>
-        <pre>Statements</pre>
-        <a href="#type-declarations">Type Controlled Declaration</a>
-        <a href="#case-default">Case &amp; Default Statements</a>
-        <pre>Operators</pre>
-        <a href="#existence">Existence Operators</a>
-        <a href="#chained">Chained Operators</a>
-        <a href="#custom">Custom Operators</a>
-        <pre>Advance</pre>
-        <a href="#classes">Classes &amp; Prototypes</a>
-        <a href="#generators">Generators</a>
-        <a href="#jsunit">JS-Unit</a>
-        <a href="#interpolation">Interpolation &amp; Block Strings</a>
-        <a href="#script-tags">"text/paramour" Script Tags</a>
-        <a href="#versions">Paramour Versions</a>
-      </div>
+<!-- [CONTENT-TYPE] -->
+<!--
+HEADER
+NAVIGATION[-BOTTOM|-LEFT|-RIGHT|-TOP]
+CONTENT
+FOOTER[ALTERNATIVE-SERVICES|CREDITS|LINKS]
+DEPENDENCIES
+-->
+<body id="top_of_page" class="devsite-doc-page devsite-header-no-upper-tabs devsite-uhura">
+  <div class="devsite-wrapper">
+    <div class="devsite-top-section-wrapper">
+      <!-- HEADER -->
+      <header class="devsite-top-section nocontent">
+        <div class="devsite-top-logo-row-wrapper-wrapper">
+          <div class="devsite-top-logo-row-wrapper">
+            <div class="devsite-top-logo-row devsite-full-site-width">
+              <button type="button" data-category="Site-Wide Custom Events" data-label="Hamburger menu" class="devsite-expand-section-nav devsite-header-icon-button button-flat material-icons gc-analytics-event"></button>
+              <div class="devsite-product-name-wrapper"><a href="https://ephellon.github.io/Paramour/" data-category="Site-Wide Custom Events" data-label="Project logo (header)" class="devsite-product-name-link gc-analytics-event"><img src="https://ephellon.github.io/Paramour/images/Paramour.png" alt="Paramour" class="devsite-product-logo"/></a><span class="devsite-product-name">
+                  <ul class="devsite-breadcrumb-list">
+                    <li class="devsite-breadcrumb-item"><a href="https://ephellon.github.io/Paramour/" data-category="Site-Wide Custom Events" data-label="Upper Header" data-value="1" class="devsite-breadcrumb-link gc-analytics-event">Paramour</a></li>
+                  </ul></span></div>
+              <div class="devsite-header-upper-tabs"></div>
+              <form id="top-search" --action="https://ephellon.github.io/Paramour/search/" method="GET" search-placeholder="Search" class="devsite-search-form">
+                <div id="searchbox" class="devsite-searchbox">
+                  <input placeholder="Search" type="text" name="q" value="" autocomplete="off" class="devsite-search-field devsite-search-query"/>
+                  <div class="devsite-search-image material-icons"></div>
+                </div>
+              </form>
+              <a href="https://github.com/ephellon/" data-category="Site-Wide Custom Events" data-label="Site header link" class="devsite-header-link devsite-top-button button gc-analytics-event">
+                <div class="devsite-header-link-label">All Projects</div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="devsite-collapsible-section">
+          <div class="devsite-header-background devsite-full-site-width">
+            <div class="devsite-doc-set-nav-row devsite-full-site-width">
+              <!-- NAVIGATION-TOP -->
+              <nav class="devsite-doc-set-nav devsite-nav devsite-overflow-tabs-scroll-wrapper">
+                <ul class="devsite-doc-set-nav-tab-list devsite-overflow-tabs-scroll">
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Paramour/" data-category="Site-Wide Custom Events" data-label="Tab: Home" class="devsite-doc-set-nav-tab gc-analytics-event">Home</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Paramour/reference/" data-category="Site-Wide Custom Events" data-label="Tab: Reference" class="devsite-doc-set-nav-tab gc-analytics-event">Reference</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Paramour/extras/" data-category="Site-Wide Custom Events" data-label="Tab: Samples" class="devsite-doc-set-nav-tab gc-analytics-event">Examples</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Paramour/support/" data-category="Site-Wide Custom Events" data-label="Tab: Support" class="devsite-doc-set-nav-tab gc-analytics-event">Support</a>
+                  </li>
+                  <a id="devsite-feedback-project" href="mailto:minkcbos@gmail.com" type="button" data-category="Site-Wide Custom Events" data-label="Send Feedback Button" track-type="feedback" track-name="sendFeedbackLink" track-metadata-position="header" class="devsite-feedback-button devsite-top-button gc-analytics-event">Send feedback</a>
+                </ul>
+              </nav>
+              <!-- :NAVIGATION-TOP -->
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- :HEADER -->
+      <script>
+        if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
+      </script>
     </div>
-    <div class="navigation try">
-      <div class="button">
-        Try Paramour
-        <div class="repl_bridge"></div>
-      </div>
-      <div class="contents repl_wrapper">
-        <div class='code'>
-          <pre>
-            <textarea id="paramour" class="edit-paramour">### Days until Xmas
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
+      <div class="devsite-site-mask"></div>
+      <div class="devsite-main-content clearfix">
+        <!-- NAVIGATION-LEFT -->
+        <nav class="devsite-section-nav devsite-nav nocontent">
+          <ul class="devsite-nav-list devsite-nav-expandable devsite-nav-only-accordions">
+            <li class="devsite-nav-item devsite-nav-active"><a href="https://ephellon.github.io/Paramour/" track-type="leftNav" track-name="titleLink" track-metadata-position="0" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Overview</a></li>
+            <!-- NEW -->
+            <li class="devsite-nav-item devsite-nav-new devsite-nav-has-status"><a href="https://ephellon.github.io/Paramour/extras/Paramour.zip" track-type="leftNav" track-name="titleLink" track-metadata-position="0" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event"><span class="devsite-nav-text">Executable <code>.JAR</code></span><span class="devsite-nav-icon-wrapper"><span title="New!" class="devsite-nav-icon material-icons"></span></span></a></li>
+            <li class="devsite-nav-item devsite-nav-new devsite-nav-has-status"><a href="https://ephellon.github.io/Paramour/cheangelog.md" track-type="leftNav" track-name="titleLink" track-metadata-position="0" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event"><span class="devsite-nav-text">Change Log</span><span class="devsite-nav-icon-wrapper"><span title="New!" class="devsite-nav-icon material-icons"></span></span></a></li>
+            <!-- :NEW -->
+            <!-- DEMOS -->
+            <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path">5-Minute Demos</span><a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+              <ul class="devsite-nav-section devsite-nav-section-collapsed">
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/extras/#99" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">99 Bottles of Beer</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/extras/#Pyramid" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Pyramid Class</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/extras/#Toggle" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Toggle Class</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/extras/#String Radii" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">String Radix Suite</a></li>
+              </ul>
+            </li>
+            <!-- :DEMOS -->
+
+            <!-- COMMENTS -->
+            <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path">Comments</span><a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+              <ul class="devsite-nav-section devsite-nav-section-collapsed">
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/comments/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Basic Comments</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/comments/phantoms/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Phantoms</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/comments/docstrings/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Docstrings</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/comments/type-annotations/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Type Annotations</a></li>
+
+                <li class="devsite-nav-item devsite-nav-item-heading"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="1" class="devsite-nav-title devsite-nav-title-no-path">Version Comments</span></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/comments/version/controlling/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Version Controlling</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/comments/version/querying/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Version Querying</a></li>
+              </ul>
+            </li>
+            <!-- :COMMENTS -->
+
+            <!-- KEYWORDS -->
+            <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path">Keywords</span><a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+              <ul class="devsite-nav-section devsite-nav-section-collapsed">
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/keywords/reserved/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Reserved Words</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/keywords/type-controlled-declarations/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Type Controlled Declarations</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/keywords/case-and-default/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Case &amp; Default Statements</a></li>
+              </ul>
+            </li>
+            <!-- :KEYWORDS -->
+
+            <!-- FUNCTIONS -->
+            <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path">Functions</span><a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+              <ul class="devsite-nav-section devsite-nav-section-collapsed">
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/functions/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Basic Functions</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/functions/generators/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Case &amp; Default Statements</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/functions/type-controlled-functions/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Type Controlled Functions</a></li>
+              </ul>
+            </li>
+            <!-- :FUNCTIONS -->
+
+            <!-- OBJECTS -->
+            <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path">Objects</span><a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+              <ul class="devsite-nav-section devsite-nav-section-collapsed">
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/objects/tuples/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Tuples</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/objects/arrays/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Array Slicing, Splicing, &amp; Ranges</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/objects/regexps/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">RegExps</a></li>
+
+                <li class="devsite-nav-item devsite-nav-item-heading"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="1" class="devsite-nav-title devsite-nav-title-no-path">Strings</span></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/objects/strings/interpolation/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">String Interpolation</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/objects/strings/block-strings/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Block Strings</a></li>
+              </ul>
+            </li>
+            <!-- :OBJECTS -->
+
+            <!-- CLASSES -->
+            <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path">Classes</span><a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+              <ul class="devsite-nav-section devsite-nav-section-collapsed">
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/classes/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Basic Classes</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/classes/statics/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Static Methods</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/classes/prototypes/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Prototype Methods</a></li>
+              </ul>
+            </li>
+            <!-- :CLASSES -->
+
+            <!-- JS-UNIT -->
+            <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path">JS Unit</span><a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+              <ul class="devsite-nav-section devsite-nav-section-collapsed">
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/js-unit/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Basic Tests</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/js-unit/before-after/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">@Before &amp; @After</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/js-unit/advance/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Advance Tests</a></li>
+              </ul>
+            </li>
+            <!-- :JS-UNIT -->
+
+            <!-- HELP -->
+            <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion"><span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path">Help</span><a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+              <ul class="devsite-nav-section devsite-nav-section-collapsed">
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/help/in-browser/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Running Paramour in a browser</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/help/out-browser/" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Running Paramour out of a browser</a></li>
+                <li class="devsite-nav-item"><a href="https://ephellon.github.io/Paramour/changelog.md" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">Change Log</a></li>
+              </ul>
+            </li>
+            <!-- :HELP -->
+          </ul>
+          </li>
+        </ul>
+      </nav>
+        <!-- :NAVIGATION-LEFT -->
+        <!-- NAVIGATION-RIGHT -->
+        <nav class="devsite-page-nav devsite-nav"></nav>
+        <!-- :NAVIGATION-RIGHT -->
+        <article class="devsite-article">
+          <!-- CONTENT -->
+          <article class="devsite-article-inner">
+            <h1 itemprop="name" class="devsite-page-title">Overview of Paramour</h1>
+            <nav class="devsite-page-nav-embedded devsite-nav"></nav>
+            <div itemprop="articleBody" class="devsite-article-body clearfix">
+              <p><a href="https://ephellon.github.io/Paramour/">Paramour</a>
+                is a client-side, preprocessed JavaScript language.
+                It is based on
+                <a href="http://coffeescript.org/" target="blank_">CoffeeScript</a>,
+                <a href="http://java.com/" target="blank_">Java</a>,
+                <a href="http://python.org/" target="blank_">Python</a>,
+                <a href="http://swift.org/" target="blank_">Swift</a>,
+                and <a href="http://javascript.com/" target="blank_">JavaScript</a>.
+
+                Paramour lets you do what you want, when you need.
+              </p>
+              <p>If you're new to JavaScript, W3Schools offers a host of <a href="http://w3schools.com/js/">tutorials</a>.
+                (Note that this service was not developed by and is not associated with myself.)
+              </p>
+              <h2 id="why_paramour">Why Paramour?</h2>
+              <p>Paramour is extremely flexible and powerful, you can:</p>
+              <ul>
+                <li>Have <a href="/objects/tuples/">Tuples</a>.</li>
+                <li>Perform <a href="/help/js-unit/">unit testing</a> (JS-Unit).</li>
+                <li>Write <a href="/functions/type-controlled/">type controlled functions</a>.</li>
+                <li>Run Paramour <a href="/help/running-out-browser/">outside of a browser</a>.</li>
+              </ul>
+              <p>For demo of Paramour in action, try a 5-minute demo:</p>
+              <ul>
+                <li><a href="/examples/#99">99 Bottles of Beer</a>: See how the easy the infamous 99 bottles song can be.</li>
+                <li><a href="/examples/tuple-class">The Tuple Class</a>: See how the Tuple class was made.</li>
+              </ul>
+              <h2 id="your_first_script">Your first script</h2>
+              <p>
+                The steps below show how to build and run a simple script.
+              </p>
+              <h3 id="set_it_up">Set-up</h3>
+              <ol>
+                <li>Visit <a href="/https://ephellon.github.com/paramour/try-paramour//" target="_blank"><code>/https://ephellon.github.com/paramour/try-paramour//</code></a> to open up the editor.</li>
+                <li>
+                  <p>Delete any code in the script editor and paste in the code below.</p>                  
+<pre translate="no" class="prettyprint notranslate lang-paramour">### Days until Xmas
   @author: W3 Resource Authors
   @url: http://www.w3resource.com/javascript-exercises/javascript-basic-exercise-9.php
 ###
@@ -120,1415 +255,142 @@ round_up(Number n) ->
 "String" days_left = HowManyDays();
 
 alert days_left;
-</textarea>
-          </pre>
-          <pre>
-            <textarea id="javascript" class="edit-javascript"></textarea>
-          </pre>
-          <div class="minibutton ok run" title="Ctrl-Enter">Run</div>
-          <a class="minibutton permalink" id="permalink">Link</a>
-          <div class="minibutton dark sea" id="sea">SEA</div>
-          <br class="clear" />
-        </div>
+</pre>
+                </li>
+                <li>To run the script, click ▶ or press <code>Ctrl+Enter</code></li>
+              </ol>
+              <h2 id="learn_more">Learn more</h2>
+              <p>To continue learning about Paramour, take a look at the following resources:</p>
+              <ul>
+                <li>Paramour - <a href="https://github.com/Ephellon/Ephellon.github.io/blob/master/Paramour/changelog.md">Change Log</a></li>
+                <li>Paramour - <a href="https://github.com/Ephellon/Paramour/blob/master/java/Paramour.js">Source Code</a></li>
+                <li>Paramour - <a href="https://codepen.io/Ephellon/post/paramour">Proposed Features</a></li>
+              </ul>
+            </div>
+            <div class="devsite-content-footer nocontent">
+              <p>
+                Except as otherwise noted, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>;
+                Paramour, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat">MIT License</a>.
+                Java, and JavsScript are registered trademarks of Oracle inc. and/or its affiliates.
+                Google is a registered trademark of Google inc. and/or its affiliates.
+                CoffeeScript is a registered trademark of "Jeremy Ashkenas."
+                Swift is a registered trademark of Apple inc. and/or its affiliates.
+                Python is a registered trademark of Python Software Foundation org. and/or its affiliates.
+              </p>
+              <p itemprop="datePublished" content="2017-05-23T15:26:03.972520" class="devsite-content-footer-date">Last updated August 17, 2017.</p>
+            </div>
+          </article>
+          <!-- :CONTENT -->
+        </article>
       </div>
+      <!-- FOOTER -->
+      <!-- FOOTER[CREDITS|LINKS] -->
+      <footer class="devsite-footer-promos nocontent">
+        <nav class="devsite-full-site-width">
+          <ul class="devsite-footer-promos-list">
+            <li class="devsite-footer-promo">
+              <a href="https://codepen.io/Ephellon/posts/published/" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+                <img src="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" class="devsite-footer-promo-icon"/>
+                Posts
+              </a>
+              <div class="devsite-footer-promo-description">The latest news about Paramour and other projects</div>
+            </li>
+            <li class="devsite-footer-promo"><a href="https://github.com/Ephellon/Paramour/tree/master/examples" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <img src="https://ephellon.github.com/Paramour/images/logo-github.svg" class="devsite-footer-promo-icon"/>
+              GitHub
+              </a>
+              <div class="devsite-footer-promo-description">Fork samples and try them yourself</div>
+            </li>
+            <li class="devsite-footer-promo"><a href="https://github.com/Ephellon/Paramour/issues/new" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <span class="devsite-footer-promo-icon">
+                <svg aria-hidden="true" class="octicon" version="1.1" viewBox="0 0 40 40" height="128" width="128">
+                  <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                </svg>
+              </span>
+              Issues
+              </a>
+              <div class="devsite-footer-promo-description">Something wrong? Post an issue!</div>
+            </li>
+            <li class="devsite-footer-promo"><a href="http://stackoverflow.com/questions/tagged/paramour" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <img src="https://ephellon.github.com/Paramour/images/logo-stack-overflow.svg" class="devsite-footer-promo-icon"/>
+              Stack Overflow
+              </a>
+              <div class="devsite-footer-promo-description">Ask a question under the <code>paramour</code> tag</div>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+      <!-- :FOOTER[CREDITS|LINKS] -->
+      <!-- FOOTER[LINKS] -->
+      <footer class="devsite-footer-linkboxes nocontent devsite-footer-linkboxes-with-sites">
+        <nav class="devsite-full-site-width">
+          <ul class="devsite-footer-linkboxes-list">
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Tools</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a href="/https://ephellon.github.com/paramour/try-paramour//" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Editor</a></li>
+                <li class="devsite-footer-linkbox-item"><a href="https://github.com/Ephellon/Ephellon.github.io/blob/master/Paramour/changelog.md" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Change Log</a></li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Connect</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item">
+                  <a href="https://twitter.com/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Twitter</a>
+                </li>
+                <li class="devsite-footer-linkbox-item">
+                  <a href="https://github.com/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">GitHub</a>
+                </li>
+                <li class="devsite-footer-linkbox-item">
+                  <a href="https://codepen.io/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">CodePen</a>
+                </li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Product Info</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a href="https://raw.githubusercontent.com/Ephellon/Ephellon.github.io/master/LICENSE.txt" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">License</a></li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox devsite-footer-linkbox-sites"><a href="https://ephellon.github.io/" data-category="Site-Wide Custom Events" data-label="Footer Google Developers Link" class="gc-analytics-event devsite-footer-linkbox-logo-link"><img src="https://avatars0.githubusercontent.com/u/8632548?v=4&s=256" class="devsite-footer-linkbox-logo" style="max-height: 32px; width: auto;"/></a>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a href="//codepen.io/ephellon/" data-category="Site-Wide Custom Events" data-label="Footer Android Link" class="gc-analytics-event">CodePen</a></li>
+                <li class="devsite-footer-linkbox-item"><a href="//github.com/ephellon/" data-category="Site-Wide Custom Events" data-label="Footer Chrome Link" class="gc-analytics-event">GitHub</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+      <!-- :FOOTER[LINKS] -->
+      <!-- FOOTER[ALTERNATE-SERVICES] -->
+      <footer class="devsite-utility-footer">
+        <nav class="devsite-utility-footer-nav devsite-nav devsite-full-site-width">
+          <div class="devsite-utility-footer-nav-left">
+            
+          </div>
+        </nav>
+      </footer>
+      <!-- FOOTER[ALTERNATE-SERVICES] -->
+      <!-- :FOOTER -->
     </div>
-    <div class="navigation annotated">
-      <div class="button">
-        Paramour Examples &amp; Files
-      </div>
-      <div class="contents menu">
-        <pre>Files</pre>
-        <a href="/Paramour/extras/#par" target="_blank">Paramour Standard Library</a>
-        <a href="/Paramour/extras/#cute" target="_blank">Paramour Syntax Conventions</a>
-        <pre>Examples</pre>
-        <a href="/Paramour/extras/#99" target="_blank" title="The infamous 99 bottles of beer example">99 Bottles of Beer</a>
-        <a href="/Paramour/extras/#Armstrong" target="_blank" title="An Armstrong number finder">Armstrong Number Finder</a>
-        <a href="/Paramour/extras/#Pyramid" target="_blank" title="A pyramid builder--has both a face and level parameters">Pyramid Builder</a>
-        <a href="/Paramour/extras/#Star Generator" target="_blank" title="The star generator I used for my pen 'Titan Logo' on CodePen">Star Generator</a>
-        <a href="/Paramour/extras/#String Radii" target="_blank" title="A bunch of radix functions--such as `123..toString(16)`">String Radix</a>
-        <a href="/Paramour/extras/#Toggle" target="_blank" title="A simple 'Toggle' class">Toggle Class</a>
-        <a href="/Paramour/extras/#Ultimate Loader" target="_blank" title="'Ultimate Loader' by Rauri on CodePen">Ultimate Loader</a>
-        <a href="/Paramour/extras/#Secco" target="_blank" title="'Secco' by Tiffany Rayside on CodePen">Secco</a>
-        <a href="/Paramour/extras/#Tuple" target="_blank" title="Using Paramour to make Tuples">Tuple</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <span class="bookmark" id="top"></span>
-
-    <p>
-      <b>Paramour is a client-side, preprocessed JavaScript language</b>,
-      based off of
-      <a href="http://coffeescript.org/" target="blank_">CoffeeScript</a>,
-      <a href="http://java.com/" target="blank_">Java</a>,
-      <a href="http://python.org/" target="blank_">Python</a>,
-      <a href="http://swift.org/" target="blank_">Swift</a>,
-and new <a href="http://javascript.com/" target="blank_">ECMAScript</a> features. Though JavaScript is powerful alone,
-      Paramour <i>enhances and simplifies</i> JavaScript's best and worst qualities.<br><br>
-      <b>It is assumed that you, the reader, know at least the basics of JavaScript, and if not, see <a href="http://w3schools.com/js/" class="javascript logo" target="_blank">"JavaScript"</a> by W3Schools.</b>
-    </p>
-
-    <p>
-      Paramour is a multi-paradigm language (17):<br>
-      <h2>Paramour's Programming Paradigms</h2>
-      <ul>
-        <li><pre>Block Structured</pre></li>
-        <li><pre>Conceptual</pre></li>
-        <li><pre>Dynamic</pre></li>
-        <li><pre>End User</pre></li>
-        <li><pre>Event Driven</pre></li>
-        <li><pre>Expression Oriented</pre></li>
-        <li><pre>Functional</pre></li>
-        <li><pre>Imperative</pre></li>
-        <li><pre>Modular</pre></li>
-        <li><pre>Object Oriented</pre></li>
-        <li><pre>Procedural</pre></li>
-        <li><pre>Protocol Oriented</pre></li>
-        <li><pre>Prototype Oriented</pre></li>
-        <li><pre>Reflective</pre></li>
-        <li><pre>Scripting</pre></li>
-        <li><pre>Structured</pre></li>
-        <br class="clear"/>
-        <li><pre>Latest Version 27.1.1:
-          <a href="https://codepen.io/ephellon/post/paramour" target="_blank" title="CodePen">Read about 28.7.0</a>,
-          <a href="extras/par.min.js" target="_blank" title="70.0 Kb">Download 28.7.0</a></pre></li>
-          <a href="extras/Paramour.zip" target="_blank" title="57.0 Kb">Download 28.7.0 (JAR Executable)</a></pre></li>
-      </ul>
-    </p>
-
-    <h2>
-      <span id="overview" class="bookmark"></span>
-      Overview
-    </h2>
-
-  <p>
-    <i>The basics of Paramour.</i> <b>(Follow the same rules for line terminators as JavaScript)</b>.<br>
-    <b>When omitting parenthesis, only the closest string/name token is taken, not the whole line (besides <code>super</code> in <code>.prototype</code> methods)</b>.<br>
-    <b class="paramour logo">Paramour is on the left</b>,
-    <b class="javascript logo">JavaScript is on the right</b>
-  </p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_overview"># Assignment
-var i = 0;
-var(array = ["Nicole", "Richard"], N, R)
-    = array[i++],
-  G = "Gumball",
-  D = "Darwin",
-  A = "Anais",
-age = 12;
-# $doc -> document
-# $R => Math.random()
-
-# Arrays
-var chars = [G, D, A, N, R];
-
-# Tuples ([] + {})
-var(list = .{G, D, A, N, R}, gummball, darwin, anais, nicole, richard)
-  = Tuple.next;
-
-# Objects
-var Gumball = {
-  name: G
-  age: age
-  brother: D
-  sister: A
-  siblings: [D, A]
-  mother: N
-  father: R
-  parents: [N, R]
-};
-
-# Functions
-$doc.writeln = (message)
-  => $doc.body.innerHTML += message + "<br>";
-
-write(message)
-  => $doc.writeln message;
-
-# Spreads
-race(winner, ...runners) =>
-  write(winner, runners);
-
-var tobias, penny;
-
-# Existence
-if(defined tobias)
-  alert "Penny will be mine!--Tobias";
-
-if(undefined penny)
-  alert "I don't exist yet--Penny";
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_overview = document.querySelector("#E_overview").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_overview);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_overview)'>run</div>
-      <br class='clear' />
-    </div>
-
-  <hr>
-
-    <h1>Comments &amp; Phantoms</h1>
-    <b><i>These are normal comments, and comments that control Paramour</i></b>
-    <h2>
-      <span id="normal-comments" class="bookmark"></span>
-      Normal Comments
-    </h2>
-
-    <p><i>Just documenting whatever you're doing.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_normal_comments">
-# single line comment
-### multi-line comments
-  blah blah blah
-###
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_normal_comments = document.querySelector("#E_normal_comments").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_normal_comments);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_normal_comments)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="option-controlling-comments" class="bookmark"></span>
-      Option Controlling Comments
-    </h2>
-
-    <p><i>These comments change how Paramour is compiled.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_option_controlling_comments">
-# below will be written as "option - default value, description"
-# note: "@option" in a single-line comment enables the option
-# e.g. "# @option" or "// @option" if @native is enabled
-
-# deps - true, "loads" all functions used in the compiled code (if Paramour has defined the function)
-# embed - false, adds the SEA comment to the end of the code
-# mini - false, minifies the compiled code
-# native - false, forces comments to be JavaScript executable; donesn't allow "#"
-# strict - false, encloses the compiled code in a function, and changes "var CLASS" to "const CLASS"
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_normal_comments = document.querySelector("#E_option_controlling_comments").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_option_controlling_comments);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_option_controlling_comments)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="phantoms" class="bookmark"></span>
-      Phantoms
-    </h2>
-
-    <p><i>Use these to shorten code and reduce errors.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_phantoms">
-# $win -> window
-# $fav -> prompt("Enter your favorite 'Amazing World of Gumball' character's name", "Anais")
-# $R => (Math.random().toString(36) + Math.random().toString(36)).replace(/[\.\d]/g, '')
-
-# -> is a simple copy
-# => is an eval copy
-
-var Gumball = "Gumball", Darwin = "Darwin", Anais = "Anais";
-
-var $R = Math.random();
-# a random, "private" variable name
-if($R < Math.random())
-  alert "$R failed";
-else
-  alert "$R passed";
-
-$win.favorite = $fav
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_phantoms = document.querySelector("#E_phantoms").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_phantoms);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_phantoms)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="docstrings" class="bookmark"></span>
-      Docstrings
-    </h2>
-
-    <p><i>Further detail of what you're doing, fantastic for type controlled functions. (The object being documented will have a <code>DOCSTRING</code> property)</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_docstrings">
-/** (message, sender, reciever)
- * Writes to the 'reciever'
- * @param {String} a The first argument
- * @param b The second argument
- * @param c The third, and final argument
- */
-write(message, sender, reciever) {
-  # do something with that
-}
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_docstrings = document.querySelector("#E_docstrings").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_docstrings);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_docstrings)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="version-controlling" class="bookmark"></span>
-      Version Controlling
-    </h2>
-
-    <p><i>Have you ever wanted to write multiple versions of the same code, but not repeat it, such as a <b>destructor</b>? Well "Version Controlling" is here for you.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_version_controlling">
-# @1.3
-# run Paramour at JavaScript version 1.3
-
-# @1.5
-# run Paramour at JavaScript version 1.5
-# All of the Paramour examples after this will run at 1.5
-
-# supported versions
-# 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.8.1, 1.8.5
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_version_controlling = document.querySelector("#E_version_controlling").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_version_controlling);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_version_controlling)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="version-querying" class="bookmark"></span>
-      Version Querying
-    </h2>
-
-    <p><i>Need to keep versions seperate? Use version querying.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_version_querying">
-# Destructor example
-
-var names = ["Gumball", "Darwin", "Anais"];
-# is-version? code-block #?
-# 1.7?
-var [gumball, darwin, anais] = names;
-#?
-
-# isnt-version?! code-block #?
-# 1.7?!
-=> (['gumball', 'darwin', 'anais'] = names);
-
-[Array = Array] {
-  for(var i = 0; i < $1.length; i++)
-    eval "var ${$1[i]} = ${$2[i]}";
-}
-#?
-
-# has-at-least-version?* block #?
-# 1.3?*
-console.log "Congratulations, you have at least JavaScript 1.3"
-#?
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_version_querying = document.querySelector("#E_version_querying").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_version_querying);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_version_querying)'>run</div>
-      <br class='clear' />
-    </div>
-
-  <hr>
-
-    <h1>Functions</h1>
-    <b><i>Running and stopping as I please.</i></b>
-
-    <h2>
-      <span id="keywords" class="bookmark"></span>
-      Keywords
-    </h2>
-
-    <p><i>These are escape sequences for JavaScript phrases/words.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_keywords">
-fn(args...) {
-  if(undefined (args[0]))
-    -> "return";
-  else if(defined (args[1]))
-    ~> "throw";
-  else if(undefined (args[2]))
-    +> "throw new";
-  else if(defined (args[3]))
-    &> "yield";
-};
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_keywords = document.querySelector("#E_keywords").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_keywords);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_keywords)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="functions" class="bookmark"></span>
-      Functions
-    </h2>
-
-    <p><i>Functions are defined by a "mini" version of the JavaScript syntax. (They do not rely on indentation, that's only apart of the Paramour syntax conventions)</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_functions">
-writeln(message) {
-  -> write(message + '\n')
-}
-
-write(message) =>
-  document.write message;
-
-var writeun = (message)
-  => write(message + "\b");
-
-var error(message) +>
-  Error message;
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_functions = document.querySelector("#E_functions").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_functions);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_functions)'>run</div>
-      <br class='clear' />
-    </div>
-    <p>
-      <b><i>Functions may also contain default values in their arguments</i></b>
-    </p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_functions_1">
-run(from = "Tina Rex")
-  => "${from} is moving, run!";
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_functions_1 = document.querySelector("#E_functions_1").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_functions_1);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_functions_1)'>run</div>
-      <br class='clear' />
-    </div>
-    <p>
-      <b><i>Functions can also be type-controlled (which is how "Custom Operators" work). The type can be anything, <code>Animal character</code>, <code>String name</code>, etc.</i></b>
-    </p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_functions_2">
-write(String message = "Hello World!")
-  => document.write message;
-
-write(Cat cat)
-  => write "${cat.name} wants to tell you something...";
-
-# * and ... can be put either in front or behind the variable name
-# * means "Any"
-write(* item) =>
-  write(item + "");
-
-# ... means "Spread"
-write(item, ... items) =>
-  write([item, items]);
-
-# Anonymous Functions with types will default to "__"
-(args...) {
-  # this function's name will be "__"
-}
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_functions_2 = document.querySelector("#E_functions_2").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_functions_2);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_functions_2)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="spreads" class="bookmark"></span>
-      Spreads...
-    </h2>
-
-    <p><i>Paramour allows the use of Spreads in function declarations, no matter its position.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_spreads">
-var gold, silver, bronze, contenders;
-
-place(first, second, thrid, others..., last) {
-  gold = first
-  silver = second
-  bronze = thrid
-  contenders = [others, last]
-}
-
-var runners = [
-  "Penny Fitzgerald",
-  "Gumball Watterson",
-  "Darwin Watterson",
-  "Tobias Wilson",
-  "Tina Rex",
-  "Anais Watterson",
-  "Bobert"
-];
-
-place runners...
-
-alert "In first, we have ${gold}, with ${silver} just moments behind--and here comes ${bronze} taking 3rd, followed by ${contenders[0]} with ${contenders[1]} in last"
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_spreads = document.querySelector("#E_spreads").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_spreads);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_spreads)'>run</div>
-      <br class='clear' />
-    </div>
-    <p>
-      <b><i>Spreads can also be controlled by type, and.or have type annotations (ignored)</i></b>
-    </p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_spreads_with_type">
-# accepts a spread of strings, returns a string
-run(String from...):String {
-  -> (from.length > 1)?
-    "A tiny little ${from}.":
-  "OMG! Run away from ${from.join(', ')}!";
-}
-
-console.log(run "bunny");
-# A tiny little bunny.
-
-console.warn(run("bunny", "goblin", "and t-rex"));
-# OMG! Run away from bunny, goblin, and t-rex!
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_spreads_with_type = document.querySelector("#E_spreads_with_type").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_spreads_with_type);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_spreads_with_type)'>run</div>
-      <br class='clear' />
-    </div>
-    <hr>
-
-    <h1>Objects</h1>
-    <p><i>This includes Arrays, Objects, RegExps, and Tuples.</i></p>
-
-    <h2>
-      <span id="arrays-objects-tuples" class="bookmark"></span>
-      Arrays, Objects, and Tuples
-    </h2>
-
-      <p><i>There isn't much difference, other than optional commas; and Tuples, which use a dot-brace pattern <code>.{}</code>.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples">
-var watterson_kids = ["Gumball", "Darwin", "Anais"],
-    fitzgerald_kids = [
-      "Penny"
-      "Penny's Sister"
-    ];
-
-var wattersons = {
-  mother: "Nicole Watterson"
-  father: "Richard Watterson"
-  kids: watterson_kids
-};
-
-# families.next(), or Tuple.next can be used to traverse the Tuple
-var families = .{
-  wattersons,
-  {
-    mother: "Mrs. Fitzgerald"
-    father: "Patrick Fitzgerald"
-    kids: fitzgerald_kids
-  }
-};
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_arrays_objects_tuples = document.querySelector("#E_arrays_objects_tuples").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_arrays_objects_tuples);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples)'>run</div>
-      <br class='clear' />
-    </div>
-      <p><i>Paramour will also, automatically quote reserved words that are meant as properties/methods.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_arrays_objects_tuples_1">
-var gumball = {
-  class: 6
-}
-
-gumball.eval = ()
-  => "Not even";
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_arrays_objects_tuples_1 = document.querySelector("#E_arrays_objects_tuples_1").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_arrays_objects_tuples_1);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_arrays_objects_tuples_1)'>run</div>
-      <br class='clear' />
-    </div>
-
-      <h2>
-      <span id="regexps" class="bookmark"></span>
-      RegExps
-    </h2>
-
-      <p><i>Quasi RegExps which are like <a href="https://coffeescript-cookbook.github.io/chapters/regular_expressions/heregexes" target="blank_">CoffeScript's Heregexes</a>.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_regexps">
-# normal regexps behave like normal regexps
-var a = /(?:ignore)/i;
-
-# Quasi RegExps can also have comments and be interpolated
-# The example doesn't work here (CodeMirror error)
-# so please see https://codepen.io/ephellon/pen/XKPVgw/
-phoneNo(String number):Boolean =>
-///
-  ^\(?(\d{3})\)? # area code, ignore optional parens
-  [-\s]?(\d{3})  # prefix, ignore optional dash or space
-  -?(\d{4})      # line-number, ignore optional dash
-///.test number;
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_regexps = document.querySelector("#E_regexps").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_regexps);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_regexps)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="slicing-splicing-ranges" class="bookmark"></span>
-      Array Slicing and Splicing, and Ranges
-    </h2>
-
-    <p><i>Slice and Splice more naturally with these shortcuts.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_slicing_splicing_ranges">
-var numbers = [9..1], first3, middle3, last3;
-
-# .. means slice (or inclusive, e.g. [1..9] = 1 to 9 by 1)
-# ... means splice (or exclusive, e.g. [1...9] = 1 to 8 by 1)
-# [a..b] = [...] is also splice
-# [a...b] = [...] is also splice
-
-first3 = numbers[0..3];
-  # numbers.SLICE(from 0, towards the end 3 indexes)
-  # "numbers from[0, 2] => [9, 8, 7]"
-
-middle3 = numbers[3..3];
-  # numbers.SLICE(from 3, towards the end 3 indexes)
-  # "numbers from [3, 5] => [6, 5, 4]"
-
-last3 = numbers[-2..3];
-  # numbers.SLICE(from the end 3 indexes, towards to the end 3 indexes)
-  # "nubers from[6, 8] => [3, 2, 1]
-
-numbers[0..5] = ["nine", "eight", "seven", "six", "five"];
-  # numbers.SPLICE(0, 5, "nine", "eight", "seven", "six", "five")
-  # same as: numbers[0..5] = ["nine ... five".split " "]
-  # numbers = ["nine", "eight", "seven", "six", "five", 4, 3, 2, 1]
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_slicing_splicing_ranges = document.querySelector("#E_slicing_splicing_ranges").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_slicing_splicing_ranges);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_slicing_splicing_ranges)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <hr>
-
-    <h1>Statements</h1>
-    <b><i>The more you make, the better things get.</i></b>
-
-    <h2>
-      <span id="type-declarations" class="bookmark"></span>
-      Type Controlled Declarations
-    </h2>
-
-      <p><i>Paramour allows the use of prefixed strings to declare a type for a variable.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_type_declarations">
-var "String" string = "hello world!",
-    "Object" object = {
-      "Date" date: new Date()
-      "Object" extra: {}
-    };
-
-# Capitalized constructor names can also be used
-### Deprecated
-var String s = "goodbye nation.",
-    Object o = {
-      Date d: new Date()
-      Object e: {}
-    }
-###
-
-# Fallback values can also be used
-var "Number" number = "this is not a number": 25;
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_type_declarations = document.querySelector("#E_type_declarations").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_type_declarations);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_type_declarations)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="case-default" class="bookmark"></span>
-      Case &amp; Default Statements
-    </h2>
-
-      <p><i>Paramour allows the use of <code>case</code> and <code>default</code> as parenthesized statements.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_case_default">
-getClass(gumball) {
-  switch(gumball.class) {
-    case[1..5] {
-      -> "This grade seems a bit low..."
-    }
-
-    case(6, 7, 8)
-      -> "That seems about right";
-
-    case 9:
-      -> "Ehh...";
-      break;
-
-    # Note: spaces only work with numbers
-    default(10 11 12) {
-      -> "That's either too high, or undefined"
-    }
-  }
-}
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_case_default = document.querySelector("#E_case_default").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_case_default);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_case_default)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <hr>
-
-    <h1>Operators</h1>
-    <b><i>To spice things up of course.</i></b>
-
-    <h2>
-      <span id="existence" class="bookmark"></span>
-      Existence Operators
-    </h2>
-
-    <p><i>Check for the existence of variables more robustly.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_existence">
-var(penny, gumball)
-       = {love: true},
-tobias = {};
-
-if(defined (gumball.love) && defined (penny.love))
-  alert "She loves you back!";
-
-if(undefined (tobias.love))
-  alert "She still doesn't love you.";
-
-if((+tobias.love) === NaN || NaN (+tobias.love))
-  alert "tobias.love is NaN";
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_existence = document.querySelector("#E_existence").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_existence);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_existence)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="chained" class="bookmark"></span>
-      Chained Operators
-    </h2>
-
-    <p><i>Chain operators just like algebra (except for => calls).</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_chained">
-var a = 1, b = 2, c = 3, d = 4, e = 5;
-
-  alert(c < d > b < e != "1" == ((c - b) + "") > (a - b))
-# alert(3 < 4 > 2 < 5 != "1" == ((3 - 2) + "") > (1 - 2))
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_chained = document.querySelector("#E_chained").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_chained);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_chained)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <h2>
-      <span id="custom" class="bookmark"></span>
-      Custom Operators
-    </h2>
-
-      <p><i>Use operators to your liking, except for <code>=&gt;</code>, <code>-&gt;</code>, <code>+&gt;</code>, <code>&amp;&gt;</code>, <code>//</code>, <code>/*</code>, and <code>*/</code>.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_custom">
-[String - *] {
-  # * as a type means "Any"
-  # ... means "Spread"
-  -> $1.replace($2, "")
-}
-
-[String?] {
-  # is the last character an 's'
-  -> $1[$1.length - 1] === "s"?
-    "'": "'s"
-}
-
-# ";" or "equ" lets Paramour know where the operator belongs
-equ[Number ; Number] =>
-  $1 === $2;
-
-# => () to use custom symbol operators
-var apples = [
-  => ("Anias")?,    # Anias' Apple
-  => ("Gummball")?, # Gumball's Apple
-  => ("Darwin")?    # Darwin's Apple
-]
-
-var a => ("Nicole" - "ic")
-# =, +=, -=, etc. work here too
-# var a = "";
-# a +=> ("Nicole" - "ic")
-
-var b = 5 equ 3; # false
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_custom = document.querySelector("#E_custom").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_custom);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_custom)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <hr>
-
-    <h2>
-      <span id="classes" class="bookmark"></span>
-      Classes &amp; Prototypes
-    </h2>
-
-    <p><i>Use classes like they were meant to be.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_classes">
-# String.proptotype
-String@add = String@concat;
-String::sub = String::replace;
-String..mul = String..repeat;
-
-var cats = [];
-
-Animal {
-  <init>(name, .type) {
-    name = name.split " "
-    @name = {
-      first: name[0]
-      middle: (name.length > 2)? name[1]: ""
-      last: name[name.length - 1]
-    }
-    -> cats.push @, @
-  }
-
-  .getFirstName() {
-    -> @name.first
-  }
-
-  getLastName() {
-    # .method is optional
-    -> @name.last
-  }
-
-  .getMiddleName() {
-    -> @name.middle
-  }
-
-  # This is a static (parent only) method
-  *.from(String args...) {
-    -> Tuple.from args...;
-  }
-};
-
-Animal.Cat {
-  <init>(name) {
-    -> new Animal(name, "Cat")
-  }
-
-  .getMiddleName(String name) {
-    -> @name.middle = name;
-  }
-
-  .getMiddleName(name) {
-    if(defined (super name))
-      -> @name.middle
-    -> ""
-  }
-};
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_classes = document.querySelector("#E_classes").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_classes);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_classes)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <hr>
-
-    <h2>
-      <span id="generators" class="bookmark"></span>
-      Generators
-    </h2>
-
-    <p><i>Use generators like they were meant to be.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_generators">
-*grab(item) {
-  &> item
-}
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_generators = document.querySelector("#E_generators").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_generators);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_generators)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <hr>
-
-    <h2>
-      <span id="jsunit" class="bookmark"></span>
-      JS-Unit
-    </h2>
-
-    <p><i>If you want to test out some code, or want to find a bug, use this.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_jsunit">
-@Before {
-  @@name = "Gumball Watterson"
-};
-
-@After {
-  # if you want anything to do after, use this
-};
-
-# Basic test
-@Test {
-  assertEquals(@@name, "Gumball Watterson") # pass
-  assertNull true # fail
-};
-
-# Advace test
-@Test(object) {
-  toconsole = true # force Paramour to print to the console
-  assertNotNull(object.name) # pass
-  stdout object # console.log
-  assertNotEquals(object.name, @@name) # pass
-}({
-  name: "Rob"
-  age: 23
-});
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_jsunit = document.querySelector("#E_jsunit").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_jsunit);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_jsunit)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <hr>
-
-    <h2>
-      <span id="interpolation" class="bookmark"></span>
-      Interpolation &amp; Block Strings
-    </h2>
-
-    <p><i>Hopefully you've noticed the <code>${...}</code> inside of some strings above, and recognized it as interpolation. The "Quasi" string family members are the only multiline strings allowed., but all strings allow interpolation.</i></p>
-    <div class='code'>
-      <pre>
-<textarea class="compile-paramour" type="text/paramour" id="E_interpolation">
-"PI = ${Math.PI}" # interpolation
-
-var bqua = # bottom-level quasi (parsed after comments)
-`
-# comment is handled BEFORE this string
-var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
-# * if the JavaScript version handles quasis, Paramour let's JavaScript do its thing,
-# otherwise, Paramour handles it
-`
-
-var tqua = # top-level quasi (parsed before everything, even comments)
-"""
-# comment is handled AFTER this string
-var PI = ${Math.PI} # interpolation of quasis are handled accordingly*
-# * if the JavaScript version handles quasis, Paramour let's JavaScript do its thing,
-# otherwise, Paramour handles it
-"""
-
-###
-  Top level - ["'`]{3}
-  Bottom level - `
-###
-</textarea>
-      </pre>
-      <pre><textarea class="compile-javascript"></textarea></pre>
-      <script>
-        window.example_interpolation = document.querySelector("#E_interpolation").value;
-      </script>
-      <div class='minibutton load' onclick='loadConsole(example_interpolation);'>load</div>
-      <div class='minibutton ok' onclick='runConsole(example_interpolation)'>run</div>
-      <br class='clear' />
-    </div>
-
-    <hr>
-
-    <h2>
-      <span id="script-tags" class="bookmark"></span>
-      "text/paramour" Script Tags
-    </h2>
-
-    <p><i>
-    If you want to run a Paramour script that is loaded via a URL, then this section is for you.<br>
-
-    To use this feature, you must have a <code>&lt;script type="text/paramour"&gt;</code> tag,
-    or <code>type="text/par"</code> if you feel a bit lazy. You can download the latest version <a href="extras/par.min.js" target="_blank">here</a>, about 70 Kb.<br>
-
-    Afterwards, you simply call <code>Paramour.compile(true)</code> and Paramour will handle the rest from there.<br>
-
-    <b>A simple example:</b>
-    </i></p>
-    <div class='code'>
-      <pre style='color: #f42424'>&lt;head&gt;
-  &lt;script src="par.min.js"&gt;&lt;/script&gt;
-  &lt;script src="Gumball.par" type="text/par"&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body onload="Paramour.compile(true)"&gt;
-  &lt;!-- blah blah blah --&gt;
-&lt;/body&gt;</pre>
-      <br class='clear' />
-    </div>
-
-    <hr>
-
-    <h2>
-      <span id="versions" class="bookmark"></span>
-      Paramour Versions (and notes, newest to oldest)
-    </h2>
-
-    <ul>
-      <li>
-        <pre>Gold - XXVII, 27.0 (Chet Faker: "Gold")</pre>
-
-        <ul>
-          <li>new type-controlled spreads, <code>fn(Object o, String strings..., Number n) => strings;</code></li>
-          <li>improved syntax recognition</li>
-          <li>improved compiling status</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Magnolia - XXVI, 26.0 (Playboi Carti: "Magnolia")</pre>
-
-        <ul>
-          <li>improved syntax recognition</li>
-          <li>improved compiling status</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Your Wish - XXV, 25.0 (Majid Jordan: "A Place Like This")</pre>
-
-        <ul>
-          <li><del>New "Type name = value" syntax</del></li>
-          <li>improved syntax recognition</li>
-        </ul>
-      </li>
-      <li>
-        <pre>... - XXIV, 24.0 (A Tribe Called Quest: "We The People....")</pre>
-
-        <ul>
-          <li>new HTML Tag types, <code>fn(&lt;Element&gt; e) =&gt; e</code></li>
-          <li>new <code>.{}</code> Tuple syntax</li>
-          <li>new type-controlled declarations, <code>"String" s = "hello world"</code>, <code>a = {"Date" d: new Date()}</code></li>
-          <li>new <code>self</code> reserved word</li>
-          <li>new <i>strict user</i> syntax, <code># @strict</code></li>
-          <li><code>*static_method</code> syntax for static methods (i.e. Array.from)</li>
-          <li>improved Tuple, class and prototype syntaxes</li>
-          <li>prototype method names now default to their parent caller's name, <code>mthd(Type variable)</code> will be named "mthd"</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Consuela - XXIII, 23.0 (Belly: "Consuela (feat. Young Thug &amp; Zack)")</pre>
-
-        <ul>
-          <li>improved syntax recognition</li>
-          <li>updated comments (unminified only)</li>
-          <li>updated <code>operator[Type operator Type]</code> syntax for named operators (still supports <code>operator[Type ; Type]</code>)</li>
-          <li>new <code>"type" x</code> typeof syntax, <code>"number" 123</code> is <code>"number" === typeof 123</code></li>
-        </ul>
-      </li>
-      <li>
-        <pre>Thursday - XXII, 22.0 (The Weeknd: "Thursday")</pre>
-
-        <ul>
-          <li>Fixed operator handling</li>
-          <li><code>new</code> operator syntax, <code>string = *String(123)</code></li>
-          <li>"assigned" brace handling--an assigned brace (<code>= {}</code>, <code>: {}</code>, <code>, {}</code>) does not need commas, as long as it has newline characters</li>
-          <li>new <code>NewLine</code> constructor</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Calm Down - XXI, 21.0 (G-Eazy: "Calm Down")</pre>
-
-        <ul>
-          <li> Enhanced JSUNIT syntax and features
-            <ul>
-              <li>added <code>Object JSUNIT.Test</code> for all tests</li>
-            </ul>
-          </li>
-          <li><code>a &lt; b &gt; c != d == e | f</code> - chained operators syntax</li>
-          <li>"Lazy Folding" error checking</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Backseat Freestyle - XX, 20.0 (Kendrick Lamar: "Backseat Freestyle")</pre>
-
-        <ul>
-          <li><code>.prototype</code> - type-controlled functions (dockets) - "sockets" and "pockets"</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Cool Girl - XIX, 19.0 (Tove Lo: "Cool Girl")</pre>
-
-        <ul>
-          <li><code>"""</code>, <code>'''</code>, <code>```</code> - top-level quasi blocks</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Fade - XVIII, 18.0 (Kanye West: "Fade")</pre>
-
-        <ul>
-          <li><code>Paramour.compile</code> - script loading and handling functions</li>
-          <li><code>Paramour.run</code> - <code>Paramour(input)</code></li>
-          <li><code>Paramour.eval</code> - <code>eval(Paramour(input))</code></li>
-          <li><code>a::b</code>, <code>a..b</code> - <code>a.prototype.b</code> shortcuts</li>
-          <li><code>NaN a</code>, <code>a == NaN</code>, <code>a === NaN</code> - <code>NaN</code> operator and comparison <code>((a + '') === 'NaN')</code></li>
-        </ul>
-      </li>
-      <li>
-        <pre>Caroline - XVII, 17.0 (Aminé: "Caroline")</pre>
-
-        <ul>
-          <li><code>shock, unshock</code> - Paramour helper functions</li>
-          <li><code>add(a, b, c) =&gt; a + b + c;</code> - Fat arrow, one line function syntax</li>
-          <li><code>[Type operator Type]</code> - new operator statement syntax</li>
-          <li><code>[a..b]</code>, <code>[a...b]</code> - slice and splice and range syntax</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Starboy - XVI, 16.0 (The Weeknd: "Starboy (feat. Daft Punk)")</pre>
-
-        <ul>
-          <li><code># version? block #?</code> - Conditional comments syntax</li>
-          <li><code>@Test, @Before, @After</code>  -JSUNIT</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Krogstad - XV, 15.0 (Henrik Ibsen: "Nils Krogstad")</pre>
-
-        <ul>
-          <li><code>Yield</code> type|statement proposal</li>
-          <li><code>yield</code> keyword <code>&amp;&gt;</code></li>
-          <li><code>throw new</code> keyword <code>+&gt;</code></li>
-          <li><code>Tuple.next, Tuple.from</code> - Tuple enhancements</li>
-          <li><code>/* Docstring */</code> - DOCSTRING statement syntax</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Prynne - XIV, 14.0 (Nathaniel Hawthorne: "Hester Prynne")</pre>
-
-        <ul>
-          <li><code>Spread</code>, <code>...</code> type</li>
-          <li><code>Any</code>, <code>*</code> type</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Jasmine - XIII, 13.0</pre>
-
-        <ul>
-          <li><del><code>&lt;operator # []&gt;</code> - statement syntax</del></li>
-        </ul>
-      </li>
-      <li>
-        <pre>Bond - XII, 12.0 (Ian Fleming: "James Bond")</pre>
-
-        <ul>
-          <li><code>case(a, b, c)</code> statement</li>
-          <li><code>default(a, b, c)</code> statement</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Monica - XI, 11.0 ("Monica S. Lewinsky")</pre>
-
-        <ul>
-          <li><code>defined</code> operator</li>
-          <li><code>undefined</code> operator</li>
-          <li><code>var(a, b, c) = #value</code> statement</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Cleopatra - X, 10.0 ("Cleopatra VII Philopator")</pre>
-
-        <ul>
-          <li>Initial release (stable)</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Iota - IX, 9.0</pre>
-      </li>
-      <li>
-        <pre>Theta - VIII, 8.0</pre>
-      </li>
-      <li>
-        <pre>Eta - VII, 7.0</pre>
-
-        <ul>
-          <li>Initial release (unstable)</li>
-        </ul>
-      </li>
-      <li>
-        <pre>Zeta - VI, 6.0</pre>
-      </li>
-      <li>
-        <pre>Epsilon - V, 5.0</pre>
-      </li>
-      <li>
-        <pre>Delta - IV, 4.0</pre>
-      </li>
-      <li>
-        <pre>Gamma - III, 3.0</pre>
-      </li>
-      <li>
-        <pre>Beta - II, 2.0</pre>
-      </li>
-      <li>
-        <pre>Alpha - I, 1.0</pre>
-
-        <ul>
-          <li>Initial proposal</li>
-        </ul>
-      </li>
-    </ul>
-
-  <!-- Scripts -->
-
-  <script src="documentation/vendor/jquery-1.6.4.js"></script>
-  <script src="extras/par.min.js"></script>
-  <script src="index.js"></script>
-
-  <script>
-  var closeMenus, compileSource, evalJS, hash, sourceFragment, src;
-  sourceFragment = "try:";
-  compileSource = function() {
-    var el, location, message, results, source;
-    source = Peditor.getValue();
-    results = $('#javascript');
-    window.compiledJS = '';
-    try {
-      window.compiledJS = Paramour(source, {embed: true});
-      el = results[0];
-      if (el.innerText) {
-        el.innerText = window.compiledJS;
-      } else {
-        results.text(window.compiledJS);
-      }
-      results.removeClass('error');
-      $('.minibutton.run').removeClass('error');
-    } catch (error1) {
-      location = error1.location, message = error1.message;
-      if (location != null) {
-        message = "Error on line " + (location.first_line + 1) + ": " + message;
-      }
-      results.text(message).addClass('error');
-      $('.minibutton.run').addClass('error');
-    }
-    return $('#permalink').attr('href', "#" + sourceFragment + (encodeURIComponent(source)));
-  };
-  $('#paramour').keyup(function() {
-    return compileSource();
-  });
-  evalJS = function() {
-    try {
-      return eval(window.compiledJS);
-    } catch (error) {
-      return alert(error), error;
-    }
-  };
-  window.loadConsole = function(content) {
-    Peditor.setValue(content);
-    Jeditor.setValue(Paramour(content, {embed: true}));
-    compileSource();
-    $('.navigation.try').addClass('active');
-    Jeditor.focus();
-    Peditor.focus();
-    return false;
-  };
-    window.runConsole = function(content) {
-      loadConsole(content);
-      return evalJS();
-    }
-  closeMenus = function() {
-    return $('.navigation.active').removeClass('active');
-  };
-  $('.minibutton.run').click(function() {
-    return evalJS();
-  });
-  $('.navigation').click(function(e) {
-    if (e.target.tagName.toLowerCase() === 'a') {
-      return;
-    }
-    if ($(e.target).closest('.repl_wrapper').length) {
-      return false;
-    }
-    if ($(this).hasClass('active')) {
-      closeMenus();
-    } else {
-      closeMenus();
-      $(this).addClass('active');
-    }
-    return false;
-  });
-  $(document.body).keydown(function(e) {
-    if (e.which === 27) {
-      closeMenus();
-    }
-    if (e.which === 13 && (e.metaKey || e.ctrlKey) && $('.minibutton.run:visible').length) {
-      return evalJS();
-    }
-  }).click(function(e) {
-    if ($(e.target).hasClass('minibutton')) {
-      return false;
-    }
-    return closeMenus();
-  });
-  $('#sea').click(function() {
-    console.log(Paramour.report, new Date());
-    alert("The SEA was written to your console.");
-    return;
-  });
-  $("#permalink").click(function(e) {
-    window.location = $(this).attr("href");
-    return false;
-  });
-  hash = decodeURIComponent(location.hash.replace(/^#/, ''));
-  if (hash.indexOf(sourceFragment) === 0) {
-    src = hash.substr(sourceFragment.length);
-    loadConsole(src);
-  }
-  window.timeout = window.timeout || 0;
-  with(window)
-  with(Peditor) {
-    on("keyup", function() {
-      clearTimeout(timeout);
-      setTimeout(function() {
-        Jeditor.setValue(Paramour(getValue(), {embed: true}));
-      }, 500);
-    });
-  }
-  compileSource();
-  </script>
-
+    <!-- DEPENDENCIES -->
+    <script>var dataLayer = [{"freeTrialEligibleUser": "False", "userCountry": "US", "language": {"requested": "en", "served": "en"}, "projectName": "Apps Script", "scriptsafe": null, "signedIn": "False", "internalUser": "False"}];</script>
+    <script src="https://ephellon.github.io/Paramour/js/jquery_ui-bundle.js"></script>
+    <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
+    <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
+    <script>
+      (function($) {
+      devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '1d7f5dcee3', 'SITE_NAME': 'devsite', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
+      '[]', 'en',
+      true, '',
+      {"f62218c009ec029abef196bba5aa34cf": false, "039e5d84b87fd75807ffb37b7f1bbf2c": true, "098dafe57affddc137df300142652cfd": false, "cb025a64a50094835616312f4774a53d": true, "51470233c56fc1fde50f00b73c52b216": false, "752953480de00a336d911a46966cc16d": false, "700def1a83e356c06c0925afb05de4b0": false, "6749dcb526ce9bde6993550c7d928d24": true},
+      '/',
+      'https://ephellon.github.com/Paramour/');
+      })(jQuery);
+      devsite.localInit = function() {};
+    </script>
+    <!-- :DEPENDENCIES -->
+  </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
 </body>
 </html>
