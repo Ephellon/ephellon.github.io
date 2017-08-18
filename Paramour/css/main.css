@@ -6,13 +6,14 @@
   list-style-type: decimal-leading-zero !important;
 }
 
-.pretty-input > *, .docs-toolbar-wrapper {
+.pretty-input > *, #docs-toolbar-wrapper {
   border: none;
   width: 640px;
 }
 
-.docs-toolbar-wrapper {
+#docs-toolbar-wrapper {
   background: #fff;
+  border: 10px solid #eee;
 }
 
 .pretty-input > textarea, .pretty-input .prettyprint {
