@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Paramour</title>
-  <meta charset="utf-8"/>
-  <link rel="shortcut icon" href="https://ephellon.github.io/Paramour/images/favicon.ico"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"/>
-  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/main.css"/>
-  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/tomorrow-night.css"/>
-  <script src="https://ephellon.github.io/Paramour/js/jquery-bundle.js"></script>
-  <script src="https://ephellon.github.io/Paramour/js/prettify.js"></script>
-  <script src="https://ephellon.github.io/Paramour/js/run_prettify.js"></script>
-  <script src="https://ephellon.github.io/Paramour/prettyprint/lang-paramour.js"></script>
-</head>
 <!-- [CONTENT-TYPE] -->
 <!--
 HEADER
@@ -78,7 +63,7 @@ DEPENDENCIES
         if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
       </script>
     </div>
-    <div id="gc-wrapper" itemscope="" itemtype="https://schema.org/Article">
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
       <div class="devsite-site-mask"></div>
       <div class="devsite-main-content clearfix">
         <!-- NAVIGATION-LEFT -->
@@ -189,46 +174,13 @@ DEPENDENCIES
         <article class="devsite-article">
           <!-- CONTENT -->
           <article class="devsite-article-inner">
-            <h1 itemprop="name" class="devsite-page-title">Overview of Paramour</h1>
+            <h1 itemprop="name" class="devsite-page-title">Paramour Editor &amp; Debugger</h1>
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
             <div itemprop="articleBody" class="devsite-article-body clearfix">
-              <p><a href="https://ephellon.github.io/Paramour/">Paramour</a>
-                is a client-side, preprocessed JavaScript language.
-                It is based on
-                <a href="https://coffeescript.org/" target="blank_">CoffeeScript</a>,
-                <a href="https://java.com/" target="blank_">Java</a>,
-                <a href="https://python.org/" target="blank_">Python</a>,
-                <a href="https://swift.org/" target="blank_">Swift</a>,
-                and <a href="https://javascript.com/" target="blank_">JavaScript</a>.
-
-                Paramour lets you do what you want, when you need.
-              </p>
-              <p>If you're new to JavaScript, W3Schools offers a host of <a href="https://w3schools.com/js/">tutorials</a>.
-                (Note that this service was not developed by and is not associated with myself.)
-              </p>
-              <h2 id="why_paramour">Why Paramour?</h2>
-              <p>Paramour is extremely flexible and powerful, you can:</p>
-              <ul>
-                <li>Have <a href="/objects/tuples/">Tuples</a>.</li>
-                <li>Perform <a href="/help/js-unit/">unit testing</a> (JS-Unit).</li>
-                <li>Write <a href="/functions/type-controlled/">type controlled functions</a>.</li>
-                <li>Run Paramour <a href="/help/running-out-browser/">outside of a browser</a>.</li>
-              </ul>
-              <p>For demo of Paramour in action, try a 5-minute demo:</p>
-              <ul>
-                <li><a href="/examples/#99">99 Bottles of Beer</a>: See how the easy the infamous 99 bottles song can be.</li>
-                <li><a href="/examples/tuple-class">The Tuple Class</a>: See how the Tuple class was made.</li>
-              </ul>
-              <h2 id="your_first_script">Your first script</h2>
-              <p>
-                The steps below show how to build and run a simple script.
-              </p>
-              <h3 id="set_it_up">Set-up</h3>
-              <ol>
-                <li>Visit <a href="https://ephellon.github.io/Paramour/extras/" target="_blank"><code>/try-paramour/</code></a> to open up the editor.</li>
-                <li>
-                  <p>Delete any code in the script editor and paste in the code below.</p>                  
-<pre translate="no" class="prettyprint notranslate lang-paramour">### Days until Xmas
+              <p>This tool is meant to provide a testing space for Paramour scripts.</p>
+                <div class="pretty-input">
+<textarea translate="no" class="notranslate">
+### Days until Xmas
   @author: W3 Resource Authors
   @url: https://www.w3resource.com/javascript-exercises/javascript-basic-exercise-9.php
 ###
@@ -258,21 +210,84 @@ round_up(Number n) ->
 "String" days_left = HowManyDays();
 
 alert days_left;
-</pre>
-                </li>
-                <li>To run the script, click ▶ or press <code>Ctrl+Enter</code></li>
-              </ol>
-              <h2 id="learn_more">Learn more</h2>
-              <p>To continue learning about Paramour, take a look at the following resources:</p>
-              <ul>
-                <li>Paramour - <a href="https://github.com/Ephellon/Ephellon.github.io/blob/master/Paramour/changelog.md">Change Log</a></li>
-                <li>Paramour - <a href="https://github.com/Ephellon/Paramour/blob/master/java/Paramour.js">Source Code</a></li>
-                <li>Paramour - <a href="https://codepen.io/Ephellon/post/paramour">Proposed Features</a></li>
-              </ul>
+</textarea>
+                  <pre class="prettyprint notranslate lang-paramour"></pre>
+                  <!-- TOOLBAR -->
+                  <div id="docs-toolbar-wrapper">
+                    <div id="docs-primary-toolbars" class="docs-collapsable-toolbar">
+                      <div id="docs-toolbar" class="goog-toolbar" aria-label="Main" role="toolbar" tabindex="0" style="user-select: none;">
+                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (Ctrl+S)">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block " style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-save" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="runButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Run">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block " style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-run" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="debugButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Debug">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block " style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-debug" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="linkButton" class="button goog-toolbar-toggle-button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" aria-pressed="false" style="user-select: none;" title="Create a link" aria-hidden="true">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-link" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="helpButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Help">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
+                                  <div class="docs-icon-img-container docs-icon-img docs-icon-help" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="button goog-toolbar-text goog-toolbar-menu-button goog-inline-block" role="listbox" aria-disabled="false" aria-expanded="false" style="user-select: none;" aria-haspopup="true" aria-activedescendant=":2m" data-tooltip="Select function" aria-label="Search through code">
+                          <div class="goog-toolbar-menu-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-menu-button-inner-box goog-inline-block" style="user-select: none; margin-top: -3%;">
+                                <div class="devsite-searchbox">
+                                  <input id="findButton" placeholder="Find code" type="text" value="" autocomplete="off" class="devsite-search-field devsite-search-query">
+                                  <div class="devsite-search-image material-icons"></div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- :TOOLBAR -->
+                </div>
             </div>
             <div class="devsite-content-footer nocontent">
               <p>
-                Except as otherwise noted, the content of this page is licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>;
+                Except as otherwise noted, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>;
                 Paramour, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat">MIT License</a>.
                 Java, and JavsScript are registered trademarks of Oracle inc. and/or its affiliates.
                 Google is a registered trademark of Google inc. and/or its affiliates.
@@ -385,8 +400,7 @@ alert days_left;
     <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
     <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
     <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
-    <script src="https://ephellon.github.io/Parmour/js/main.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/main.js"></script>
     <!-- :DEPENDENCIES -->
   </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
 </body>
-</html>
