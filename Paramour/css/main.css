@@ -1,8 +1,8 @@
-.prettyprint {
+.prettyprint, .pretty-input {
   scroll: auto;
 }
 
-.prettyprint ol.linenums > li {
+.prettyprint > ol.linenums > li, .prettyprint > code > ol.linenums > li {
   list-style-type: decimal-leading-zero !important;
 }
 
