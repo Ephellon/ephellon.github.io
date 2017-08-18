@@ -53,6 +53,7 @@ true, '',
   })
   .on("scroll", function(event) {
     event.target.nextElementSibling.scrollTop = event.target.scrollTop;
+    event.target.nextElementSibling.scrollLeft = event.target.scrollLeft;
   });
 
   setInterval(function() {
