@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Paramour</title>
+  <meta charset="utf-8"/>
+  <link rel="shortcut icon" href="https://ephellon.github.io/Paramour/images/favicon.ico"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"/>
+  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/main.css"/>
+  <script src="https://ephellon.github.io/Paramour/js/jquery-bundle.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/run_prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/prettyprint/lang-paramour.js"></script>
+</head>
 <!-- [CONTENT-TYPE] -->
 <!--
 HEADER
@@ -63,7 +77,7 @@ DEPENDENCIES
         if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
       </script>
     </div>
-    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
+    <div id="gc-wrapper" itemscope="" itemtype="https://schema.org/Article">
       <div class="devsite-site-mask"></div>
       <div class="devsite-main-content clearfix">
         <!-- NAVIGATION-LEFT -->
@@ -174,40 +188,90 @@ DEPENDENCIES
         <article class="devsite-article">
           <!-- CONTENT -->
           <article class="devsite-article-inner">
-            <h1 itemprop="name" class="devsite-page-title">Title</h1>
+            <h1 itemprop="name" class="devsite-page-title">Overview of Paramour</h1>
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
             <div itemprop="articleBody" class="devsite-article-body clearfix">
-              <p>Text.</p>
-              <p>More text.</p>
-              <h2 id="why_paramour">Subtitle</h2>
-              <p>Text (list title)</p>
-              <ul>
-                <li>List item</li>
-                <li>List item</li>
-              </ul>
-              <p>Text.</p>
-              <ul>
-                <li><a href="#">link</a> with text</li>
-              </ul>
-              <h2 id="your_first_script">Subtitle</h2>
-              <p>
-                Text.
+              <p><a href="https://ephellon.github.io/Paramour/">Paramour</a>
+                is a client-side, preprocessed JavaScript language.
+                It is based on
+                <a href="https://coffeescript.org/" target="blank_">CoffeeScript</a>,
+                <a href="https://java.com/" target="blank_">Java</a>,
+                <a href="https://python.org/" target="blank_">Python</a>,
+                <a href="https://swift.org/" target="blank_">Swift</a>,
+                and <a href="https://javascript.com/" target="blank_">JavaScript</a>.
+
+                Paramour lets you do what you want, when you need.
               </p>
-              <h3 id="set_it_up">Step Header</h3>
+              <p>If you're new to JavaScript, W3Schools offers a host of <a href="https://w3schools.com/js/">tutorials</a>.
+                (Note that this service was not developed by and is not associated with myself.)
+              </p>
+              <h2 id="why_paramour">Why Paramour?</h2>
+              <p>Paramour is extremely flexible and powerful, you can:</p>
+              <ul>
+                <li>Have <a href="/objects/tuples/">Tuples</a>.</li>
+                <li>Perform <a href="/help/js-unit/">unit testing</a> (JS-Unit).</li>
+                <li>Write <a href="/functions/type-controlled/">type controlled functions</a>.</li>
+                <li>Run Paramour <a href="/help/running-out-browser/">outside of a browser</a>.</li>
+              </ul>
+              <p>For demo of Paramour in action, try a 5-minute demo:</p>
+              <ul>
+                <li><a href="/examples/#99">99 Bottles of Beer</a>: See how the easy the infamous 99 bottles song can be.</li>
+                <li><a href="/examples/tuple-class">The Tuple Class</a>: See how the Tuple class was made.</li>
+              </ul>
+              <h2 id="your_first_script">Your first script</h2>
+              <p>
+                The steps below show how to build and run a simple script.
+              </p>
+              <h3 id="set_it_up">Set-up</h3>
               <ol>
+                <li>Visit <a href="https://ephellon.github.io/Paramour/extras/" target="_blank"><code>/try-paramour/</code></a> to open up the editor.</li>
                 <li>
-                  <p>Bullet point.</p>
-                </li>
-<pre translate="no" class="prettyprint notranslate lang-paramour">
-# code
-# code
-# code
+                  <p>Delete any code in the script editor and paste in the code below.</p>                  
+<pre translate="no" class="prettyprint notranslate lang-paramour">### Days until Xmas
+  @author: W3 Resource Authors
+  @url: https://www.w3resource.com/javascript-exercises/javascript-basic-exercise-9.php
+###
+# @strict
+
+# $year -> getFullYear()
+# $month -> getMonth()
+# $day -> getDate()
+# $time -> getTime()
+
+var today = new Date(),
+    Xmas = new Date(today.$year, 11, 25), # Xmas Day of this year
+    oneDay = 1000 60 60 24; # spaces between number sare treated as *
+
+if(today.$month == 11 && today.$day > 25)
+  Xmas.setFullYear(Xmas.$year + 1);
+
+/** ():String
+ * Finds the number of days left until Xmas (Dec. 25)
+ */
+HowManyDays():String
+  -> "\${round_up((Xmas.$time - today.$time) / oneDay)} days left until Christmas!";
+
+round_up(Number n) ->
+  Math.ceil n;
+
+"String" days_left = HowManyDays();
+
+alert days_left;
 </pre>
+                </li>
+                <li>To run the script, click ▶ or press <code>Ctrl+Enter</code></li>
               </ol>
+              <h2 id="learn_more">Learn more</h2>
+              <p>To continue learning about Paramour, take a look at the following resources:</p>
+              <ul>
+                <li>Paramour - <a href="https://github.com/Ephellon/Ephellon.github.io/blob/master/Paramour/changelog.md">Change Log</a></li>
+                <li>Paramour - <a href="https://github.com/Ephellon/Paramour/blob/master/java/Paramour.js">Source Code</a></li>
+                <li>Paramour - <a href="https://codepen.io/Ephellon/post/paramour">Proposed Features</a></li>
+              </ul>
             </div>
             <div class="devsite-content-footer nocontent">
               <p>
-                Except as otherwise noted, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>;
+                Except as otherwise noted, the content of this page is licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>;
                 Paramour, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat">MIT License</a>.
                 Java, and JavsScript are registered trademarks of Oracle inc. and/or its affiliates.
                 Google is a registered trademark of Google inc. and/or its affiliates.
@@ -320,77 +384,8 @@ DEPENDENCIES
     <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
     <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
     <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
-    <script>
-      (function($) {
-      devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '1d7f5dcee3', 'SITE_NAME': 'devsite', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
-      '[]', 'en',
-      true, '',
-      {"f62218c009ec029abef196bba5aa34cf": false, "039e5d84b87fd75807ffb37b7f1bbf2c": true, "098dafe57affddc137df300142652cfd": false, "cb025a64a50094835616312f4774a53d": true, "51470233c56fc1fde50f00b73c52b216": false, "752953480de00a336d911a46966cc16d": false, "700def1a83e356c06c0925afb05de4b0": false, "6749dcb526ce9bde6993550c7d928d24": true},
-      '/',
-      'https://ephellon.github.io/Paramour/');
-
-      var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]);
-        ltr = (ltr == "" || ltr == "vertical-lr");
-
-        function updateCursor(textarea) {
-          var start = textarea.selectionStart,
-              end = textarea.selectionEnd,
-              value = textarea.value,
-              direction = textarea.selectionDirection;
-
-          if(direction == undefined || direction == null)
-            direction = ((last.start > start || end < last.end) && ltr)? "left": "right";
-          else
-            direction = (direction != "forward" && ltr)? "left": "right";
-
-          if((last.start = start) == (last.end = end))
-            return value.slice(0, start) +
-              '<span class="cursor ' + direction + ' nocode"></span>' +
-              value.slice(end, value.length);
-          else
-            return value.slice(0, start) +
-              '<span class="cursor ' + direction + ' nocode">' +
-              value.slice(start, end) +
-              '</span>' +
-              value.slice(end, value.length);
-        }
-
-        $(".pretty-input > textarea")
-        .on("keydown", function(event) {
-          var textarea = event.target, display = $(textarea).siblings();
-
-          clearTimeout(timer);
-          timer = setTimeout(function() {
-            display.html(function() {
-              return updateCursor(textarea);
-            });
-
-            prettyPrint();
-          }, 100);
-        })
-        .on("mousemove", function(event) {
-          $(event.target).keydown();
-        })
-        .on("mousedown", function(event) {
-          $(event.target).mousemove();
-        });
-
-        setInterval(function() {
-          $(".cursor")
-          .css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
-        }, 500);
-
-        var siblings =
-            $(".pretty-input > textarea")
-            .siblings();
-        siblings
-        .html(function(index, value) {
-          return updateCursor($(siblings).siblings()[index]) + "<br>";
-        });
-
-      })(jQuery);
-      devsite.localInit = function() {};
-    </script>
+    <script src="https://ephellon.github.io/Parmour/js/main.js"></script>
     <!-- :DEPENDENCIES -->
   </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
 </body>
+</html>
