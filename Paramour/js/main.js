@@ -34,11 +34,11 @@
 
       $(".pretty-input > textarea")
       .on("keydown", function(event) {
-        var textarea = event.target, display = $(textarea).siblings().children();
+        var textarea = event.target, display = $(textarea).siblings("pre").children("code");
 
         clearTimeout(timer);
         timer = setTimeout(function() {
-          display.html(function() {
+          display.val(function() {
             return updateCursor(textarea);
           });
 
@@ -53,17 +53,17 @@
       });
 
       setInterval(function() {
-        $(".cursor")
-        .css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
+        $(".cursor").css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
       }, 500);
 
       var siblings =
           $(".pretty-input > textarea")
-          .siblings();
+          .siblings("pre");
+
       siblings
-      .children()
+      .children("code")
       .html(function(index, value) {
-        return updateCursor($(siblings).siblings()[index]) + "<br>";
+        return updateCursor($(siblings).siblings("textarea")[index]) + "<br>";
       });
 
     })(jQuery);
