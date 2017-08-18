@@ -6,16 +6,17 @@
   <link rel="shortcut icon" href="https://ephellon.github.io/Paramour/images/favicon.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"/>
-  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/icons.css"/>
-  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/main.css"/>
-  <link rel="stylesheet" href="https://ephellon.github.io/Paramour/css/tomorrow-night.css"/>
   <script src="https://ephellon.github.io/Paramour/js/jquery-bundle.js"></script>
   <script src="https://ephellon.github.io/Paramour/js/prettify.js"></script>
   <script src="https://ephellon.github.io/Paramour/js/run_prettify.js"></script>
   <script src="https://ephellon.github.io/Paramour/prettyprint/lang-paramour.js"></script>
   <style>
+  @import url(https://ephellon.github.io/Paramour/css/icons.css);
+  @import url(https://ephellon.github.io/Paramour/css/main.css);
+  @import url(https://ephellon.github.io/Paramour/css/tomorrow-night.css);
+
   .prettyprint, .pretty-input > textarea {
-    scroll: auto;
+    overflow: auto;
   }
 
   .prettyprint > ol.linenums > li {
@@ -82,16 +83,17 @@
     word-wrap: break-word;
   }
 
-  a.devsite-doc-set-nav-tab, a.devsite-top-button {
-    color: rgba(255,255,255,0.7);
-  }
-
-  a {
+  a:link, a:visited {
+    color: #039be5 !important;
     text-decoration: none !important;
   }
 
+  a.devsite-doc-set-nav-tab, a.devsite-top-button {
+    color: rgba(255,255,255,0.7) !important;
+  }
+
   a.devsite-footer-promo-title {
-    color: rgba(0,0,0,0.9)
+    color: rgba(0,0,0,0.9) !important;
   }
   </style>
 </head>
