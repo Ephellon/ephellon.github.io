@@ -56,7 +56,7 @@
         $(".cursor").css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
       }, 500);
 
-      var display = $(".pretty-input > .prettyprint");
+      var display = $(".pretty-input > textarea").siblings("pre");
 
       display
       .html(function(index, value) {
