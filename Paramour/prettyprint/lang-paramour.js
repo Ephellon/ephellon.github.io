@@ -36,23 +36,23 @@ PR['registerLangHandler'](
           //whitespace
           [PR['PR_PLAIN'],                /^[ \n\r\t\v\f\0]+/, null, ' \n\r\t\v\f\0'],
           //string literals
-          [PR['PR_STRING'],               /^"(?:[^"\\]|(?:\\.)|(?:\\\((?:[^"\\)]|\\.)*\)))*"/, null, '"']
+          [PR['PR_STRING'],               /^(["'`])(?:[^\\\1]|(?:\\.)|(?:\\\((?:[^\\\1)]|\\.)*\)))*\1/, null, '$1']
         ],
         [
           //floating point literals
-          [PR['PR_LITERAL'],              /^(?:(?:0x[\da-fA-F][\da-fA-F_]*\.[\da-fA-F][\da-fA-F_]*[pP]?)|(?:\d[\d_]*\.\d[\d_]*[eE]?))[+-]?\d[\d_]*/, null],
+          [PR['PR_LITERAL'],              /^(?:(?:0x[\da-fA-F][\da-fA-F_]*\.[\da-fA-F][\da-fA-F_]*)|(?:\d[\d]*\.\d[\d]*[eE]?))[+-]?\d[\d]*/, null],
           //integer literals
           [PR['PR_LITERAL'],              /^-?(?:(?:0(?:(?:b[01][01_]*)|(?:o[0-7][0-7_]*)|(?:x[\da-fA-F][\da-fA-F_]*)))|(?:\d[\d_]*))/, null],
           //some other literals
-          [PR['PR_LITERAL'],              /^(?:true|false|nil)\b/, null],
+          [PR['PR_LITERAL'],              /^(?:true|false|null|undefined|defined|![01])\b/, null],
           //keywords
-          [PR['PR_KEYWORD'],              /^\b(?:__COLUMN__|__FILE__|__FUNCTION__|__LINE__|#available|#else|#elseif|#endif|#if|#line|arch|arm|arm64|associativity|as|break|case|catch|class|continue|convenience|default|defer|deinit|didSet|do|dynamic|dynamicType|else|enum|extension|fallthrough|final|for|func|get|guard|import|indirect|infix|init|inout|internal|i386|if|in|iOS|iOSApplicationExtension|is|lazy|left|let|mutating|none|nonmutating|operator|optional|OSX|OSXApplicationExtension|override|postfix|precedence|prefix|private|protocol|Protocol|public|required|rethrows|return|right|safe|self|set|static|struct|subscript|super|switch|throw|try|Type|typealias|unowned|unsafe|var|weak|watchOS|while|willSet|x86_64)\b/, null],
+          [PR['PR_KEYWORD'],              /^\b(?:abstract|boolean|break|byte|case|catch|char|class|const|continue|debugger|default|delete|do|double|else|enum|eval|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|let|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|undefined|var|void|volatile|while|with|yield|[gs]et|defined)\b/, null],
           //double slash comments
-          [PR['PR_COMMENT'],              /^\/\/.*?[\n\r]/, null],
+          [PR['PR_COMMENT'],              /^#.*?[\n\r]/, null],
           //slash star comments
-          [PR['PR_COMMENT'],              /^\/\*[\s\S]*?(?:\*\/|$)/, null],
+          [PR['PR_COMMENT'],              /^#{3}[\s\S]*?(?:#{3}|$)/, null],
           //punctuation
-          [PR['PR_PUNCTUATION'],          /^<<=|<=|<<|>>=|>=|>>|===|==|\.\.\.|&&=|\.\.<|!==|!=|&=|~=|~|\(|\)|\[|\]|{|}|@|#|;|\.|,|:|\|\|=|\?\?|\|\||&&|&\*|&\+|&-|&=|\+=|-=|\/=|\*=|\^=|%=|\|=|->|`|==|\+\+|--|\/|\+|!|\*|%|<|>|&|\||\^|\?|=|-|_/, null],
+          [PR['PR_PUNCTUATION'],          /^[\(\)\[\]\{\}\!\~\*\/%\+\-<>\&\^\|\?\:\=,;]|\.{2,3}/, null],
           [PR['PR_TYPE'],                 /^\b(?:[@_]?[A-Z]+[a-z][A-Za-z_$@0-9]*|\w+_t\b)/, null]   //borrowing the type regex given by the main program for C-family languages
         ]),
     ['paramour']);
