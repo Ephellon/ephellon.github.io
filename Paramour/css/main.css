@@ -1,4 +1,4 @@
-@import url(https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night-bright.min.css);
+@import url(tomorrow-night-bright.min.css);
 
 .prettyprint {
   scroll: auto;
@@ -6,6 +6,40 @@
 
 .prettyprint > ol.linenums > li {
   list-style-type: decimal-leading-zero !important;
+}
+
+.pretty-input > * {
+  border: none;
+  height: 300px;
+  width: 640px;
+}
+
+.pretty-input > textarea {
+  resize: none;
+  position: absolute;
+  opacity: 0 !important;
+  z-index: 9 !important;
+}
+
+.pretty-input > .prettyprint {
+  z-index: initial !important;
+}
+
+.prettyprint > .cursor {
+  background: rgba(255,255,255,0.1); /* default-blue: #0867d7 */
+  border: none;
+  color: #fff;
+  margin: 0;
+  padding: 2px 0;
+  width: 0 !important;
+}
+
+.prettyprint > .cursor.right {
+  border-right: solid 1px #fff;
+}
+
+.prettyprint > .cursor.left {
+  border-left: solid 1px #fff;
 }
 
 .octicon {
