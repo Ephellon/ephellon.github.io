@@ -1,5 +1,5 @@
 /*! Color themes for Google Code Prettify | MIT License | ephellon.github.io/paramour/css/tomorrow-night.css */
-@import(main.css);
+@import url(main.css);
 
 .prettyprint {
   background: #1d1f20;
