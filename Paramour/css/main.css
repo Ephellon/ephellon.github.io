@@ -7344,7 +7344,11 @@ a.exw-control.exw-expanded::before {
 #docs-toolbar-wrapper {
   background: #fff;
   border: none;
-  box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+  box-shadow: none; /*0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28)*/
+}
+
+#docs-toolbar .button:first-child {
+  margin-left: -56px;
 }
 
 .pretty-input > textarea, .pretty-input .prettyprint {
