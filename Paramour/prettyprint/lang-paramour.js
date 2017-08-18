@@ -50,15 +50,15 @@ PR['registerLangHandler'](
          ['opn',             /^[\(\{\[]+/, null, '([{'],
          ['clo',             /^[\)\}\]]+/, null, ')]}'],
          // A line comment that starts with ;
-         [PR['PR_COMMENT'],     /^;[^\r\n]*/, null, ';'],
+         [PR['PR_COMMENT'],     /^#[^\r\n]*/, null, '#'],
          // Whitespace
          [PR['PR_PLAIN'],       /^[\t\n\r \x20]+/, null, '\t\n\r \x20'],
          // A double quoted, possibly multi-line, string.
-         [PR['PR_STRING'],      /^(["'`]|["'`]{3})(?:[^\1\\]|\\[\s\S])*(?:\1|$)/, null, '$1']
+         [PR['PR_STRING'],      /^(["'`]|["'`]{3})(?:[^\1\\]|\\[\s\S])*(?:\1|$)/, null, '"\'`']
         ],
         [
          // clojure has a much larger set of keywords
-         [PR['PR_KEYWORD'],     /^(?:abstract|boolean|break|byte|ca(?:se|tch)|char|class|con(?:st|tinue)|de(?:bugger|fault|lete)|do(?:uble)?|else|enum|eval|ex(?:port|tends)|false|final(?:ly)?|float|for|function|goto|if|im(?:plements|port)|in(?:t(?:erface)|stanceof)?|[lgs]et|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throws?|transient|tr(?:ue|y)|(?:type)?of|(?:un)?defined|var|void|volatile|while|with|yield)\b/, null],
-         [PR['PR_TYPE'], /^:[0-9a-zA-Z\-]+/]
+         [PR['PR_KEYWORD'], /^(?:abstract|boolean|break|byte|ca(?:se|tch)|char|class|con(?:st|tinue)|de(?:bugger|fault|lete)|do(?:uble)?|else|enum|eval|ex(?:port|tends)|false|final(?:ly)?|float|for|function|goto|if|im(?:plements|port)|in(?:t(?:erface)|stanceof)?|[lgs]et|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throws?|transient|tr(?:ue|y)|(?:type)?of|(?:un)?defined|var|void|volatile|while|with|yield)\b/, null],
+         [PR['PR_TYPE'], /^[a-z\$_][\w\$]*/i]
         ]),
     ['paramour']);
