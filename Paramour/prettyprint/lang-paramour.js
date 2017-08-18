@@ -1,6 +1,5 @@
 /**
- * @license
- * Copyright (C) 2015 Google Inc.
+ * @license Copyright (C) 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,42 +16,49 @@
 
 /**
  * @fileoverview
- * Registers a language handler for Paramour
+ * Registers a language handler for Clojure.
  *
  *
  * To use, include prettify.js and this file in your HTML page.
  * Then put your code in an HTML tag like
- *      <pre class="prettyprint lang-paramour">(my paramour code)</pre>
+ *      <pre class="prettyprint lang-lisp">(my lisp code)</pre>
+ * The lang-cl class identifies the language as common lisp.
  * This file supports the following language extensions:
- *     lang-paramour - Paramour
+ *     lang-clj - Clojure
  *
- * @author cerech@google.com
- * @author GitHub @ephellon
+ *
+ * I used lang-lisp.js as the basis for this adding the clojure specific
+ * keywords and syntax.
+ *
+ * "Name"    = 'Clojure'
+ * "Author"  = 'Rich Hickey'
+ * "Version" = '1.2'
+ * "About"   = 'Clojure is a lisp for the jvm with concurrency primitives and a richer set of types.'
+ *
+ *
+ * I used <a href="http://clojure.org/Reference">Clojure.org Reference</a> as
+ * the basis for the reserved word list.
+ *
+ *
+ * @author jwall@google.com
  */
 
 PR['registerLangHandler'](
     PR['createSimpleLexer'](
         [
-          //whitespace
-          [PR['PR_PLAIN'],                /^[ \n\r\t\v\f\0]+/, null, ' \n\r\t\v\f\0'],
-          //string literals
-          [PR['PR_STRING'],               /^(["'`])(?:[^\\\1]|(?:\\.)|(?:\\\((?:[^\\\1)]|\\.)*\)))*\1/, null, '$1']
+         // clojure has more paren types than minimal lisp.
+         ['opn',             /^[\(\{\[]+/, null, '([{'],
+         ['clo',             /^[\)\}\]]+/, null, ')]}'],
+         // A line comment that starts with ;
+         [PR['PR_COMMENT'],     /^;[^\r\n]*/, null, ';'],
+         // Whitespace
+         [PR['PR_PLAIN'],       /^[\t\n\r \xA0]+/, null, '\t\n\r \xA0'],
+         // A double quoted, possibly multi-line, string.
+         [PR['PR_STRING'],      /^\"(?:[^\"\\]|\\[\s\S])*(?:\"|$)/, null, '"']
         ],
         [
-          //floating point literals
-          [PR['PR_LITERAL'],              /^(?:(?:0x[\da-fA-F][\da-fA-F_]*\.[\da-fA-F][\da-fA-F_]*)|(?:\d[\d]*\.\d[\d]*[eE]?))[+-]?\d[\d]*/, null],
-          //integer literals
-          [PR['PR_LITERAL'],              /^-?(?:(?:0(?:(?:b[01][01_]*)|(?:o[0-7][0-7_]*)|(?:x[\da-fA-F][\da-fA-F_]*)))|(?:\d[\d_]*))/, null],
-          //some other literals
-          [PR['PR_LITERAL'],              /^(?:true|false|null|undefined|defined|![01])\b/, null],
-          //keywords
-          [PR['PR_KEYWORD'],              /^\b(?:abstract|boolean|break|byte|case|catch|char|class|const|continue|debugger|default|delete|do|double|else|enum|eval|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|let|long|native|new|null|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|undefined|var|void|volatile|while|with|yield|[gs]et|defined)\b/, null],
-          //double slash comments
-          [PR['PR_COMMENT'],              /^#.*?[\n\r]/, null],
-          //slash star comments
-          [PR['PR_COMMENT'],              /^#{3}[\s\S]*?(?:#{3}|$)/, null],
-          //punctuation
-          [PR['PR_PUNCTUATION'],          /^[\(\)\[\]\{\}\!\~\*\/%\+\-<>\&\^\|\?\:\=,;]|\.{2,3}/, null],
-          [PR['PR_TYPE'],                 /^\b(?:[@_]?[A-Z]+[a-z][A-Za-z_$@0-9]*|\w+_t\b)/, null]   //borrowing the type regex given by the main program for C-family languages
+         // clojure has a much larger set of keywords
+         [PR['PR_KEYWORD'],     /^(?:def|if|do|let|quote|var|fn|loop|recur|throw|try|monitor-enter|monitor-exit|defmacro|defn|defn-|macroexpand|macroexpand-1|for|doseq|dosync|dotimes|and|or|when|not|assert|doto|proxy|defstruct|first|rest|cons|defprotocol|deftype|defrecord|reify|defmulti|defmethod|meta|with-meta|ns|in-ns|create-ns|import|intern|refer|alias|namespace|resolve|ref|deref|refset|new|set!|memfn|to-array|into-array|aset|gen-class|reduce|map|filter|find|nil?|empty?|hash-map|hash-set|vec|vector|seq|flatten|reverse|assoc|dissoc|list|list?|disj|get|union|difference|intersection|extend|extend-type|extend-protocol|prn)\b/, null],
+         [PR['PR_TYPE'], /^:[0-9a-zA-Z\-]+/]
         ]),
     ['paramour']);
