@@ -34,7 +34,7 @@
 
       $(".pretty-input > textarea")
       .on("keydown", function(event) {
-        var textarea = event.target, display = $(textarea).siblings("pre").children("code");
+        var textarea = event.target, display = $(textarea).siblings(".prettyprint");
 
         clearTimeout(timer);
         timer = setTimeout(function() {
@@ -56,14 +56,11 @@
         $(".cursor").css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
       }, 500);
 
-      var siblings =
-          $(".pretty-input > textarea")
-          .siblings("pre");
+      var display = $(".pretty-input > .prettyprint");
 
-      siblings
-      .children("code")
+      display
       .html(function(index, value) {
-        return updateCursor($(siblings).siblings("textarea")[index]) + "<br>";
+        return updateCursor(display.siblings("textarea")[index]) + "<br>";
       });
 
     })(jQuery);
