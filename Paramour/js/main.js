@@ -34,7 +34,7 @@
 
       $(".pretty-input > textarea")
       .on("keydown", function(event) {
-        var textarea = event.target, display = $(textarea).siblings();
+        var textarea = event.target, display = $(textarea).siblings().children();
 
         clearTimeout(timer);
         timer = setTimeout(function() {
@@ -61,6 +61,7 @@
           $(".pretty-input > textarea")
           .siblings();
       siblings
+      .children()
       .html(function(index, value) {
         return updateCursor($(siblings).siblings()[index]) + "<br>";
       });
