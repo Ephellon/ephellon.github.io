@@ -8,7 +8,7 @@
   list-style-type: decimal-leading-zero !important;
 }
 
-.pretty-input > textarea, .pretty-input > .prettyprint {
+.pretty-input > textarea, .pretty-input > .prettyprint, .docs-toolbar-wrapper {
   border: none;
   height: 300px;
   width: 640px;
