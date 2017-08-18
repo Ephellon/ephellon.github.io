@@ -50,6 +50,9 @@ true, '',
   })
   .on("mousedown", function(event) {
     $(event.target).mousemove();
+  })
+  .on("scroll", function(event) {
+    event.target.nextElementSibling.scrollTop = event.target.scrollTop;
   });
 
   setInterval(function() {
