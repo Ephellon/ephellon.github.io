@@ -6,13 +6,41 @@ true, '',
 '/',
 'https://ephellon.github.io/Paramour/');
 
-  var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]);
-  ltr = (ltr == "" || ltr == "vertical-lr");
+  var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]), isJS = false,
+      swapicon = $("#swapButton span > div.docs-icon-redo, #swapButton span > div.docs-icon-undo"),
+      runicons = $("#runButton div.docs-icon-run, #runButton div.docs-icon-debug"),
+      icons = {
+        swap: ["docs-icon-redo", "docs-icon-undo"],
+        run: ["docs-icon-run", "docs-icon-debug"]
+      },
+      input, output, last_active, display, tinyurl;
 
-  function updateCursor(textarea) {
-    var start = textarea.selectionStart,
-        end = textarea.selectionEnd,
-        value = textarea.value,
+  ltr = (ltr == "" || ltr == "vertical-lr");
+  tinyurl = tinyurl || window.tinyurl;
+
+  function swapIcons(element, pack, bool) {
+    bool = bool == undefined? true: bool;
+    return element
+      .toggleClass(icons[pack][0], bool)
+      .toggleClass(icons[pack][1], bool = !bool),
+      bool;
+  }
+
+  function getCurrent(index) {
+    return last_active = (last_active == undefined)?
+      $(".pretty-input > textarea.active, .pretty-input > textarea.last-active, .pretty-input > textarea").slice(0, 1):
+    (last_active instanceof $)?
+      last_active:
+    $(last_active),
+      display = last_active.siblings(".prettyprint"),
+      (index != undefined && index != null)? (display = display[index], last_active[index]): last_active;
+  }
+
+  function updateCursor() {
+    var textarea  = getCurrent(0),
+        start     = textarea.selectionStart,
+        end       = textarea.selectionEnd,
+        value     = textarea.value || "",
         direction = textarea.selectionDirection;
 
     if(direction == undefined || direction == null)
@@ -32,39 +60,122 @@ true, '',
         value.slice(end, value.length);
   }
 
-  $(".pretty-input > textarea")
-  .on("keydown", function(event) {
-    var textarea = event.target, display = $(textarea).siblings(".prettyprint");
+  function updateDisplay() {
+    return updateCursor() + "<br>";
+  }
 
+  function updateHTML() {
     clearTimeout(timer);
     timer = setTimeout(function() {
-      display.html(function() {
-        return updateCursor(textarea);
-      });
-
+      getCurrent();
+      display.html(updateDisplay);
       prettyPrint();
     }, 100);
-  })
-  .on("mousemove", function(event) {
-    $(event.target).keydown();
-  })
-  .on("mousedown", function(event) {
-    $(event.target).mousemove();
-  })
+  }
+
+  $(".pretty-input > textarea")
+  .on("keydown", updateHTML)
+  .on("mousemove", updateHTML)
+  .on("mousedown", updateHTML)
   .on("scroll", function(event) {
-    event.target.nextElementSibling.scrollTop = event.target.scrollTop;
-    event.target.nextElementSibling.scrollLeft = event.target.scrollLeft;
+    var T = "scrollTop", L = "scrollLeft",
+        t = getCurrent(0), s = display,
+        a = t[T], b = t[L], o = {};
+
+    if(a == (last[t]||o)[T] && b == (last[t]||o)[L])
+      return;
+    else
+      s[T] = a, s[L] = b;
+
+    if(a > s[T])
+      last[T] = t[T] = s[T] - 1;
+    if(b > s[L])
+      last[L] = t[L] = s[L] - 1;
+  })
+  .on("focus", function(event) {
+    $(last_active = event.target).toggleClass("active", true);
+  })
+  .on("blur", function(event) {
+    $(".pretty-input > textarea.last-active")
+      .toggleClass("last-active", false);
+    $(event.target)
+      .toggleClass("active", false)
+      .toggleClass("last-active", true);
   });
+
+  $("#saveButton").click(function(event) {
+    
+  });
+
+  $("#runButton").click(function(event) {
+    var self = $(event.target), textarea = getCurrent();
+
+    if(last["in"] != input || input == undefined)
+        last["in"] = input = textarea.val();
+
+    try {
+      eval(last["out"] = output = Paramour(input));
+      last.error = undefined;
+      swapIcons(runicons, "run", isJS = true);
+      self.attr("title", "Run");
+      display.toggleClass("lang-paramour", false).toggleClass("lang-javascript", true);
+    } catch(error) {
+      last.error = error;
+      swapIcons(runicons, "run", isJS = false);
+      self.attr("title", "Uncaught: " + error.message);
+      display.toggleClass("lang-paramour", true).toggleClass("lang-javascript", false);
+      return alert(error);
+    }
+
+    isJS = false;
+    $("#swapButton").click();
+  });
+
+  $("#linkButton").click(function(event) {
+    if(!tinyurl)
+      throw Error("The tinyurl API is not loaded.");
+    var textarea = getCurrent(),
+        url      = "https://ephellon.github.io/Paramour/extras/?code=" + encodeURIComponent(textarea.val()),
+        self     = $(event.target);
+    tinyurl(url, function() {
+      var url = tinyurl.url;
+      try {
+        alert("The URL [" + url + "] was " + (document.execCommand("copy", false, url)? "": "not ") + "copied to the clipboard.");
+      } catch(e) {
+        alert("The URL [" + url + "] cannot be copied to the clipboard.");
+      }
+    });
+  });
+
+  $("#helpButton").click(function(event) {
+    window.open("https://ephellon.github.io/Paramour/help/", "blank_");
+  });
+
+  $("#swapButton").click(function(event) {
+    if(last.error != undefined)
+      return alert("Cannot convert code: [" + last["error"] + "]; please press \"Debug.\"");
+
+    var textarea = getCurrent();
+
+    isJS = swapIcons(swapicon, "swap", isJS);
+
+    event.target.setAttribute("title", "Switch to " + (!isJS? "JavaScript": "Paramour"));
+
+    if(last["in"] != input || input == undefined)
+        $("#runButton").click();
+    else if(!isJS)
+      textarea.val(input);
+    else
+      textarea.val(output);
+
+    updateHTML();
+  });
+
+  last_active = getCurrent(), display.html(last_active.val());
 
   setInterval(function() {
     $(".cursor").css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
   }, 500);
-
-  var display = $(".pretty-input > .prettyprint");
-
-  display.html(function(index, value) {
-    return updateCursor(display.siblings("textarea")[index]) + "<br>";
-  });
 
 })(jQuery);
 devsite.localInit = function() {};
