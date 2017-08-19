@@ -326,7 +326,7 @@ DEPENDENCIES
 
 var today = new Date(),
     Xmas = new Date(today.$year, 11, 25), # Xmas Day of this year
-    oneDay = 1000 60 60 24; # spaces between number sare treated as *
+    oneDay = 1000 60 60 24; # spaces between numbers are treated as "*"
 
 if(today.$month == 11 && today.$day > 25)
   Xmas.setFullYear(Xmas.$year + 1);
@@ -349,7 +349,7 @@ alert days_left;
                   <div id="docs-toolbar-wrapper">
                     <div id="docs-primary-toolbars" class="docs-collapsable-toolbar">
                       <div id="docs-toolbar" class="goog-toolbar" aria-label="Main" role="toolbar" tabindex="0" style="user-select: none;">
-                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (Ctrl+S)">
+                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (local)">
                           <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
                             <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
                               <div class="docs-icon goog-inline-block " style="user-select: none;">
@@ -369,11 +369,14 @@ alert days_left;
                           </div>
                         </div>
 
-                        <div id="debugButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Debug">
+                        
+                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to JavaScript">
                           <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
                             <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
-                              <div class="docs-icon goog-inline-block " style="user-select: none;">
-                                <div class="docs-icon-img-container docs-icon-img docs-icon-debug" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
+                                  <div class="docs-icon-img-container docs-icon-img docs-icon-redo" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -541,6 +544,8 @@ alert days_left;
     <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
     <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
     <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/par.min.js"></script>
+    <script src="https://codepen.io/Ephellon/pen/EvvGGp.js"></script>
     <script src="https://ephellon.github.io/Paramor/js/main.js">(</script>
     <!-- :DEPENDENCIES -->
   </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
