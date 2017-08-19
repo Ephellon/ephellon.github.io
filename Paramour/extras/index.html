@@ -314,7 +314,7 @@ alert days_left;
                   <div id="docs-toolbar-wrapper">
                     <div id="docs-primary-toolbars" class="docs-collapsable-toolbar">
                       <div id="docs-toolbar" class="goog-toolbar" aria-label="Main" role="toolbar" tabindex="0" style="user-select: none;">
-                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (Ctrl+S)">
+                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (local)">
                           <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
                             <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
                               <div class="docs-icon goog-inline-block " style="user-select: none;">
@@ -334,11 +334,14 @@ alert days_left;
                           </div>
                         </div>
 
-                        <div id="debugButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Debug">
+                        
+                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to JavaScript">
                           <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
                             <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
-                              <div class="docs-icon goog-inline-block " style="user-select: none;">
-                                <div class="docs-icon-img-container docs-icon-img docs-icon-debug" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
+                                  <div class="docs-icon-img-container docs-icon-img docs-icon-redo" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                                </span>
                               </div>
                             </div>
                           </div>
