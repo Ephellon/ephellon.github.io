@@ -162,7 +162,7 @@ DEPENDENCIES
         if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
       </script>
     </div>
-    <div id="gc-wrapper" itemscope="" itemtype="https://schema.org/Article">
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
       <div class="devsite-site-mask"></div>
       <div class="devsite-main-content clearfix">
         <!-- NAVIGATION-LEFT -->
@@ -273,10 +273,17 @@ DEPENDENCIES
         <article class="devsite-article">
           <!-- CONTENT -->
           <article class="devsite-article-inner">
-            <h1 itemprop="name" class="devsite-page-title">Paramour Editor &amp; Debugger</h1>
+            <h1 itemprop="name" class="devsite-page-title">Page Title</h1>
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
-            <div itemprop="articleBody" class="devsite-article-body clearfix">                 
-<div class="pretty-input">
+            <div itemprop="articleBody" class="devsite-article-body clearfix">
+              <p>Content.</p>
+              <p>Content.</p>
+              <h2 id="why_paramour">Header</h2>
+              <p>Content:</p>
+              <ul>
+                <li>List Item.</li>
+              </ul>
+                  <div class="pretty-input">
 <textarea translate="no" class="notranslate">
 ### Days until Xmas
   @author: W3 Resource Authors
@@ -291,7 +298,7 @@ DEPENDENCIES
 
 var today = new Date(),
     Xmas = new Date(today.$year, 11, 25), # Xmas Day of this year
-    oneDay = 1000 60 60 24; # spaces between number sare treated as *
+    oneDay = 1000 60 60 24; # spaces between numbers are treated as "*"
 
 if(today.$month == 11 && today.$day > 25)
   Xmas.setFullYear(Xmas.$year + 1);
@@ -314,7 +321,7 @@ alert days_left;
                   <div id="docs-toolbar-wrapper">
                     <div id="docs-primary-toolbars" class="docs-collapsable-toolbar">
                       <div id="docs-toolbar" class="goog-toolbar" aria-label="Main" role="toolbar" tabindex="0" style="user-select: none;">
-                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (Ctrl+S)">
+                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (local)">
                           <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
                             <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
                               <div class="docs-icon goog-inline-block " style="user-select: none;">
@@ -334,11 +341,14 @@ alert days_left;
                           </div>
                         </div>
 
-                        <div id="debugButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Debug">
+                        
+                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to JavaScript">
                           <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
                             <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
-                              <div class="docs-icon goog-inline-block " style="user-select: none;">
-                                <div class="docs-icon-img-container docs-icon-img docs-icon-debug" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
+                                  <div class="docs-icon-img-container docs-icon-img docs-icon-redo" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -382,17 +392,13 @@ alert days_left;
                   </div>
                   <!-- :TOOLBAR -->
                   </div>
+              <h2 id="learn_more">More Information</h2>
+              <p>Content:</p>
+              <ul>
+                <li>List Item.</li>
+              </ul>
             </div>
             <div class="devsite-content-footer nocontent">
-              <p>
-                Except as otherwise noted, the content of this page is licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>;
-                Paramour, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat">MIT License</a>.
-                Java, and JavsScript are registered trademarks of Oracle inc. and/or its affiliates.
-                Google is a registered trademark of Google inc. and/or its affiliates.
-                CoffeeScript is a registered trademark of "Jeremy Ashkenas."
-                Swift is a registered trademark of Apple inc. and/or its affiliates.
-                Python is a registered trademark of Python Software Foundation org. and/or its affiliates.
-              </p>
               <p itemprop="datePublished" content="2017-05-23T15:26:03.972520" class="devsite-content-footer-date">Last updated August 17, 2017.</p>
             </div>
           </article>
