@@ -150,4 +150,6 @@ function tinyurl() {
   }
 };
 
+window.tinyurl = tinyurl;
+
 function Types(){for(var index=0,results=[],args=[].slice.call(arguments),arg;index<args.length;index++)if(((arg=args[index])!=undefined&&arg!=null)&&arg.constructor==Function&&(arg.name!=undefined&&arg.name!=null&&arg.name!=""))results.push(arg.name);else if(arg!=undefined&&arg!=null)results.push(arg.constructor.name);else results.push(typeof arg);return results.join(',')};Types.check=function(a,b){var c=RegExp("^(\\b"+a+"\\b,?)+$").test(b),d=(c)?RegExp.$_:b.replace(RegExp("^(\\b"+a+"\\b,?)+"),"").split(","),i=check.failIndex=((c)?-1:((b=b.split(",")).length-d.length));return check.fail=((c)?"":b.slice(i,b.length)+""),c};Types.oftype=function(a,b){return check(a,b+"")?b:b.slice(0,index=check.failIndex)};
