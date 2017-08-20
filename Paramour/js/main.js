@@ -162,7 +162,8 @@ true, '',
     event.target.setAttribute("title", "Switch to " + (!isJS? "JavaScript": "Paramour"));
 
     if(last["in"] != input || input == undefined)
-        $("#runButton").click();
+        last["in"] = input = textarea.val(),
+        last["out"] = output = Paramour(input);
     else if(!isJS)
       textarea.val(input);
     else
