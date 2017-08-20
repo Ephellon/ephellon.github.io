@@ -170,7 +170,7 @@ true, '',
       textarea.val(output);
 
     updateHTML();
-  });
+  }).click().click();
 
   last_active = getCurrent(), display.html(last_active.val());
 
