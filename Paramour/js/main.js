@@ -145,6 +145,8 @@ true, '',
   $("#linkButton").click(function(event) {
     if(!tinyurl)
       throw Error("The tinyurl API is not loaded.");
+    isJS = true;
+    $("#swapButton").click();
     var textarea = getCurrent(),
         url      = "https://ephellon.github.io/Paramour/extras/?code=" + encodeURIComponent(textarea.val()),
         self     = $(event.target);
