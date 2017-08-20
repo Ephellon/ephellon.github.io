@@ -85,7 +85,10 @@ true, '',
   }
 
   $(".pretty-input > textarea")
-  .on("keydown", updateHTML)
+  .on("keydown", function(event) {
+    last["in"] = input = ($(event.target).val() || "");
+    updateHTML();
+  })
   .on("mousemove", updateHTML)
   .on("mousedown", updateHTML)
   .on("scroll", function(event) {
@@ -120,9 +123,6 @@ true, '',
 
   $("#runButton").click(function(event) {
     var self = $(event.target), textarea = getCurrent();
-
-    if(last["in"] != input || input == undefined)
-        last["in"] = input = textarea.val();
 
     try {
       eval(last["out"] = output = Paramour(input));
@@ -163,33 +163,28 @@ true, '',
   });
 
   $("#swapButton").click(function(event) {
-    if(last.error != undefined)
-      return alert("Cannot convert code: [" + last["error"] + "]; please press \"Debug.\"");
-
     var textarea = getCurrent();
 
     isJS = swapIcons(swapicon, "swap", isJS);
 
     event.target.setAttribute("title", "Switch to " + (!isJS? "JavaScript": "Paramour"));
 
-    if(last["in"] != input || input == undefined)
-        last["in"] = input = textarea.val(),
-        last["out"] = output = Paramour(input);
-    else if(!isJS)
+    last["out"] = output = Paramour(input);
+
+    if(!isJS)
       textarea.val(input);
     else
       textarea.val(output);
 
     updateHTML();
-  })
-  .click()
-  .click();
+  });
 
   last_active = getCurrent(), display.html(last_active.val());
+  input = last_active.val() || "";
 
   setInterval(function() {
     $(".cursor").css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
   }, 500);
 
 })(jQuery);
-devsite.localInit = function() {};
+      devsite.localInit = function() {};
