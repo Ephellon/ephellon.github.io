@@ -85,7 +85,7 @@ true, '',
   }
 
   $(".pretty-input > textarea")
-  .on("keydown", function(event) {
+  .on("keyup", function(event) {
     last["in"] = input = ($(event.target).val() || "");
     updateHTML();
   })
