@@ -13,7 +13,10 @@ true, '',
         swap: ["docs-icon-redo", "docs-icon-undo"],
         run: ["docs-icon-run", "docs-icon-debug"]
       },
-      input, output, last_active, display, tinyurl;
+      input, output, last_active, display, tinyurl, Paramour;
+
+  if(Paramour == undefined)
+    Paramour = function(string){return string};
 
   ltr = (ltr == "" || ltr == "vertical-lr");
   tinyurl = tinyurl || window.tinyurl;
