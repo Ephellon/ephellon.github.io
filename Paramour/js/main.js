@@ -13,7 +13,7 @@ true, '',
         swap: ["docs-icon-redo", "docs-icon-undo"],
         run: ["docs-icon-run", "docs-icon-debug"]
       },
-      input, output, last_active, display, tinyurl, Paramour;
+      input, output, last_active, display, tinyurl, Paramour = Paramour || window.Paramour;
 
   if(Paramour == undefined)
     Paramour = function(string){return string};
