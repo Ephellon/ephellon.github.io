@@ -29,6 +29,14 @@ true, '',
       bool;
   }
 
+  function encodeHTML(string) {
+    return string.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function decodeHTML(string) {
+    return string.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+  }
+
   function getCurrent(index) {
     return last_active = (last_active == undefined)?
       $(".pretty-input > textarea.active, .pretty-input > textarea.last-active, .pretty-input > textarea").slice(0, 1):
@@ -52,15 +60,15 @@ true, '',
       direction = (direction != "forward" && ltr)? "left": "right";
 
     if((last.start = start) == (last.end = end))
-      return value.slice(0, start) +
+      return encodeHTML(value.slice(0, start)) +
         '<span class="cursor ' + direction + ' nocode"></span>' +
-        value.slice(end, value.length);
+        encodeHTML(value.slice(end, value.length));
     else
-      return value.slice(0, start) +
+      return encodeHTML(value.slice(0, start)) +
         '<span class="cursor ' + direction + ' nocode">' +
-        value.slice(start, end) +
+        encodeHTML(value.slice(start, end)) +
         '</span>' +
-        value.slice(end, value.length);
+        encodeHTML(value.slice(end, value.length));
   }
 
   function updateDisplay() {
@@ -173,7 +181,9 @@ true, '',
       textarea.val(output);
 
     updateHTML();
-  }).click().click();
+  })
+  .click()
+  .click();
 
   last_active = getCurrent(), display.html(last_active.val());
 
