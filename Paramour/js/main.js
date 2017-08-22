@@ -192,87 +192,83 @@ true, '',
 // Mustache + jQuery
 
 function loadMenu() {
-  $.get("https://ephellon.github.io/Paramour/mst/menu.mst", function(template) {
-    var template = template || $("#template").html();
-    Mustache.parse(template); // speed up future uses
-    var rendered = Mustache.render(template, menu_data);
-    $("#target,#template").html(rendered); // #template for testing purposes
+  var base_url = "https://ephellon.github.io/Paramour/",
+  menu_data =
+  {
+    new_menu: [
+      { title: "Overview",        date: "08/22/2017 01:20 CST", href: base_url },
+      { title: "Executable .JAR", date: "08/22/2017 01:20 CST", href: base_url + "extras/Paramour.zip" },
+      { title: "Change Log",      date: "08/22/2017 01:20 CST", href: base_url + "changelog.md" }
+    ],
+    acc_menu: [
+      { title: "5-Minute Demos",
+        items: [
+          {title: "99 Bottles of Beer", href: base_url + "extras/#99"},
+          {title: "Pyramid Class",      href: base_url + "extras/#Pyramid"},
+          {title: "Toggle Class",       href: base_url + "extras/#Toggle"},
+          {title: "String Radix Suite", href: base_url + "extras/#String Radii"}
+        ]},
+
+        { title: "Comments",
+        items: [
+          {title: "Basic Comments",      href: base_url + "comments/"},
+          {title: "Phantoms",            href: base_url + "comments/phantoms/"},
+          {title: "Docstrings",          href: base_url + "comments/docstrings/"},
+          {title: "Type Annotations",    href: base_url + "comments/type-annotations/"},
+          {title: "Version Controlling", href: base_url + "comments/version-control/"},
+          {title: "Version Querying",    href: base_url + "comments/version-query/"}
+        ]},
+
+        { title: "Keywords",
+        items: [
+          {title: "Reserved Words",               href: base_url + "keywords/"},
+          {title: "Type Controlled Declarations", href: base_url + "keywords/type-declarations/"},
+          {title: "Case & Default Statements",    href: base_url + "keywords/case-and-default/"}
+        ]},
+
+        { title: "Functions",
+        items: [
+          {title: "Basic Functions",           href: base_url + "functions/"},
+          {title: "Generators",                href: base_url + "functions/generators/"},
+          {title: "Type Controlled Functions", href: base_url + "functions/type-functions/"}
+        ]},
+
+        { title: "Objects",
+        items: [
+          {title: "Tuples",  href: base_url + "objects/tuples/"},
+          {title: "Arrays",  href: base_url + "objects/arrays/"},
+          {title: "RegExps", href: base_url + "objects/regexps/"},
+          {title: "Strings", href: base_url + "objects/strings/"}
+        ]},
+
+        { title: "Classes",
+        items: [
+          {title: "Basic Classes",     href: base_url + "classes/tuples/"},
+          {title: "Static Methods",    href: base_url + "classes/static/"},
+          {title: "Prototype Methods", href: base_url + "classes/prototype/"}
+        ]},
+
+        { title: "JS Unit",
+        items: [
+          {title: "Basic Tests",      href: base_url + "js-unit/"},
+          {title: "@Before & @After", href: base_url + "js-unit/before-and-after/"},
+          {title: "Advance Tests",    href: base_url + "js-unit/advance/"}
+        ]},
+
+        { title: "Help",
+        items: [
+          {title: "Paramour inside a browser",  href: base_url + "help/in-browser/"},
+          {title: "Paramour outside a browser", href: base_url + "help/out-browser/"},
+          {title: "Change Log",                 href: base_url + "changelog.md"}
+        ]}
+    ]},
+      template, rendered;
+  $.get("https://ephellon.github.io/Paramour/mst/menu.mst", function(file_contents) {
+    template = file_contents || $("#template").html();
+    rendered = Mustache.render(template, menu_data);
+    $("#target, #template").html(rendered); // #template for testing purposes
   });
 };
-
-var base_url = "https://ephellon.github.io/Paramour/",
-menu_data =
-{
-
-  new_menu: [
-    { title: "Overview",        date: "08/22/2017 01:20 CST", href: base_url },
-    { title: "Executable .JAR", date: "08/22/2017 01:20 CST", href: base_url + "extras/Paramour.zip" },
-    { title: "Change Log",      date: "08/22/2017 01:20 CST", href: base_url + "changelog.md" }
-  ],
-
-  acc_menu: [
-
-    { title: "5-Minute Demos",
-      items: [
-        {title: "99 Bottles of Beer", href: base_url + "extras/#99"},
-        {title: "Pyramid Class",      href: base_url + "extras/#Pyramid"},
-        {title: "Toggle Class",       href: base_url + "extras/#Toggle"},
-        {title: "String Radix Suite", href: base_url + "extras/#String Radii"}
-      ]},
-
-      { title: "Comments",
-      items: [
-        {title: "Basic Comments",      href: base_url + "comments/"},
-        {title: "Phantoms",            href: base_url + "comments/phantoms/"},
-        {title: "Docstrings",          href: base_url + "comments/docstrings/"},
-        {title: "Type Annotations",    href: base_url + "comments/type-annotations/"},
-        {title: "Version Controlling", href: base_url + "comments/version-control/"},
-        {title: "Version Querying",    href: base_url + "comments/version-query/"}
-      ]},
-
-      { title: "Keywords",
-      items: [
-        {title: "Reserved Words",               href: base_url + "keywords/"},
-        {title: "Type Controlled Declarations", href: base_url + "keywords/type-declarations/"},
-        {title: "Case & Default Statements",    href: base_url + "keywords/case-and-default/"}
-      ]},
-
-      { title: "Functions",
-      items: [
-        {title: "Basic Functions",           href: base_url + "functions/"},
-        {title: "Generators",                href: base_url + "functions/generators/"},
-        {title: "Type Controlled Functions", href: base_url + "functions/type-functions/"}
-      ]},
-
-      { title: "Objects",
-      items: [
-        {title: "Tuples",  href: base_url + "objects/tuples/"},
-        {title: "Arrays",  href: base_url + "objects/arrays/"},
-        {title: "RegExps", href: base_url + "objects/regexps/"},
-        {title: "Strings", href: base_url + "objects/strings/"}
-      ]},
-
-      { title: "Classes",
-      items: [
-        {title: "Basic Classes",     href: base_url + "classes/tuples/"},
-        {title: "Static Methods",    href: base_url + "classes/static/"},
-        {title: "Prototype Methods", href: base_url + "classes/prototype/"}
-      ]},
-
-      { title: "JS Unit",
-      items: [
-        {title: "Basic Tests",      href: base_url + "js-unit/"},
-        {title: "@Before & @After", href: base_url + "js-unit/before-and-after/"},
-        {title: "Advance Tests",    href: base_url + "js-unit/advance/"}
-      ]},
-
-      { title: "Help",
-      items: [
-        {title: "Paramour inside a browser",  href: base_url + "help/in-browser/"},
-        {title: "Paramour outside a browser", href: base_url + "help/out-browser/"},
-        {title: "Change Log",                 href: base_url + "changelog.md"}
-      ]}
-  ]};
 
   loadMenu();
 
