@@ -206,8 +206,8 @@ menu_data =
 
   new_menu: [
     { title: "Overview",        date: "08/22/2017 01:20 CST", href: base_url },
-    { title: "Executable .JAR", date: "08/22/2017 01:20 CST", herf: base_url + "extras/Paramour.zip" },
-    { title: "Change Log",      date: "08/22/2017 01:20 CST", herf: base_url + "changelog.md" }
+    { title: "Executable .JAR", date: "08/22/2017 01:20 CST", href: base_url + "extras/Paramour.zip" },
+    { title: "Change Log",      date: "08/22/2017 01:20 CST", href: base_url + "changelog.md" }
   ],
 
   acc_menu: [
