@@ -188,15 +188,15 @@ true, '',
     $(".cursor").css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
   }, 500);
 
-  // The Navigation Menu
-  // Mustache + jQuery
+// The Navigation Menu
+// Mustache + jQuery
 
 function loadMenu() {
-  $.get("https://ephellon.github.io/Paramour/mst/menu.mst", function() {
-    var template = $("#template").html(), rendered;
+  $.get("https://ephellon.github.io/Paramour/mst/menu.mst", function(template) {
+    var template = template || $("#template").html();
     Mustache.parse(template); // speed up future uses
-    rendered = Mustache.render(template, menu_data);
-    $("#target").html(rendered);
+    var rendered = Mustache.render(template, menu_data);
+    $("#target,#template").html(rendered); // #template for testing purposes
   });
 };
 
@@ -205,19 +205,19 @@ menu_data =
 {
 
   new_menu: [
-    { title: "Overview",        href: base_url },
-    { title: "Executable .JAR", herf: base_url + "extras/Paramour.zip" },
-    { title: "Change Log",      herf: base_url + "changelog.md" }
+    { title: "Overview",        date: "08/22/2017 01:20 CST", href: base_url },
+    { title: "Executable .JAR", date: "08/22/2017 01:20 CST", herf: base_url + "extras/Paramour.zip" },
+    { title: "Change Log",      date: "08/22/2017 01:20 CST", herf: base_url + "changelog.md" }
   ],
 
   acc_menu: [
 
     { title: "5-Minute Demos",
       items: [
-        {title: "99 Bottles of Beer", href: base_url + "#99"},
-        {title: "Pyramid Class",      href: base_url + "#Pyramid"},
-        {title: "Toggle Class",       href: base_url + "#Toggle"},
-        {title: "String Radix Suite", href: base_url + "#String Radii"}
+        {title: "99 Bottles of Beer", href: base_url + "extras/#99"},
+        {title: "Pyramid Class",      href: base_url + "extras/#Pyramid"},
+        {title: "Toggle Class",       href: base_url + "extras/#Toggle"},
+        {title: "String Radix Suite", href: base_url + "extras/#String Radii"}
       ]},
 
       { title: "Comments",
