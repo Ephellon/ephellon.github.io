@@ -1,6 +1,5 @@
 <ul class="devsite-nav-list devsite-nav-expandable devsite-nav-only-accordions">
   {{ #new_menu }}
-
   <li class="devsite-nav-item devsite-nav-new devsite-nav-has-status">
     <a href="{{ href }}" target="blank_" class="devsite-nav-title gc-analytics-event" track-type="leftNav" track-name="titleLink" track-metadata-position="0" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click">
       <span>{{ title }}</span>
