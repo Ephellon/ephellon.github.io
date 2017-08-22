@@ -1,1 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Paramour - Version Querying</title>
+  <meta charset="utf-8"/>
+  <link rel="shortcut icon" href="https://ephellon.github.io/Paramour/images/favicon.ico"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"/>
+  <script src="https://ephellon.github.io/Paramour/js/jquery-bundle.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/run_prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/mustache.js"></script>
+  <script src="https://ephellon.github.io/Paramour/prettyprint/lang-paramour.js"></script>
+  <style>
+  @import url(https://ephellon.github.io/Paramour/css/icons.css);
+  @import url(https://ephellon.github.io/Paramour/css/main.css);
+  @import url(https://ephellon.github.io/Paramour/css/tomorrow-night.css);
 
+  .prettyprint, .pretty-input > textarea {
+    overflow: auto;
+  }
+
+  .prettyprint > ol.linenums > li {
+    list-style-type: decimal-leading-zero !important;
+  }
+
+  .pretty-input > *, #docs-toolbar-wrapper {
+    border: none;
+    width: 50vw;
+  }
+
+  #docs-toolbar-wrapper {
+    background: #fff;
+    border: none;
+    box-shadow: none; /*0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28)*/
+  }
+
+  #docs-toolbar .button:first-child {
+    margin-left: -56px;
+  }
+
+  .pretty-input > textarea, .pretty-input .prettyprint {
+    height: 20vw; /* Yes, use vw; it's a 2:5 ratio */
+  }
+
+  .pretty-input > textarea {
+    resize: none;
+    position: absolute;
+    opacity: 0 !important;
+    z-index: 9 !important;
+  }
+
+  .pretty-input > .prettyprint {
+    z-index: initial !important;
+  }
+
+  .prettyprint .cursor {
+    background: rgba(255,255,255,0.1); /* default-blue: #0867d7 */
+    border: none;
+    color: #fff;
+    margin: 0;
+    padding: 2px 0;
+    width: 0 !important;
+  }
+
+  .prettyprint .cursor.right {
+    border-right: solid 1px #fff;
+  }
+
+  .prettyprint .cursor.left {
+    border-left: solid 1px #fff;
+  }
+
+  .octicon {
+    box-sizing: border-box;
+    display: inline-block;
+    fill: currentColor;
+    font-size: inherit;
+    overflow: hidden;
+    text-size-adjust: 100%;
+    transform-origin: 64px 64px;
+    vertical-align: text-bottom;
+    white-space: nowrap;
+    word-wrap: break-word;
+  }
+
+  a:link, a:visited {
+    color: #039be5 !important;
+    text-decoration: none !important;
+  }
+
+  a.devsite-doc-set-nav-tab, a.devsite-top-button {
+    color: rgba(255,255,255,0.7) !important;
+  }
+
+  a.devsite-footer-promo-title {
+    color: rgba(0,0,0,0.9) !important;
+  }
+  </style>
+</head>
+<!-- [CONTENT-TYPE] -->
+<!--
+HEADER
+NAVIGATION[-BOTTOM|-LEFT|-RIGHT|-TOP]
+CONTENT
+FOOTER[ALTERNATIVE-SERVICES|CREDITS|LINKS]
+DEPENDENCIES
+-->
+<body id="top_of_page" class="devsite-doc-page devsite-header-no-upper-tabs devsite-uhura">
+  <div class="devsite-wrapper">
+    <div class="devsite-top-section-wrapper">
+      <!-- HEADER -->
+      <header class="devsite-top-section nocontent">
+        <div class="devsite-top-logo-row-wrapper-wrapper">
+          <div class="devsite-top-logo-row-wrapper">
+            <div class="devsite-top-logo-row devsite-full-site-width">
+              <button type="button" data-category="Site-Wide Custom Events" data-label="Hamburger menu" class="devsite-expand-section-nav devsite-header-icon-button button-flat material-icons gc-analytics-event"></button>
+              <div class="devsite-product-name-wrapper"><a href="https://ephellon.github.io/Paramour/" data-category="Site-Wide Custom Events" data-label="Project logo (header)" class="devsite-product-name-link gc-analytics-event"><img src="https://ephellon.github.io/Paramour/images/Paramour.png" alt="Paramour" class="devsite-product-logo"/></a><span class="devsite-product-name">
+                  <ul class="devsite-breadcrumb-list">
+                    <li class="devsite-breadcrumb-item"><a href="https://ephellon.github.io/Paramour/" data-category="Site-Wide Custom Events" data-label="Upper Header" data-value="1" class="devsite-breadcrumb-link gc-analytics-event">Paramour</a></li>
+                  </ul></span></div>
+              <div class="devsite-header-upper-tabs"></div>
+              <form id="top-search" --action="https://ephellon.github.io/Paramour/search/" method="GET" search-placeholder="Search" class="devsite-search-form">
+                <div id="searchbox" class="devsite-searchbox">
+                  <input placeholder="Search" type="text" name="q" value="" autocomplete="off" class="devsite-search-field devsite-search-query"/>
+                  <div class="devsite-search-image material-icons"></div>
+                </div>
+              </form>
+              <a href="https://github.com/ephellon/" data-category="Site-Wide Custom Events" data-label="Site header link" class="devsite-header-link devsite-top-button button gc-analytics-event">
+                <div class="devsite-header-link-label">All Projects</div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="devsite-collapsible-section">
+          <div class="devsite-header-background devsite-full-site-width">
+            <div class="devsite-doc-set-nav-row devsite-full-site-width">
+              <!-- NAVIGATION-TOP -->
+              <nav class="devsite-doc-set-nav devsite-nav devsite-overflow-tabs-scroll-wrapper">
+                <ul class="devsite-doc-set-nav-tab-list devsite-overflow-tabs-scroll">
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Paramour/" data-category="Site-Wide Custom Events" data-label="Tab: Home" class="devsite-doc-set-nav-tab gc-analytics-event">Home</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Paramour/reference/" data-category="Site-Wide Custom Events" data-label="Tab: Reference" class="devsite-doc-set-nav-tab gc-analytics-event">Reference</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Paramour/extras/" data-category="Site-Wide Custom Events" data-label="Tab: Samples" class="devsite-doc-set-nav-tab gc-analytics-event">Examples</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Paramour/support/" data-category="Site-Wide Custom Events" data-label="Tab: Support" class="devsite-doc-set-nav-tab gc-analytics-event">Support</a>
+                  </li>
+                  <a id="devsite-feedback-project" href="mailto:minkcbos@gmail.com" type="button" data-category="Site-Wide Custom Events" data-label="Send Feedback Button" track-type="feedback" track-name="sendFeedbackLink" track-metadata-position="header" class="button devsite-feedback-button devsite-top-button gc-analytics-event">Send feedback</a>
+                </ul>
+              </nav>
+              <!-- :NAVIGATION-TOP -->
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- :HEADER -->
+      <script>
+        if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
+      </script>
+    </div>
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
+      <div class="devsite-site-mask"></div>
+      <div class="devsite-main-content clearfix">
+        <!-- NAVIGATION-LEFT -->
+        <div id="target"></div>
+        <!-- :NAVIGATION-LEFT -->
+        <!-- NAVIGATION-RIGHT -->
+        <nav class="devsite-page-nav devsite-nav"></nav>
+        <!-- :NAVIGATION-RIGHT -->
+        <article class="devsite-article">
+          <!-- CONTENT -->
+          <article class="devsite-article-inner">
+            <h1 itemprop="name" class="devsite-page-title">Version Querying</h1>
+            <nav class="devsite-page-nav-embedded devsite-nav"></nav>
+            <div itemprop="articleBody" class="devsite-article-body clearfix">
+              <p><i>Version Querying</i>, not to be confused with <a href="https://ephellon.gituhb.io/Paramour/verion-controlling/">Version Controlling</a> changes the output in blocks,
+                not as a whole, depending on the matched version.</p>
+              <p>Version queries follw the syntax <code># [version]?[flag] [code-block] #?</code>, where <code>[version]</code> is the desired verion,
+                <code>[flag]</code> is a legal query flag,
+                and <code>[code-block]</code> is the code to use, <b>if</b> the verion matches the criteria.</p>
+              <h2 id="query_flags">Query Flags</h2>
+              <p>Available Flags:</p>
+              <ul>
+                <li>Is version, <code># [version]? [code-block] #?</code></li>
+                <li>Isn't version, <code># [version]?! [code-block] #?</code></li>
+                <li>Is at least version, <code># [version]?* [code-block] #?</code></li>
+              </ul>
+              <h3 id="set_it_up">Set-Up</h3>
+              <div class="pretty-input">
+<textarea translate="no" class="notranslate">
+# Destructor example
+# JavaScript 1.7 supports destructors natively
+
+var names = ["Gumball", "Darwin", "Anais"];
+
+# if this is verison 1.7, then handle it here
+# 1.7?
+var [gumball, darwin, anais] = names;
+#?
+
+# otherwise, handle it here
+# 1.7?!
+=> (['gumball', 'darwin', 'anais'] = names);
+
+[Array = Array] {
+  for(var i = 0; i < $1.length; i++)
+    eval "var ${$1[i]} = ${$2[i]}";
+}
+#?
+
+# and this is just an example of the ?* query
+# 1.3?*
+alert "Congratulations, you have at least JavaScript 1.3"
+#?
+</textarea>
+                  <pre class="prettyprint notranslate lang-paramour"></pre>
+                  <!-- TOOLBAR -->
+                  <div id="docs-toolbar-wrapper">
+                    <div id="docs-primary-toolbars" class="docs-collapsable-toolbar">
+                      <div id="docs-toolbar" class="goog-toolbar" aria-label="Main" role="toolbar" tabindex="0" style="user-select: none;">
+                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (local)">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block " style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-save" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="runButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Run">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block " style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-run" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        
+                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to JavaScript">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
+                                  <div class="docs-icon-img-container docs-icon-img docs-icon-redo" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="linkButton" class="button goog-toolbar-toggle-button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" aria-pressed="false" style="user-select: none;" title="Create a link" aria-hidden="true">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-link" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="helpButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Help">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
+                                  <div class="docs-icon-img-container docs-icon-img docs-icon-help" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="button goog-toolbar-text goog-toolbar-menu-button goog-inline-block" role="listbox" aria-disabled="false" aria-expanded="false" style="user-select: none;" aria-haspopup="true" aria-activedescendant=":2m" data-tooltip="Select function" aria-label="Search through code">
+                          <div class="goog-toolbar-menu-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-menu-button-inner-box goog-inline-block" style="user-select: none; margin-top: -3%;">
+                                <div class="devsite-searchbox">
+                                  <input id="findButton" placeholder="Find code" type="text" value="" autocomplete="off" class="devsite-search-field devsite-search-query">
+                                  <div class="devsite-search-image material-icons"></div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- :TOOLBAR -->
+              </div>
+              <h2 id="learn_more">Learn more</h2>
+              <p>To continue learning about Paramour, take a look at the following resources:</p>
+              <ul>
+                <li>Paramour - <a href="https://github.com/Ephellon/Ephellon.github.io/blob/master/Paramour/changelog.md" target="blank_">Change Log</a></li>
+                <li>Paramour - <a href="https://github.com/Ephellon/Paramour/blob/master/java/Paramour.js" target="blank_">Source Code</a></li>
+                <li>Paramour - <a href="https://codepen.io/Ephellon/post/paramour" target="blank_">Proposed Features</a></li>
+              </ul>
+            </div>
+            <div class="devsite-content-footer nocontent">
+              <p itemprop="datePublished" content="2017-05-23T15:26:03.972520" class="devsite-content-footer-date">Last updated August 17, 2017.</p>
+            </div>
+          </article>
+          <!-- :CONTENT -->
+        </article>
+      </div>
+      <!-- FOOTER -->
+      <!-- FOOTER[CREDITS|LINKS] -->
+      <footer class="devsite-footer-promos nocontent">
+        <nav class="devsite-full-site-width">
+          <ul class="devsite-footer-promos-list">
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://codepen.io/Ephellon/posts/published/" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+                <img src="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" class="devsite-footer-promo-icon"/>
+                Posts
+              </a>
+              <div class="devsite-footer-promo-description">The latest news about Paramour and other projects</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://github.com/Ephellon/Paramour/tree/master/examples" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <img src="https://ephellon.github.io/Paramour/images/logo-github.svg" class="devsite-footer-promo-icon"/>
+              GitHub
+              </a>
+              <div class="devsite-footer-promo-description">Fork samples and try them yourself</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://github.com/Ephellon/Paramour/issues/new" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <span class="devsite-footer-promo-icon">
+                <svg aria-hidden="true" class="octicon" version="1.1" viewBox="0 0 40 40" height="128" width="128">
+                  <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                </svg>
+              </span>
+              Issues
+              </a>
+              <div class="devsite-footer-promo-description">Something wrong? Post an issue!</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://stackoverflow.com/questions/tagged/paramour" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <img src="https://ephellon.github.io/Paramour/images/logo-stack-overflow.svg" class="devsite-footer-promo-icon"/>
+              Stack Overflow
+              </a>
+              <div class="devsite-footer-promo-description">Ask a question under the <code>paramour</code> tag</div>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+      <!-- :FOOTER[CREDITS|LINKS] -->
+      <!-- FOOTER[LINKS] -->
+      <footer class="devsite-footer-linkboxes nocontent devsite-footer-linkboxes-with-sites">
+        <nav class="devsite-full-site-width">
+          <ul class="devsite-footer-linkboxes-list">
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Tools</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://ephellon.github.io/Paramour/extras/" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Editor</a></li>
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://github.com/Ephellon/Ephellon.github.io/blob/master/Paramour/changelog.md" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Change Log</a></li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Connect</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://twitter.com/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Twitter</a>
+                </li>
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://github.com/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">GitHub</a>
+                </li>
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://codepen.io/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">CodePen</a>
+                </li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Product Info</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://raw.githubusercontent.com/Ephellon/Ephellon.github.io/master/LICENSE.txt" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">License</a></li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox devsite-footer-linkbox-sites"><a target="blank_" href="https://ephellon.github.io/" data-category="Site-Wide Custom Events" data-label="Footer Google Developers Link" class="gc-analytics-event devsite-footer-linkbox-logo-link"><img src="https://avatars0.githubusercontent.com/u/8632548?v=4&s=256" class="devsite-footer-linkbox-logo" style="max-height: 32px; width: auto;"/></a>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="//codepen.io/ephellon/" data-category="Site-Wide Custom Events" data-label="Footer Android Link" class="gc-analytics-event">CodePen</a></li>
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="//github.com/ephellon/" data-category="Site-Wide Custom Events" data-label="Footer Chrome Link" class="gc-analytics-event">GitHub</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+      <!-- :FOOTER[LINKS] -->
+      <!-- FOOTER[ALTERNATE-SERVICES] -->
+      <footer class="devsite-content-footer nocontent" style="background: #455a64; color: #fff; margin: -1px; padding-bottom: 10px;">
+        <nav class="devsite-content-footer-nav devsite-nav devsite-full-site-width">
+          <div class="devsite-content-footer-nav-left">
+            <p>
+                Except as otherwise noted, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/" target=blank_"">Creative Commons Attribution 3.0 License</a>;
+                Paramour, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat" target=blank_"">MIT License</a>.
+                Java is a registered trademark of Oracle inc. and/or its affiliates.
+                JavaScript, and ECMAScript are registered trademarks of ECMAScript intl. and/or its affiliates.
+                Google is a registered trademark of Google inc. and/or its affiliates.
+                CoffeeScript is a registered trademark of "Jeremy Ashkenas."
+                Swift is a registered trademark of Apple inc. and/or its affiliates.
+                Python is a registered trademark of Python Software Foundation org. and/or its affiliates.
+              </p>
+          </div>
+        </nav>
+      </footer>
+      <!-- FOOTER[ALTERNATE-SERVICES] -->
+      <!-- :FOOTER -->
+    </div>
+    <!-- DEPENDENCIES -->
+    <script>var dataLayer = [{"freeTrialEligibleUser": "False", "userCountry": "US", "language": {"requested": "en", "served": "en"}, "projectName": "Apps Script", "scriptsafe": null, "signedIn": "False", "internalUser": "False"}];</script>
+    <script src="https://ephellon.github.io/Paramour/js/jquery_ui-bundle.js"></script>
+    <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
+    <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/par.min.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/tinyurl.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/main.js"></script>
+    <!-- :DEPENDENCIES -->
+  </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
+</body>
+</html>
