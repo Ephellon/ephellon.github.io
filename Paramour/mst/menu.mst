@@ -1,4 +1,4 @@
-<nav class="devsite-section-nav devsite-nav nocontent" style="left: auto; max-height: 556px; position: fixed; top: 120px;">
+<nav id="template" class="devsite-section-nav devsite-nav nocontent" style="left: auto; max-height: 556px; position: fixed; top: 120px;">
   <ul class="devsite-nav-list devsite-nav-expandable devsite-nav-only-accordions">
     {{ #new_menu }}
     <li class="devsite-nav-item devsite-nav-active">
@@ -13,7 +13,7 @@
       <span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path" tabindex="0">
         <span>{{ title }}</span>
       </span>
-      <a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle material-icons devsite-nav-toggle-expanded"></a>
+      <a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
       <ul class="devsite-nav-section devsite-nav-section-expanded" style="display: block; height: auto;">
         {{ #items }}
         <li class="devsite-nav-item">
