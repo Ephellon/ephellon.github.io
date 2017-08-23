@@ -267,6 +267,17 @@ function loadMenu() {
     template = file_contents || $("#template").html();
     rendered = Mustache.render(template, menu_data);
     $("#target, #template").html(rendered); // #template for testing purposes
+
+    $(".devsite-nav-item > a[track-type='leftNav']")
+    .click(function(event) {
+      $(event.target)
+      // .siblings("a[track-type='leftNav']")
+        .toggleClass("devsite-nav-toggle-expanded")
+        .toggleClass("devsite-nav-toggle-collapsed")
+      .siblings("ul")
+        .toggleClass("devsite-nav-section-expanded")
+        .toggleClass("devsite-nav-section-collapsed");
+    });
   });
 };
 
