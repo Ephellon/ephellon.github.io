@@ -10946,7 +10946,7 @@
   };
   var wq = function(a, b) {
     M.call(this);
-    var c = document.createElement("div");
+    var a = a || document.createElement("input"), c = document.createElement("div");
     c.className = "devsite-popout devsite-popout-closed";
     a.appendChild(c);
     this.mg = c;
