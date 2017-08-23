@@ -263,6 +263,8 @@ function loadMenu() {
         ]}
     ]},
       template, rendered;
+
+if(/^https?:\/\/ephellon\.github\.io$/.test(location.origin))
   $.get("https://ephellon.github.io/Paramour/mst/menu.mst", function(file_contents) {
     template = file_contents || $("#template").html();
     rendered = Mustache.render(template, menu_data);
