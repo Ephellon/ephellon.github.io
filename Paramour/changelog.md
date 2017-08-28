@@ -1,14 +1,24 @@
-# Paramour Change-log (Gyalchester - XXIX)
+# Paramour Change-log (Oxygen - XXXI)
 
-_Latest Version_: "Gyalchester" 29.0.0
+_Latest Version_: "Oxygen" 31.0.0
 
 ----
 
+- Oxygen, 31.0 (Smino: "Oxygen")
+  - improved compile time
+  - improved syntax recognition
+  - added infinite loop detection for ```compile```
+
+- Arabella, 30.0 (Arctic Monkeys: "Arabella")
+  - added Arrow Statements for prototype methods
+  - improved syntax recognition
+
 - Gyalchester, 29.0 (Drake: "Gyalchester")
   - improved syntax recognition
+
 - untitled, 28.0 (Kendrick Lamar: "untitled 02 | 06.23.2014")
   - new compiling options, "deps", "mini" and "strict", e.g. ```Paramour(input, {deps: true, mini: true, strict: false});``` or ```# @deps``` etc.
-  - Type Annontaions, must always use ```:Type [arrow statement]``` e.g. ```fn(param):Type -> param;``` or ```fn(param):Type => {-> param};```
+  - added Type Annontaions; must always use ```:Type [arrow statement]``` e.g. ```fn(param):Type -> param;``` or ```fn(param):Type => {-> param};```
   - Arrow Statements, e.g. ```toss(err) +> err;```
   - Quasi-RegExps, e.g. ```///Hello${name || "world"}///i```
   - ```case[Range]``` and ```default[Range]``` (e.g. ```case[0..5] {alert "0 - 5"}```)
