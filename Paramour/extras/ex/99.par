@@ -15,7 +15,7 @@ for (
   # Stop execution if either is false
   i > 0 && (s => (i)?) && (t => (i - 1)?);
     # s => (i)?
-    # s = "?$"(i)
+    # s = [?$](i)
 
   # decrement after each iteration
   i--
@@ -29,4 +29,4 @@ out 'No more bottles of beer on the wall, no more bottles of beer. You go to the
 # custom [Number?] operator
 # function "?$"(Number $1)
 [Number?] =>
-  ($1 === 1? '': 's');
+  ($1 == 1? '': 's');
