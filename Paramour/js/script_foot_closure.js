@@ -1960,7 +1960,7 @@ try {
     ;
     var ve = function(a) {
       m.setTimeout(function() {
-        throw a;
+        console.warn(a);
       }, 0)
     }, we, xe = function() {
       var a = m.MessageChannel;
