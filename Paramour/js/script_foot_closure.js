@@ -10481,7 +10481,7 @@ try {
       c.s = d;
       c.c = b;
       a = a.Jj.bind(a, b, d);
-      pi("/_s/getsuggestions", a, "GET", c)
+      pi("/get-suggestions/", a, "GET", c)
     };
     cq.prototype.Jj = function(a, b, c) {
       if (c && Jh(c.target)) {
