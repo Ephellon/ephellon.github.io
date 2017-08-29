@@ -10497,12 +10497,12 @@ try {
           c = d
         }
         if (b != this.xg) {
-          var f = c;
+          var f = c || [];
           for (d = 0; d < f.length; d++)
             e = f[d],
             e.p && -1 == e.p.indexOf("//") && (e.p = $p[b] + e.p)
         }
-        b = c;
+        b = c || [];
         for (f = 0; f < b.length; f++)
           d = b[f],
           d.p = ni(d.p);
