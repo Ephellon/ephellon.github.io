@@ -7,7 +7,7 @@ _Latest Version_: "Oxygen" 31.0.0
 - Oxygen, 31.0 (Smino: "Oxygen")
   - improved compile time
   - improved syntax recognition
-  - added infinite loop detection for ```compile```
+  - added infinite loop detection for ```compile``` and ```IG``` unfolding
 
 - Arabella, 30.0 (Arctic Monkeys: "Arabella")
   - added Arrow Statements for prototype methods
