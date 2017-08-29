@@ -41,11 +41,11 @@ _Latest Version_: "Oxygen" 31.0.0
   - imporved syntax recognition
 
 - ..., 24.0 (A Tribe Called Quest: "We The People....")
-  - new HTML Tag types, ```fn(<Element> e) => e``` (note: you must use the JS name of the tag)
+  - new HTML Tag types, ```fn(<Element> e) => e``` (note: it is recommended you use the JavaScript name of the tag)
   - new Tuple syntax, ```.{}```
   - new type-controlled declarations, ```"String" s = "hello world"```, ```"Object" o = {"Date" d: new Date()}```
-  - new ```self``` reserved word
-  - new _strict user_ syntax, ```# @strict```
+  - new ```self``` reserved word in Paramour source code
+  - new _strict user_ compiling option, ```# @strict```
   - ```*static_method``` syntax for static methods (i.e. Array.from)
   - improved Tuple, class and prototype syntaxes
   - prototype method names now default to their parent caller's name, ```mthd(Type variable)``` will be named "mthd"
@@ -58,10 +58,10 @@ _Latest Version_: "Oxygen" 31.0.0
 
 - Thursday, 22.0 (The Weeknd: "Thursday")
   - improved syntax recognition
-  - new ```NewLine``` constructor
-  - ```string = *String(123)``` syntax (```string = new String(123)```)
+  - new ```NewLine``` constructor, ```new NewLine(String sequence)```
+  - ```string = *String 123``` syntax (```string = new String(123)```)
   - assigned brace recognition, (```= {}```, ```: {}```, ```, {}```)
-  - Improved operator syntax
+  - improved operator syntax
 
 - Calm Down, 21.0 (G-Eazy: "Calm Down")
   - imporoved JSUNIT features and syntax
@@ -81,10 +81,10 @@ _Latest Version_: "Oxygen" 31.0.0
 
 - Fade - XVIII, 18.0 (Kanye West: "Fade")
   - ```Paramour.compile``` - script loading and handling functions
-    - ```Paramour.run``` - ```Paramour(input)```
-    - ```Paramour.eval``` - ```eval(Paramour(input))```
-    - ```a::b```, ```a..b``` - ```a.prototype.b``` shortcuts
-    - ```NaN a```, ```a == NaN```, ```a === NaN``` - ```NaN``` operator and comparison (```!(a <= Infinity)```)
+  - ```Paramour.run``` - ```Paramour(input)```
+  - ```Paramour.eval``` - ```eval(Paramour(input))```
+  - ```a::b```, ```a..b```, ```a@b``` - ```a.prototype.b``` shortcuts
+  - ```NaN a```, ```a == NaN```, ```a === NaN``` - ```NaN``` operator and comparison (```!(a <= Infinity)```)
 
 - Caroline - XVII, 17.0 (Aminé: "Caroline")
   - ```shock, unshock``` - Paramour helper functions
@@ -93,8 +93,8 @@ _Latest Version_: "Oxygen" 31.0.0
   - ```[a..b]```, ```[a...b]``` - slice and splice syntax
 
 - Starboy - XVI, 16.0 (The Weeknd: "Starboy (feat. Daft Punk)")
-  - ```# version? block #?``` Conditional block-statement syntax
-  - ```@Test, @Before, @After``` JSUNIT
+  - ```# version? block #?``` - Conditional block-statement syntax
+  - ```@Test, @Before, @After``` - JSUNIT
 
 - Krogstad - XV, 15.0 (Henrik Ibsen: "Nils Krogstad")
   - ```Yield``` type|statement proposal
@@ -121,6 +121,12 @@ _Latest Version_: "Oxygen" 31.0.0
 
 - Cleopatra - X, 10.0 ("Cleopatra VII Philopator")
   - Initial release (stable)
+  - ```fn(a, b, c){}``` - miniature function syntax with type recognition
+  - ```cls {}``` - miniature class syntax, including class extensions
+  - ```# comment``` - single line comment syntax
+  - ```### comment ###``` - multi-line comment syntax
+  - runtime detection
+  - Self Evaluation Article
 
 - Iota - IX, 9.0
 
