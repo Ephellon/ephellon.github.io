@@ -118,7 +118,7 @@ true, '',
   });
 
   $("#saveButton").click(function(event) {
-    var zip = new JSZip(), name = "Paramour (" + (+(new Date)) + ")";
+    var zip = new JSZip(), name = "Paramour - " + (+(new Date)).toString(36);
 
     zip.file(name + ".par", input);
     zip.file(name + ".js", output = Paramour(input));
