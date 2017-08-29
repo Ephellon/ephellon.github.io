@@ -10,12 +10,12 @@
 
 var (lower, upper, results = []) = +prompt "${Tuple.next} range limit?"
 
-for(var x = lower; x < upper; x++) {
-  for(var y = x, z, w = 0; y > 0; y => (y % 10)) {
+for(var x = lower, y, z, w; x < upper; x++) {
+  for(y = x, w = 0; y > 0; y => (y % 10)) {
     z = y % 10
     w +=> (z ^ 3)
   }
-  if(x === w)
+  if(x is w)
     results.push x;
 }
 
@@ -26,3 +26,6 @@ alert "Armstrong numbers between ${lower} and ${upper} are (${results.join(', ')
 
 [Number ^ Number] =>
   Math.pow($1, $2);
+
+is[* ; *] =>
+  $1 == $2;
