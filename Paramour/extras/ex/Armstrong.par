@@ -27,5 +27,6 @@ alert "Armstrong numbers between ${lower} and ${upper} are (${results.join(', ')
 [Number ^ Number] =>
   Math.pow($1, $2);
 
+# can also be: is[* is *]
 is[* ; *] =>
   $1 == $2;
