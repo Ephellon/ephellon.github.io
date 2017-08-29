@@ -83,7 +83,7 @@ DEPENDENCIES
         if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
       </script>
     </div>
-    <div id="gc-wrapper" itemscope="" itemtype="https://schema.org/Article">
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
       <div class="devsite-site-mask"></div>
       <div class="devsite-main-content clearfix">
         <!-- NAVIGATION-LEFT -->
@@ -95,10 +95,10 @@ DEPENDENCIES
         <article class="devsite-article">
           <!-- CONTENT -->
           <article class="devsite-article-inner">
-            <h1 itemprop="name" class="devsite-page-title">Paramour Editor &amp; Debugger</h1>
+            <h1 itemprop="name" class="devsite-page-title">Editor &amp; Debugger</h1>
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
-            <div itemprop="articleBody" class="devsite-article-body clearfix">                 
-<div class="pretty-input">
+            <div itemprop="articleBody" class="devsite-article-body clearfix">
+              <div class="pretty-input">
 <textarea translate="no" class="notranslate">
 ### Days until Xmas
   @author: W3 Resource Authors
@@ -113,7 +113,7 @@ DEPENDENCIES
 
 var today = new Date(),
     Xmas = new Date(today.$year, 11, 25), # Xmas Day of this year
-    oneDay = 1000 60 60 24; # spaces between number sare treated as *
+    oneDay = 1000 60 60 24; # spaces between numbers are treated as "*"
 
 if(today.$month == 11 && today.$day > 25)
   Xmas.setFullYear(Xmas.$year + 1);
@@ -122,7 +122,7 @@ if(today.$month == 11 && today.$day > 25)
  * Finds the number of days left until Xmas (Dec. 25)
  */
 HowManyDays():String
-  -> "\${round_up((Xmas.$time - today.$time) / oneDay)} days left until Christmas!";
+  -> "${round_up((Xmas.$time - today.$time) / oneDay)} days left until Christmas!";
 
 round_up(Number n) ->
   Math.ceil n;
@@ -206,7 +206,7 @@ alert days_left;
                     </div>
                   </div>
                   <!-- :TOOLBAR -->
-                  </div>
+              </div>
             </div>
             <div class="devsite-content-footer nocontent">
               <p itemprop="datePublished" content="2017-05-23T15:26:03.972520" class="devsite-content-footer-date">Last updated August 17, 2017.</p>
