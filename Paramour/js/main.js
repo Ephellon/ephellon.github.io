@@ -118,7 +118,17 @@ true, '',
   });
 
   $("#saveButton").click(function(event) {
-    
+    var zip = new JSZip(), name = "Paramour (" + (+(new Date)) + ")";
+
+    zip.file(name + ".par", input);
+    zip.file(name + ".js", output = Paramour(input));
+
+    zip.generateAsync({type: "blob"})
+    .then(function(blob) {         // 1) generate the zip file
+      saveAs(blob, name + ".zip"); // 2) trigger the download
+    }, function(err) {
+      $("#blob").text(err);
+    });
   });
 
   $("#runButton").click(function(event) {
