@@ -1,327 +1,374 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
-  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
-  <title>Mi/o - Compression Algorithm</title>
+  <title>Mi/o</title>
+  <meta charset="utf-8"/>
+  <link rel="shortcut icon" href="https://ephellon.github.io/Mio/images/favicon.ico"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"/>
   <script src="https://ephellon.github.io/Paramour/js/jquery-bundle.js"></script>
   <script src="https://ephellon.github.io/Paramour/js/prettify.js"></script>
   <script src="https://ephellon.github.io/Paramour/js/run_prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/mustache.js"></script>
   <script src="https://ephellon.github.io/Paramour/js/jszip.js"></script>
   <script src="https://ephellon.github.io/Paramour/js/jszip-utils.js"></script>
   <script src="https://ephellon.github.io/Paramour/js/FileSaver.js"></script>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-  
   <style>
-@import url(https://ephellon.github.io/Paramour/css/icons.css);
-@import url(https://ephellon.github.io/Paramour/css/main.css);
-@import url(https://ephellon.github.io/Paramour/css/tomorrow-night.css);
-
-html, body {
-  background: #8424f4;
-}
-
-.prettyprint, .pretty-input > textarea {
-  background-attachment: scroll;
-  background-clip: border-box;
-  background-image: none;
-  background-position: 0 0;
-  background-size: auto;
-  box-sizing: inherit;
-  font-size: 14px !important;
-  font-family: Menlo,
-    Bitstream Vera Sans Mono,
-    DejaVu Sans Mono,
-    Monaco,
-    Consolas,
-    monospace !important;
-  line-height: 20px !important;
-  overflow: auto !important;
-  padding: 2px;
-  resize: none;
-  text-rendering: auto;
-  white-space: pre;
-  word-spacing: 0px;
-  word-wrap: break-word;
-}
-
-.prettyprint > ol.linenums > li {
-  list-style-type: decimal-leading-zero !important;
-}
-
-.pretty-input > *, #docs-toolbar-wrapper {
-  border: none;
-  width: 100vw;
-}
-
-#docs-toolbar-wrapper {
-  margin-top: -1%;
-  background: inherit;
-  border: none;
-  box-shadow: none; /*0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28)*/
-}
-
-#docs-toolbar .button:first-child {
-  margin-left: -56px;
-}
-
-.pretty-input > textarea, .pretty-input .prettyprint {
-  height: 45vw; /* Yes, use vw; it's a 2:5 ratio */
-}
-
-.pretty-input > textarea {
-  resize: none;
-  position: absolute;
-  opacity: 0 !important;
-  z-index: 9 !important;
-}
-
-.pretty-input > .prettyprint {
-  z-index: initial !important;
-}
-
-.prettyprint .cursor {
-  background: rgba(255,255,255,0.1); /* default-blue: #0867d7 */
-  border: none;
-  color: #fff;
-  margin: 0;
-  padding: 2px 0;
-  width: 0 !important;
-}
-
-.prettyprint .cursor.right {
-  border-right: solid 1px #fff;
-}
-
-.prettyprint .cursor.left {
-  border-left: solid 1px #fff;
-}
-
-.octicon {
-  box-sizing: border-box;
-  display: inline-block;
-  fill: currentColor;
-  font-size: inherit;
-  overflow: hidden;
-  text-size-adjust: 100%;
-  transform-origin: 64px 64px;
-  vertical-align: text-bottom;
-  white-space: nowrap;
-  word-wrap: break-word;
-}
-    </style>
+  @import url(https://ephellon.github.io/Paramour/css/icons.css);
+  @import url(https://ephellon.github.io/Paramour/css/main.css);
+  @import url(https://ephellon.github.io/Paramour/css/tomorrow-night.css);
+  @import url(https://ephellon.github.io/Mio/css/adjust.css);
+  </style>
 </head>
-
-<body translate="no" >
-  <div class="pretty-input">
-<textarea translate="no" class="notranslate">
-var Mio = window.Mio = Mio || {power: 8};
-
-// Encode
-Mio.Mi =
-Mio.enc =
-// String: String[, Boolean]
-function Mi(input, hybrid_only) {
-  return (hybrid_only? function(){}: btoa)(LZW_Wrap(LZW_Encode(input)));
-};
-
-// Decode
-Mio.Mo =
-Mio.dec =
-// String: String
-function Mo(input) {
-  return LZW_Decode(LZW_Unwrap(atob(input)));
-};
-
-// LZW from [JSFiddle](https://jsfiddle.net/ryanoc/fpMM6/)
-// LZW-compress a string
-function LZW_Encode(string) {
-  var dictionary = {},
-      phrases = (string + "").split(""),
-      output = [],
-      media = [],
-      character,
-      phrase = phrases[0],
-      index = 256;
-
-  for(var i = 1; i < phrases.length; i++)
-    if(dictionary[phrase + (character = phrases[i])] != void 0)
-      phrase += character;
-    else
-      media.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0)),
-        dictionary[phrase + character] = index,
-        index++,
-        phrase = character;
-
-    media.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0));
-
-  for(i = 0; i < media.length; i++)
-    output.push(String.fromCharCode(media[i]));
-
-  return output.join("");
-};
-
-// Decompress an LZW-encoded string
-function LZW_Decode(string) {
-  var dictionary = {},
-      phrases = (string + "").split(""),
-      character = phrases[0],
-      oldPhrase = character,
-      output = [character],
-      index = 256,
-      phrase;
-
-    for(var i = 1, currCode; i < phrases.length; i++) {
-      currCode = phrases[i].charCodeAt(0);
-
-      if(currCode < 256)
-        phrase = phrases[i];
-      else
-        phrase = dictionary[currCode] ? dictionary[currCode] : (oldPhrase + character);
-
-      output.push(phrase);
-      character = phrase.charAt(0);
-      dictionary[index] = oldPhrase + character;
-      index++;
-      oldPhrase = phrase;
-    }
-
-    return output.join("");
-};
-  
-/** LZW Wrappers
- * These allow base64 compression to be applied
- * They also adapt to the returned LZW string
- */
-
-function LZW_Wrap(input) {
-  var output = [], media = [], pow = Mio.power, uni = Math.pow(2, pow).toString(16), R = RegExp;
-  function f(n) {
-    return n = (n.length <= 4? "0".repeat(4 - n.length): "") + n;
-  };
-  uni = f(uni);
-
-  if(R("([^\\u0000-\\u" + uni + "]+)").test(input))
-    Mio.power = pow = (uni = R.$_.split("").sort()[R.$_.length - 1]).charCodeAt(0).toString(2).length;
-
-  // console.warn("[Mi/o]: Set Mio.power to " + pow + " for '" + uni + "', '\\u" + f(uni.charCodeAt(0).toString(16)) + "'");
-
-  for(var i = 0, j; i < input.length; i++)
-    media.push(
-      "0".repeat(pow - (j = input.charCodeAt(i).toString(2)).length) +
-      j
-    );
-
-  media = media.join("").split(/([01]{8})/);
-
-  for(i = 0; i < media.length; i++)
-    if((j = media[i]) != "" && j.length == 8)
-      output.push(String.fromCharCode(+("0b" + j)));
-    else if(j != "")
-      output.push(String.fromCharCode(+("0b" + j + "0".repeat(8 - j.length))));
-
-  return String.fromCharCode(pow) + output.join("");
-};
-
-function LZW_Unwrap(input) {
-  var output = [], media = [], pow = Mio.power = input.charCodeAt(0);
-
-  for(var i = 1, j; i < input.length; i++)
-    media.push("0".repeat(8 - (j = input.charCodeAt(i).toString(2)).length) + j);
-
-  media = media.join("").split(RegExp("([01]{" + pow + "})"));
-
-  for(i = 0; i < media.length; i++)
-    if((j = media[i]) != "" && j.length == pow)
-      output.push(String.fromCharCode(+("0b" + j)));
-
-  return output.join("");
-};
-</textarea>
-    <pre class="prettyprint notranslate"></pre>
-    <!-- TOOLBAR -->
-    <div id="docs-toolbar-wrapper">
-      <div id="docs-primary-toolbars" class="docs-collapsable-toolbar">
-        <div id="docs-toolbar" class="goog-toolbar" aria-label="Main" role="toolbar" tabindex="0" style="user-select: none;">
-          <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (local)">
-            <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
-              <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
-                <div class="docs-icon goog-inline-block " style="user-select: none;">
-                  <div class="docs-icon-img-container docs-icon-img docs-icon-save" aria-hidden="true" style="user-select: none;">&nbsp;</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="runButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Compress the input">
-            <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
-              <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
-                <div class="docs-icon goog-inline-block " style="user-select: none;">
-                  <div class="docs-icon-img-container docs-icon-img docs-icon-run" aria-hidden="true" style="user-select: none;">&nbsp;</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to compressed text">
-            <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
-              <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
-                <div class="docs-icon goog-inline-block" style="user-select: none;">
-                  <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
-                    <div class="docs-icon-img-container docs-icon-img docs-icon-redo" aria-hidden="true" style="user-select: none;">&nbsp;</div>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="linkButton" class="button goog-toolbar-toggle-button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" aria-pressed="false" style="user-select: none;" title="Create a link" aria-hidden="true">
-            <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
-              <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
-                <div class="docs-icon goog-inline-block" style="user-select: none;">
-                  <div class="docs-icon-img-container docs-icon-img docs-icon-link" aria-hidden="true" style="user-select: none;">&nbsp;</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="helpButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Help">
-            <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
-              <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
-                <div class="docs-icon goog-inline-block" style="user-select: none;">
-                  <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
-                    <div class="docs-icon-img-container docs-icon-img docs-icon-help" aria-hidden="true" style="user-select: none;">&nbsp;</div>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="button goog-toolbar-text goog-toolbar-menu-button goog-inline-block" role="listbox" aria-disabled="false" aria-expanded="false" style="user-select: none;" aria-haspopup="true" aria-activedescendant=":2m" data-tooltip="Select function" aria-label="Search through code">
-            <div class="goog-toolbar-menu-button-outer-box goog-inline-block" style="user-select: none;">
-              <div class="goog-toolbar-menu-button-inner-box goog-inline-block" style="user-select: none; margin-top: -3%;">
-                <div class="devsite-searchbox">
-                  <input id="findButton" placeholder="Find code" type="text" value="" autocomplete="off" class="devsite-search-field devsite-search-query">
+<!-- [CONTENT-TYPE] -->
+<!--
+HEADER
+NAVIGATION[-BOTTOM|-LEFT|-RIGHT|-TOP]
+CONTENT
+FOOTER[ALTERNATIVE-SERVICES|CREDITS|LINKS]
+DEPENDENCIES
+-->
+<body id="top_of_page" class="devsite-doc-page devsite-header-no-upper-tabs devsite-uhura">
+  <div class="devsite-wrapper">
+    <div class="devsite-top-section-wrapper">
+      <!-- HEADER -->
+      <header class="devsite-top-section nocontent">
+        <div class="devsite-top-logo-row-wrapper-wrapper">
+          <div class="devsite-top-logo-row-wrapper">
+            <div class="devsite-top-logo-row devsite-full-site-width">
+              <button type="button" data-category="Site-Wide Custom Events" data-label="Hamburger menu" class="devsite-expand-section-nav devsite-header-icon-button button-flat material-icons gc-analytics-event"></button>
+              <div class="devsite-product-name-wrapper"><a href="https://ephellon.github.io/Mio/" data-category="Site-Wide Custom Events" data-label="Project logo (header)" class="devsite-product-name-link gc-analytics-event"><img src="https://ephellon.github.io/Mio/images/Mio.png" alt="Mio" class="devsite-product-logo"/></a><span class="devsite-product-name">
+                  <ul class="devsite-breadcrumb-list">
+                    <li class="devsite-breadcrumb-item"><a href="https://ephellon.github.io/Mio/" data-category="Site-Wide Custom Events" data-label="Upper Header" data-value="1" class="devsite-breadcrumb-link gc-analytics-event">Mio</a></li>
+                  </ul></span></div>
+              <div class="devsite-header-upper-tabs"></div>
+              <form id="top-search" --action="https://ephellon.github.io/Mio/search/" method="GET" search-placeholder="Search" class="devsite-search-form">
+                <div id="searchbox" class="devsite-searchbox">
+                  <input placeholder="Search" type="text" name="q" value="" autocomplete="off" class="devsite-search-field devsite-search-query"/>
                   <div class="devsite-search-image material-icons"></div>
                 </div>
-              </div>
+              </form>
+              <a href="https://github.com/ephellon/" data-category="Site-Wide Custom Events" data-label="Site header link" class="devsite-header-link devsite-top-button button gc-analytics-event">
+                <div class="devsite-header-link-label">All Projects</div>
+              </a>
             </div>
           </div>
-
         </div>
+        <div class="devsite-collapsible-section">
+          <div class="devsite-header-background devsite-full-site-width">
+            <div class="devsite-doc-set-nav-row devsite-full-site-width">
+              <!-- NAVIGATION-TOP -->
+              <nav class="devsite-doc-set-nav devsite-nav devsite-overflow-tabs-scroll-wrapper">
+                <ul class="devsite-doc-set-nav-tab-list devsite-overflow-tabs-scroll">
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Mio/" data-category="Site-Wide Custom Events" data-label="Tab: Home" class="devsite-doc-set-nav-tab gc-analytics-event">Home</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Mio/reference/" data-category="Site-Wide Custom Events" data-label="Tab: Reference" class="devsite-doc-set-nav-tab gc-analytics-event">Reference</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Mio/extras/" data-category="Site-Wide Custom Events" data-label="Tab: Samples" class="devsite-doc-set-nav-tab gc-analytics-event">Examples</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Mio/support/" data-category="Site-Wide Custom Events" data-label="Tab: Support" class="devsite-doc-set-nav-tab gc-analytics-event">Support</a>
+                  </li>
+                  <a id="devsite-feedback-project" href="mailto:minkcbos@gmail.com" type="button" data-category="Site-Wide Custom Events" data-label="Send Feedback Button" track-type="feedback" track-name="sendFeedbackLink" track-metadata-position="header" class="button devsite-feedback-button devsite-top-button gc-analytics-event">Send feedback</a>
+                </ul>
+              </nav>
+              <!-- :NAVIGATION-TOP -->
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- :HEADER -->
+      <script>
+        if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
+      </script>
+    </div>
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
+      <div class="devsite-site-mask"></div>
+      <div class="devsite-main-content clearfix">
+        <!-- NAVIGATION-LEFT -->
+        <nav id="target" class="devsite-section-nav devsite-nav nocontent"></nav>
+        <!-- :NAVIGATION-LEFT -->
+        <!-- NAVIGATION-RIGHT -->
+        <nav class="devsite-page-nav devsite-nav"></nav>
+        <!-- :NAVIGATION-RIGHT -->
+        <article class="devsite-article">
+          <!-- CONTENT -->
+          <article class="devsite-article-inner">
+            <h1 itemprop="name" class="devsite-page-title">Mi/o</h1>
+            <nav class="devsite-page-nav-embedded devsite-nav"></nav>
+            <div itemprop="articleBody" class="devsite-article-body clearfix">
+              <p>Content.</p>
+              <p>Content.</p>
+              <h2 id="why_paramour">Header</h2>
+              <p>Sub-Header:</p>
+              <ul>
+                <li>List Item.</li>
+              </ul>
+              <h3 id="set_it_up">Code Header</h3>
+              <p>Delete any code in the script editor and paste in the code below.</p>
+              <div class="pretty-input">
+<textarea translate="no" class="notranslate">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse augue ligula, commodo nec ultrices ut, blandit non ante.
+Praesent elementum orci non nulla finibus suscipit. Nunc malesuada sit amet lorem nec suscipit. Cras faucibus vulputate diam, vitae dapibus erat.
+Nullam euismod sed orci id faucibus. Ut rhoncus scelerisque elementum. Aliquam egestas egestas euismod. Aliquam maximus aliquam ex, vitae scelerisque purus consequat nec.
+In sodales justo ornare nulla rutrum, eget dictum tellus tincidunt. Maecenas accumsan sit amet mauris vitae sodales. Praesent porttitor venenatis eleifend.
+Pellentesque lobortis id tellus ut rutrum. Donec bibendum aliquet est eu ultrices. Curabitur sit amet porta orci.
+
+Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla in egestas sem, et pulvinar sapien. Proin aliquam ultrices dictum.
+Suspendisse elementum gravida dolor quis ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+Phasellus nisl massa, sodales eu lectus in, rhoncus ultricies magna. Maecenas vel risus dapibus, mollis velit laoreet, pharetra augue. Donec nec urna quam.
+Cras eu dignissim lorem. Curabitur aliquet cursus risus ut dictum. Etiam tempor velit eget lorem interdum eleifend.
+
+Nunc arcu ex, malesuada vitae lorem ut, consectetur porttitor velit. Phasellus congue nunc tincidunt porttitor facilisis. Vivamus vel libero felis.
+Etiam eleifend libero neque, id pulvinar mauris molestie consequat. Curabitur a mollis turpis. Duis nisi erat, consequat ut lobortis ac, laoreet eget lacus.
+Fusce at tortor porta, vehicula lorem hendrerit, suscipit libero. Nullam tristique tristique dui non semper. Nulla facilisi. Sed id semper urna.
+Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer lacus orci, aliquet in venenatis vitae, viverra ut mi.
+Vestibulum condimentum, arcu a ullamcorper aliquam, augue arcu lobortis est, at ultrices sem eros ac sapien.
+
+Donec tristique ornare est vitae sodales. Vivamus sollicitudin dui ut pellentesque luctus. Integer et lorem ac nulla tempus blandit mollis et lacus.
+Maecenas ullamcorper, nunc ac suscipit interdum, mi urna convallis augue, quis varius diam nisl quis neque. Pellentesque placerat tortor ac felis tempus cursus.
+Aliquam ac vulputate odio. Phasellus vehicula euismod nunc, vitae pulvinar metus malesuada tincidunt. Morbi eu sapien augue. Sed eget facilisis mauris. Duis id finibus lectus.
+Morbi eu ipsum nunc. Cras nec volutpat odio. Sed convallis accumsan venenatis. Nam ac eros sit amet tellus faucibus scelerisque.
+
+Phasellus molestie augue quis vulputate feugiat. Phasellus elementum, lectus sed bibendum porta, ex ante auctor augue, non auctor tellus mi sit amet lacus.
+Donec sit amet nulla eget sem commodo congue sit amet quis ipsum. Donec vehicula mi in odio porta, tempus congue est tincidunt.
+Quisque ac mauris consectetur, feugiat lectus non, finibus tortor. Nunc dui erat, molestie sit amet ex in, commodo molestie tellus. Aenean egestas augue id maximus commodo.
+Donec maximus, lectus ac pulvinar suscipit, nunc nulla convallis neque, sit amet lacinia dui massa ut nisi. Donec fermentum purus a lacus mattis faucibus.
+Vestibulum mattis suscipit nisi, non pellentesque libero semper at. Nunc a mauris nibh. Suspendisse hendrerit ex vitae mi ultricies, ac sagittis dolor vestibulum.
+Donec ac arcu lobortis, pulvinar quam ac, bibendum risus. Cras eleifend iaculis semper. Mauris sollicitudin elit posuere tempus ornare. Etiam et massa ligula.
+
+Etiam viverra est in sodales rhoncus. Donec bibendum mi ac metus egestas molestie. Sed arcu justo, imperdiet in dolor nec, imperdiet elementum leo.
+Duis posuere odio turpis, in accumsan felis dignissim vitae. Vivamus a consectetur eros, nec consectetur nisi. Donec at odio quis lacus bibendum ultrices.
+Pellentesque finibus ipsum ex, a scelerisque risus tempus et. Sed convallis mi sed mauris convallis, sodales convallis arcu mollis. Morbi ornare eu libero sit amet finibus.
+Ut ac vehicula eros. Cras congue sit amet mauris id pharetra. Praesent finibus imperdiet ante porta mattis.
+
+Proin consectetur arcu non lectus fringilla sollicitudin. Nunc nibh ante, consequat vel turpis at, bibendum ultrices dui.
+Donec sed nunc posuere, scelerisque elit non, sagittis erat. Pellentesque eleifend dolor diam, eget suscipit nibh fringilla ut. Maecenas a tincidunt arcu, eu venenatis nunc.
+Vestibulum in nisl id tellus consequat ultricies in sed magna. Morbi lorem quam, efficitur auctor vehicula ut, sollicitudin eu turpis. Duis vitae mi accumsan, rhoncus risus a, condimentum turpis.
+
+Vestibulum laoreet scelerisque turpis in pharetra. Suspendisse libero erat, scelerisque sed semper sed, porttitor eleifend purus.
+Ut pharetra lorem elit, at maximus lorem vulputate gravida. Integer volutpat turpis eget iaculis tincidunt. Suspendisse dui nisi, ultrices ac eleifend sit amet, malesuada non neque.
+Mauris hendrerit augue enim, id ultricies odio vestibulum sed. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+Aenean ullamcorper elit nunc, nec condimentum felis semper in. Suspendisse tincidunt mollis enim, et laoreet ex finibus ac. Suspendisse hendrerit diam magna.
+In auctor consectetur mauris, hendrerit ultrices erat posuere nec. In vitae nibh vitae massa gravida tempor sit amet at eros. Maecenas porttitor metus nec quam commodo, eget aliquam mauris iaculis.
+In dignissim neque sit amet nunc porta, nec sagittis erat interdum.
+
+Aliquam nec nisl arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+Pellentesque aliquet risus urna, eget vulputate est viverra non. Integer dapibus magna id ante suscipit iaculis.
+Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam tempor libero et neque luctus tincidunt sit amet id urna.
+Nullam turpis elit, convallis in ornare quis, blandit sit amet dui. Etiam commodo orci nec euismod bibendum. Sed nisl augue, fermentum ut metus eget, finibus cursus ex.
+Phasellus at magna sodales, molestie dolor a, tempus mauris. Pellentesque a tincidunt lectus. Cras imperdiet nulla id dignissim tristique. Curabitur tellus quam, euismod egestas odio eu, pulvinar ornare enim.
+Vestibulum molestie lacinia venenatis. Maecenas semper id orci at rhoncus.
+
+Vivamus cursus dapibus congue. Suspendisse potenti. Ut porta lectus urna, vel ultricies diam consectetur non. Etiam eu augue orci. Praesent rutrum eu nulla ut mollis.
+In iaculis dictum ante, quis rhoncus ante facilisis quis. Maecenas tincidunt vestibulum tellus eget suscipit. Aliquam vehicula lobortis tellus, at mattis sem condimentum sed.
+Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed molestie id velit et pulvinar. Sed lobortis ligula ante, auctor ullamcorper leo commodo at.
+</textarea>
+                  <pre class="prettyprint notranslate"></pre>
+                  <!-- TOOLBAR -->
+                  <div id="docs-toolbar-wrapper">
+                    <div id="docs-primary-toolbars" class="docs-collapsable-toolbar">
+                      <div id="docs-toolbar" class="goog-toolbar" aria-label="Main" role="toolbar" tabindex="0" style="user-select: none;">
+                        <div id="saveButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Save (local)">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block " style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-save" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="runButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="false" style="user-select: none;" title="Run">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block " style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-run" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        
+                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to JavaScript">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
+                                  <div class="docs-icon-img-container docs-icon-img docs-icon-redo" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="linkButton" class="button goog-toolbar-toggle-button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" aria-pressed="false" style="user-select: none;" title="Create a link" aria-hidden="true">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <div class="docs-icon-img-container docs-icon-img docs-icon-link" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="helpButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Help">
+                          <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
+                              <div class="docs-icon goog-inline-block" style="user-select: none;">
+                                <span type="button" class="button devsite-feedback-button devsite-top-button gc-analytics-event">
+                                  <div class="docs-icon-img-container docs-icon-img docs-icon-help" aria-hidden="true" style="user-select: none;">&nbsp;</div>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="button goog-toolbar-text goog-toolbar-menu-button goog-inline-block" role="listbox" aria-disabled="false" aria-expanded="false" style="user-select: none;" aria-haspopup="true" aria-activedescendant=":2m" data-tooltip="Select function" aria-label="Search through code">
+                          <div class="goog-toolbar-menu-button-outer-box goog-inline-block" style="user-select: none;">
+                            <div class="goog-toolbar-menu-button-inner-box goog-inline-block" style="user-select: none; margin-top: -3%;">
+                                <div class="devsite-searchbox">
+                                  <input id="findButton" placeholder="Find code" type="text" value="" autocomplete="off" class="devsite-search-field devsite-search-query">
+                                  <div class="devsite-search-image material-icons"></div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- :TOOLBAR -->
+              </div>
+              <h2 id="learn_more">Learn more</h2>
+              <p>To continue learning about Mio, take a look at the following resources:</p>
+              <ul>
+                <li>Wikipedia - <a href="https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch" target="blank_">Lempel–Ziv–Welch</a></li>
+                <li>Wikipedia - <a href="https://en.wikipedia.org/wiki/Base64" target="blank_">Base64</a></li>
+                <li>Mi/o - <a href="hhttps://github.com/Ephellon/ephellon.github.io/tree/master/Mio/js/mio.js" target="blank_">Source Code</a></li>
+              </ul>
+            </div>
+            <div class="devsite-content-footer nocontent">
+              <p itemprop="datePublished" content="2017-08-29T15:26:03.972520" class="devsite-content-footer-date">Last updated August 29, 2017.</p>
+            </div>
+          </article>
+          <!-- :CONTENT -->
+        </article>
       </div>
+      <!-- FOOTER -->
+      <!-- FOOTER[CREDITS|LINKS] -->
+      <footer class="devsite-footer-promos nocontent">
+        <nav class="devsite-full-site-width">
+          <ul class="devsite-footer-promos-list">
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://codepen.io/Ephellon/posts/published/" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+                <img src="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" class="devsite-footer-promo-icon"/>
+                Posts
+              </a>
+              <div class="devsite-footer-promo-description">The latest news about Mi/o and other projects</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://github.com/Ephellon/Mio/tree/master/examples" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <img src="https://ephellon.github.io/Paramour/images/logo-github.svg" class="devsite-footer-promo-icon"/>
+              GitHub
+              </a>
+              <div class="devsite-footer-promo-description">Fork samples and try them yourself</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://github.com/Ephellon/Mio/issues/new" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <span class="devsite-footer-promo-icon">
+                <svg aria-hidden="true" class="octicon" version="1.1" viewBox="0 0 40 40" height="128" width="128">
+                  <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                </svg>
+              </span>
+              Issues
+              </a>
+              <div class="devsite-footer-promo-description">Something wrong? Post an issue!</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://stackoverflow.com/questions/tagged/mio" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <img src="https://ephellon.github.io/Paramour/images/logo-stack-overflow.svg" class="devsite-footer-promo-icon"/>
+              Stack Overflow
+              </a>
+              <div class="devsite-footer-promo-description">Ask a question under the <code>mio</code> tag</div>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+      <!-- :FOOTER[CREDITS|LINKS] -->
+      <!-- FOOTER[LINKS] -->
+      <footer class="devsite-footer-linkboxes nocontent devsite-footer-linkboxes-with-sites">
+        <nav class="devsite-full-site-width">
+          <ul class="devsite-footer-linkboxes-list">
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Tools</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://ephellon.github.io/Mio/extras/" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Conversion Tool</a></li>
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://github.com/Ephellon/Ephellon.github.io/blob/master/Mio/changelog.md" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Change Log</a></li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Connect</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://twitter.com/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Twitter</a>
+                </li>
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://github.com/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">GitHub</a>
+                </li>
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://codepen.io/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">CodePen</a>
+                </li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Product Info</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://raw.githubusercontent.com/Ephellon/Ephellon.github.io/master/LICENSE.txt" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">License</a></li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox devsite-footer-linkbox-sites"><a target="blank_" href="https://ephellon.github.io/" data-category="Site-Wide Custom Events" data-label="Footer Google Developers Link" class="gc-analytics-event devsite-footer-linkbox-logo-link"><img src="https://avatars0.githubusercontent.com/u/8632548?v=4&s=256" class="devsite-footer-linkbox-logo" style="max-height: 32px; width: auto;"/></a>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="//codepen.io/ephellon/" data-category="Site-Wide Custom Events" data-label="Footer Android Link" class="gc-analytics-event">CodePen</a></li>
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="//github.com/ephellon/" data-category="Site-Wide Custom Events" data-label="Footer Chrome Link" class="gc-analytics-event">GitHub</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+      <!-- :FOOTER[LINKS] -->
+      <!-- FOOTER[ALTERNATE-SERVICES] -->
+      <footer class="devsite-content-footer nocontent" style="background: #455a64; color: #fff; margin: -1px; padding-bottom: 10px;">
+        <nav class="devsite-content-footer-nav devsite-nav devsite-full-site-width">
+          <div class="devsite-content-footer-nav-left">
+            <p>
+                Except as otherwise noted, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/" target=blank_"">Creative Commons Attribution 3.0 License</a>;
+                Mio, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat" target=blank_"">MIT License</a>.
+                Java is a registered trademark of Oracle inc. and/or its affiliates.
+                JavaScript, and ECMAScript are registered trademarks of ECMAScript intl. and/or its affiliates.
+                Google is a registered trademark of Google inc. and/or its affiliates.
+                CoffeeScript is a registered trademark of "Jeremy Ashkenas."
+                Swift is a registered trademark of Apple inc. and/or its affiliates.
+                Python is a registered trademark of Python Software Foundation org. and/or its affiliates.
+              </p>
+          </div>
+        </nav>
+      </footer>
+      <!-- FOOTER[ALTERNATE-SERVICES] -->
+      <!-- :FOOTER -->
     </div>
-    <!-- :TOOLBAR -->
-    </div>
-  <script src="https://ephellon.github.io/Paramour/js/jquery_ui-bundle.js"></script>
-  <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
-  <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
-  <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
-  <script src="https://ephellon.github.io/Mio/js/main.js"></script>
-  <script src="https://ephellon.github.io/Mio/js/mio.min.js"></script>
+    <!-- DEPENDENCIES -->
+    <script>var dataLayer = [{"freeTrialEligibleUser": "False", "userCountry": "US", "language": {"requested": "en", "served": "en"}, "projectName": "Apps Script", "scriptsafe": null, "signedIn": "False", "internalUser": "False"}];</script>
+    <script src="https://ephellon.github.io/Paramour/js/jquery_ui-bundle.js"></script>
+    <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
+    <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
+    <script src="https://ephellon.github.io/Mio/js/mio.min.js"></script>
+    <script src="https://ephellon.github.io/Mio/js/main.js"></script>
+    <!-- :DEPENDENCIES -->
+  </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
 </body>
 </html>
