@@ -1,5 +1,5 @@
 (function($) {
-devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '0000000000', 'SITE_NAME': 'Paramour', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
+      devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '0000000000', 'SITE_NAME': 'Paramour', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
 '[]', 'en',
 true, '',
 {"00000000000000000000000000000000": false},
@@ -25,8 +25,8 @@ true, '',
     bool = bool == undefined? true: bool;
     return element
       .toggleClass(icons[pack][0], bool)
-      .toggleClass(icons[pack][1], bool = !bool),
-      bool;
+      .toggleClass(icons[pack][1], !bool),
+      !bool;
   }
 
   function encodeHTML(string) {
@@ -183,12 +183,14 @@ true, '',
   $("#swapButton").click(function(event) {
     var textarea = getCurrent(0), value = textarea.value;
 
+    isJS = swapIcons(swapicon, "swap", isJS);
+
     if(isJS)
-      textarea.value = Paramour(value);
+      textarea.value = Paramour(last.hold = value);
+    else
+      textarea.value = last.hold = last.hold || value;
 
-    swapIcons(swapicon, "swap", isJS);
-
-    event.target.setAttribute("title", "Switch to " + ((isJS = !isJS)? "JavaScript": "Paramour"));
+    event.target.setAttribute("title", "View " + ((!isJS)? "JavaScript": "Paramour"));
 
     updateHTML();
   });
@@ -295,4 +297,4 @@ function loadMenu() {
   loadMenu();
 
 })(jQuery);
-    devsite.localInit = function() {};
+devsite.localInit = function() {};
