@@ -187,7 +187,12 @@ true, '',
     swapIcons(swapicon, "swap", isJS = !isJS);
 
     if(isJS)
-      textarea.value = Paramour(last.hold = value);
+      try {
+        textarea.value = Paramour(last.hold = value);
+      } catch(e) {
+        swapIcons(swapicon, "swap", isJS = !isJS);
+        return alert(e);
+      }
     else
       textarea.value = last.hold = last.hold || value;
 
