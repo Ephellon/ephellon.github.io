@@ -162,7 +162,7 @@ if(today.$month == 11 && today.$day > 25)
  * Finds the number of days left until Xmas (Dec. 25)
  */
 HowManyDays():String
-  -> "\${round_up((Xmas.$time - today.$time) / oneDay)} days left until Christmas!";
+  -> "${round_up((Xmas.$time - today.$time) / oneDay)} days left until Christmas!";
 
 round_up(Number n) ->
   Math.ceil n;
