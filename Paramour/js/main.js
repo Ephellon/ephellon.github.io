@@ -52,6 +52,7 @@ true, '',
         start     = textarea.selectionStart,
         end       = textarea.selectionEnd,
         value     = textarea.value || "",
+        length    = value.length,
         direction = textarea.selectionDirection;
 
     if(direction == undefined || direction == null)
@@ -62,13 +63,13 @@ true, '',
     if((last.start = start) == (last.end = end))
       return encodeHTML(value.slice(0, start)) +
         '<span class="cursor ' + direction + ' nocode"></span>' +
-        encodeHTML(value.slice(end, value.length));
+        encodeHTML(value.slice(end, length));
     else
       return encodeHTML(value.slice(0, start)) +
         '<span class="cursor ' + direction + ' nocode">' +
         encodeHTML(value.slice(start, end)) +
         '</span>' +
-        encodeHTML(value.slice(end, value.length));
+        encodeHTML(value.slice(end, length));
   }
 
   function updateDisplay() {
@@ -158,7 +159,7 @@ true, '',
     isJS = true;
     $("#swapButton").click();
     var textarea = getCurrent(),
-        url      = "https://ephellon.github.io/Paramour/extras/?code=" + encodeURIComponent(textarea.val()),
+        url      = "https://ephellon.github.io/Paramour/extras/?code=" + Mio.enc(textarea.val()),
         self     = $(event.target);
     tinyurl(url, function() {
       var url = tinyurl.url;
@@ -273,12 +274,10 @@ function loadMenu() {
         ]}
     ]},
       template, rendered;
-
-if(/^https?:\/\/ephellon\.github\.io$/.test(location.origin))
   $.get("https://ephellon.github.io/Paramour/mst/menu.mst", function(file_contents) {
     template = file_contents || $("#template").html();
     rendered = Mustache.render(template, menu_data);
-    $("#target, #template").html(rendered); // #template for testing purposes
+    $("#target").html(rendered); // #template for testing purposes
 
     $(".devsite-nav-item > a[track-type='leftNav']")
     .click(function(event) {
