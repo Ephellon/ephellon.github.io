@@ -6,14 +6,14 @@ true, '',
 '/',
 'https://ephellon.github.io/Paramour/');
 
-  var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]), isJS = false,
+  var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]), isJS = true,
       swapicon = $("#swapButton span > div.docs-icon-redo, #swapButton span > div.docs-icon-undo"),
       runicons = $("#runButton div.docs-icon-run, #runButton div.docs-icon-debug"),
       icons = {
         swap: ["docs-icon-redo", "docs-icon-undo"],
         run: ["docs-icon-run", "docs-icon-debug"]
       },
-      input, output, last_active, display, tinyurl, Paramour = Paramour || window.Paramour;
+      last_active, display, tinyurl, Paramour = Paramour || window.Paramour;
 
   if(Paramour == undefined)
     Paramour = function(string){return string};
@@ -87,7 +87,6 @@ true, '',
 
   $(".pretty-input > textarea")
   .on("keyup", function(event) {
-    last["in"] = input = ($(event.target).val() || "");
     updateHTML();
   })
   .on("mousemove", updateHTML)
@@ -119,10 +118,14 @@ true, '',
   });
 
   $("#saveButton").click(function(event) {
-    var zip = new JSZip(), name = "Paramour - " + (+(new Date)).toString(36);
+    if(!isJS)
+      $("#swapButton").click();
 
-    zip.file(name + ".par", input);
-    zip.file(name + ".js", output = Paramour(input));
+    var zip = new JSZip(), name = "Paramour - " + (+(new Date)).toString(36),
+        textarea = getCurrent(), value = textarea.val(), output = Paramour(value);
+
+    zip.file(name + ".par", value);
+    zip.file(name + ".js", output);
 
     zip.generateAsync({type: "blob"})
     .then(function(blob) {         // 1) generate the zip file
@@ -133,15 +136,16 @@ true, '',
   });
 
   $("#runButton").click(function(event) {
-    var self = $(event.target), textarea = getCurrent();
+    var self = $(event.target), textarea = getCurrent(), value = textarea.val();
 
     try {
-      eval(last["out"] = output = Paramour(input));
+      value = Paramour(value);
       last.error = undefined;
       swapIcons(runicons, "run", isJS = true);
       self.attr("title", "Run");
       display.toggleClass("lang-paramour", false).toggleClass("lang-javascript", true);
     } catch(error) {
+      value = textarea.val();
       last.error = error;
       swapIcons(runicons, "run", isJS = false);
       self.attr("title", "Uncaught: " + error.message);
@@ -149,7 +153,8 @@ true, '',
       return alert(error);
     }
 
-    isJS = false;
+    textarea.val(value);
+
     $("#swapButton").click();
   });
 
@@ -176,24 +181,19 @@ true, '',
   });
 
   $("#swapButton").click(function(event) {
-    var textarea = getCurrent();
+    var textarea = getCurrent(0), value = textarea.value;
 
-    isJS = swapIcons(swapicon, "swap", isJS);
+    if(isJS)
+      textarea.value = Paramour(value);
 
-    event.target.setAttribute("title", "Switch to " + (!isJS? "JavaScript": "Paramour"));
+    swapIcons(swapicon, "swap", isJS);
 
-    last["out"] = output = Paramour(input);
-
-    if(!isJS)
-      textarea.val(input);
-    else
-      textarea.val(output);
+    event.target.setAttribute("title", "Switch to " + ((isJS = !isJS)? "JavaScript": "Paramour"));
 
     updateHTML();
   });
 
   last_active = getCurrent(), display.html(last_active.val());
-  input = last_active.val() || "";
 
   setInterval(function() {
     $(".cursor").css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
@@ -295,4 +295,4 @@ function loadMenu() {
   loadMenu();
 
 })(jQuery);
-      devsite.localInit = function() {};
+    devsite.localInit = function() {};
