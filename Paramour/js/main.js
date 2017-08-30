@@ -6,11 +6,11 @@ true, '',
 '/',
 'https://ephellon.github.io/Paramour/');
 
-  var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]), isJS = true,
+  var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]), isJS = false,
       swapicon = $("#swapButton span > div.docs-icon-redo, #swapButton span > div.docs-icon-undo"),
       runicons = $("#runButton div.docs-icon-run, #runButton div.docs-icon-debug"),
       icons = {
-        swap: ["docs-icon-redo", "docs-icon-undo"],
+        swap: ["docs-icon-undo", "docs-icon-redo"],
         run: ["docs-icon-run", "docs-icon-debug"]
       },
       last_active, display, tinyurl, Paramour = Paramour || window.Paramour;
@@ -22,11 +22,10 @@ true, '',
   tinyurl = tinyurl || window.tinyurl;
 
   function swapIcons(element, pack, bool) {
-    bool = bool == undefined? true: bool;
+    bool = bool || false;
     return element
       .toggleClass(icons[pack][0], bool)
-      .toggleClass(icons[pack][1], !bool),
-      !bool;
+      .toggleClass(icons[pack][1], !bool);
   }
 
   function encodeHTML(string) {
@@ -141,18 +140,19 @@ true, '',
     try {
       eval(value = Paramour(value));
       last.error = undefined;
-      swapIcons(runicons, "run", isJS = true);
+      if(!isJS) $("#swapButton").click();
       self.attr("title", "Run");
       display.toggleClass("lang-paramour", false).toggleClass("lang-javascript", true);
     } catch(error) {
       value = textarea.val();
       last.error = error;
-      swapIcons(runicons, "run", isJS = false);
+      if(isJS) $("#swapButton").click();
       self.attr("title", "Uncaught: " + error.message);
       display.toggleClass("lang-paramour", true).toggleClass("lang-javascript", false);
-      return alert(error);
+      alert(error);
     }
 
+    swapIcons(runicons, "run", !isJS);
     textarea.val(value);
 
     $("#swapButton").click();
@@ -161,8 +161,9 @@ true, '',
   $("#linkButton").click(function(event) {
     if(!tinyurl)
       throw Error("The tinyurl API is not loaded.");
-    isJS = true;
-    $("#swapButton").click();
+
+    if(isJS) $("#swapButton").click();
+
     var textarea = getCurrent(),
         url      = "https://ephellon.github.io/Paramour/extras/?code=" + Mio.enc(textarea.val()),
         self     = $(event.target);
@@ -183,7 +184,7 @@ true, '',
   $("#swapButton").click(function(event) {
     var textarea = getCurrent(0), value = textarea.value;
 
-    isJS = swapIcons(swapicon, "swap", isJS);
+    swapIcons(swapicon, "swap", isJS = !isJS);
 
     if(isJS)
       textarea.value = Paramour(last.hold = value);
