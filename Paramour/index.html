@@ -148,7 +148,7 @@ DEPENDENCIES
 # @1.5
 
 # $year -> getFullYear()
-# $month -> getMonth()
+# $month => newDate().getMonth() + 1
 # $day -> getDate()
 # $time -> getTime()
 
@@ -156,7 +156,7 @@ var today = new Date(),
     Xmas = new Date(today.$year, 11, 25), # Xmas Day of this year
     oneDay = 1000 60 60 24; # spaces between numbers are treated as "*"
 
-if(today.$month == 11 && today.$day > 25)
+if($month == 12 && today.$day > 25)
   Xmas.setFullYear(Xmas.$year + 1);
 
 /** ():String
