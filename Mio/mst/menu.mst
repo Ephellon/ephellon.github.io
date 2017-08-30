@@ -1,0 +1,28 @@
+<ul class="devsite-nav-list devsite-nav-expandable devsite-nav-only-accordions">
+  {{ #new_menu }}
+  <li class="devsite-nav-item devsite-nav-new devsite-nav-has-status">
+    <a href="{{ href }}" target="blank_" class="devsite-nav-title gc-analytics-event" track-type="leftNav" track-name="titleLink" track-metadata-position="0" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click">
+      <span>{{ title }}</span>
+      <span class="devsite-nav-icon-wrapper"><span title="New: {{ title }} ({{ date }})" class="devsite-nav-icon material-icons"></span></span>
+    </a>
+  </li>
+  {{ /new_menu }}
+
+  {{ #acc_menu }}
+  <li class="devsite-nav-item devsite-nav-item-section-expandable devsite-nav-accordion">
+    <span track-type="leftNav" track-name="expandNavSectionNoLink" track-metadata-position="0" class="devsite-nav-title devsite-nav-title-no-path" tabindex="0">
+      <span>{{ title }}</span>
+    </span>
+    <a track-type="leftNav" track-name="expandNavSectionArrow" track-metadata-position="0" class="devsite-nav-toggle devsite-nav-toggle-collapsed material-icons"></a>
+    <ul class="devsite-nav-section devsite-nav-section-collapsed">
+      {{ #items }}
+      <li class="devsite-nav-item">
+        <a href="{{ href }}" target="blank_" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">
+          <span>{{ title }}</span>
+        </a>
+      </li>
+      {{ /items }}
+    </ul>
+  </li>
+  {{ /acc_menu }}
+</ul>
