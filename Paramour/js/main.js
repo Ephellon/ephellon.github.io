@@ -139,7 +139,7 @@ true, '',
     var self = $(event.target), textarea = getCurrent(), value = textarea.val();
 
     try {
-      value = Paramour(value);
+      eval(value = Paramour(value));
       last.error = undefined;
       swapIcons(runicons, "run", isJS = true);
       self.attr("title", "Run");
