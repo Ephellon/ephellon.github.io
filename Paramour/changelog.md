@@ -5,6 +5,7 @@ _Latest Version_: "Oxygen" 31.0.0
 ----
 
 - Oxygen, 31.0 (Smino: "Oxygen")
+  - added SI numbering support; substitute periods for commas, ```1.234.567``` for _1,234,567_. _Note: does not work for the thousands' place_ ```1.234``` will still be ```1.234```
   - improved compile time
   - improved syntax recognition
   - added infinite loop detection for ```compile``` and ```IG``` unfolding
