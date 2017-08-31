@@ -13,7 +13,7 @@
 # $Rq -> requestAnimationFrame
 
 Line {
-  <init>(.x, .y, .hue) {
+  init::(.x, .y, .hue) {
     @ox = x, @oy = y;
     @a = 360 $R;
     @va = (0.2 $R) - 0.1;
