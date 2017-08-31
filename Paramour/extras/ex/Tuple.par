@@ -3,7 +3,7 @@
 # @1.5
 
 Tuple {
-  <init>() {
+  init::() {
     @index = 0;
     @arguments = [].slice.call arguments;
     @length = arguments.length;
