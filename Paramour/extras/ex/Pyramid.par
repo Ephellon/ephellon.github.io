@@ -7,7 +7,7 @@
 # @1.5
 
 Pyramid {
-  <init>(.faces = 4, .levels = 3) {
+  init::(.faces = 4, .levels = 3) {
     # var faces = (this.faces = (arguments[0] === undefined)? 4: arguments[0]), ...
     var(x = 1, y = [])
     @levels = ++levels;
