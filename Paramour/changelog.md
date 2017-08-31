@@ -5,6 +5,7 @@ _Latest Version_: "Oxygen" 31.0.0
 ----
 
 - Oxygen, 31.0 (Smino: "Oxygen")
+  - changed ```<init>``` shortcut to ```init::```
   - added SI numbering support; substitute periods for commas, ```1.234.567``` for _1,234,567_.
   _Note: does not work for the thousands' place_ ```1.234``` will still be ```1.234```
   - improved compile time
@@ -99,7 +100,7 @@ _Latest Version_: "Oxygen" 31.0.0
   - ```@Test, @Before, @After``` - JSUNIT
 
 - Krogstad - XV, 15.0 (Henrik Ibsen: "Nils Krogstad")
-  - ```Yield``` type|statement proposal
+  - ```Yield``` proposal
   - ```yield``` keyword (```&>```)
   - ```throw new``` keyword (```+>```)
   - ```Tuple.next, Tuple.from``` Tuple enhancements
