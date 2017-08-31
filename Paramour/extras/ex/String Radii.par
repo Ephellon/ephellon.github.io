@@ -666,7 +666,7 @@ toLetter(Number number) {
 }
 
 Password {
-  <init>(value) {
+  init::(value) {
     var val = +value;
     if(NaN val) {
       var u = [], value = val;
