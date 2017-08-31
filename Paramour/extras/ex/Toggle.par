@@ -6,9 +6,8 @@
 # @1.5
 
 Toggle {
-  <init>(.on, .off, .state = false) {
-    @locked = false
-  }
+  init::(.on, .off, .state = false):Boolean ->
+    @locked = false;
 
   .toggle(state) {
     if(undefined state && @locked === false)
