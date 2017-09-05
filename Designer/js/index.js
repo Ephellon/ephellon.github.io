@@ -55,7 +55,14 @@ $(document).ready(function() {
       site: [
         ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/ANTI (Alternate).png']
       ]
-    }
+    }, {
+      title: 'J. Cole Born Sinner',
+      text: '<p>An edited version of J. Cole\'s <a href="https://dreamville.lnk.to/BornSinnerDeluxeDB" target="blank_">Born Sinner (Deluxe)</a> album art. I thought "Forbidden Fruit" should\'ve had a different cover (as a single).</p>',
+
+      image: ['https://ephellon.github.io/Designer/img/Forbidden Fruit.jpg'],
+      site: [
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Forbidden Fruit.jpg']
+      ]
     /*, {
       title: 'Title',
       text: '<p>Description.</p>',
