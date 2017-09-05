@@ -137,19 +137,19 @@ true, '',
     }
 
     zip.file("README.md",
-`# Mi/o - ${name}.zip
-_This document details the statistics of ${name}.zip_.
-
-_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._
-
-----
-
-### Space Used
-  - [Original](${name}.org.txt):\t\t ${si(length[0])}
-  - [Hybrid](${name}.hyb.txt):\t\t\t ${si(length[2])}
-  - [Compressed](${name}.cmp.txt):\t ${si(length[1])}
-  - Space saved: ${si(length[1] - length[0])} (${-length[3]}%)
-`);
+"# Mi/o - ${name}.zip\n" +
+"_This document details the statistics of ${name}.zip_.\n" +
+"\n" +
+"_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._\n" +
+"\n" +
+"----\n" +
+"\n" +
+"### Space Used\n" +
+"  - [Original](${name}.org.txt):\t\t ${si(length[0])}\n" +
+"  - [Hybrid](${name}.hyb.txt):\t\t\t ${si(length[2])}\n" +
+"  - [Compressed](${name}.cmp.txt):\t ${si(length[1])}\n" +
+"  - Space saved: ${si(length[1] - length[0])} (${-length[3]}%)\n"
+);
     zip.file(name + ".org.txt", value);
     zip.file(name + ".hyb.txt", hybrid);
     zip.file(name + ".cmp.txt", output);
