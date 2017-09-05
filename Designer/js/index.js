@@ -31,7 +31,7 @@ $(document).ready(function() {
         ['Live Site', 'fa-link', 'https://ephellon.github.io/Paramour/']
       ]
     }, {
-      title: 'Mi/o Compression Algorithm',
+      title: 'Mi/o',
       text: '<p>An improved LZW compression algorithm that allows the use of Base64.</p> <b>Code:</b> JavaScript<br>',
 
       image: ['https://ephellon.github.io/Designer/img/Mio.png'],
