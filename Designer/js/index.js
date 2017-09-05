@@ -45,7 +45,7 @@ $(document).ready(function() {
 
       image: ['https://ephellon.github.io/Designer/img/ANTI.png'],
       site: [
-        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/ANTI.png']
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/ANTI.png']
       ]
     }, {
       title: 'Rihanna ANTI (Alternate)',
@@ -53,7 +53,7 @@ $(document).ready(function() {
 
       image: ['https://ephellon.github.io/Designer/img/ANTI (Alternate).png'],
       site: [
-        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/ANTI (Alternate).png']
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/ANTI (Alternate).png']
       ]
     }
     /*, {
