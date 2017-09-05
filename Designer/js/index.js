@@ -74,7 +74,7 @@ $(document).ready(function() {
       ]
     }
     */
-  ];
+    };
 
   // add listener to all the cards for click flipping
   function addListener() {
