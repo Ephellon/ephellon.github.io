@@ -122,13 +122,11 @@ true, '',
         zip = new JSZip(),
         def = (+new Date).toString(36),
         name = "Mio." + def,
-        length = [value.length],
         output = Mio.Mi(value),
-        hybrid = atob(output);
+        hybrid = atob(output),
+        length = [value.length, output.length, hybrid.length];
 
-    length[1] = output.length;
-    length[2] = hybrid.length;
-    length[3] = (100 * (length[1] / length[0])) - 100;
+    length.push((100 * (length[1] / length[0])) - 100);
 
     function si(n) {
       for(var k = "\bKMGTPEZY".split(""), n = Math.abs(+n), m = 1024; n >= m && k.length > 1; n /= m)
@@ -137,18 +135,18 @@ true, '',
     }
 
     zip.file("README.md",
-"# Mi/o - ${name}.zip\n" +
-"_This document details the statistics of ${name}.zip_.\n" +
+"# Mi/o - " + (name) + ".zip\n" +
+"_This document details the statistics of " + (name) + ".zip_.\n" +
 "\n" +
 "_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._\n" +
 "\n" +
 "----\n" +
 "\n" +
 "### Space Used\n" +
-"  - [Original](${name}.org.txt):\t\t ${si(length[0])}\n" +
-"  - [Hybrid](${name}.hyb.txt):\t\t\t ${si(length[2])}\n" +
-"  - [Compressed](${name}.cmp.txt):\t ${si(length[1])}\n" +
-"  - Space saved: ${si(length[1] - length[0])} (${-length[3]}%)\n"
+"  - [Original  ](" + (name) + ".org.txt): " + (si(length[0])) + "\n" +
+"  - [Hybrid    ](" + (name) + ".hyb.txt): " + (si(length[2])) + "\n" +
+"  - [Compressed](" + (name) + ".cmp.txt): " + (si(length[1])) + "\n" +
+"  - Space " + (length[1] <= length[0]? "saved": "lost") + ": " + (si(length[1] - length[0])) + " (" + (-length[3]) + "%)"
 );
     zip.file(name + ".org.txt", value);
     zip.file(name + ".hyb.txt", hybrid);
