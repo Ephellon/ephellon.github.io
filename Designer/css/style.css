@@ -103,7 +103,6 @@ body {
   color: #f42424;
   padding-top: 20px;
   padding-bottom: 25px;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.30);
 }
 
 .icon-contact {
@@ -112,7 +111,6 @@ body {
   color: rgba(152, 110, 110, 0.4);
   padding-top: 10px;
   padding-bottom: 15px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.75);
 }
 
 .icon-contact a {
