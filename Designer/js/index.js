@@ -43,9 +43,17 @@ $(document).ready(function() {
       title: 'Rihanna ANTI',
       text: '<p>An edited version of Rihanna\'s <a href="http://www.rihannanow.com/music/anti/" target="blank_">ANTI</a> album art, which I thought should be her deluxe version\'s cover art.</p>',
 
-      image: ['https://ephellon.github.io/Designer/ANTI.png'],
+      image: ['https://ephellon.github.io/Designer/img/ANTI.png'],
       site: [
         ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/ANTI.png']
+      ]
+    }, {
+      title: 'Rihanna ANTI (Alternate)',
+      text: '<p>An edited version of Rihanna\'s <a href="http://www.rihannanow.com/music/anti/" target="blank_">ANTI</a> album art, which I thought should be her deluxe version\'s cover art.</p>',
+
+      image: ['https://ephellon.github.io/Designer/img/ANTI (Alternate).png'],
+      site: [
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/ANTI (Alternate).png']
       ]
     }
     /*, {
