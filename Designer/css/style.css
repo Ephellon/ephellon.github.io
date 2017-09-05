@@ -43,10 +43,10 @@ body {
 }
 
 
-#twoam {
+#theend {
   width: 100vw;
   height: 100vh;
-  background-image: url("http://2am.ninja/img/bruce_contact3.jpg");
+  background-image: url("img/me.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -100,7 +100,7 @@ body {
 .icon-me {
   text-align: center;
   font-size: 5em;
-  color: rgba(200, 100, 100, 0.7);
+  color: #f42424;
   padding-top: 20px;
   padding-bottom: 25px;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.30);
@@ -116,7 +116,7 @@ body {
 }
 
 .icon-contact a {
-  color: rgba(152, 110, 110, 0.4) !important;
+  color: #f42424 !important;
 }
 
 #portfolio {
@@ -135,7 +135,7 @@ body {
 #contact {
   width: 100vw;
   height: 100vh;
-  background-image: url(http://2am.ninja/img/stars.jpg);
+  background-image: url("img/footer.jpg");
   background-color: black;
   background-repeat: no-repeat;
   background-position: center center;
