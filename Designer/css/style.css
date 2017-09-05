@@ -366,8 +366,8 @@ a:link {
 }
 
 .card img {
-  width: calc(300px - 0px);
-  height: calc(365px - 45px);
+  width: 300px;
+  height: auto;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   border-style: solid;
