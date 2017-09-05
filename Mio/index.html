@@ -100,15 +100,16 @@ DEPENDENCIES
             <h1 itemprop="name" class="devsite-page-title">Mi/o</h1>
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
             <div itemprop="articleBody" class="devsite-article-body clearfix">
-              <p>Content.</p>
-              <p>Content.</p>
-              <h2 id="why_paramour">Header</h2>
-              <p>Sub-Header:</p>
+              <p>Mi/o is an optimized <a href="https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch" target="blank_">LZW</a> algorithm, that also allows the use of the <a href="https://en.wikipedia.org/wiki/Base64" target="blank_">Base64</a> algorithms (<code>atob</code> and <code>btoa</code> in JavaScript).</p>
+              <h2 id="why_mio">More about Mi/o's algorithms</h2>
+              <p>Mi/o is called on as <code>Mio.enc(String data[, Boolean hybrid-only])</code> to encode data, and <code>Mio.dec(String data)</code> to decode it.</p>
               <ul>
-                <li>List Item.</li>
+                <li><code>Mio.enc</code> is also available as <code>Mio.Mi</code></li>
+                <li><code>Mio.dec</code> is also available as <code>Mio.Mo</code></li>
+                <li><code>Boolean hybrid-only</code> tells Mio to leave the encoded data in LZW format <code>true</code>, or Base64 format <code>false</code>; default is <code>false</code></li>
               </ul>
-              <h3 id="set_it_up">Code Header</h3>
-              <p>Delete any code in the script editor and paste in the code below.</p>
+              <h3 id="set_it_up">Example of Mi/o</h3>
+              <p>The example below is editable.</p>
               <div class="pretty-input">
 <textarea translate="no" class="notranslate">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse augue ligula, commodo nec ultrices ut, blandit non ante.
@@ -193,7 +194,7 @@ Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculu
                         </div>
 
                         
-                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to JavaScript">
+                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to compressed text">
                           <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
                             <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
                               <div class="docs-icon goog-inline-block" style="user-select: none;">
