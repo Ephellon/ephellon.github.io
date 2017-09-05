@@ -27,7 +27,7 @@ $(document).ready(function() {
 
       image: ['http://ephellon.github.io/Designer/img/Paramour.png'],
       site: [
-        ['CodePen', 'fa-codepen', 'https://codepen.io/Ephellon/pen/XKPVgw'],
+        ['CodePen', 'fa-codepen', 'https://codepen.io/Ephellon/full/XKPVgw'],
         ['Live Site', 'fa-link', 'https://ephellon.github.io/Paramour/']
       ]
     }, {
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
       image: ['https://ephellon.github.io/Designer/img/Mio.png'],
       site: [
-        ['CodePen', 'fa-codepen', 'https://codepen.io/Ephellon/debug/NvEXbV'],
+        ['CodePen', 'fa-codepen', 'https://codepen.io/Ephellon/full/NvEXbV'],
         ['Live Site', 'fa-link', 'https://ephellon.github.io/Mio/']
       ]
     }, {
