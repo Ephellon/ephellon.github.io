@@ -63,6 +63,7 @@ $(document).ready(function() {
       site: [
         ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Forbidden Fruit.jpg']
       ]
+    }
     /*, {
       title: 'Title',
       text: '<p>Description.</p>',
@@ -74,7 +75,7 @@ $(document).ready(function() {
       ]
     }
     */
-    }];
+    ];
 
   // add listener to all the cards for click flipping
   function addListener() {
