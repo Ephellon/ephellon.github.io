@@ -25,7 +25,7 @@
 // ".number" is an error in this case
 "(\\j)\\.(\\d+)": function($_, $1, $2) {
   // when using, RegExp -> Functions
-  // arguments are given as (RegExp.$_[, RegExp.$1[, ...[, RegExp.$9]]], indexOf)
+  // arguments are given as (RegExp.$_[, RegExp.$1[, ...[, RegExp.$9]]], indexOf, lastMatch)
   console.error("@Paramour Error '" + self.name + "'", '->', "'" + $_ "'");
     // this would log "@Paramour Error '(\j)\.(\d+)' -> 'abc.123'"
     // self refers to the current function being executed
