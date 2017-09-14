@@ -228,18 +228,18 @@ _These are usually handled natively by JavaScript, unless inside of a JavaScript
 ### Object Tuple (* item...)
   __returns a Tuple object with the following properties__
 
-  - Function `constructor` - `Tuple`
-  - Boolean `every(Function function)` - see [Array.prototype.every](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
-  - Object `forEach(Function function)` - see [Array.prototype.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
-  - Number `indexOf(* item)` - see [Array.prototype.indexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
+  - Function `constructor` - `Tuple`, can also be obtained via `Tuple.from(* items...)`
+  - Boolean `every(Function callback[, Object _this_])` - see [Array.prototype.every](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
+  - Object `forEach(Function callback[, Object _this_])` - see [Array.prototype.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+  - Number `indexOf(* item[, Number start])` - see [Array.prototype.indexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
   - String `join(String delimeter)` - see [Array.prototype.join](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join)
-  - Number `lastIndexOf(* item)` - see [Array.prototype.lastIndexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf)
-  - Object `next(Number places)` - traverses (moves forward) the Tuple's index by `places` many places; defaults to `1`
+  - Number `lastIndexOf(* item[, Number start])` - see [Array.prototype.lastIndexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf)
+  - Object `next(Number places)` - traverses (moves forward) the Tuple's index by `places` many places; defaults to `1`; can also be invoked via the `Tuple.next` getter, but only for the latest Tuple
 
 ### Object NewLine (String characters)
   __returns a NewLine object, which represents the newline sequence given in `characters`__
-  - Supports `\n`, `\r`, and `\f` in the sequence (\n, \r, \r\n, etc.)
-  - Also returns the `.esc` and `.unesc` properties of the sequence
+  - Supports `\n`, `\r`, and `\f` in the sequence (`\n`, `\r`, `\r\n`, etc.)
+  - Also exposes the `.esc` and `.unesc` properties; and the `.toRegExp([Boolean capture[, String flags]])` and `.toString([Boolean escape])` methods
 
 ### Undefined Operator (String operator, String type, String fix, String function, String brace)
   __returns undefined, but modifies Operator.kids__
@@ -412,37 +412,37 @@ __Unit testing, below are porperties/methods of the `JSUNIT` object__
 
 ### assertNull(received[, comment])
   __log that you wanted `null`__
-  - received - the received value
-  - comment - an optional comment about the error
+  - `received` - the received value
+  - `comment` - an optional comment about the error
 
 ### assertNotNull(received[, comment])
   __log that you did not want `null`__
-  - received - the recieved value
-  - comment - an optional comment about the error
+  - `received` - the recieved value
+  - `comment` - an optional comment about the error
 
 ### assertUndefined(received[, comment])
   __log that you wanted `undefined`__
-  - received - the received value
-  - comment - an optional comment about the error
+  - `received` - the received value
+  - `comment` - an optional comment about the error
 
 ### assertNotUndefined(received[, comment])
   __log that you did not want `undefined`__
-  - received - the recieved value
-  - comment - an optional comment about the error
+  - `received` - the recieved value
+  - `comment` - an optional comment about the error
 
 ### assertNaN(received[, comment])
   __log that you wanted `NaN`__
-  - received - the received value
-  - comment - an optional comment about the error
+  - `received` - the received value
+  - `comment` - an optional comment about the error
 
 ### assertNotNaN(received[, comment])
   __log that you did not want `NaN`__
-  - received - the recieved value
-  - comment - an optional comment about the error
+  - `received` - the recieved value
+  - `comment` - an optional comment about the error
 
 ### assertFail([comment])
   __log a fail__
-  - comment - an optional comment about the error
+  - `comment` - an optional comment about the error
 
 ### out(error)
   __log an error__
@@ -450,20 +450,20 @@ __Unit testing, below are porperties/methods of the `JSUNIT` object__
 
 ### log(message)
   __log a message__
-  - message - the message to log
+  - `message` - the message to log
 
 ### stdout(message)
   __log a message to the &lt;stdout&gt;__
-  - message - the message to log
+  - `message` - the message to log
 
 ### stderr(error)
   __log an error to the &lt;stdout&gt;__
-  - error - the error to log
+  - `error` - the error to log
 
 ### stdin(query, default)
   __get user input via &lt;stdin&gt;__
-  - query - the query to ask the user
-  - default - the default value
+  - `query` - the query to ask the user
+  - `default` - the default value
 
 ----
 
