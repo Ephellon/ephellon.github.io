@@ -446,7 +446,7 @@ __Unit testing, below are porperties/methods of the `JSUNIT` object__
 
 ### out(error)
   __log an error__
-  - error - the error to log
+  - `error` - the error to log
 
 ### log(message)
   __log a message__
