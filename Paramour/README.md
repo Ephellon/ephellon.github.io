@@ -385,30 +385,30 @@ __Unit testing, below are porperties/methods of the `JSUNIT` object__
 
 ### assert(expected, received)
   __log that you wanted "received"__
-  - received - the received value
-  - expected - the expected value
+  - `received` - the received value
+  - `expected` - the expected value
 
 ### assertTrue(received[, comment])
   __log that you wanted `true`__
-  - received - the received value
-  - comment - an optional comment about the error
+  - `received` - the received value
+  - `comment` - an optional comment about the error
 
 ### assertFalse(received[, comment])
   __log that you wanted `false`__
-  - received - the recieved value
-  - comment - an optional comment about the error
+  - `received` - the recieved value
+  - `comment` - an optional comment about the error
 
 ### assertEquals(expected, received[, comment])
   __log that you wanted `expected`__
-  - received - the received value
-  - expected - the expected value
-  - comment - an optional comment about the error
+  - `received` - the received value
+  - `expected` - the expected value
+  - `comment` - an optional comment about the error
 
 ### assertNotEquals(expected, received[, comment])
   __log that you did not want `expected`__
-  - received - the received value
-  - expected - the expected value
-  - comment - an optional comment about the error
+  - `received` - the received value
+  - `expected` - the expected value
+  - `comment` - an optional comment about the error
 
 ### assertNull(received[, comment])
   __log that you wanted `null`__
