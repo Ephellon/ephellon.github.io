@@ -494,4 +494,3 @@ __Unit testing, below are porperties/methods of the `JSUNIT` object__
     => ?("apples & bananas")
       # returns true, defaults to ?-suffix
   ```
-  
