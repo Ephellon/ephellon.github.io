@@ -399,13 +399,13 @@ __Unit testing, below are porperties/methods of the `JSUNIT` object__
   - `comment` - an optional comment about the error
 
 ### assertEquals(expected, received[, comment])
-  __log that you wanted `expected`__
+  __log that you wanted `received` to equal `expected`__
   - `received` - the received value
   - `expected` - the expected value
   - `comment` - an optional comment about the error
 
 ### assertNotEquals(expected, received[, comment])
-  __log that you did not want `expected`__
+  __log that you did not want `received` to equal `expected`__
   - `received` - the received value
   - `expected` - the expected value
   - `comment` - an optional comment about the error
