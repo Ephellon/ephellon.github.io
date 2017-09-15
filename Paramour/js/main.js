@@ -1,11 +1,4 @@
 (function($) {
-devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '0000000000', 'SITE_NAME': 'Paramour', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
-'[]', 'en',
-true, '',
-{"00000000000000000000000000000000": false},
-'/',
-'https://ephellon.github.io/Paramour/');
-
 // The Navigation Menu
 // Mustache + jQuery
 
@@ -114,6 +107,15 @@ function loadToolbar() {
 
 loadMenu();
 loadToolbar();
+})(jQuery);
+
+(function($) {
+devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '0000000000', 'SITE_NAME': 'Paramour', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
+'[]', 'en',
+true, '',
+{"00000000000000000000000000000000": false},
+'/',
+'https://ephellon.github.io/Paramour/');
 
 // Main.js
 
