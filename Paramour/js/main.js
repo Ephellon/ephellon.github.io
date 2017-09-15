@@ -211,8 +211,8 @@ true, '',
 // Mustache + jQuery
 
 function loadMenu() {
-  var base_url = "https://ephellon.github.io/Paramour/",
-  menu_data =
+  var base_url  = "https://ephellon.github.io/Paramour/",
+      menu_data =
   {
     new_menu: [
       { title: "Overview",        date: "08/22/2017 01:20 CST", href: base_url },
@@ -282,7 +282,7 @@ function loadMenu() {
         ]}
     ]},
       template, rendered;
-  $.get("https://ephellon.github.io/Paramour/mst/menu.mst", function(file_contents) {
+  $.get(base_url + "mst/menu.mst", function(file_contents) {
     template = file_contents || $("#template").html();
     rendered = Mustache.render(template, menu_data);
     $("#target").html(rendered); // #template for testing purposes
@@ -300,7 +300,21 @@ function loadMenu() {
   });
 };
 
+function loadToolbar() {
+  var base_url  = "https://ephellon.github.io/Paramour/",
+      menu_data = {},
+      template, rendered;
+  $.get(base_url + "mst/toolbar.mst", function(file_contents) {
+    template = file_contents || $("#toolbar-template").html();
+    rendered = Mustache.render(template, menu_data);
+    $("#toolbar-target").html(rendered); // #toolbar-template for testing purposes
+
+    $("#docs-toolbar").html(rendered);
+  });
+}
+
   loadMenu();
+  loadToolbar();
 
 })(jQuery);
 devsite.localInit = function() {};
