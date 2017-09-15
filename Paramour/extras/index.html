@@ -267,7 +267,7 @@ alert days_left;
     $(function() {
       var hash = (location.hash || "").replace(/^#/, "");
       if(hash != "")
-        $.get("/ex/" + hash + ".par", function(file_contents) {
+        $.get("ex/" + hash + ".par", function(file_contents) {
           $("#code-input").val(file_contents);
           prettyPrint();
         });
