@@ -269,6 +269,7 @@ true, '',
       self.attr("title", "Uncaught: " + error.message);
       display.toggleClass("lang-paramour", true).toggleClass("lang-javascript", false);
       alert(error);
+      console.warn(error);
     }
 
     swapIcons(runicons, "run", !isJS);
