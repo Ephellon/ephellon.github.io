@@ -114,6 +114,8 @@ loaded = true;
 
 var loading =
 setInterval(function($) {
+$ = jQuery;
+
 devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '0000000000', 'SITE_NAME': 'Paramour', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
 '[]', 'en',
 true, '',
