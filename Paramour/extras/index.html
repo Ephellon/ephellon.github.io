@@ -103,7 +103,7 @@ DEPENDENCIES
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
             <div itemprop="articleBody" class="devsite-article-body clearfix">
               <div class="pretty-input">
-<textarea translate="no" class="notranslate">
+<textarea id="code-input" translate="no" class="notranslate">
 ### Days until Xmas
   @author: W3 Resource Authors
   @url: https://www.w3resource.com/javascript-exercises/javascript-basic-exercise-9.php
@@ -263,6 +263,16 @@ alert days_left;
     <script src="https://ephellon.github.io/Paramour/js/par.min.js"></script>
     <script src="https://ephellon.github.io/Paramour/js/tinyurl.js"></script>
     <script src="https://ephellon.github.io/Paramour/js/main.js"></script>
+    <script>
+    $(function() {
+      var hash = (location.hash || "").replace(/^#/, "");
+      if(hash != "")
+        $.get("/ex/" + hash + ".par", function(file_contents) {
+          $("#code-input").val(file_contents);
+          prettyPrint();
+        });
+    });
+    </script>
     <!-- :DEPENDENCIES -->
   </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
 </body>
