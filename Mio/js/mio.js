@@ -1,11 +1,14 @@
-var Mio = window.Mio = Mio || {power: 8};
+var Mio = window.Mio = Mio || {power: 8},
+    fn = function(input){return input},
+    atob_regexp = /^[a-z\+\=]+$/i,
+    atob, btoa;
 
 // Encode
 Mio.Mi =
 Mio.enc =
 // String: String[, Boolean]
 function Mi(input, hybrid_only) {
-  return (hybrid_only? function(){}: btoa)(LZW_Wrap(LZW_Encode(input)));
+  return (!hybrid_only && btoa? btoa: fn)(LZW_Wrap(LZW_Encode(input)));
 };
 
 // Decode
@@ -13,7 +16,7 @@ Mio.Mo =
 Mio.dec =
 // String: String
 function Mo(input) {
-  return LZW_Decode(LZW_Unwrap(atob(input)));
+  return LZW_Decode(LZW_Unwrap((atob && atob_regexp.test(input)? atob: fn)(input)));
 };
 
 // LZW from [JSFiddle](https://jsfiddle.net/ryanoc/fpMM6/)
