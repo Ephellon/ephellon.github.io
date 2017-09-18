@@ -1,6 +1,6 @@
 var Mio = window.Mio = Mio || {power: 8},
     fn = function(input){return input},
-    atob_regexp = /^[a-z\+\=]+$/i,
+    atob_regexp = /^[a-z\+\\\=]+$/i,
     atob, btoa;
 
 // Encode
