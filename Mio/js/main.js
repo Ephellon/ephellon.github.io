@@ -115,50 +115,57 @@ true, '',
   });
 
   $("#saveButton").click(function(event) {
-    if(!is_plain_text)
-      $("#swapButton").click();
+      if(!isPlainText)
+        $("#swapButton").click();
 
-    var textarea = getCurrent(), value = textarea.val(),
-        zip = new JSZip(),
-        def = (+new Date).toString(36),
-        name = "Mio." + def,
-        output = Mio.Mi(value),
-        hybrid = atob(output),
-        length = [value.length, output.length, hybrid.length];
+      var zip = new JSZip(), name = "Mio - " + (+(new Date)).toString(36),
+          textarea   = getCurrent(),
+          original   = textarea.val(),
+          hybrid     = Mio.Mi(original, !0),
+          compressed = Mio.Mi(original, !1);
 
-    length.push((100 * (length[1] / length[0])) - 100);
+      function si(n) {
+        for(var k = "\bKMGTPEZY", n = Math.abs(+n), m = 1024; n >= m && k.length > 1; n /= m)
+          k = k.slice(1, k.length);
+        return (n + "").replace(/\.(\d{3}).*/, ".$1") + k[0].replace(/[\b]$/, "") + "B";
+      }
 
-    function si(n) {
-      for(var k = "\bKMGTPEZY".split(""), n = Math.abs(+n), m = 1024; n >= m && k.length > 1; n /= m)
-        k.splice(0, 1);
-      return (n + "").replace(/\.(\d{3}).*/, ".$1") + k[0].replace(/[\b]/, "") + "b"
-    }
+      function utf8_to_ascii(s) {
+        return UTF8.esc(s);
+      }
 
-    zip.file("README.md",
-"# Mi/o - " + (name) + ".zip\n" +
-"_This document details the statistics of " + (name) + ".zip_.\n" +
-"\n" +
-"_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._\n" +
-"\n" +
-"----\n" +
-"\n" +
-"### Space Used\n" +
-"  - [Original  ](" + (name) + ".org.txt): " + (si(length[0])) + "\n" +
-"  - [Hybrid    ](" + (name) + ".hyb.txt): " + (si(length[2])) + "\n" +
-"  - [Compressed](" + (name) + ".cmp.txt): " + (si(length[1])) + "\n" +
-"  - Space " + (length[1] <= length[0]? "saved": "lost") + ": " + (si(length[1] - length[0])) + " (" + (-length[3]) + "%)"
-);
-    zip.file(name + ".org.txt", value);
-    zip.file(name + ".hyb.txt", hybrid);
-    zip.file(name + ".cmp.txt", output);
+      original = utf8_to_ascii(original);
+      hybrid   = utf8_to_ascii(hybrid);
 
-    zip.generateAsync({type: "blob"})
-    .then(function(blob) {         // 1) generate the zip file
-      saveAs(blob, name + ".zip"); // 2) trigger the download
-    }, function(err) {
-      $("#blob").text(err);
+      zip.file("README.md",
+  "# Mi/o - " + (name) + ".zip\n" +
+  "_This document details the statistics of " + (name) + ".zip_.\n" +
+  "\n" +
+  "_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._\n" +
+  "\n" +
+  "----\n" +
+  "\n" +
+  (stats = "### Space Used\n" +
+  "  - [Original  ](" + (name) + ".org.txt): " + (si(original.length))   + "\n" +
+  "  - [Hybrid    ](" + (name) + ".hyb.txt): " + (si(hybrid.length))     + "\n" +
+  "  - [Compressed](" + (name) + ".cmp.txt): " + (si(compressed.length)) + "\n" +
+  "\n" +
+  "  - Space " + (compressed.length <= original.length? "saved": "lost") + " [compressed]: " +
+    (si(compressed.length - original.length)) + " (" + (100 - (100 * (compressed.length / original.length))) + "%)" + "\n" +
+  "  - Space " + (hybrid.length <= original.length? "saved": "lost") + " [hybrid]: " +
+    (si(hybrid.length - original.length)) + " (" + (100 - (100 * (hybrid.length / original.length))) + "%)"));
+
+      zip.file(name + ".org.txt", original);
+      zip.file(name + ".hyb.txt", hybrid);
+      zip.file(name + ".cmp.txt", compressed);
+
+      zip.generateAsync({type: "blob"})
+      .then(function(blob) {         // 1) generate the zip file
+        saveAs(blob, name + ".zip"); // 2) trigger the download
+      }, function(error) {
+        $("#blob").text(error);
+      });
     });
-  });
 
   $("#runButton").click(function(event) {
     var self = $(event.target), textarea = getCurrent(), value = textarea.val();
