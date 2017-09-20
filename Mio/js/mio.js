@@ -1,9 +1,61 @@
-var Mio = window.Mio = Mio || {power: 8},
+var Mio   = window.Mio   = Mio   || {power: 8},
+    UTF8 = window.UTF8 = UTF8 || {
+      bksl: function Backslash(character) {
+        // table of character substitutions
+        var meta = {
+            '\b': 'b',
+            '\f': 'f',
+            '\n': 'n',
+            '\r': 'r',
+            '\t': 't',
+            '\v': 'v',
+            '\\': ''
+        };
+
+        return meta[character]?
+          "\\" + meta[character]:
+        character;
+      },
+
+      esc: function Escape(string) {
+        string = string.replace(/~/g, "~\u0000");
+
+        for(var illegal = /([^\u0000-\u007E])/, counter = 0, length = string.length; illegal.test(string) & counter < length; counter++)
+          string = string.replace(illegal, function($0, $1, $$, $_) {
+            var code      = $1.charCodeAt(0),
+                signature = String.fromCharCode(Math.floor(code / 127)),
+                character = String.fromCharCode(code % 127);
+
+            // console.log($1, [code, signature, character]);
+
+            return "~" + UTF8.bksl(signature) + UTF8.bksl(character);
+          });
+
+        return string;
+      },
+
+      unesc: function Unescape(string) {
+        for(var escaped = /~([\u0001-\uFFFF]{2})/; escaped.test(string);)
+          string = string.replace(escaped, function($0, $1, $$, $_) {
+            var signature = $1.charCodeAt(0),
+                character = $1.charCodeAt(1),
+                code      = (signature * 127) + character;
+
+            // console.log($1, [code, signature, character]);
+
+            return String.fromCharCode(code);
+          });
+
+        return string.replace(/~\u0000/g, "~");
+      }
+    },
     fn = function(input){return input},
-    atob_regexp = /^[a-z\d\+\/]+[\=]{0,2}$/i,
     atob, btoa;
 
-// Encode
+// Base64 RegExp
+(atob || {}).regexp = /^[a-z\d\+\/]+[\=]{0,2}$/i;
+
+// Encode (Compress)
 Mio.Mi =
 Mio.enc =
 // String: String[, Boolean]
@@ -11,12 +63,12 @@ function Mi(input, hybrid_only) {
   return (!hybrid_only && btoa? btoa: fn)(LZW_Wrap(LZW_Encode(input)));
 };
 
-// Decode
+// Decode (Decompress)
 Mio.Mo =
 Mio.dec =
 // String: String
 function Mo(input) {
-  return LZW_Decode(LZW_Unwrap((atob && atob_regexp.test(input)? atob: fn)(input)));
+  return LZW_Decode(LZW_Unwrap((atob && atob.regexp.test(input)? atob: fn)(input)));
 };
 
 // LZW from [JSFiddle](https://jsfiddle.net/ryanoc/fpMM6/)
