@@ -49,18 +49,26 @@ var Mio   = window.Mio   = Mio   || {power: 8},
         return string.replace(/~\u0000/g, "~");
       }
     },
-    fn = function(input){return input},
     atob, btoa;
 
 // Base64 RegExp
 (atob || {}).regexp = /^[a-z\d\+\/]+[\=]{0,2}$/i;
+(atob || {}).characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/=";
 
 // Encode (Compress)
 Mio.Mi =
 Mio.enc =
-// String: String[, Boolean]
-function Mi(input, hybrid_only) {
-  return (!hybrid_only && btoa? btoa: fn)(LZW_Wrap(LZW_Encode(input)));
+// String: String[, Boolean[, Boolean]]
+function Mi(input, hybrid, unbloat) {
+  input = LZW_Wrap(LZW_Encode(input));
+
+  return (
+  (btoa && !hybrid)?
+    (!unbloat)?
+      Mio.unbloat(btoa(input)):
+    btoa(input):
+  input
+  );
 };
 
 // Decode (Decompress)
@@ -68,14 +76,79 @@ Mio.Mo =
 Mio.dec =
 // String: String
 function Mo(input) {
-  return LZW_Decode(LZW_Unwrap((atob && atob.regexp.test(input)? atob: fn)(input)));
+  var media = Mio.bloat(input),
+      test  = [atob.regexp.test(media), atob.regexp.test(input)];
+
+  return (
+    (atob && test[0])?
+      LZW_Decode(LZW_Unwrap(atob(media))):
+    (atob && test[1])?
+      LZW_Decode(LZW_Unwrap(atob(input))):
+    LZW_Decode(LZW_Unwrap(input))
+  );
 };
+
+// Base64 string -> Unbloated string
+Mio.unbloat =
+// String: String
+function unbloat(string) {
+  var characters = atob.characters,
+      list       = {},
+      media      = [],
+      output     = [];
+
+  if(atob.regexp.test(string))
+    for(var index = 0, length = characters.length, character, code, next; index < length; index++)
+      list[( character = characters[index] )] = list[character] || (
+        (character == characters[64])?
+          "00":
+        ("000000" + index.toString(2)).slice(-6)
+      );
+  else
+    return string;
+
+  for(index = 0, length = string.length; index < length; index++)
+    media.push(list[string[index]]);
+  media = media.join("").split(/([01]{8})/).join(",").replace(/^,|,$/g, "").split(/,,?/);
+
+  for(index = 0, length = media.length; index < length; index++)
+    if(( code = media[index], next = media[index + 1] ) != "00" || next == void 0)
+      output.push(String.fromCharCode(+( "0b" + code )));
+
+  return output.join("");
+}
+
+// Unbloated string -> Base64 string
+Mio.bloat =
+// String: String
+function bloat(string) {
+  var characters = atob.characters,
+      list       = {},
+      media      = [],
+      output     = [];
+
+  for(var index = 0, length = characters.length, character, code, next; index < length; index++)
+    list[code = (index < 64? ("000000" + index.toString(2)).slice(-6): "00")] = list[code] || characters[index];
+  list["0000"] = list["00"] + list["00"];
+
+  for(index = 0, length = string.length; index < length; index++)
+    media.push(( "00000000" + string.charCodeAt(index).toString(2) ).slice(-8));
+  media = media.join("").split(/([01]{6})/).join(",").replace(/^,|,$/g, "").split(/,,?/);
+
+  for(index = 0, length = media.length; index < length; index++)
+    if(( code = media[index] ).length == 6)
+      output.push(characters[+("0b" + code)]);
+    else
+      output.push(list[code]);
+
+  return output.join("");
+}
 
 // LZW from [JSFiddle](https://jsfiddle.net/ryanoc/fpMM6/)
 // LZW-compress a string
 function LZW_Encode(string) {
   var dictionary = {},
-      phrases = (string + "").split(""),
+      phrases = (string + ""),
       output = [],
       media = [],
       character,
@@ -87,11 +160,13 @@ function LZW_Encode(string) {
       phrase += character;
     else
       media.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0)),
-        dictionary[phrase + character] = index,
-        index++,
-        phrase = character;
+      dictionary[phrase + character] = index,
+      index++,
+      phrase = character;
 
-    media.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0));
+    media.push(phrase.length > 1?
+      dictionary[phrase]:
+    phrase.charCodeAt(0));
 
   for(i = 0; i < media.length; i++)
     output.push(String.fromCharCode(media[i]));
@@ -102,7 +177,7 @@ function LZW_Encode(string) {
 // Decompress an LZW-encoded string
 function LZW_Decode(string) {
   var dictionary = {},
-      phrases = (string + "").split(""),
+      phrases = (string + ""),
       character = phrases[0],
       oldPhrase = character,
       output = [character],
@@ -110,12 +185,14 @@ function LZW_Decode(string) {
       phrase;
 
     for(var i = 1, currCode; i < phrases.length; i++) {
-      currCode = phrases[i].charCodeAt(0);
+      currCode = phrases.charCodeAt(i);
 
       if(currCode < 256)
         phrase = phrases[i];
       else
-        phrase = dictionary[currCode] ? dictionary[currCode] : (oldPhrase + character);
+        phrase = dictionary[currCode]?
+          dictionary[currCode]:
+        oldPhrase + character;
 
       output.push(phrase);
       character = phrase.charAt(0);
