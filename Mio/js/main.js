@@ -1,36 +1,67 @@
+var loaded = false, stats = "Press the 'Download' button to generate stats.";
+
 (function($) {
-devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '0000000000', 'SITE_NAME': 'Mi/o', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
+// The Navigation Menu
+// Mustache + jQuery
+
+function loadMenu() {};
+
+function loadToolbar() {
+  var base_url  = "https://ephellon.github.io/Mio/",
+      menu_data = {},
+      template, rendered;
+  $.get(base_url + "mst/toolbar.mst", function(file_contents) {
+    template = file_contents || $("#toolbar-template").html();
+    rendered = Mustache.render(template, menu_data);
+    $("#toolbar-target").html(rendered); // #toolbar-template for testing purposes
+
+    $("#docs-toolbar").html(rendered);
+  });
+}
+
+loadMenu();
+loadToolbar();
+loaded = true;
+})(jQuery);
+
+var loading =
+setInterval(function($) {
+$ = jQuery;
+
+devsite.devsite.Init($, {'FULL_SITE_SEARCH_ENABLED': 1, 'ENABLE_BLOCKED_VIDEO_PLACEHOLDER': 0, 'VERSION_HASH': '0000000000', 'SITE_NAME': 'Mio', 'HISTORY_ENABLED': 1, 'SUBPATH': '', 'ENABLE_BLOCKED_LINK_TOOLTIP': 0, 'ALLOWED_HOSTS': ['.github.io'], 'BLOCK_RSS_FEEDS': 0, 'SCRIPTSAFE_DOMAIN': '.github.io'},
 '[]', 'en',
 true, '',
 {"00000000000000000000000000000000": false},
 '/',
-'https://ephellon.github.io/mio/');
+'https://ephellon.github.io/Mio/');
 
-  var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]), is_plain_text = true,
+// Main.js
+
+  var timer, blink = false, last = {}, ltr = $("html").css(["writing-mode"]), isPlainText = true,
       swapicon = $("#swapButton span > div.docs-icon-redo, #swapButton span > div.docs-icon-undo"),
       runicons = $("#runButton div.docs-icon-run, #runButton div.docs-icon-debug"),
       icons = {
-        swap: ["docs-icon-redo", "docs-icon-undo"],
+        swap: ["docs-icon-undo", "docs-icon-redo"],
         run: ["docs-icon-run", "docs-icon-debug"]
       },
-      last_active, display;
+      last_active, display, tinyurl;
 
   ltr = (ltr == "" || ltr == "vertical-lr");
+  tinyurl = tinyurl || window.tinyurl;
 
   function swapIcons(element, pack, bool) {
-    bool = bool == undefined? true: bool;
+    bool = bool || false;
     return element
       .toggleClass(icons[pack][0], bool)
-      .toggleClass(icons[pack][1], bool = !bool),
-      bool;
+      .toggleClass(icons[pack][1], !bool);
   }
 
   function encodeHTML(string) {
-    return string.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return string.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/(\n[\r\f]?|\r[\n\f]?)/g, "<br>");
   }
 
   function decodeHTML(string) {
-    return string.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    return string.replace(/<br>/g, "\n").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
   }
 
   function getCurrent(index) {
@@ -49,7 +80,8 @@ true, '',
         end       = textarea.selectionEnd,
         value     = textarea.value || "",
         length    = value.length,
-        direction = textarea.selectionDirection;
+        direction = textarea.selectionDirection,
+        e         = encodeHTML;
 
     if(direction == undefined || direction == null)
       direction = ((last.start > start || end < last.end) && ltr)? "left": "right";
@@ -57,15 +89,15 @@ true, '',
       direction = (direction != "forward" && ltr)? "left": "right";
 
     if((last.start = start) == (last.end = end))
-      return encodeHTML(value.slice(0, start)) +
+      return e(value.slice(0, start)) +
         '<span class="cursor ' + direction + ' nocode"></span>' +
-        encodeHTML(value.slice(end, length));
+        e(value.slice(end, length));
     else
-      return encodeHTML(value.slice(0, start)) +
+      return e(value.slice(0, start)) +
         '<span class="cursor ' + direction + ' nocode">' +
-        encodeHTML(value.slice(start, end)) +
+        e(value.slice(start, end)) +
         '</span>' +
-        encodeHTML(value.slice(end, length));
+        e(value.slice(end, length));
   }
 
   function updateDisplay() {
@@ -83,7 +115,6 @@ true, '',
 
   $(".pretty-input > textarea")
   .on("keyup", function(event) {
-    last["in"] = ($(event.target).val() || "");
     updateHTML();
   })
   .on("mousemove", updateHTML)
@@ -115,97 +146,122 @@ true, '',
   });
 
   $("#saveButton").click(function(event) {
-      if(!isPlainText)
-        $("#swapButton").click();
+    if(!isPlainText)
+      $("#swapButton").click();
 
-      var zip = new JSZip(), name = "Mio - " + (+(new Date)).toString(36),
-          textarea   = getCurrent(),
-          original   = textarea.val(),
-          hybrid     = Mio.Mi(original, !0),
-          compressed = Mio.Mi(original, !1);
+    var zip = new JSZip(), name = "Mio - " + (+(new Date)).toString(36),
+        textarea   = getCurrent(),
+        original   = textarea.val(),
+        hybrid     = Mio.Mi(original, !1),
+        compressed = Mio.Mi(original, !0),
+        ol         = original.length,
+        hl         = hybrid.length,
+        cl         = compressed.length;
 
-      function si(n) {
-        for(var k = "\bKMGTPEZY", n = Math.abs(+n), m = 1024; n >= m && k.length > 1; n /= m)
-          k = k.slice(1, k.length);
-        return (n + "").replace(/\.(\d{3}).*/, ".$1") + k[0].replace(/[\b]$/, "") + "B";
-      }
+    function si(n) {
+      for(var k = "\bKMGTPEZY", n = Math.abs(+n), m = 1024; n >= m && k.length > 1; n /= m)
+        k = k.slice(1, k.length);
+      return (n + "").replace(/\.(\d{3}).*/, ".$1") + k[0].replace(/[\b]$/, "") + "B";
+    }
 
-      function utf8_to_ascii(s) {
-        return UTF8.esc(s);
-      }
+    function sz(n, m) {
+      return (100 - (100 * (n / m)));
+    }
 
-      original = utf8_to_ascii(original);
-      hybrid   = utf8_to_ascii(hybrid);
+    zip.file("README.md",
+"# Mi/o - " + (name) + ".zip\n" +
+"_This document details the statistics of " + (name) + ".zip_.\n" +
+"\n" +
+"_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._\n" +
+"\n" +
+"----\n" +
+"\n" +
+(stats = "### Space Used\n" +
+"  - [Original  ](" + (name) + ".org.txt): " + (si(ol))   + "\n" +
+"  - [Hybrid    ](" + (name) + ".hyb.txt): " + (si(hl))     + "\n" +
+"  - [Compressed](" + (name) + ".cmp.txt): " + (si(cl)) + "\n" +
+"\n" +
+"  - Space " + (cl <= ol? "saved": "lost") + " [compressed]: " +
+  (si(cl - ol)) + " (" + sz(cl, ol) + "%)" + "\n" +
+"  - Space " + (hl <= ol? "saved": "lost") + " [hybrid]: " +
+  (si(hl - ol)) + " (" + sz(hl, ol) + "%)"));
 
-      zip.file("README.md",
-  "# Mi/o - " + (name) + ".zip\n" +
-  "_This document details the statistics of " + (name) + ".zip_.\n" +
-  "\n" +
-  "_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._\n" +
-  "\n" +
-  "----\n" +
-  "\n" +
-  (stats = "### Space Used\n" +
-  "  - [Original  ](" + (name) + ".org.txt): " + (si(original.length))   + "\n" +
-  "  - [Hybrid    ](" + (name) + ".hyb.txt): " + (si(hybrid.length))     + "\n" +
-  "  - [Compressed](" + (name) + ".cmp.txt): " + (si(compressed.length)) + "\n" +
-  "\n" +
-  "  - Space " + (compressed.length <= original.length? "saved": "lost") + " [compressed]: " +
-    (si(compressed.length - original.length)) + " (" + (100 - (100 * (compressed.length / original.length))) + "%)" + "\n" +
-  "  - Space " + (hybrid.length <= original.length? "saved": "lost") + " [hybrid]: " +
-    (si(hybrid.length - original.length)) + " (" + (100 - (100 * (hybrid.length / original.length))) + "%)"));
+    zip.file(name + ".org.txt", original);
+    zip.file(name + ".hyb.txt", hybrid);
+    zip.file(name + ".cmp.txt", compressed);
 
-      zip.file(name + ".org.txt", original);
-      zip.file(name + ".hyb.txt", hybrid);
-      zip.file(name + ".cmp.txt", compressed);
-
-      zip.generateAsync({type: "blob"})
-      .then(function(blob) {         // 1) generate the zip file
-        saveAs(blob, name + ".zip"); // 2) trigger the download
-      }, function(error) {
-        $("#blob").text(error);
-      });
+    zip.generateAsync({type: "blob"})
+    .then(function(blob) {         // 1) generate the zip file
+      saveAs(blob, name + ".zip"); // 2) trigger the download
+    }, function(error) {
+      $("#blob").text(error);
     });
+  });
 
   $("#runButton").click(function(event) {
     var self = $(event.target), textarea = getCurrent(), value = textarea.val();
 
     try {
-      value = Mio.Mi(value);
       last.error = undefined;
-      swapIcons(runicons, "run", is_plain_text = true);
+      if(isPlainText) $("#swapButton").click();
       self.attr("title", "Run");
     } catch(error) {
       value = textarea.val();
       last.error = error;
-      swapIcons(runicons, "run", is_plain_text = false);
+      if(!isPlainText) $("#swapButton").click();
       self.attr("title", "Uncaught: " + error.message);
-      return alert(error);
+      alert(error);
+      console.error(error);
     }
 
     textarea.val(value);
 
-    is_plain_text = false;
     $("#swapButton").click();
   });
 
-  $("#linkButton").click(function(event) {});
+  $("#linkButton").click(function(event) {
+    if(!tinyurl)
+      throw Error("The tinyurl API is not loaded.");
 
-  $("#helpButton").click(function(event) {});
+    if(!isPlainText) $("#swapButton").click();
+
+    var textarea = getCurrent(),
+        url      = "https://ephellon.github.io/Mio/?input=" + Mio.enc(textarea.val()),
+        self     = $(event.target);
+    tinyurl(url, function() {
+      var url = tinyurl.url;
+      try {
+        alert("The URL [" + url + "] was " + (document.execCommand("copy", false, url)? "": "not ") + "copied to the clipboard.");
+      } catch(e) {
+        alert("The URL [" + url + "] cannot be copied to the clipboard.");
+      }
+    });
+  });
+
+  $("#helpButton").click(function(event) {
+    // window.open("https://ephellon.github.io/Mio/help/", "blank_");
+    alert(stats);
+  });
 
   $("#swapButton").click(function(event) {
     var textarea = getCurrent(0), value = textarea.value;
 
-    if(is_plain_text)
-      textarea.value = Mio.Mi(value);
+    swapIcons(swapicon, "swap", isPlainText);
+
+    if(isPlainText)
+      try {
+        textarea.value = Mio.Mi(last.hold = value);
+      } catch(e) {
+        swapIcons(swapicon, "swap", isPlainText);
+        return alert(e), console.warn(e);
+      }
     else
-      textarea.value = Mio.Mo(value);
+      textarea.value = last.hold = last.hold || value;
 
-    swapIcons(swapicon, "swap", is_plain_text);
-
-    event.target.setAttribute("title", "Switch to " + ((is_plain_text = !is_plain_text)? "compressed": "plain") + " text");
+    event.target.setAttribute("title", "View " + ((isPlainText)? "original": "compressed") + " text");
 
     updateHTML();
+    isPlainText = !isPlainText;
   });
 
   last_active = getCurrent(), display.html(last_active.val());
@@ -214,5 +270,8 @@ true, '',
     $(".cursor").css({"border-color": (blink = !blink)? "#ffffff": "#212121"});
   }, 500);
 
-})(jQuery);
-    devsite.localInit = function() {};
+  if(loaded)
+    clearInterval(loading);
+}, 10);
+
+devsite.localInit = function() {};
