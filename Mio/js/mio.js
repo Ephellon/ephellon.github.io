@@ -1,54 +1,4 @@
-var Mio   = window.Mio   = Mio   || {power: 8},
-    UTF8 = window.UTF8 = UTF8 || {
-      bksl: function Backslash(character) {
-        // table of character substitutions
-        var meta = {
-            '\b': 'b',
-            '\f': 'f',
-            '\n': 'n',
-            '\r': 'r',
-            '\t': 't',
-            '\v': 'v',
-            '\\': ''
-        };
-
-        return meta[character]?
-          "\\" + meta[character]:
-        character;
-      },
-
-      esc: function Escape(string) {
-        string = string.replace(/~/g, "~\u0000");
-
-        for(var illegal = /([^\u0000-\u007E])/, counter = 0, length = string.length; illegal.test(string) & counter < length; counter++)
-          string = string.replace(illegal, function($0, $1, $$, $_) {
-            var code      = $1.charCodeAt(0),
-                signature = String.fromCharCode(Math.floor(code / 127)),
-                character = String.fromCharCode(code % 127);
-
-            // console.log($1, [code, signature, character]);
-
-            return "~" + UTF8.bksl(signature) + UTF8.bksl(character);
-          });
-
-        return string;
-      },
-
-      unesc: function Unescape(string) {
-        for(var escaped = /~([\u0001-\uFFFF]{2})/; escaped.test(string);)
-          string = string.replace(escaped, function($0, $1, $$, $_) {
-            var signature = $1.charCodeAt(0),
-                character = $1.charCodeAt(1),
-                code      = (signature * 127) + character;
-
-            // console.log($1, [code, signature, character]);
-
-            return String.fromCharCode(code);
-          });
-
-        return string.replace(/~\u0000/g, "~");
-      }
-    },
+var Mio = window.Mio = Mio || {power: 8},
     atob, btoa;
 
 // Base64 RegExp
@@ -58,17 +8,11 @@ var Mio   = window.Mio   = Mio   || {power: 8},
 // Encode (Compress)
 Mio.Mi =
 Mio.enc =
-// String: String[, Boolean[, Boolean]]
-function Mi(input, hybrid, unbloat) {
-  input = LZW_Wrap(LZW_Encode(input));
+// String: String[, Boolean]
+function Mi(input, unbloat) {
+  input = btoa(LZW_Wrap(LZW_Encode(input)));
 
-  return (
-  (btoa && !hybrid)?
-    (!unbloat)?
-      Mio.unbloat(btoa(input)):
-    btoa(input):
-  input
-  );
+  return (!unbloat)? Mio.unbloat(input): input;
 };
 
 // Decode (Decompress)
@@ -76,16 +20,7 @@ Mio.Mo =
 Mio.dec =
 // String: String
 function Mo(input) {
-  var media = Mio.bloat(input),
-      test  = [atob.regexp.test(media), atob.regexp.test(input)];
-
-  return (
-    (atob && test[0])?
-      LZW_Decode(LZW_Unwrap(atob(media))):
-    (atob && test[1])?
-      LZW_Decode(LZW_Unwrap(atob(input))):
-    LZW_Decode(LZW_Unwrap(input))
-  );
+  return LZW_Decode(LZW_Unwrap(atob((!atob.regexp.test(input))? Mio.bloat(input): input)));
 };
 
 // Base64 string -> Unbloated string
@@ -112,7 +47,7 @@ function unbloat(string) {
   media = media.join("").split(/([01]{8})/).join(",").replace(/^,|,$/g, "").split(/,,?/);
 
   for(index = 0, length = media.length; index < length; index++)
-    if(( code = media[index], next = media[index + 1] ) != "00" || next == void 0)
+    if(( code = media[index], next = media[index + 1] ) != "00" || next == undefined)
       output.push(String.fromCharCode(+( "0b" + code )));
 
   return output.join("");
@@ -156,7 +91,7 @@ function LZW_Encode(string) {
       index = 256;
 
   for(var i = 1; i < phrases.length; i++)
-    if(dictionary[phrase + (character = phrases[i])] != void 0)
+    if(dictionary[phrase + (character = phrases[i])] != undefined)
       phrase += character;
     else
       media.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0)),
