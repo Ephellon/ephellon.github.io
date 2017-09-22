@@ -17,9 +17,9 @@
   padding: 2px;
   resize: none;
   text-rendering: auto;
-  white-space: pre;
+  white-space: normal;
   word-spacing: 0px;
-  word-wrap: break-word;
+  word-wrap: break-word !important;
 }
 
 .prettyprint > ol.linenums > li {
