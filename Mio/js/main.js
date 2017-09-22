@@ -18,7 +18,7 @@ function loadToolbar() {
         ]},
         { title: "Signatures",
         items: [
-          {title: "Generating Signatures (hashes)",  href: base_url + "sign/"}
+          {title: "Generating Signatures (hashes)", href: base_url + "sign/"}
         ]}
       ]
 },
