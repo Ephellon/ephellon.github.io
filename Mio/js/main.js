@@ -240,6 +240,7 @@ true, '',
     var self = $(event.target), textarea = getCurrent(), value = textarea.val();
 
     try {
+      eval(value);
       last.error = undefined;
       if(isPlainText) $("#swapButton").click();
       self.attr("title", "Run");
