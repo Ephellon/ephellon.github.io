@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mi/o | Compression</title>
+  <meta charset="utf-8"/>
+  <link rel="shortcut icon" href="https://ephellon.github.io/Mio/images/favicon.ico"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700|Material+Icons"/>
+  <script src="https://ephellon.github.io/Paramour/js/jquery-bundle.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/run_prettify.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/mustache.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/jszip.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/jszip-utils.js"></script>
+  <script src="https://ephellon.github.io/Paramour/js/FileSaver.js"></script>
+  <style>
+  @import url(https://ephellon.github.io/Paramour/css/icons.css);
+  @import url(https://ephellon.github.io/Paramour/css/tomorrow-night.css);
+  @import url(https://ephellon.github.io/Mio/css/main.css);
+  @import url(https://ephellon.github.io/Mio/css/adjust.css);
+  </style>
+</head>
+<!-- [CONTENT-TYPE] -->
+<!--
+HEADER
+NAVIGATION[-BOTTOM|-LEFT|-RIGHT|-TOP]
+CONTENT
+FOOTER[ALTERNATIVE-SERVICES|CREDITS|LINKS]
+DEPENDENCIES
+-->
+<body id="top_of_page" class="devsite-doc-page devsite-header-no-upper-tabs devsite-uhura">
+  <div class="devsite-wrapper">
+    <div class="devsite-top-section-wrapper">
+      <!-- HEADER -->
+      <header class="devsite-top-section nocontent">
+        <div class="devsite-top-logo-row-wrapper-wrapper">
+          <div class="devsite-top-logo-row-wrapper">
+            <div class="devsite-top-logo-row devsite-full-site-width">
+              <button type="button" data-category="Site-Wide Custom Events" data-label="Hamburger menu" class="devsite-expand-section-nav devsite-header-icon-button button-flat material-icons gc-analytics-event"></button>
+              <div class="devsite-product-name-wrapper"><a href="https://ephellon.github.io/Mio/" data-category="Site-Wide Custom Events" data-label="Project logo (header)" class="devsite-product-name-link gc-analytics-event"><img src="https://ephellon.github.io/Mio/images/Mio.png" alt="Mio" class="devsite-product-logo"/></a><span class="devsite-product-name">
+                  <ul class="devsite-breadcrumb-list">
+                    <li class="devsite-breadcrumb-item"><a href="https://ephellon.github.io/Mio/" data-category="Site-Wide Custom Events" data-label="Upper Header" data-value="1" class="devsite-breadcrumb-link gc-analytics-event">Mio</a></li>
+                  </ul></span></div>
+              <div class="devsite-header-upper-tabs"></div>
+              <form id="top-search" --action="https://ephellon.github.io/Mio/search/" method="GET" search-placeholder="Search" class="devsite-search-form">
+                <div id="searchbox" class="devsite-searchbox">
+                  <input placeholder="Search" type="text" name="q" value="" autocomplete="off" class="devsite-search-field devsite-search-query"/>
+                  <div class="devsite-search-image material-icons"></div>
+                </div>
+              </form>
+              <a href="https://github.com/ephellon/" data-category="Site-Wide Custom Events" data-label="Site header link" class="devsite-header-link devsite-top-button button gc-analytics-event">
+                <div class="devsite-header-link-label">All Projects</div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="devsite-collapsible-section">
+          <div class="devsite-header-background devsite-full-site-width">
+            <div class="devsite-doc-set-nav-row devsite-full-site-width">
+              <!-- NAVIGATION-TOP -->
+              <nav class="devsite-doc-set-nav devsite-nav devsite-overflow-tabs-scroll-wrapper">
+                <ul class="devsite-doc-set-nav-tab-list devsite-overflow-tabs-scroll">
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Mio/" data-category="Site-Wide Custom Events" data-label="Tab: Home" class="devsite-doc-set-nav-tab gc-analytics-event">Home</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Mio/reference/" data-category="Site-Wide Custom Events" data-label="Tab: Reference" class="devsite-doc-set-nav-tab gc-analytics-event">Reference</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Mio/extras/" data-category="Site-Wide Custom Events" data-label="Tab: Samples" class="devsite-doc-set-nav-tab gc-analytics-event">Examples</a>
+                  </li>
+                  <li class="devsite-doc-set-nav-tab-container">
+                    <a href="https://ephellon.github.io/Mio/support/" data-category="Site-Wide Custom Events" data-label="Tab: Support" class="devsite-doc-set-nav-tab gc-analytics-event">Support</a>
+                  </li>
+                  <a id="devsite-feedback-project" href="mailto:minkcbos@gmail.com" type="button" data-category="Site-Wide Custom Events" data-label="Send Feedback Button" track-type="feedback" track-name="sendFeedbackLink" track-metadata-position="header" class="button devsite-feedback-button devsite-top-button gc-analytics-event">Send feedback</a>
+                </ul>
+              </nav>
+              <!-- :NAVIGATION-TOP -->
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- :HEADER -->
+      <script>
+        if (window.jQuery) $(document).ready(function() {if (window.devsite && window.devsite.search) window.devsite.search.init('en')});
+      </script>
+    </div>
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
+      <div class="devsite-site-mask"></div>
+      <div class="devsite-main-content clearfix">
+        <!-- NAVIGATION-LEFT -->
+        <nav id="target" class="devsite-section-nav devsite-nav nocontent"></nav>
+        <!-- :NAVIGATION-LEFT -->
+        <!-- NAVIGATION-RIGHT -->
+        <nav class="devsite-page-nav devsite-nav"></nav>
+        <!-- :NAVIGATION-RIGHT -->
+        <article class="devsite-article">
+          <!-- CONTENT -->
+          <article class="devsite-article-inner">
+            <h1 itemprop="name" class="devsite-page-title">Mi/o | Compression</h1>
+            <nav class="devsite-page-nav-embedded devsite-nav"></nav>
+            <div itemprop="articleBody" class="devsite-article-body clearfix">
+              <p>Mi/o is an optimized <a href="https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch" target="blank_">LZW</a> algorithm, that also allows the use of the <a href="https://en.wikipedia.org/wiki/Base64" target="blank_">Base64</a> algorithms (<code>atob</code> and <code>btoa</code> in JavaScript).</p>
+              <h2 id="why_mio">When to use compression</h2>
+              <p>Although Mi/o is fast, and lossless, I wouldn't trust the algorithms fully on sensitive data. Places you could use Mi/o:</p>
+              <ul>
+                <li>Case studies</li>
+                <li>JavaScript's <code>localStorage</code></li>
+                <li>Small-data applications (such as document processing)</li>
+              </ul>
+              <h3 id="set_it_up">Mi/o &amp; <code>localStorage</code></h3>
+              <p>The example below is editable.</p>
+              <div class="pretty-input">
+<textarea translate="no" class="notranslate">
+var input  = document.body.innerHTML, // should be a very large amount of text
+    output = Mio.com(input, false),   // using [bloat = false] will keep the string in LZW format
+    sign   = Mio.sign(output, 1);     // generates a signature using [fidelity = 1], where fidelity = (0, 1)
+
+// add [output] to the localStorage
+// add [sign] to the localStorage
+
+console.log(
+"localStorage {\n\
+  ...\n\
+  [" + sign + "]: [" + output + "]\n\
+  ...\n\
+}");
+</textarea>
+                  <pre class="prettyprint notranslate"></pre>
+                  <!-- TOOLBAR -->
+                  <div id="docs-toolbar-wrapper">
+                    <div id="docs-primary-toolbars" class="docs-collapsable-toolbar">
+                      <div id="docs-toolbar" class="goog-toolbar" aria-label="Main" role="toolbar" tabindex="0" style="user-select: none;"></div>
+                    </div>
+                  </div>
+                  <!-- :TOOLBAR -->
+              </div>
+              <h2 id="learn_more">Learn more</h2>
+              <p>To continue learning about Mio, take a look at the following resources:</p>
+              <ul>
+                <li>Wikipedia - <a href="https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch" target="blank_">Lempel–Ziv–Welch</a></li>
+                <li>Wikipedia - <a href="https://en.wikipedia.org/wiki/Base64" target="blank_">Base64</a></li>
+                <li>Mi/o - <a href="https://github.com/Ephellon/ephellon.github.io/tree/master/Mio/js/mio.js" target="blank_">Source Code</a></li>
+              </ul>
+            </div>
+            <div class="devsite-content-footer nocontent">
+              <p itemprop="datePublished" content="2017-08-29T15:26:03.972520" class="devsite-content-footer-date">Last updated August 29, 2017.</p>
+            </div>
+          </article>
+          <!-- :CONTENT -->
+        </article>
+      </div>
+      <!-- FOOTER -->
+      <!-- FOOTER[CREDITS|LINKS] -->
+      <footer class="devsite-footer-promos nocontent">
+        <nav class="devsite-full-site-width">
+          <ul class="devsite-footer-promos-list">
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://codepen.io/Ephellon/posts/published/" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+                <img src="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" class="devsite-footer-promo-icon"/>
+                Posts
+              </a>
+              <div class="devsite-footer-promo-description">The latest news about Mi/o and other projects</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://github.com/Ephellon/Mio/tree/master/examples" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <img src="https://ephellon.github.io/Paramour/images/logo-github.svg" class="devsite-footer-promo-icon"/>
+              GitHub
+              </a>
+              <div class="devsite-footer-promo-description">Fork samples and try them yourself</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://github.com/Ephellon/Mio/issues/new" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <span class="devsite-footer-promo-icon">
+                <svg aria-hidden="true" class="octicon" version="1.1" viewBox="0 0 40 40" height="128" width="128">
+                  <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                </svg>
+              </span>
+              Issues
+              </a>
+              <div class="devsite-footer-promo-description">Something wrong? Post an issue!</div>
+            </li>
+            <li class="devsite-footer-promo">
+              <a target="blank_" href="https://stackoverflow.com/questions/tagged/mio" data-category="Site-Wide Custom Events" data-label="Content Page Footer Promo" class="devsite-footer-promo-title gc-analytics-event">
+              <img src="https://ephellon.github.io/Paramour/images/logo-stack-overflow.svg" class="devsite-footer-promo-icon"/>
+              Stack Overflow
+              </a>
+              <div class="devsite-footer-promo-description">Ask a question under the <code>mio</code> tag</div>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+      <!-- :FOOTER[CREDITS|LINKS] -->
+      <!-- FOOTER[LINKS] -->
+      <footer class="devsite-footer-linkboxes nocontent devsite-footer-linkboxes-with-sites">
+        <nav class="devsite-full-site-width">
+          <ul class="devsite-footer-linkboxes-list">
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Tools</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://ephellon.github.io/Mio/extras/" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Conversion Tool</a></li>
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://github.com/Ephellon/Ephellon.github.io/blob/master/Mio/changelog.md" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Change Log</a></li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Connect</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://twitter.com/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">Twitter</a>
+                </li>
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://github.com/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">GitHub</a>
+                </li>
+                <li class="devsite-footer-linkbox-item">
+                  <a target="blank_" href="https://codepen.io/ephellon" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">CodePen</a>
+                </li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox">
+              <h3 class="devsite-footer-linkbox-heading">Product Info</h3>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="https://raw.githubusercontent.com/Ephellon/Ephellon.github.io/master/LICENSE.txt" data-category="Site-Wide Custom Events" data-label="Content Page Footer Linkbox" class="gc-analytics-event">License</a></li>
+              </ul>
+            </li>
+            <li class="devsite-footer-linkbox devsite-footer-linkbox-sites"><a target="blank_" href="https://ephellon.github.io/" data-category="Site-Wide Custom Events" data-label="Footer Google Developers Link" class="gc-analytics-event devsite-footer-linkbox-logo-link"><img src="https://avatars0.githubusercontent.com/u/8632548?v=4&s=256" class="devsite-footer-linkbox-logo" style="max-height: 32px; width: auto;"/></a>
+              <ul class="devsite-footer-linkbox-list">
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="//codepen.io/ephellon/" data-category="Site-Wide Custom Events" data-label="Footer Android Link" class="gc-analytics-event">CodePen</a></li>
+                <li class="devsite-footer-linkbox-item"><a target="blank_" href="//github.com/ephellon/" data-category="Site-Wide Custom Events" data-label="Footer Chrome Link" class="gc-analytics-event">GitHub</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+      <!-- :FOOTER[LINKS] -->
+      <!-- FOOTER[ALTERNATE-SERVICES] -->
+      <footer class="devsite-content-footer nocontent" style="background: #455a64; color: #fff; margin: -1px; padding-bottom: 10px;">
+        <nav class="devsite-content-footer-nav devsite-nav devsite-full-site-width">
+          <div class="devsite-content-footer-nav-left">
+            <p>
+                Except as otherwise noted, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/" target=blank_"">Creative Commons Attribution 3.0 License</a>;
+                Mio, and the supplied examples are licensed under the <a href="https://www.gnu.org/licenses/license-list.html#Expat" target=blank_"">MIT License</a>.
+                Java is a registered trademark of Oracle inc. and/or its affiliates.
+                JavaScript, and ECMAScript are registered trademarks of ECMAScript intl. and/or its affiliates.
+                Google is a registered trademark of Google inc. and/or its affiliates.
+                CoffeeScript is a registered trademark of "Jeremy Ashkenas."
+                Swift is a registered trademark of Apple inc. and/or its affiliates.
+                Python is a registered trademark of Python Software Foundation org. and/or its affiliates.
+              </p>
+          </div>
+        </nav>
+      </footer>
+      <!-- FOOTER[ALTERNATE-SERVICES] -->
+      <!-- :FOOTER -->
+    </div>
+    <!-- DEPENDENCIES -->
+    <script>var dataLayer = [{"freeTrialEligibleUser": "False", "userCountry": "US", "language": {"requested": "en", "served": "en"}, "projectName": "Apps Script", "scriptsafe": null, "signedIn": "False", "internalUser": "False"}];</script>
+    <script src="https://ephellon.github.io/Paramour/js/jquery_ui-bundle.js"></script>
+    <script src="https://ephellon.github.io/Paramour/jsi18n/"></script>
+    <script src="https://ephellon.github.io/Paramour/js/script_foot_closure.js"></script>
+    <script src="https://ephellon.github.io/Paramour/js/script_foot.js"></script>
+    <script src="https://ephellon.github.io/Mio/js/mio.min.js"></script>
+    <script src="https://ephellon.github.io/Mio/js/main.js"></script>
+    <!-- :DEPENDENCIES -->
+  </div><span id="devsite-request-elapsed" data-request-elapsed="269.229888916"></span>
+</body>
+</html>
