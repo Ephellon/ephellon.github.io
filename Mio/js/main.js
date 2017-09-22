@@ -149,14 +149,15 @@ true, '',
     if(!isPlainText)
       $("#swapButton").click();
 
-    var zip = new JSZip(), name = "Mio - " + (+(new Date)).toString(36),
+    var zip = new JSZip(), name = "Mio." + (+new Date).toString(36),
         textarea   = getCurrent(),
         original   = textarea.val(),
         hybrid     = Mio.Mi(original, !1),
         compressed = Mio.Mi(original, !0),
         ol         = original.length,
         hl         = hybrid.length,
-        cl         = compressed.length;
+        cl         = compressed.length,
+        q          = 1;
 
     function si(n) {
       for(var k = "\bKMGTPEZY", n = Math.abs(+n), m = 1024; n >= m && k.length > 1; n /= m)
@@ -181,10 +182,14 @@ true, '',
 "  - [Hybrid    ](" + (name) + ".hyb.txt): " + (si(hl))     + "\n" +
 "  - [Compressed](" + (name) + ".cmp.txt): " + (si(cl)) + "\n" +
 "\n" +
-"  - Space " + (cl <= ol? "saved": "lost") + " [compressed]: " +
+"  - Space " + (cl <= ol? "saved": "lost") + " (using [compressed](" + (name) + ".cmp.txt)): " +
   (si(cl - ol)) + " (" + sz(cl, ol) + "%)" + "\n" +
-"  - Space " + (hl <= ol? "saved": "lost") + " [hybrid]: " +
-  (si(hl - ol)) + " (" + sz(hl, ol) + "%)"));
+"  - Space " + (hl <= ol? "saved": "lost") + " (using [hybrid    ](" + (name) + ".hyb.txt)): " +
+  (si(hl - ol)) + " (" + sz(hl, ol) + "%)") + "\n\n" +
+"### Signatures (`fidelity = " + q + "`)\n" +
+"  - Orignal:    " + Mio.sign(original, q) + "\n" +
+"  - Hybrid:     " + Mio.sign(hybrid, q)   + "\n" +
+"  - Compressed: " + Mio.sign(compressed, q));
 
     zip.file(name + ".org.txt", original);
     zip.file(name + ".hyb.txt", hybrid);
