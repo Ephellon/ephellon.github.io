@@ -5,7 +5,7 @@ var loaded = false, stats = "Press the 'Download' button to generate stats.";
 // Mustache + jQuery
 
 function loadMenu() {
-  var base_url  = "https://ephellon.github.io/Paramour/",
+  var base_url  = "https://ephellon.github.io/Mio/",
       menu_data =
 {
       acc_menu: [
