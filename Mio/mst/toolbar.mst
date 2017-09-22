@@ -19,7 +19,7 @@
                         </div>
 
                         
-                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to JavaScript">
+                        <div id="swapButton" class="button goog-toolbar-button goog-inline-block" role="button" aria-disabled="true" style="user-select: none;" title="Switch to compressed text">
                           <div class="goog-toolbar-button-outer-box goog-inline-block" style="user-select: none;">
                             <div class="goog-toolbar-button-inner-box goog-inline-block" style="user-select: none;">
                               <div class="docs-icon goog-inline-block" style="user-select: none;">
