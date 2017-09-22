@@ -4,10 +4,8 @@ var loaded = false, stats = "Press the 'Download' button to generate stats.";
 // The Navigation Menu
 // Mustache + jQuery
 
-function loadMenu() {};
-
-function loadToolbar() {
-  var base_url  = "https://ephellon.github.io/Mio/",
+function loadMenu() {
+  var base_url  = "https://ephellon.github.io/Paramour/",
       menu_data =
 {
       acc_menu: [
@@ -22,6 +20,28 @@ function loadToolbar() {
         ]}
       ]
 },
+      template, rendered;
+  $.get(base_url + "mst/menu.mst", function(file_contents) {
+    template = file_contents || $("#template").html();
+    rendered = Mustache.render(template, menu_data);
+    $("#target").html(rendered); // #template for testing purposes
+
+    $(".devsite-nav-item > a[track-type='leftNav']")
+    .click(function(event) {
+      $(event.target)
+      // .siblings("a[track-type='leftNav']")
+        .toggleClass("devsite-nav-toggle-expanded")
+        .toggleClass("devsite-nav-toggle-collapsed")
+      .siblings("ul")
+        .toggleClass("devsite-nav-section-expanded")
+        .toggleClass("devsite-nav-section-collapsed");
+    });
+  });
+};
+
+function loadToolbar() {
+  var base_url  = "https://ephellon.github.io/Mio/",
+      menu_data = {},
       template, rendered;
   $.get(base_url + "mst/toolbar.mst", function(file_contents) {
     template = file_contents || $("#toolbar-template").html();
