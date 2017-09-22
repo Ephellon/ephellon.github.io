@@ -8,7 +8,20 @@ function loadMenu() {};
 
 function loadToolbar() {
   var base_url  = "https://ephellon.github.io/Mio/",
-      menu_data = {},
+      menu_data =
+{
+      acc_menu: [
+        { title: "Compression",
+        items: [
+          {title: "Compress",   href: base_url + "com/"},
+          {title: "Decompress", href: base_url + "dec/"}
+        ]},
+        { title: "Signatures",
+        items: [
+          {title: "Generating Signatures (hashes)",  href: base_url + "sign/"}
+        ]}
+      ]
+},
       template, rendered;
   $.get(base_url + "mst/toolbar.mst", function(file_contents) {
     template = file_contents || $("#toolbar-template").html();
