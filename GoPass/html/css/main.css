@@ -1,0 +1,125 @@
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local("Roboto"),
+    local("Roboto-Regular"),
+    url("fonts/Roboto-Regular.ttf");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+html, body {
+  font-family:
+    Roboto,
+    Arial,
+    Sans-Serif,
+    Monospace;
+
+  height: 100%;
+  width: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+.fill-x {
+  width: calc(100vw - 24px);
+}
+
+.holster {
+  padding: 12px 0;
+  text-align: left;
+}
+
+/* Icons, Logos & Buttons */
+
+/* Icons/Logos */
+.l.dart {
+  background-image: url("../img/dart.png");
+}
+
+.l.dcta {
+  background-image: url("../img/dcta.png");
+}
+
+.l.thet {
+  background-image: url("../img/thet.png");
+}
+
+.i.dart {
+  background-image: url("../img/i.dart.png");
+}
+
+.i.dcta {
+  background-image: url("../img/i.dcta.png");
+}
+
+.i.thet {
+  background-image: url("../img/i.thet.png");
+}
+
+.i.bus {
+  background-image: url("../img/i.bus.png");
+}
+
+.i.cart {
+  background-image: url("../img/i.cart.png");
+}
+
+.i.events {
+  background-image: url("../img/i.events.png");
+}
+
+.i.launcher {
+  background-image: url("../img/i.launcher.png");
+}
+
+.i.settings {
+  background-image: url("../img/i.settings.png");
+}
+
+.i.ticket {
+  background-image: url("../img/i.ticket.png");
+}
+
+.i.travel {
+  background-image: url("../img/i.travel.png");
+}
+
+.i.tutorial {
+  background-image: url("../img/i.tutorial.png");
+}
+
+/* Buttons */
+.b {
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  width: 100%;
+}
+
+/* Inactive/Not Pressed */
+.b {
+  background: url("../img/b.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Focused/Pressing */
+.b.f {
+  background-image: url("../img/b.f.png");
+}
+
+/* Disabled */
+.b.d {
+  background-image: url("../img/b.d.png");
+}
+
+/* Fixes/Constants */
+.i {
+  background-size: contain;
+
+  height: 30pt;
+  width: 30pt;
+}

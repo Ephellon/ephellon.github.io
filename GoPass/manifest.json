@@ -1,0 +1,12 @@
+{
+  "short_name": "GoPass",
+  "name": "GoPass (SM)",
+  "icons": [{
+      "src": "../img/i.launcher.png",
+      "sizes": "148x148",
+      "type": "image/png"
+    }],
+  "start_url": "../index.html",
+  "display": "standalone",
+  "orientation": "portrait"
+}

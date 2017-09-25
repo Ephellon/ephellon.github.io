@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+  <link rel="mask-icon" href="img/favicon.png" />
+
+  <!-- Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="manifest" href="js/manifest.json">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/jquery.js" type="text/javascript"></script>
+  <script src="js/mustache.js" type="text/javascript"></script>
+  <script src="js/main.js" type="text/javascript"></script>
+  <script src="js/prices.js" type="text/javascript"></script>
+
+  <style type="text/css">
+    body {
+      background: url("img/o.background.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: bottom left;
+
+      overflow: hidden;
+
+      height: 100%;
+      width: 100%;
+    }
+
+    sub {
+      font-size: 40%;
+    }
+
+    table {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="center">
+    <img src="img/launcher.png"/>
+    <sub><b>SM</b></sub>
+  </div>
+
+  <table></table>
+
+  <script>
+  parseMST("table", [
+    "options",
+    {title: "Buy Tickets", icon:"cart"},
+    {title: "My Tickets", icon: "tickets"},
+    {title: "Travel Tools", icon: "travel"},
+    {title: "Events & Offers", icon: "events"},
+    {title: "Settings", icon: "settings"},
+    {title: "GoPass Tutorial", icon: "tutorial"}
+  ], "mst/menu.mst");
+  </script>
+</body>
+</html>

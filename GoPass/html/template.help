@@ -1,0 +1,50 @@
+/* How tp use Mustache.js */
+String:
+  Mustache.render(String template, Object data[, Object partials]);
+
+String:
+  Mustache.parse(String template[, Array<String:2> delimiters]);
+
+/* ES6+ */
+var view = {
+  title: "Joe",
+  calc: () => 2 + 4
+},
+    output = Mustache.render("{{title}} spends ${{calc}}", view);
+
+/* HTML {jQuery}
+<body onload="loadUser()">
+<b id="target">Loading...</b>
+
+<script id="template" type="text/x-tmpl-mustache">
+Hello {{name}}!
+</script>
+
+<script>
+function loadUser() {
+  var template = $("#template").html();
+  Mustache.parse(template); // speeds up use
+
+  var rendered = Mustache.render(template, {name: "Luke"});
+  $("#target").html(rendered);
+}
+</script>
+</body>
+*/
+
+/* Sequences
+{{property}} - Escape HTML(data.property)
+{{{property}}} - data.property
+
+{{#property}}{{grandchild}}{{/property}} - data.property.grandchild (auto-recursive: Object)
+{{#property}}{{.}}{{/property}} - data.property.grandchild (auto-recursive: Array)
+
+{{^property}}...{{/property}} - data.property (only IF property isn't: null, undefined, false, NaN, "", or [])
+
+{{> property}} - data.property.grandchild -> {{#grandchild}}{{.}}{{/grandchild}}
+
+{{! comment}} - not rendered
+
+{{&property}} - data.proprty
+{{=<%%>=}}{{property}}<%={{}}=%> - {{property}}
+*/
