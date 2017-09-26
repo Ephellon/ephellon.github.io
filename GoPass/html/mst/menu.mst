@@ -1,9 +1,9 @@
 <tbody>
   {{#options}}
   <tr>
-    <td>
+    <td class="holster">
       <span><img class="i {{icon}}"/></span>
-      <span>{{title}}</span>
+      <button>{{title}}</button>
     </td>
   </tr>
   {{/options}}

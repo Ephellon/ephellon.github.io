@@ -20,21 +20,39 @@ html, body {
   width: 100%;
 }
 
+body * {
+  font: inherit;
+}
+
 .center {
   text-align: center;
 }
 
 .fill-x {
-  width: calc(100vw - 24px);
+  width: calc(100vw - 5%);
 }
 
 .holster {
-  padding: 12px 0;
+  background: transparent;
+  border: 10px solid transparent;
+  border-image: url("../img/frame.png") 20 round;
+  display: inline-flex;
+
+  box-sizing: border-box;
+
+  font-size: 2vh;
+  margin: 12px 0;
+  padding: 0;
   text-align: left;
+
+  width: 100%;
+}
+
+.holster > * {
+  vertical-align: top;
 }
 
 /* Icons, Logos & Buttons */
-
 /* Icons/Logos */
 .l.dart {
   background-image: url("../img/dart.png");
@@ -80,8 +98,8 @@ html, body {
   background-image: url("../img/i.settings.png");
 }
 
-.i.ticket {
-  background-image: url("../img/i.ticket.png");
+.i.tickets {
+  background-image: url("../img/i.tickets.png");
 }
 
 .i.travel {
@@ -93,32 +111,104 @@ html, body {
 }
 
 /* Buttons */
-.b {
-  background-repeat: no-repeat;
-  background-size: contain;
-
-  width: 100%;
-}
 
 /* Inactive/Not Pressed */
-.b {
-  background: url("../img/b.png") no-repeat center center fixed;
-  background-size: cover;
+/* No-Image support/Fallback */
+.b, .holster > button {
+  background: linear-gradient(#fff, #d7d7d7 40%, #c6c6c6 40%, #fff);
+  border: 2px solid #000;
+  border-radius: 6px;
+
+  padding: 10px 15px;
+}
+
+/* Image Support */
+.b, .holster > button {
+  background: linear-gradient(#ededed, #dadada 35%, #c8c8c8 35%, #ededed);
+  border: 10px solid transparent;
+  border-image: url("../img/b.png") 20 round;
+
+  padding: 4px 15px;
 }
 
 /* Focused/Pressing */
-.b.f {
-  background-image: url("../img/b.f.png");
+/* No-Image support/Fallback */
+.b.f, .holster > button:hover {
+  background: linear-gradient(#595959, #dbdbdb 40%, #d1d1d1 40%, #cecece);
+  border: 2px solid #000;
+  border-radius: 6px;
+
+  padding: 10px 15px;
+}
+
+/* Image Support */
+.b.f, .holster > button:hover {
+  background: linear-gradient(#bdbdbd, #dbdbdb 20%, #d1d1d1 20%, #ececec);
+  border: 10px solid transparent;
+  border-image: url("../img/b.f.png") 20 round;
+
+  padding: 4px 15px;
+}
+
+/* Selected/Pressed */
+/* No Image Support/Fallback */
+.b.s, .holster > button:focus {
+  background: linear-gradient(#001433, #112F57);
+  border: 2px solid #000;
+  border-radius: 6px;
+  color: #fff;
+
+  padding: 10px 15px;
+}
+
+/* Image Support */
+.b.s, .holster > button:focus {
+  background: linear-gradient(#01214B, #153D70);
+  border: 10px solid transparent;
+  border-image: url("../img/b.s.png") 20 round;
+  color: #fff;
+
+  padding: 4px 15px;
 }
 
 /* Disabled */
-.b.d {
-  background-image: url("../img/b.d.png");
+/* Image Support */
+/* No-Image support/Fallback */
+.b.d, .holster > button[disabled=true] {
+  background: linear-gradient(#fcfcfc, #d3d3d3 40%, #c7c7c7 40%, #fefefe);
+  border: 2px solid #000;
+
+  padding: 10px 15px;
+}
+
+.b.d, .holster > button[disabled=true] {
+  background: linear-gradient(#e4e4e4, #d3d3d3, #c7c7c7 45%, #e6e6e6);
+  border-image: url("../img/b.d.png") 20 round;
+
+  padding: 4px 15px;
 }
 
 /* Fixes/Constants */
+.b, .holster > button {
+  background-color: #000;
+  color: inherit;
+  font-weight: bold;
+  text-decoration: inherit;
+  text-transform: uppercase;
+
+  width: calc(100% - 30pt);
+}
+
 .i {
+  background-color: #000;
   background-size: contain;
+  border: 1px solid #000;
+  border-bottom: 5px solid #000;
+  box-shadow: 0 0 1px 1px #000 inset;
+
+  margin: -1px;
+  margin-bottom: -5px;
+  padding: 0;
 
   height: 30pt;
   width: 30pt;
