@@ -1,3 +1,10 @@
+var window, document, console;
+
+// GLobal types
+window.icon = "i";
+window.logo = "l";
+window.bttn = "b";
+
 // Error reporting
 window.Throw =
 function Throw(error, breaks) {
@@ -55,7 +62,7 @@ function format(date, string) {
       mins  = date.getMinutes() + "",
       secs  = date.getSeconds() + "";
 
-      function f(n){return("00"+n).slice(-2)};
+  function f(n){return("00"+n).slice(-2)}
 
   return string
     .replace(/Y{3,4}/g, year)

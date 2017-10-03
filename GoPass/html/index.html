@@ -50,13 +50,15 @@
   <table></table>
 
   <script>
-  parseMST("table", {options:[
-    {title: "Buy Tickets", icon:"cart"},
-    {title: "My Tickets", icon: "tickets"},
-    {title: "Travel Tools", icon: "travel"},
-    {title: "Events & Offers", icon: "events"},
-    {title: "Settings", icon: "settings"},
-    {title: "GoPass Tutorial", icon: "tutorial"}
+var base = "";
+  parseMST("table", {
+    options:[
+      {title: "Buy Tickets",     type: icon, class: "cart",     href: base + "buy.html"},
+      {title: "My Tickets",      type: icon, class: "tickets",  href: base + "tickets.html"},
+      {title: "Travel Tools",    type: icon, class: "travel",   href: base + "tools.html"},
+      {title: "Events & Offers", type: icon, class: "events",   href: base + "events.html"},
+      {title: "Settings",        type: icon, class: "settings", href: base + "settings.html"},
+      {title: "GoPass Tutorial", type: icon, class: "tutorial", href: base + "tutorial.html"}
   ]}, "mst/menu.mst");
   </script>
 </body>

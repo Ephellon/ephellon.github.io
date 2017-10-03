@@ -1,0 +1,4 @@
+<span class="footer-container">
+  <span><img class="{{type}} {{class}}"/></span>
+  <button><a href="{{href}}">{{title}}</a></button>
+</span>
