@@ -42,24 +42,17 @@
   </style>
 </head>
 <body>
-<div class="center">
-  <img src="img/launcher.png"/>
-  <sub><b>SM</b></sub>
-</div>
-
-<table></table>
+<table class="container"></table>
 
 <script>
-var base = "";
+var base = "javascript:";
     parseMST("table", {
       items:[
-        {title: "Buy Tickets",     type: icon, class: "cart",     href: base + "buy.html"},
-        {title: "My Tickets",      type: icon, class: "tickets",  href: base + "tickets.html"},
-        {title: "Travel Tools",    type: icon, class: "travel",   href: base + "tools.html"},
-        {title: "Events & Offers", type: icon, class: "events",   href: base + "events.html"},
-        {title: "Settings",        type: icon, class: "settings", href: base + "settings.html"},
-        {title: "GoPass Tutorial", type: icon, class: "tutorial", href: base + "tutorial.html"}
-    ]}, "mst/menu.mst");
+        {title: "Dallas Area Rapid Transit",              type: logo, class: "dart",   href: base + "buy('dart')",  caption: "For trips that begin in Dallas area"},
+        {title: "Fort Worth Transportation Authority",    type: logo, class: "thet",   href: base + "buy('thet')",  caption: "For trips that begin in Fort Worth area"},
+        {title: "Denton County Transportation Authority", type: logo, class: "dcta",   href: base + "buy('dcta')",  caption: "For trips that begin in Denton area"},
+        {title: "Special Events",                         type: icon, class: "events", href: base + "buy('event')", caption: "For events occuring in and round the DFW area"}
+    ]}, "mst/table.mst");
 </script>
 </body>
 </html>

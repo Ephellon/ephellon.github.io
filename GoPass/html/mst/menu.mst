@@ -1,10 +1,10 @@
 <tbody>
-  {{#options}}
+  {{#items}}
   <tr>
     <td class="container">
       <span><img class="{{type}} {{class}}"/></span>
       <button><a href="{{href}}">{{title}}</a></button>
     </td>
   </tr>
-  {{/options}}
+  {{/items}}
 </tbody>

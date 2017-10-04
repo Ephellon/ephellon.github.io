@@ -26,19 +26,40 @@ body * {
   font: inherit;
 }
 
+.left {
+  text-align: left;
+}
+
 .center {
   text-align: center;
 }
 
+.right {
+  text-align: right;
+}
+
+.top {
+  vertical-align: top;
+}
+
+.middle {
+  vertical-align: middle;
+}
+
+.bottom {
+  vertical-align: bottom;
+}
+
 .fill-x {
-  width: calc(100vw - 5%);
+  display: table-cell;
+
+  width: 100%;
 }
 
 .container {
   background: transparent;
   border: 10px solid transparent;
   border-image: url("../img/frame.png") 20 round;
-  display: inline-flex;
   overflow: auto;
 
   box-sizing: border-box;
@@ -51,22 +72,39 @@ body * {
   width: 95%;
 }
 
+.sub-container {
+  background: transparent;
+  border: none;
+  overflow: hidden;
+
+  font-size: 1.5vh;
+  margin: 6px 0;
+  padding: 0;
+  text-align: left;
+
+  width: 95%;
+}
+
 .container > * {
   vertical-align: top;
+}
+
+table.container {
+  display: inline-flex;
 }
 
 /* Icons, Logos & Buttons */
 /* Icons/Logos */
 .l.dart {
-  background-image: url("../img/dart.png");
+  background-image: url("../img/l.dart.png");
 }
 
 .l.dcta {
-  background-image: url("../img/dcta.png");
+  background-image: url("../img/l.dcta.png");
 }
 
 .l.thet {
-  background-image: url("../img/thet.png");
+  background-image: url("../img/l.thet.png");
 }
 
 .i.dart {
@@ -117,7 +155,7 @@ body * {
 
 /* Inactive/Not Pressed */
 /* No-Image support/Fallback */
-.b, .container > button {
+.b, .container button {
   background: linear-gradient(#fff, #d7d7d7 40%, #c6c6c6 40%, #fff);
   border: 2px solid #000;
   border-radius: 6px;
@@ -126,7 +164,7 @@ body * {
 }
 
 /* Image Support */
-.b, .container > button {
+.b, .container button {
   background: linear-gradient(#ededed, #dadada 35%, #c8c8c8 35%, #ededed);
   border: 10px solid transparent;
   border-image: url("../img/b.png") 20 round;
@@ -136,7 +174,7 @@ body * {
 
 /* Focused/Pressing */
 /* No-Image support/Fallback */
-.b.h, .container > button:hover {
+.b.h, .container button:hover {
   background: linear-gradient(#595959, #dbdbdb 40%, #d1d1d1 40%, #cecece);
   border: 2px solid #000;
   border-radius: 6px;
@@ -145,7 +183,7 @@ body * {
 }
 
 /* Image Support */
-.b.h, .container > button:hover {
+.b.h, .container button:hover {
   background: linear-gradient(#bdbdbd, #dbdbdb 20%, #d1d1d1 20%, #ececec);
   border: 10px solid transparent;
   border-image: url("../img/b.f.png") 20 round;
@@ -155,9 +193,9 @@ body * {
 
 /* Selected/Pressed */
 /* No Image Support/Fallback */
-.b.f, .container > button:focus, .container > button.focus {
+.b.f, .container button:focus, .container button.focus {
   background: linear-gradient(#001433, #112F57);
-  border: 2px solid #000;
+  border: 2px solid transparent;
   border-radius: 6px;
   color: #fff;
 
@@ -165,7 +203,7 @@ body * {
 }
 
 /* Image Support */
-.b.f, .container > button:focus, .container > button.focus {
+.b.f, .container button:focus, .container button.focus {
   background: linear-gradient(#01214B, #153D70);
   border: 10px solid transparent;
   border-image: url("../img/b.s.png") 20 round;
@@ -177,14 +215,14 @@ body * {
 /* Disabled */
 /* Image Support */
 /* No-Image support/Fallback */
-.b.d, .container > button[disabled=true] {
+.b.d, .container button[disabled=true] {
   background: linear-gradient(#fcfcfc, #d3d3d3 40%, #c7c7c7 40%, #fefefe);
-  border: 2px solid #000;
+  border: 2px solid transparent;
 
   padding: 10px 15px;
 }
 
-.b.d, .container > button[disabled=true] {
+.b.d, .container button[disabled=true] {
   background: linear-gradient(#e4e4e4, #d3d3d3, #c7c7c7 45%, #e6e6e6);
   border-image: url("../img/b.d.png") 20 round;
 
@@ -192,27 +230,34 @@ body * {
 }
 
 /* Fixes/Constants */
-.b, .container > button {
-  background-color: #000;
+.container button {
+  background-color: transparent;
   color: inherit;
   font-weight: bold;
   text-decoration: inherit;
-  text-transform: uppercase;
 
-  width: calc(100% - 30pt);
+  width: calc(100% - 35pt);
 }
 
-.b > a, .container > button > a {
+.sub-container button {
+  width: calc(100% - 60pt);
+}
+
+.container > button {
+  text-transform: uppercase;
+}
+
+a {
   color: inherit;
 
   text-decoration: none;
 }
 
 .i {
-  background-color: #000;
+  background-color: transparent;
+  background-repeat: no-repeat;
   background-size: contain;
-  border: 1px solid #000;
-  border-bottom: 5px solid #000;
+  border: 1px solid transparent;
   box-shadow: 0 0 1px 1px #000 inset;
 
   margin: -1px;
@@ -221,4 +266,20 @@ body * {
 
   height: 30pt;
   width: 30pt;
+}
+
+.l {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid transparent;
+  box-shadow: 0 0 1px 1px #000 inset;
+
+  margin: -10px 0;
+  padding: 0;
+
+  height: 30pt;
+  width: 55pt;
 }

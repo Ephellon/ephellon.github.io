@@ -62,6 +62,8 @@ function format(date, string) {
       mins  = date.getMinutes() + "",
       secs  = date.getSeconds() + "";
 
+  string = string || "MM/DD/YYYY<br>hh:mm";
+
   function f(n){return("00"+n).slice(-2)}
 
   return string
@@ -107,7 +109,7 @@ var g = {
 window.initial = {
   "get": g,
   "format": f,
-  "aztec_url": u
+  "barcode_api_url": u
 };
 
 var now  = window.now  = (new Date),
