@@ -113,9 +113,9 @@ DEPENDENCIES
               <div class="pretty-input">
 <textarea translate="no" class="notranslate">
 // Mio.sign takes 2 arguments
-// Mio.sign(string[, fidelity])
+// Mio.sign(String string[, Number fidelity])
 // where fidelity is a decimal between 0 and 1; defaults to 0 if undefined
-// the larger fidelity is, the smaller the signature
+// the larger fidelity is, the smaller and more "random" the signature
 
 var input  = document.body.innerHTML, // should be a very large amount of text
     output = Mio.com(input, false),   // using [bloat = false] will keep the string in LZW format
