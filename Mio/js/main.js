@@ -204,7 +204,7 @@ function loadMenu() {
     "# Mi/o - " + (name) + ".zip\n" +
     "_This document details the statistics of " + (name) + ".zip_.\n" +
     "\n" +
-    "_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._\n" +
+    "_For more information, see [Mi/o](https://Ephellon.github.io/Mio/)._\n" +
     "\n" +
     "----\n" +
     "\n" +
