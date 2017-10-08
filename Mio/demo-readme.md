@@ -1,7 +1,7 @@
 # Mi/o - Mio.j8jc2xzr.zip
 _This document details the statistics of Mio.j8jc2xzr.zip_.
 
-_For more information, see [Mi/o](https://Ephellon.github.io/mio/)._
+_For more information, see [Mi/o](https://Ephellon.github.io/Mio/)._
 
 ----
 
