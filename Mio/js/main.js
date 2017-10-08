@@ -310,7 +310,7 @@ function loadMenu() {
       if(loaded)
         clearInterval(loading);
     }, 10);
-  })(jQuery);
-};
+  };
+})(jQuery);
 
 devsite.localInit = function() {};
