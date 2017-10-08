@@ -113,7 +113,7 @@ function sign(string, fidelity) {
   result.splice(fidelity, result.length - fidelity);
 
   result.forEach(function(value, index, self) {
-    return self.splice(index, 1, (value ^ gamma).toString(36));
+    return self.splice(index, 1, (value ^ gamma).toString((gamma % 20) + 16));
   });
 
   return result.join("");
