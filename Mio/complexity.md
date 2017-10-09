@@ -5,7 +5,7 @@
 ### Explanation
 
 - ![Sum of n=16, to n=36](img/b.png "Sum of n=16, to n=36")
-  - __Get the sum from *n=16* to *n=36*__
+  - __Get the sum from *n=16* to *n=36* using ![n^256!](img/c.png "n^256!")__
   - `Mio.sign` returns its output using the numerical bases from No<sub>16</sub> (0-9, a-f) to No<sub>36</sub> (0-9, a-z)
 
 - ![n^256!](img/c.png "n^256!")
