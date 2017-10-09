@@ -5,6 +5,10 @@
 
 ### Explanation
 
+- *16*
+  - __The `fidelity` argument ranges from (0, 1) at 16 distinct points__
+    - So really, *fidelity = [0, 16]* in that sense
+
 - ![Sum of n=16, to n=36](img/b.png "Sum of n=16, to n=36")
   - __Get the sum of *n=16* up to *n=36* for *n<sup>256!</sup>*__
   - `Mio.sign` returns its output using the numerical bases from Base<sub>16</sub> (0-9, a-f) to Base<sub>36</sub> (0-9, a-z)
@@ -16,7 +20,7 @@
   - `Mio.sign` will return a string with a length between *(0, 256]* (see [intervals])
 
 - \+ 1
-  - Include the empty string
+  - __Include the empty string__
 
 
 ### Other hashing algorithms and their degrees of difficulty
