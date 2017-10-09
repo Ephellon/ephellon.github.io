@@ -116,7 +116,7 @@ function sign(string, fidelity) {
     return self.splice(index, 1, (value ^ gamma).toString((gamma % 20) + 16));
   });
 
-  return result.join("").slice(0, 128);
+  return result.join("").slice(0, 256);
 };
 
 // LZW from [JSFiddle](https://jsfiddle.net/ryanoc/fpMM6/)
