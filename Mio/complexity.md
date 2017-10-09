@@ -6,11 +6,11 @@
 ### Explanation
 
 - ![Sum of n=16, to n=36](img/b.png "Sum of n=16, to n=36")
-  - __Get the sum of *n=16* up to *n=36* for ![n^256!](img/c.png "n^256!")__
+  - __Get the sum of *n=16* up to *n=36* for *n<sup>256!</sup>*__
   - `Mio.sign` returns its output using the numerical bases from Base<sub>16</sub> (0-9, a-f) to Base<sub>36</sub> (0-9, a-z)
 
-- ![n^256!](img/c.png "n^256!")
-  - __Get the [permutations](https://en.wikipedia.org/wiki/Permutation) of _n<sup>256!</sup>___
+- *n<sup>256!</sup>*
+  - __Get the [permutations](https://en.wikipedia.org/wiki/Permutation) of *n<sup>256!</sup>*__
     - Use *256!* since the signature can be any length of *(0, 256]* (see [intervals])
     - _The signature's length will only be **0** for an empty string_
   - `Mio.sign` will return a string with a length between *(0, 256]* (see [intervals])
