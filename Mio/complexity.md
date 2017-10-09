@@ -7,7 +7,7 @@
 
 - *16*
   - __The `fidelity` argument ranges from (0, 1) at 16 distinct points__
-    - So really, *fidelity = [0, 16]* in that sense
+    - So really, *fidelity = [1, 16]* in that sense
 
 - ![Sum of n=16, to n=36](img/b.png "Sum of n=16, to n=36")
   - __Get the sum of *n=16* up to *n=36* for *n<sup>256!</sup>*__
