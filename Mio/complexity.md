@@ -1,5 +1,5 @@
 # The [Degree of Difficulty](https://en.wikipedia.org/wiki/Cryptographic_hash_function#Degree_of_difficulty) for `Mio.sign`
-## Mio's hashing (signing) algorithm
+### Equation
 
 ![Complexity of Mio.sign](img/a.png "Complexity of Mio.sign")
 
