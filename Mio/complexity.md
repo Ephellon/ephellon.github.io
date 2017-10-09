@@ -23,14 +23,14 @@
 
 - [MD5](https://en.wikipedia.org/wiki/MD5)
   - 32 characters using Base<sub>16</sub>
-  - ![MD5](https://latex.codecogs.com/png.latex?16%5E%7B32%7D)
+  - 16<sup>32</sup>
 
 - [SHA-1](https://en.wikipedia.org/wiki/SHA-1)
   - 40 characters using Base<sub>16</sub>
-  - ![SHA-1](https://latex.codecogs.com/png.latex?16%5E%7B40%7D)
+  - 16<sup>40</sup>
 
 - [SHA-2](https://en.wikipedia.org/wiki/SHA-2)
   - 56 characters using Base<sub>16</sub>
-  - ![SHA-2](https://latex.codecogs.com/png.latex?16%5E%7B56%7D)
+  - 16<sup>56</sup>
 
 [intervals]: https://en.wikipedia.org/wiki/Interval_(mathematics)
