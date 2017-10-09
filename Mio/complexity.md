@@ -1,4 +1,5 @@
-# The Complexity of Mio's "signature" algorithm (`Mio.sign`)
+# The [Degree of Difficulty](https://en.wikipedia.org/wiki/Cryptographic_hash_function#Degree_of_difficulty) for `Mio.sign`
+## Mio's hashing (signing) algorithm
 
 ![Complexity of Mio.sign](img/a.png "Complexity of Mio.sign")
 
@@ -6,7 +7,7 @@
 
 - ![Sum of n=16, to n=36](img/b.png "Sum of n=16, to n=36")
   - __Get the sum of *n=16* up to *n=36* for ![n^256!](img/c.png "n^256!")__
-  - `Mio.sign` returns its output using the numerical bases from No<sub>16</sub> (0-9, a-f) to No<sub>36</sub> (0-9, a-z)
+  - `Mio.sign` returns its output using the numerical bases from Base<sub>16</sub> (0-9, a-f) to Base<sub>36</sub> (0-9, a-z)
 
 - ![n^256!](img/c.png "n^256!")
   - __Get the [permutations](https://en.wikipedia.org/wiki/Permutation) of _n<sup>256!</sup>___
@@ -16,5 +17,20 @@
 
 - \+ 1
   - Include the empty string
+
+
+### Other hashing algorithms and their degrees of difficulty
+
+- [MD5](https://en.wikipedia.org/wiki/MD5)
+  - 32 characters using Base<sub>16</sub>
+  - ![MD5](https://latex.codecogs.com/png.latex?16%5E%7B32%7D)
+
+- [SHA-1](https://en.wikipedia.org/wiki/SHA-1)
+  - 40 characters using Base<sub>16</sub>
+  - ![SHA-1](https://latex.codecogs.com/png.latex?16%5E%7B40%7D)
+
+- [SHA-2](https://en.wikipedia.org/wiki/SHA-2)
+  - 56 characters using Base<sub>16</sub>
+  - ![SHA-2](https://latex.codecogs.com/png.latex?16%5E%7B56%7D)
 
 [intervals]: https://en.wikipedia.org/wiki/Interval_(mathematics)
