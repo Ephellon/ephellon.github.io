@@ -40,7 +40,7 @@ $(document).ready(function() {
         ['Live Site', 'fa-link', 'https://ephellon.github.io/Mio/']
       ]
     }, {
-      title: 'Rihanna ANTI',
+      title: 'Rihanna: ANTI',
       text: '<p>An edited version of Rihanna\'s <a href="http://www.rihannanow.com/music/anti/" target="blank_">ANTI</a> album art, which I thought should be her deluxe version\'s cover art.</p>',
 
       image: ['https://ephellon.github.io/Designer/img/ANTI.png'],
@@ -48,7 +48,7 @@ $(document).ready(function() {
         ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/ANTI.png']
       ]
     }, {
-      title: 'Rihanna ANTI (Alternate)',
+      title: 'Rihanna: ANTI (Alternate)',
       text: '<p>An edited version of Rihanna\'s <a href="http://www.rihannanow.com/music/anti/" target="blank_">ANTI</a> album art, which I thought should be her deluxe version\'s cover art.</p>',
 
       image: ['https://ephellon.github.io/Designer/img/ANTI (Alternate).png'],
@@ -56,12 +56,20 @@ $(document).ready(function() {
         ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/ANTI (Alternate).png']
       ]
     }, {
-      title: 'J. Cole Born Sinner',
+      title: 'J. Cole: Born Sinner',
       text: '<p>An edited version of J. Cole\'s <a href="https://dreamville.lnk.to/BornSinnerDeluxeDB" target="blank_">Born Sinner (Deluxe)</a> album art. I thought "Forbidden Fruit" should\'ve had a different cover (as a single).</p>',
 
       image: ['https://ephellon.github.io/Designer/img/Forbidden Fruit.jpg'],
       site: [
         ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Forbidden Fruit.jpg']
+      ]
+    }, {
+      title: 'Michael Jackson: Dirty Diana',
+      text: '<p>A single version of Michael Jackson\'s <a href="http://www.michaeljackson.com/track/dirty-diana-4/" target="blank_">Dirty Diana</a>. It feels more like the song than the original, and 2017 album arts.</p>',
+
+      image: ['https://ephellon.github.io/Designer/img/Dirty Diana.jpg'],
+      site: [
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Dirty Diana.jpg']
       ]
     }
     /*, {
