@@ -67,9 +67,9 @@ $(document).ready(function() {
       title: 'Michael Jackson: Dirty Diana',
       text: '<p>A single version of Michael Jackson\'s <a href="http://www.michaeljackson.com/track/dirty-diana-4/" target="blank_">Dirty Diana</a>. It feels more like the song than the original, and 2017 album arts.</p>',
 
-      image: ['https://ephellon.github.io/Designer/img/Dirty Diana.jpg'],
+      image: ['https://ephellon.github.io/Designer/img/Dirty Diana.png'],
       site: [
-        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Dirty Diana.jpg']
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Dirty Diana.png']
       ]
     }
     /*, {
