@@ -71,6 +71,14 @@ $(document).ready(function() {
       site: [
         ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Dirty Diana.png']
       ]
+    }, {
+      title: 'Cardi B: Bodak Yellow',
+      text: '<p>Preffered album art for Cardi B\'s <a target="blacnk_" href="https://itunes.apple.com/us/album/bodak-yellow-feat-kodak-black-single/id1286929334">Bodak Yellow (iTunes)</a>.</p>',
+
+      image: ['https://ephellon.github.io/Designer/img/Bodak Yellow.png'],
+      site: [
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Bodak Yellow.png']
+      ]
     }
     /*, {
       title: 'Title',
