@@ -41,11 +41,11 @@ $(document).ready(function() {
       ]
     }, {
       title: 'Rihanna: ANTI',
-      text: '<p>An edited version of Rihanna\'s <a href="http://www.rihannanow.com/music/bitch-better-have-my-money/" target="blank_">Bitch Better Have My Money</a> album art./p>',
+      text: '<p>An edited version of Rihanna\'s <a href="http://www.rihannanow.com/music/anti/" target="blank_">ANTI</a> album art, which I thought should be her deluxe version\'s cover art.</p>',
 
-      image: ['https://ephellon.github.io/Designer/img/Bitch Better Have My Money.jpg'],
+      image: ['https://ephellon.github.io/Designer/img/ANTI.png'],
       site: [
-        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Bitch Better Have My Money.jpg']
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/ANTI.png']
       ]
     }, {
       title: 'Rihanna: ANTI (Alternate)',
@@ -57,11 +57,11 @@ $(document).ready(function() {
       ]
     }, {
       title: 'Rihanna: Bitch Better Have My Money',
-      text: '<p>Preffered album art for Cardi B\'s <a target="blacnk_" href="https://itunes.apple.com/us/album/bodak-yellow-feat-kodak-black-single/id1286929334">Bodak Yellow (iTunes)</a>.</p>',
+      text: '<p>An edited version of Rihanna\'s <a href="http://www.rihannanow.com/music/bitch-better-have-my-money/" target="blank_">Bitch Better Have My Money</a> album art./p>',
 
-      image: ['https://ephellon.github.io/Designer/img/Bodak Yellow.png'],
+      image: ['https://ephellon.github.io/Designer/img/Bitch Better Have My Money.jpg'],
       site: [
-        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Bodak Yellow.png']
+        ['Link to Image', 'fa-link', 'https://ephellon.github.io/Designer/img/Bitch Better Have My Money.jpg']
       ]
     }, {
       title: 'J. Cole: Born Sinner',
