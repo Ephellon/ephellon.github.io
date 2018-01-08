@@ -1,0 +1,303 @@
+html, body {
+  height: 1440px;
+  width: 720px;
+  overflow: hidden;
+
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  border: none;
+
+  font-family: arial;
+  font-size: 30px;
+
+  background: #7D9E1A;
+}
+
+body {
+  animation: glow ease-in-out 0.8s alternate infinite;
+}
+
+h4 {
+  line-height: 70%;
+}
+
+a {
+  font-size: 67%;
+  color: #000;
+
+  position: absolute;
+  margin-top: -2%;
+  margin-left: -8%;
+}
+
+b {
+  font-weight: bold;
+}
+
+.logo {
+  position: absolute;
+  margin-left: 40%;
+  margin-top: 3%;
+}
+
+.return {
+  margin-left: 80%;
+  margin-top: 2%;
+}
+
+#container {
+  height: 58%;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 25%;
+
+  text-align: center;
+}
+
+#container::after {
+  content: "----";
+  font-size: 10px;
+
+  position: absolute;
+  margin-top: 7%;
+
+  background: #21508C;
+  border: 1px solid #888;
+  border-radius: 100%;
+  color: rgba(0,0,0,0);
+}
+
+#status {
+  background: radial-gradient(#7D9E1A, #5F8211);
+  border: 7px solid #EBE8E4;
+  border-top: none;
+  border-bottom: none;
+  color: #fff;
+  padding: 8%;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  margin-top: -1%;
+}
+
+#timer {
+  margin-top: -10%;
+  font-size: 45px;
+}
+
+#H, #M, #S {
+  padding: 5%;
+}
+
+#H b::after, #M b::after, #S b::after {
+  font-size: 40%;
+  font-weight: initial;
+  position: absolute;
+  text-align: center;
+  margin-top: 10%;
+}
+
+#H b::after {
+  content: "HOURS";
+  margin-left: -10%;
+}
+
+#M b::after {
+  content: "MIN.";
+  margin-left: -7%;
+}
+
+#S b::after {
+  content: "SEC.";
+  margin-left: -7%;
+}
+
+#age {
+  font-weight: bold;
+  padding: 5%;
+}
+
+.back #age {
+  padding: 0;
+}
+
+.A, .B {
+  padding-left: 10%;
+  padding-right: 10%;
+  line-height: 40px;
+}
+
+.A {
+  float: left;
+}
+
+.B {
+  float: right;
+}
+
+.front .A, .front .B {
+  font-size: 27px;
+  margin-top: 2%;
+}
+
+.back .A, .back .B {
+  padding: 5px;
+  line-height: 40px;
+}
+
+.back .A {
+  text-align: left;
+  padding-left: 15px;
+}
+
+.back .B {
+  text-align: right;
+  padding-right: 15px;
+  margin-top: 0;
+}
+
+.return.flip {
+  -webkit-transform: scaleY(-1);
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  transform: scaleY(-1);
+
+  -ms-filter: "FlipV";
+  filter: FlipV;
+}
+
+#header, #footer {
+  padding: 0;
+  position: absolute;
+  margin-left: -5%;
+  width: 105%;
+}
+
+#header img, #footer img {
+  border: 5px solid #21508C;
+  width: 100%;
+}
+
+#header img {
+  border-bottom: none;
+}
+
+#header {
+  margin-top: 0%; /* 53% */
+}
+
+#footer {
+  margin-top: 12%; /* 37% */
+}
+
+#footer img {
+  border-top: none;
+  max-width: 725px;
+  margin-left: 25px;
+  margin-top: 7px;
+}
+
+#aztec-copy {
+  background: #fff;
+  display: none;
+  position: absolute;
+  padding: 5%;
+  z-index: 9;
+  margin-left: -45%;
+  margin-top: 10%;
+}
+
+.hidden img {
+  transition: all 2s;
+  opacity: 0;
+}
+
+#header.hidden img {
+  margin-top: calc(-12% - 120px);
+}
+
+#footer.hidden img {
+  margin-top: calc(12% + 120px);
+}
+
+@keyframes glow {
+  0%   {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 60%, #416407 100%)}
+  5%   {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 61%, #416407 100%)}
+  10%  {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 62%, #416407 100%)}
+  15%  {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 63%, #416407 100%)}
+  20%  {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 64%, #416407 100%)}
+
+  25%  {background: radial-gradient(#7FA118  5%, #6C8F13 35%, #54760C 65%, #416407 100%)}
+  30%  {background: radial-gradient(#7FA118  5%, #6C8F13 35%, #54760C 66%, #416407 100%)}
+  35%  {background: radial-gradient(#7FA118  5%, #6C8F13 35%, #54760C 67%, #416407 100%)}
+  40%  {background: radial-gradient(#7FA118  5%, #6C8F13 35%, #54760C 68%, #416407 100%)}
+  45%  {background: radial-gradient(#7FA118 10%, #6C8F13 40%, #54760C 69%, #416407 100%)}
+
+  50%  {background: radial-gradient(#7FA118 10%, #6C8F13 40%, #54760C 70%, #416407 100%)}
+  55%  {background: radial-gradient(#7FA118 10%, #6C8F13 40%, #54760C 71%, #416407 100%)}
+  60%  {background: radial-gradient(#7FA118 10%, #6C8F13 40%, #54760C 72%, #416407 100%)}
+  65%  {background: radial-gradient(#7FA118 15%, #6C8F13 45%, #54760C 73%, #416407 100%)}
+  70%  {background: radial-gradient(#7FA118 15%, #6C8F13 45%, #54760C 74%, #416407 100%)}
+
+  75%  {background: radial-gradient(#7FA118 15%, #6C8F13 45%, #54760C 75%, #416407 100%)}
+  80%  {background: radial-gradient(#7FA118 15%, #6C8F13 45%, #54760C 76%, #416407 100%)}
+  85%  {background: radial-gradient(#7FA118 20%, #6C8F13 50%, #54760C 77%, #416407 100%)}
+  90%  {background: radial-gradient(#7FA118 20%, #6C8F13 50%, #54760C 78%, #416407 100%)}
+  95%  {background: radial-gradient(#7FA118 20%, #6C8F13 50%, #54760C 79%, #416407 100%)}
+
+  100% {background: radial-gradient(#7FA118 20%, #6C8F13 50%, #54760C 80%, #416407 100%)}
+}
+
+/* Flipping Animation: David Walsh, Unaffiliated */
+
+/* entire container, keeps perspective */
+.flip-container {
+  perspective: 100%;
+
+  background: #EBE8E4;
+  border: 1px solid rgba(0,0,0,0);
+  border-radius: 7px;
+  color: #000;
+  padding: 0;
+  padding-bottom: 5px;
+  box-shadow: 5px 5px 35px 10px rgba(0,0,0,0.3);
+}
+
+/* flip the pane when [focused] */
+.flip-container:focus .flipper, .flip-container.hover .flipper {
+  transform: rotateY(180deg);
+}
+
+.flip-container, .front, .back {
+  width: 100%;
+  height: 100%;
+}
+
+/* flip speed goes here */
+.flipper {
+  transition: 0.6s;
+  transform-style: preserve-3d;
+
+  position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+  backface-visibility: hidden;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+  transform: rotateY(180deg);
+}
