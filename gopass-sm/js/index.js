@@ -1,5 +1,3 @@
-alert(navigator.userAgent);
-
 function $(query) {
   return document.querySelector(query);
 }
