@@ -15,7 +15,7 @@ function format(date, string) {
 }
 
 var now = (new Date),
-    dawn = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6, 0, 0, 0),
+    dawn = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6, (Math.random() * 20) | 0, 0, 0),
     dusk = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 3, 0, 0, 0),
     H = $("#H b"),
     M = $("#M b"),
@@ -47,10 +47,18 @@ $(".front > .return").onclick = function() {
   $(".flip-container").classList = "flip-container hover";
 });
 
+function upimg() {
+$("#aztec").src = $("#aztec-copy").src = "http://bwipjs-api.metafloor.com/?bcid=azteccode&text=" + Math.random().toString().replace(/0\./g, "").repeat(77).slice(0, 77);
+  $("#aztec").onerror = function() {
+    $("#aztec").src = $("#aztec-copy").src = "img/bu." + Math.floor(Math.random() * 6) + ".png";
+  };
+};
+upimg();
+
 $(".back").addEventListener("swipehorizontal",
 $(".back > .return").onclick = function() {
   $(".flip-container").classList = "flip-container";
-  $("#aztec").src = $("#aztec-copy").src = "http://bwipjs-api.metafloor.com/?bcid=azteccode&text=" + Math.random().toString().replace(/0\./g, "").repeat(77).slice(0, 77);
+  upimg();
 });
 
 $("#aztec").onclick = function() {
@@ -61,7 +69,7 @@ $("#aztec-copy").onclick = function() {
   $("#aztec-copy").style.display = "none";
 }
 
-$("body").onclick = function() {
+$("body").onclick != function() {
   $("#header").setAttribute("class", "");
   $("#footer").setAttribute("class", "");
 

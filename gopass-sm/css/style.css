@@ -10,12 +10,20 @@ html, body {
 
   font-family: arial;
   font-size: 30px;
-
-  background: #7D9E1A;
 }
 
-body {
-  animation: glow ease-in-out 0.8s alternate infinite;
+body:before {
+  animation: glow ease-in-out 1.5s alternate infinite;
+  background: url("../img/bg.png");
+  background-size: cover;
+  content: " ";
+
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 h4 {
@@ -55,7 +63,7 @@ b {
   text-align: center;
 }
 
-#container::after {
+#container:after {
   content: "----";
   font-size: 10px;
 
@@ -197,6 +205,12 @@ b {
   margin-top: 7px;
 }
 
+#aztec {
+  background: #fff;
+  border: 10px solid #fff;
+  margin-top: -20px;
+}
+
 #aztec-copy {
   background: #fff;
   display: none;
@@ -221,31 +235,9 @@ b {
 }
 
 @keyframes glow {
-  0%   {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 60%, #416407 100%)}
-  5%   {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 61%, #416407 100%)}
-  10%  {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 62%, #416407 100%)}
-  15%  {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 63%, #416407 100%)}
-  20%  {background: radial-gradient(#7FA118  0%, #6C8F13 30%, #54760C 64%, #416407 100%)}
-
-  25%  {background: radial-gradient(#7FA118  5%, #6C8F13 35%, #54760C 65%, #416407 100%)}
-  30%  {background: radial-gradient(#7FA118  5%, #6C8F13 35%, #54760C 66%, #416407 100%)}
-  35%  {background: radial-gradient(#7FA118  5%, #6C8F13 35%, #54760C 67%, #416407 100%)}
-  40%  {background: radial-gradient(#7FA118  5%, #6C8F13 35%, #54760C 68%, #416407 100%)}
-  45%  {background: radial-gradient(#7FA118 10%, #6C8F13 40%, #54760C 69%, #416407 100%)}
-
-  50%  {background: radial-gradient(#7FA118 10%, #6C8F13 40%, #54760C 70%, #416407 100%)}
-  55%  {background: radial-gradient(#7FA118 10%, #6C8F13 40%, #54760C 71%, #416407 100%)}
-  60%  {background: radial-gradient(#7FA118 10%, #6C8F13 40%, #54760C 72%, #416407 100%)}
-  65%  {background: radial-gradient(#7FA118 15%, #6C8F13 45%, #54760C 73%, #416407 100%)}
-  70%  {background: radial-gradient(#7FA118 15%, #6C8F13 45%, #54760C 74%, #416407 100%)}
-
-  75%  {background: radial-gradient(#7FA118 15%, #6C8F13 45%, #54760C 75%, #416407 100%)}
-  80%  {background: radial-gradient(#7FA118 15%, #6C8F13 45%, #54760C 76%, #416407 100%)}
-  85%  {background: radial-gradient(#7FA118 20%, #6C8F13 50%, #54760C 77%, #416407 100%)}
-  90%  {background: radial-gradient(#7FA118 20%, #6C8F13 50%, #54760C 78%, #416407 100%)}
-  95%  {background: radial-gradient(#7FA118 20%, #6C8F13 50%, #54760C 79%, #416407 100%)}
-
-  100% {background: radial-gradient(#7FA118 20%, #6C8F13 50%, #54760C 80%, #416407 100%)}
+  0% { opacity: 0.5 }
+   33% { opacity: 1 }
+  100% { opacity: 1 }
 }
 
 /* Flipping Animation: David Walsh, Unaffiliated */
@@ -261,6 +253,17 @@ b {
   padding: 0;
   padding-bottom: 5px;
   box-shadow: 5px 5px 35px 10px rgba(0,0,0,0.3);
+}
+
+.flip-container:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: " ";
+  background: radial-gradient(transparent 0%, #7FA118 40%, transparent 100%);
+  z-index: -1;
 }
 
 /* flip the pane when [focused] */
