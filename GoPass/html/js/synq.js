@@ -1,5 +1,7 @@
 /** Ephellon Dantzler - 2015
   * You call on SynQ() and that's it
+  * If you don't want to update element's, just some data, then use SynQ.push, SynQ.pull or SynQ.pop
+  * If youd like to get rid of all of your data (for one site) then use SynQ.clear
   */
 
 var SynQName = 'synq-data',               // change this accordingly; this is the syncronizing attribute for your elements
@@ -7,8 +9,8 @@ var SynQName = 'synq-data',               // change this accordingly; this is th
     doc      = document,
     win      = window,
     los      = localStorage,
-    sig,
-    noname   = "Resource name is missing.";
+    noname   = "Resource name is missing.",
+    sig, use_global_synq_token;
 
 doc.Qy = doc.querySelectorAll;
 
@@ -164,5 +166,7 @@ SynQ.prevent = function(variable, failures, message) {
 };
 
 // Auto-update
-sig = "synq://" + SynQ.sign(location + "@" + SynQName, 1) + "/";
-SynQ.eventlistener();
+if(use_global_synq_token == undefined)
+  sig = "synq://" + SynQ.sign(location, 1) + "/";
+else
+  sig = "synq://" + SynQ.sign(location.origin, 1) + "/";
