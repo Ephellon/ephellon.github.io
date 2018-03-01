@@ -18,6 +18,9 @@
 
   <style type="text/css">
     html, body {
+      background: url("splash.png");
+      background-size: contain;
+      background-repeat: no-repeat;
       border: none;
 
       margin: 0;
@@ -29,9 +32,7 @@
     }
 
     iframe {
-      background: url("splash.png");
-      background-size: contain;
-      background-repeat: no-repeat;
+      background: transparent;
       border: none;
       color: #000000;
 
@@ -40,13 +41,48 @@
 
       height: 100vh;
       width: 100vw;
+      z-index: 0;
+    }
+
+    #header, #footer {
+      position: absolute;
+
+      height: 8.57vh;
+      width: 100vw;
+      z-index: 1;
+    }
+
+    #header, #footer {
+      top: 0;
     }
   </style>
 </head>
 <body>
+  <!-- Header menu -->
+  <div id="header">
+    <table>
+      <tr class="menu">
+        <td></td>
+        <td id="Title"></td>
+      </tr>
+    </table>
+  </div>
+  <!-- Main content holder -->
   <iframe src="html/index.html">
     GoPass ran into an error. [IFRAME NULL]
   </iframe>
+  <!-- Footer menu -->
+  <div id="footer">
+    <table>
+      <tr class="menu">
+        <td>Home</td>
+        <td>Buy Tickets</td>
+        <td>My Tickets <sup id="ticket-counter"></sup></td>
+        <td>Travel Tools</td>
+        <td>Events &amp; Offers</td>
+      </tr>
+    </table>
+  </div>
 
   <!-- scripts -->
   <script src="/html/js/synq.js"></script>
