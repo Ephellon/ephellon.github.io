@@ -171,4 +171,4 @@ if(use_global_synq_token == undefined)
 else
   sig = "synq://" + SynQ.sign(location.origin, 1) + "/";
 
-Synq.eventlistener({});
+SynQ.eventlistener({});
