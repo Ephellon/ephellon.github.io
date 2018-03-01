@@ -2,6 +2,7 @@
   * You call on SynQ() and that's it
   * If you don't want to update element's, just some data, then use SynQ.push, SynQ.pull or SynQ.pop
   * If youd like to get rid of all of your data (for one site) then use SynQ.clear
+  * If you'd like to synchronize across your entire domain, then set the use_global_synq_token to a defined value
   */
 
 var SynQName = 'synq-data',               // change this accordingly; this is the syncronizing attribute for your elements
@@ -43,7 +44,7 @@ function SynQ(name) {
       (element.value != undefined)?
         query[index].value:
       query[index].innerText),
-    SynQ.push(uuid, value);
+    SynQ.push(".values#" + uuid, value);
 
   SynQ.push(".values", messages.join(SynQESC));
   SynQ.push(".uuids", uuids.join(","));
@@ -71,7 +72,7 @@ SynQ.eventlistener = function(event) {
     // UUID is set
     // Write confidently, even if the HTML document has changed
     if(element.getAttribute("uuid") == uuid)
-      value = SynQ.pull(uuid) || values[index],
+      value = SynQ.pull(".values#" + uuid) || values[index],
       write(element, value);
     // UUID isn't set
     // Write, assuming the HTML document hasn't changed
