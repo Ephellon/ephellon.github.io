@@ -42,8 +42,8 @@ function SynQ(name) {
     // Push the messages
     messages.push(value =
       (element.value != undefined)?
-        query[index].value:
-      query[index].innerText),
+        element.value:
+      element.innerText),
     SynQ.push(".values#" + uuid, value);
 
   SynQ.push(".values", messages.join(SynQESC));
