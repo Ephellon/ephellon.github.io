@@ -20,7 +20,7 @@
   */
 
 var NO_NAME = "Resource name is missing.",
-    use_global_synq_token;
+    use_global_synq_token, localStorage, sessionStorage, storage;
 
 // IE and Edge?
 if(!("addEventListener" in window))
@@ -170,9 +170,9 @@ SynQ.data = function(all) {
                + ")" + (all? ".+": "[^\\.].+") + "$"),
       array  = {};
 
-  for(item in localStorage)
+  for(item in storage)
     if(regexp.test(item))
-      array[item] = localStorage[item];
+      array[item] = storage[item];
 
   return array;
 };
@@ -187,7 +187,7 @@ SynQ.push = function(name, data, key) {
   else
     key = "";
 
-  localStorage.setItem(SynQ.signature + key + name, data);
+  storage.setItem(SynQ.signature + key + name, data);
 
   return data;
 };
@@ -199,9 +199,9 @@ SynQ.pull = function(name, key) {
   var data;
 
   if(key != undefined && key != null)
-    data = SynQ.unlock(localStorage.getItem(SynQ.signature + "." + name), key);
+    data = SynQ.unlock(storage.getItem(SynQ.signature + "." + name), key);
   else
-    data = localStorage.getItem(SynQ.signature + name);
+    data = storage.getItem(SynQ.signature + name);
 
   return data;
 };
@@ -213,9 +213,9 @@ SynQ.pop = function(name, key) {
   var data = SynQ.pull(name, key);
 
   if(key != undefined && key != null)
-    localStorage.removeItem(SynQ.signature + "." + name);
+    storage.removeItem(SynQ.signature + "." + name);
   else
-    localStorage.removeItem(SynQ.signature + name);
+    storage.removeItem(SynQ.signature + name);
 
   return data;
 };
@@ -224,9 +224,9 @@ SynQ.pop = function(name, key) {
 SynQ.clear = function() {
   var regexp = RegExp("^" + SynQ.signature.replace(/(\W)/g, "\\$1") + "$");
 
-  for(item in localStorage)
+  for(item in storage)
     if(regexp.test(item))
-      localStorage.removeItem(item);
+      storage.removeItem(item);
 };
 
 // Lock and unlock data (weak security)
@@ -312,6 +312,103 @@ SynQ.prevent = function(variable, failures, message) {
     if(variable == failures[index])
       throw new Error(message);
 };
+
+// Polyfill - Mozilla
+if(!("localStorage" in window))
+  Object.defineProperty(window, "localStorage", new(function() {
+    var keys = [], StorageObject = {};
+
+    Object.defineProperty(StorageObject, "getItem", {
+      value: function(key) {
+        return(key)?
+          this[key]:
+        null;
+      },
+      writable:     false,
+      configurable: false,
+      enumerable:   false
+    });
+
+    Object.defineProperty(StorageObject, "key", {
+      value: function(keyID) {
+        return keys[keyID];
+      },
+      writable:     false,
+      configurable: false,
+      enumerable:   false
+    });
+
+    Object.defineProperty(StorageObject, "setItem", {
+      value: function(key, value) {
+        if(key == undefined || key == null)
+          return;
+        document.cookie = escape(key) + "=" + escape(value) + "; expires=Thu, Dec 31 2099 23:59:59 GMT; path=/";
+      },
+      writable:     false,
+      configurable: false,
+      enumerable:   false
+    });
+
+    Object.defineProperty(StorageObject, "length", {
+      get: function() {
+        return keys.length;
+      },
+      configurable: false,
+      enumerable:   false
+    });
+
+    Object.defineProperty(StorageObject, "removeItem", {
+      value: function(key) {
+        if(key == undefined || key == null)
+          return;
+        document.cookie = escape(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+      },
+      writable:     false,
+      configurable: false,
+      enumerable:   false
+    });
+    
+    Object.defineProperty(StorageObject, "clear", {
+      value: function() {
+        if(keys.length == undefined || key.slength == null)
+          return;
+        for(var key in keys)
+          document.cookie = escape(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+      },
+      writable:     false,
+      configurable: false,
+      enumerable:   false
+    });
+
+    this.get = function() {
+      var index;
+
+      for(var key in StorageObject) {
+        index = keys.indexOf(key);
+        if(index == -1)
+          StorageObject.setItem(key, StorageObject[key]);
+        else
+          keys.splice(index, 1);
+        delete StorageObject[key];
+      }
+
+      for(keys; keys.length > 0; keys.splice(0, 1))
+        StorageObject.removeItem(keys[0]);
+
+      for(var cookie, key, index = 0, cookies = document.cookie.split(/\s*;\s*/); index < cookies.length; index++) {
+        cookie = cookies[index].split(/\s*=\s*/);
+        if(cookie.length > 1)
+          key = unescape(cookie[0]),
+          StorageObject[key] = unescape(cookie[1]),
+          keys.push(key);
+      }
+
+      return StorageObject;
+    };
+
+    this.configurable = false;
+    this.enumerable   = true;
+  })());
 
 // Auto-update & run
 if(use_global_synq_token == undefined)
