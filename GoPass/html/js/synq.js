@@ -51,10 +51,10 @@ function SynQ(name) {
 
   for(var index = 0, element, uuid, value, info, id; index < query.length; index++) {
     // Element information
-    copies[info] |= 0;
     element       = query[index];
     info          = element.tagName;
     id            = element.attributes.id;
+    copies[info] |= 0;
 
     // Add copies of elements for the UUID to work properly
     info += (id != undefined && id != null)?
