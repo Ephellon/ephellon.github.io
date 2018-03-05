@@ -231,7 +231,7 @@ SynQ.clear = function() {
 
 // Lock and unlock data (weak security)
 SynQ.lock = function(data, key) {
-  key = SynQ.sign(SynQ.salt(key), 0);
+  key = SynQ.salt(SynQ.sign(key, 0));
 
   for(var index = 0, salted = []; index < data.length; index++)
     salted.push(String.fromCharCode(
