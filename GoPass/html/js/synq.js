@@ -7,27 +7,28 @@
           SynQ.pull(string:name[, string:password]),
           SynQ.pop(string:name[, string:password])
   * Q2) What if I'd like to get rid of all of my data (in SynQ)?
-  * A2)   Use SynQ.clear([boolean:clear-all])**
+  * A2)   Use SynQ.clear([boolean:clear-all]) {See note #1}
   * Q3) What if I'd like to synchronize across my entire domain?
   * A3)   Set the [use_global_synq_token] variable to a defined value
   * Q4) How do I check on the status of my data?
   * A4)   You can use SynQ.data([boolean:show-private]) to show your data
   * Q5) What about the other things I see under SynQ?
   * A5)   Those are for future technologies, but you can use them as you see fit.
-  * Q6) How much space^ do I have?
+  * Q6) How much space {See note #3} do I have?
   * A6)   It depends on the browser (use SynQ.size([number:value[, number:base[, string:symbol]]]) to find out),
-          but the highest is 2.5 MB (2.5 * 2^20 bits: 2,621,440) because JS uses UTF-16 characters^^ by default.
-  * Q7) What if I want more space^?
+          but the highest is 2.5 MB (2.5 * 2^20 bits: 2,621,440) because JS uses UTF-16 characters {See note #4} by default.
+  * Q7) What if I want more space {See note #3}?
   * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings),
           the available space will be doubled (5.0 * 2^20 bits: 5,242,880).
   * Q8) How can I see how much space I have left?
   * A8)   Use
   *
-  * ** SynQ.clear will only remove local*** items if the "use_global_synq_token" isn't set
-  * *** By "local" I mean for a unique page identifier (URL), e.g. "https://example.com/page-1" won't share "local" data with ".../page-2"
-  * ^ Data units are given in Bytes (1B = 8b [0000 0000]), with no regard to encoding
-      e.g. if SynQ.check() returns "16" it means 16 Bytes (i.e. 16 UTF-8 characters)
-  * ^^ According to [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage),
+  * Notes:
+  * 1) SynQ.clear will only remove local {See note #2} items if the "use_global_synq_token" isn't set
+  * 2) By "local" I mean for a unique page identifier (URL), e.g. "https://example.com/page-1" won't share "local" data with ".../page-2"
+  * 3) Data units are given in Bytes (1B = 8b [0000 0000]), with no regard to encoding.
+       E.g. if SynQ.check() returns "16" it means 16 Bytes (i.e. 16 UTF-8 characters)
+  * 4) According to [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage),
        pretty sure they know what they're talking about
   */
 
