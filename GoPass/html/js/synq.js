@@ -16,11 +16,11 @@
   * A5)   Those are for future technologies, but you can use them as you see fit.
   * Q6) How much space {See note #3} do I have?
   * A6)   It depends on the browser {See note #4} but you can use SynQ.size() to find the current maximum.
-          The highest is 2.5 MiB (2.5 * 2^20 bits: 2,621,440) because JS uses UTF-16 characters {See note #4} by default.
+          The highest is 5 MiB (5,242,880 b, with UTF-16 enabled) because JS uses UTF-16 characters {See note #4} by default.
           SynQ.size([number:value[, number:base[, string:symbol]]]) also converts "value" in a SI foramatted string, e.g. "5Mb"
   * Q7) What if I want more space {See note #3}?
   * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings);
-          the available space will be doubled to 5 MiB (5.0 * 2^20 bits: 5,242,880).
+          the available space will be doubled, max being 10 MiB (10,485,760 b, with UTF-16 disabled).
   * Q8) How can I see how much space I am using?
   * A8)   Use SynQ.check([boolean:synq-data-only])
   *
@@ -231,10 +231,10 @@ SynQ.data = function(all) {
 SynQ.push = function(name, data, key) {
   SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
 
-  var UFT8;
+  var UTF8 = use_utf8_synq_token != undefined;
 
-  if(UTF8 = use_utf8_synq_token != undefined)
-    SynQ.prevent(data, function(value){return /[^\u0000-\u00ff]/.test(value)}, UTF8_ONLY_ERROR);
+  if(UTF8)
+    SynQ.prevent(data, /[^\u0000-\u00ff]/, UTF8_ONLY_ERROR);
 
   if(key != undefined && key != null)
     data = SynQ.lock(data, key),
@@ -263,10 +263,10 @@ SynQ.push = function(name, data, key) {
 SynQ.pull = function(name, key) {
   SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
 
-  var data, UTF8;
+  var data, UTF8 = use_utf8_synq_token != undefined;
 
-  if(UTF8 = use_utf8_synq_token != undefined)
-    SynQ.prevent(data, function(value){return /[^\u0000-\u00ff]/.test(value)}, UTF8_ONLY_ERROR);
+  if(UTF8)
+    SynQ.prevent(data, /[^\u0000-\u00ff]/, UTF8_ONLY_ERROR);
 
   if(key != undefined && key != null)
     data = SynQ.unlock(storage.getItem(SynQ.signature + "." + name), key);
@@ -331,7 +331,7 @@ SynQ.check = function(exclusive) {
       else if(!exclusive)
         size += storage[item].length | 0;
 
-  return size;
+  return size * 2;
 };
 
 // Test data limits (in Bytes -> iB)
@@ -382,7 +382,7 @@ SynQ.size = function(number, base, symbol) {
   };
 
   SynQ.size.convert = size;
-  SynQ.size.max = i;
+  SynQ.size.max = i *= 2;
 
   if(number != undefined && number != null)
     return SynQ.size(number, base, symbol);
@@ -484,7 +484,7 @@ SynQ.sign = function(string, fidelity) {
 
 // Handle errors
 SynQ.prevent = function(variable, failures, message) {
-  function test(a, b, c) {
+  function prevent(a, b, c) {
     if(a == b)
       throw new Error(c);
   };
@@ -494,12 +494,12 @@ SynQ.prevent = function(variable, failures, message) {
     for(var index = 0, length = variable.length; index < length; index++)
       SynQ.prevent(variable[index], failures, message);
   // *, Function, *
-  else if(failures instanceof Function)
-    test(failures(variable), true, message);
+  else if(failures instanceof RegExp)
+    prevent(failures.test(variable), true, message);
   // *, Array, *
   else if(failures instanceof Array)
     for(var index = 0, length = failures.length; index < length; index++)
-      test(variable, failures[index], message);
+      prevent(variable, failures[index], message);
 };
 
 // Polyfill - Mozilla
