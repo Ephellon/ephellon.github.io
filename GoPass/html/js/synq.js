@@ -345,7 +345,7 @@ SynQ.size = function(number, base, symbol) {
           for(var k = "m\u00b5npfaz", x = 0, g = k.length; (x < g) && (n < 1); x++)
             n *= b;
         else
-          for(var k = "kMGTPEZY", x = 0, g = k.length; (x < g) && (n >= Math.pow(b, x)); x++)
+          for(var k = "kMGTPEZY", x = 0, g = k.length; (x < g) && (n > b); x++)
             n /= b;
 
         return n + (k[x - 1] || "") + s;
