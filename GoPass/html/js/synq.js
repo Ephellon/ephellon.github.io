@@ -15,17 +15,19 @@
   * Q5) What about the other things I see under SynQ?
   * A5)   Those are for future technologies, but you can use them as you see fit.
   * Q6) How much space {See note #3} do I have?
-  * A6)   It depends on the browser (use SynQ.size([number:value[, number:base[, string:symbol]]]) to find out),
-          but the highest is 2.5 MB (2.5 * 2^20 bits: 2,621,440) because JS uses UTF-16 characters {See note #4} by default.
+  * A6)   It depends on the browser {See note #4} but you can use SynQ.size() to find the current maximum.
+          The highest is 2.5 MB (2.5 * 2^20 bits: 2,621,440) because JS uses UTF-16 characters {See note #4} by default.
+          SynQ.size([number:value[, number:base[, string:symbol]]]) also converts "value" in a SI foramatted string, e.g. "5Mb"
   * Q7) What if I want more space {See note #3}?
-  * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings),
+  * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings);
           the available space will be doubled (5.0 * 2^20 bits: 5,242,880).
-  * Q8) How can I see how much space I have left?
-  * A8)   Use
+  * Q8) How can I see how much space I am using?
+  * A8)   Use SynQ.check([boolean:synq-data-only])
   *
   * Notes:
-  * 1) SynQ.clear will only remove local {See note #2} items if the "use_global_synq_token" isn't set
-  * 2) By "local" I mean for a unique page identifier (URL), e.g. "https://example.com/page-1" won't share "local" data with ".../page-2"
+  * 1) SynQ.clear will only remove "local" {See note #2} items if the "use_global_synq_token" isn't set
+  * 2) By "local" I mean per the unique page identifier (URL),
+       i.e. "https://example.com/page-1" won't share data with ".../page-2"
   * 3) Data units are given in Bytes (1B = 8b [0000 0000]), with no regard to encoding.
        E.g. if SynQ.check() returns "16" it means 16 Bytes (i.e. 16 UTF-8 characters)
   * 4) According to [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage),
@@ -337,7 +339,7 @@ SynQ.check = function(exclusive) {
 SynQ.size = function(number, base, symbol) {
   var backup = {},
       size   = function(n, b, s) {
-        for(var k = "kMGTPEZY", x = 0, g = k.length, b = b || 1024, s = "B"; (x < g) && (n >= Math.pow(b, x)); x++)
+        for(var k = "kMGTPEZY", x = 0, g = k.length, b = b || 1024, s = s || "iB"; (x < g) && (n >= Math.pow(b, x)); x++)
           n /= b;
         return n + (k[x - 1] || "") + s;
       };
