@@ -16,11 +16,11 @@
   * A5)   Those are for future technologies, but you can use them as you see fit.
   * Q6) How much space {See note #3} do I have?
   * A6)   It depends on the browser {See note #4} but you can use SynQ.size() to find the current maximum.
-          The highest is 2.5 MB (2.5 * 2^20 bits: 2,621,440) because JS uses UTF-16 characters {See note #4} by default.
+          The highest is 2.5 MiB (2.5 * 2^20 bits: 2,621,440) because JS uses UTF-16 characters {See note #4} by default.
           SynQ.size([number:value[, number:base[, string:symbol]]]) also converts "value" in a SI foramatted string, e.g. "5Mb"
   * Q7) What if I want more space {See note #3}?
   * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings);
-          the available space will be doubled (5.0 * 2^20 bits: 5,242,880).
+          the available space will be doubled to 5 MiB (5.0 * 2^20 bits: 5,242,880).
   * Q8) How can I see how much space I am using?
   * A8)   Use SynQ.check([boolean:synq-data-only])
   *
@@ -334,7 +334,7 @@ SynQ.check = function(exclusive) {
   return size;
 };
 
-// Test data limits (in Bytes)
+// Test data limits (in Bytes -> iB)
 // or return an SI formated value
 SynQ.size = function(number, base, symbol) {
   var backup = {},
@@ -349,7 +349,7 @@ SynQ.size = function(number, base, symbol) {
 
   storage.clear();
 
-  _1MB: // 1 MB
+  _1MiB: // 1 MiB
   for(var s = "_", i = 1, j, l = 1024 * 1024, p = true, m; i <= l; i *= 2)
     try {
       storage.setItem("$_TEST_$", s.repeat(i));
@@ -357,17 +357,17 @@ SynQ.size = function(number, base, symbol) {
       m = size(i);
       p = false;
 
-      break _1MB;
+      break _1MiB;
     };
 
-  _64MB: // 64 MB
+  _64MiB: // 64 MiB
   for(j = l, l *= 10; p && i <= l; i += j)
     try {
       storage.setItem("$_TEST_$", s.repeat(i));
     } catch(e) {
       m = size(i);
 
-      break _64MB;
+      break _64MiB;
     };
 
   storage.clear();
