@@ -17,7 +17,8 @@
   * Q6) How much space {See note #3} do I have?
   * A6)   It depends on the browser {See note #4} but you can use SynQ.size() to find the current maximum.
           The highest is 5 MiB (5,242,880 b, with UTF-16 enabled) because JS uses UTF-16 characters {See note #4} by default.
-          SynQ.size([number:value[, number:base[, string:symbol]]]) also converts "value" in a SI foramatted string, e.g. "5Mb"
+          SynQ.size([number:value[, number:base[, string:symbol]]]) also converts "value" in a SI foramatted string,
+          e.g. SynQ.size(8214, 1000, "m") returns "8.214km"
   * Q7) What if I want more space {See note #3}?
   * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings);
           the available space will be doubled, max being 10 MiB (10,485,760 b, with UTF-16 disabled).
