@@ -242,7 +242,7 @@ SynQ.push = function(name, data, key) {
   else
     key = "";
 
-  if(UTF8) {
+  if(UTF8 && data) {
     var to_utf16 = function(a, b) {
       var s = function(c) {return ("00000000" + c.charCodeAt(0).toString(2)).slice(-8)};
       return String.fromCharCode(+("0b" + s(a) + (b? s(b): "")));
@@ -273,7 +273,7 @@ SynQ.pull = function(name, key) {
   else
     data = storage.getItem(SynQ.signature + name);
 
-  if(UTF8) {
+  if(UTF8 && data) {
     var from_utf16 = function(a) {
       var b, s = function(c) {return (((b = c.charCodeAt(0)) < 0xff? "": "00000000") + b.toString(2)).slice(-16)};
       return s(a);
@@ -326,7 +326,7 @@ SynQ.check = function(exclusive) {
 
   for(var item in storage)
     if(storage.hasOwnProperty(item))
-      if(exclusive && /synq\:\/\//.test(item))
+      if(exclusive && RegExp(SynQ.signature.replace(/(\W)/g, "\\$1")).test(item))
         size += storage[item].length | 0;
       else if(!exclusive)
         size += storage[item].length | 0;
