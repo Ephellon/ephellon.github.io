@@ -3,28 +3,33 @@
   * Simply call on SynQ([attribute-name]), and that's it
   * FAQ:
   * Q1) What if I don't want to update elements, just some data?
-  * A2) Use SynQ.push(string:name, string:data[, string:password]),
-        SynQ.pull(string:name[, string:password]),
-        OR SynQ.pop(string:name[, string:password])
+  * A2)   Use SynQ.push(string:name, string:data[, string:password]),
+          SynQ.pull(string:name[, string:password]),
+      AND SynQ.pop(string:name[, string:password])
   * Q2) What if I'd like to get rid of all of my data (in SynQ)?
-  * A2) Use SynQ.clear()**
+  * A2)   Use SynQ.clear([boolean:clear-all])**
   * Q3) What if I'd like to synchronize across my entire domain?
-  * A3) Set the use_global_synq_token to a defined value
+  * A3)   Set the [use_global_synq_token] variable to a defined value
   * Q4) How do I check on the status of my data?
-  * A4) You can use SynQ.data([boolean:show-private]) to show your data
+  * A4)   You can use SynQ.data([boolean:show-private]) to show your data
   * Q5) What about the other things I see under SynQ?
-  * A6) Those are for future technologies, but you can use them as you see fit.
+  * A5)   Those are for future technologies, but you can use them as you see fit.
+  * Q6) How much space do I have?
+  * A6)   It depends on the browser, but the most is 2.5 MiB (JS uses UTF-16 characters by default)
+  * Q7) What if I want more space?
+  * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will force UTF-8 data strings)
   *
   * ** SynQ.clear will only remove local*** items if the "use_global_synq_token" isn't set
   * *** By "local" I mean for a unique page identifier (URL), e.g. "https://example.com/page-1" won't share "local" data with ".../page-2"
   */
 
-var NO_NAME = "Resource name is missing.",
-    IE      = {
+var NO_NAME_ERROR   = "The resource name is missing.",
+    UTF8_ONLY_ERROR = "Only UTF-8 characters are allowed.",
+    IE              = {
       "addEventListener": "attachEvent",
       "dispatchEvent":    "fireEvent"
     },
-    use_global_synq_token, localStorage, sessionStorage, storage;
+    use_global_synq_token, use_utf8_synq_token, localStorage, sessionStorage, storage;
 
 // IE and Edge?
 for(var property in IE)
@@ -200,13 +205,30 @@ SynQ.data = function(all) {
 
 // Push (set) a resource
 SynQ.push = function(name, data, key) {
-  SynQ.prevent(name, [undefined, null], NO_NAME);
+  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
+
+  var UFT8;
+
+  if(UTF8 = use_utf8_synq_token != undefined)
+    SynQ.prevent(data, function(value){return /[^\u0000-\u00ff]/.test(value)}, UTF8_ONLY_ERROR);
 
   if(key != undefined && key != null)
     data = SynQ.lock(data, key),
     key  = ".";
   else
     key = "";
+
+  if(UTF8) {
+    var to_utf16 = function(a, b) {
+      var s = function(c) {return ("00000000" + c.charCodeAt(0).toString(2)).slice(-8)};
+      return String.fromCharCode(+("0b" + s(a) + (b? s(b): "")));
+    };
+
+    for(var index = 0, length = data.length, array = []; index < length;)
+      array.push(to_utf16(data[index++], data[index++]));
+
+    data = array.join("");
+  }
 
   storage.setItem(SynQ.signature + key + name, data);
 
@@ -215,21 +237,40 @@ SynQ.push = function(name, data, key) {
 
 // Pull (get) a resource
 SynQ.pull = function(name, key) {
-  SynQ.prevent(name, [undefined, null], NO_NAME);
+  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
 
-  var data;
+  var data, UTF8;
+
+  if(UTF8 = use_utf8_synq_token != undefined)
+    SynQ.prevent(data, function(value){return /[^\u0000-\u00ff]/.test(value)}, UTF8_ONLY_ERROR);
 
   if(key != undefined && key != null)
     data = SynQ.unlock(storage.getItem(SynQ.signature + "." + name), key);
   else
     data = storage.getItem(SynQ.signature + name);
 
+  if(UTF8) {
+    var from_utf16 = function(a) {
+      var b, s = function(c) {return (((b = c.charCodeAt(0)) < 0xff? "": "00000000") + b.toString(2)).slice(-16)};
+      return s(a);
+    };
+
+    for(var index = 0, length = data.length, array = []; index < length;)
+      array.push(from_utf16(data[index++]));
+
+    for(data = [], array = array.join("").split(/([01]{8})/), index = 0, length = array.length; index < length; index++)
+      if(array[index] != "")
+        data.push(String.fromCharCode(+("0b" + array[index])));
+
+    data = data.join("");
+  }
+
   return data;
 };
 
 // Remove a resource
 SynQ.pop = function(name, key) {
-  SynQ.prevent(name, [undefined, null, ""], NO_NAME);
+  SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR);
 
   var data = SynQ.pull(name, key);
 
@@ -242,8 +283,12 @@ SynQ.pop = function(name, key) {
 };
 
 // The "clear all" option
-SynQ.clear = function() {
-  var regexp = RegExp("^" + SynQ.signature.replace(/(\W)/g, "\\$1"));
+SynQ.clear = function(all) {
+  var regexp = RegExp("^(" +
+                 ("synq://" + SynQ.sign(location, 1) + "/").replace(/(\W)/g, "\\$1") +
+                 "|" +
+                 ("synq://" + SynQ.sign(location.origin, 1) + "/").replace(/(\W)/g, "\\$1")
+               + ")" + (all? ".+": "[^\\.].+") + "$");
 
   for(item in storage)
     if(regexp.test(item))
@@ -329,9 +374,22 @@ SynQ.sign = function(string, fidelity) {
 
 // Handle errors
 SynQ.prevent = function(variable, failures, message) {
-  for(var index = 0, length = failures.length; index < length; index++)
-    if(variable == failures[index])
-      throw new Error(message);
+  function test(a, b, c) {
+    if(a == b)
+      throw new Error(c);
+  };
+
+  // Array, *, *
+  if(variable instanceof Array)
+    for(var index = 0, length = variable.length; index < length; index++)
+      SynQ.prevent(variable[index], failures, message);
+  // *, Function, *
+  else if(failures instanceof Function)
+    test(failures(variable), true, message);
+  // *, Array, *
+  else if(failures instanceof Array)
+    for(var index = 0, length = failures.length; index < length; index++)
+      test(variable, failures[index], message);
 };
 
 // Polyfill - Mozilla
@@ -405,6 +463,13 @@ if(!("localStorage" in window))
 
         window.dispatchEvent(onstorage);
       },
+      writable:     false,
+      configurable: false,
+      enumerable:   false
+    });
+
+    Object.defineProperty(StorageObject, "cookie", {
+      value:        true,
       writable:     false,
       configurable: false,
       enumerable:   false
