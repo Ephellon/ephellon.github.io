@@ -399,17 +399,18 @@ SynQ.size = function(number, base, symbol) {
 
 SynQ.parseSize = function(size, base) {
   size = size
-    .replace(/.*([\d\. ]+[kMGTPEZY]|[\d\., ]+).*/, "$1")
+    .replace(/^\s*([\d\. ]+[zafpn\u00b5mkMGTPEZY]|[\d\., ]+).*/, "$1")
     .replace(/[^\w\.]/g, "")
-    .replace(/(\d*\.)(\d*)/, function($0, $1, $2, $_) {
+    .replace(/(\d+)?(\.\d+)?/, function($0, $1, $2, $_) {
+      $1 = $1 || ""; $2 = $2 || "";
       return $1 + $2.replace(/\./g, "");
     });
   base = base || 1024;
 
-  var sizes = "kMGTPEZY",
+  var sizes = "zafpn\u00b5m kMGTPEZY",
       tail  = size.replace((size = parseInt(size)), "");
 
-  return size * Math.pow(base, sizes.indexOf(tail) + 1);
+  return size * Math.pow(base, sizes.indexOf(tail) - 7);
 };
 
 // Lock and unlock data (weak security)
