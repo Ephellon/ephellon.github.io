@@ -20,11 +20,16 @@
   */
 
 var NO_NAME = "Resource name is missing.",
+    IE      = {
+      "addEventListener": "attachEvent",
+      "dispatchEvent":    "fireEvent"
+    },
     use_global_synq_token, localStorage, sessionStorage, storage;
 
 // IE and Edge?
-if(!("addEventListener" in window))
-  window.addEventListener = window.attachEvent;
+for(var property in IE)
+  if(IE.hasOwnProperty(property) && !(property in window))
+    window[ property ] = window[ IE[property] ];
 
 // The main function
 function SynQ(name) {
@@ -130,17 +135,33 @@ SynQ.eventlistener = function(event) {
 
 // Parse all URL types (even unconventional ones)
 SynQ.parseURL = function(url) {
-    var data = url.match(/^(([^:\/?#]+):)?\/{2}([^:\/?#]*)?(:\d+)?([^?#]*)(\?[^#]*)?(#.*)?/), i = 0;
+    var data = url.match(/^(([^:\/?#]+):)?\/{2}([^:\/?#]*)?(:\d+)?([^?#]*)(\?[^#]*)?(#.*)?$/),
+        i    = 0;
 
     return {
-        href:     data[i++],
-        protocol: data[i++],
-        scheme:   data[i++],
-        host:     data[i++],
-        port:     data[i++],
-        path:     data[i++],
-        search:   data[i++],
-        hash:     data[i++]
+        href:             data[i++],
+        protocol:         data[i++],
+        scheme:           data[i++],
+        host:             data[i++],
+        port:             data[i++],
+        path:             data[i++],
+        search:           data[i++],
+        searchParameters: (function(sd) {
+          parsing:
+          for(var i = 0, s = {}, d = (sd = sd || "").slice(1, sd.length).split("&"), n, p, c; i < d.length; i++) {
+            c = d[i].split("=", 2);
+            n = c[0] || "";
+
+            if(n == "")
+              continue parsing;
+
+            p = c[1] || "";
+            s[n] = p;
+          }
+
+          return s;
+        })(data[i - 1]),
+        hash:             data[i++]
     };
 };
 
@@ -222,7 +243,7 @@ SynQ.pop = function(name, key) {
 
 // The "clear all" option
 SynQ.clear = function() {
-  var regexp = RegExp("^" + SynQ.signature.replace(/(\W)/g, "\\$1") + "$");
+  var regexp = RegExp("^" + SynQ.signature.replace(/(\W)/g, "\\$1"));
 
   for(item in storage)
     if(regexp.test(item))
@@ -316,11 +337,13 @@ SynQ.prevent = function(variable, failures, message) {
 // Polyfill - Mozilla
 if(!("localStorage" in window))
   Object.defineProperty(window, "localStorage", new(function() {
-    var keys = [], StorageObject = {};
+    var keys          = [],
+        StorageObject = {},
+        onstorage     = new Event("storage", {bubbles: false, cancelable: false, composed: true});
 
     Object.defineProperty(StorageObject, "getItem", {
       value: function(key) {
-        return(key)?
+        return (key)?
           this[key]:
         null;
       },
@@ -342,7 +365,9 @@ if(!("localStorage" in window))
       value: function(key, value) {
         if(key == undefined || key == null)
           return;
+
         document.cookie = escape(key) + "=" + escape(value) + "; expires=Thu, Dec 31 2099 23:59:59 GMT; path=/";
+        window.dispatchEvent(onstorage);
       },
       writable:     false,
       configurable: false,
@@ -361,7 +386,9 @@ if(!("localStorage" in window))
       value: function(key) {
         if(key == undefined || key == null)
           return;
+
         document.cookie = escape(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        window.dispatchEvent(onstorage);
       },
       writable:     false,
       configurable: false,
@@ -372,8 +399,11 @@ if(!("localStorage" in window))
       value: function() {
         if(keys.length == undefined || key.slength == null)
           return;
+
         for(var key in keys)
           document.cookie = escape(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+
+        window.dispatchEvent(onstorage);
       },
       writable:     false,
       configurable: false,
@@ -415,6 +445,8 @@ if(use_global_synq_token == undefined)
   SynQ.signature = "synq://" + SynQ.sign(location, 1) + "/";
 else
   SynQ.signature = "synq://" + SynQ.sign(location.origin, 1) + "/";
+
+storage = window.localStorage;
 
 SynQ.eventlistener("SynQ initializer.");
 window.addEventListener("storage", window.onstorage = SynQ.eventlistener, false);
