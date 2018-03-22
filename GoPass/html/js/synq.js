@@ -5,7 +5,7 @@
   * Q1) What if I don't want to update elements, just some data?
   * A2)   Use SynQ.push(string:name, string:data[, string:password]),
           SynQ.pull(string:name[, string:password]),
-      AND SynQ.pop(string:name[, string:password])
+          SynQ.pop(string:name[, string:password])
   * Q2) What if I'd like to get rid of all of my data (in SynQ)?
   * A2)   Use SynQ.clear([boolean:clear-all])**
   * Q3) What if I'd like to synchronize across my entire domain?
@@ -14,13 +14,21 @@
   * A4)   You can use SynQ.data([boolean:show-private]) to show your data
   * Q5) What about the other things I see under SynQ?
   * A5)   Those are for future technologies, but you can use them as you see fit.
-  * Q6) How much space do I have?
-  * A6)   It depends on the browser, but the most is 2.5 MiB (JS uses UTF-16 characters by default)
-  * Q7) What if I want more space?
-  * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will force UTF-8 data strings)
+  * Q6) How much space^ do I have?
+  * A6)   It depends on the browser (use SynQ.size([number:value[, number:base[, string:symbol]]]) to find out),
+          but the highest is 2.5 MB (2.5 * 2^20 bits: 2,621,440) because JS uses UTF-16 characters^^ by default.
+  * Q7) What if I want more space^?
+  * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings),
+          the available space will be doubled (5.0 * 2^20 bits: 5,242,880).
+  * Q8) How can I see how much space I have left?
+  * A8)   Use
   *
   * ** SynQ.clear will only remove local*** items if the "use_global_synq_token" isn't set
   * *** By "local" I mean for a unique page identifier (URL), e.g. "https://example.com/page-1" won't share "local" data with ".../page-2"
+  * ^ Data units are given in Bytes (1B = 8b [0000 0000]), with no regard to encoding
+      e.g. if SynQ.check() returns "16" it means 16 Bytes (i.e. 16 UTF-8 characters)
+  * ^^ According to [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage),
+       pretty sure they know what they're talking about
   */
 
 var NO_NAME_ERROR   = "The resource name is missing.",
@@ -35,6 +43,19 @@ var NO_NAME_ERROR   = "The resource name is missing.",
 for(var property in IE)
   if(IE.hasOwnProperty(property) && !(property in window))
     window[ property ] = window[ IE[property] ];
+
+// Helpers
+isNaN = isNaN || function(number) {
+  return !(+number < Infinity);
+};
+
+parseInt = parseInt || function(number) {
+  return +((number + "").replace(/^\s*(\d+).+/, "$1"));
+};
+
+parseFloat = parseFloat || function(number) {
+  return +((number + "").replace(/^\s*(\d+\.\d*|\d*\.\d+).+/, "$1"));
+};
 
 // The main function
 function SynQ(name) {
@@ -293,6 +314,92 @@ SynQ.clear = function(all) {
   for(item in storage)
     if(regexp.test(item))
       storage.removeItem(item);
+};
+
+// How much space is in use?
+SynQ.check = function(exclusive) {
+  var max  = SynQ.size(),
+      size = 0;
+
+  for(var item in storage)
+    if(storage.hasOwnProperty(item))
+      if(exclusive && /synq\:\/\//.test(item))
+        size += storage[item].length | 0;
+      else if(!exclusive)
+        size += storage[item].length | 0;
+
+  return size;
+};
+
+// Test data limits (in Bytes)
+// or return an SI formated value
+SynQ.size = function(number, base, symbol) {
+  var backup = {},
+      size   = function(n, b, s) {
+        for(var k = "kMGTPEZY", x = 0, g = k.length, b = b || 1024, s = "B"; (x < g) && (n >= Math.pow(b, x)); x++)
+          n /= b;
+        return n + (k[x - 1] || "") + s;
+      };
+
+  for(var n in storage)
+    backup[n] = storage[n];
+
+  storage.clear();
+
+  _1MB: // 1 MB
+  for(var s = "_", i = 1, j, l = 1024 * 1024, p = true, m; i <= l; i *= 2)
+    try {
+      storage.setItem("$_TEST_$", s.repeat(i));
+    } catch(e) {
+      m = size(i);
+      p = false;
+
+      break _1MB;
+    };
+
+  _64MB: // 64 MB
+  for(j = l, l *= 10; p && i <= l; i += j)
+    try {
+      storage.setItem("$_TEST_$", s.repeat(i));
+    } catch(e) {
+      m = size(i);
+
+      break _64MB;
+    };
+
+  storage.clear();
+
+  for(var n in backup)
+    storage[n] = backup[n];
+
+  SynQ.size = function(number, base, symbol) {
+    return (number == undefined || number == null)?
+      SynQ.size.max || "0B":
+    SynQ.size.convert(+number, base, symbol)
+  };
+
+  SynQ.size.convert = size;
+  SynQ.size.max = i;
+
+  if(number != undefined && number != null)
+    return SynQ.size(number, base, symbol);
+
+  return i;
+};
+
+SynQ.parseSize = function(size, base) {
+  size = size
+    .replace(/.*([\d\. ]+[kMGTPEZY]|[\d\., ]+).*/, "$1")
+    .replace(/[^\w\.]/g, "")
+    .replace(/(\d*\.)(\d*)/, function($0, $1, $2, $_) {
+      return $1 + $2.replace(/\./g, "");
+    });
+  base = base || 1024;
+
+  var sizes = "kMGTPEZY",
+      tail  = size.replace((size = parseInt(size)), "");
+
+  return size * Math.pow(base, sizes.indexOf(tail) + 1);
 };
 
 // Lock and unlock data (weak security)
