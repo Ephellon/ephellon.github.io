@@ -322,8 +322,7 @@ SynQ.clear = function(all) {
 
 // How much space is in use?
 SynQ.check = function(exclusive) {
-  var max  = SynQ.size(),
-      size = 0;
+  var size = 0;
 
   for(var item in storage)
     if(storage.hasOwnProperty(item))
@@ -340,8 +339,15 @@ SynQ.check = function(exclusive) {
 SynQ.size = function(number, base, symbol) {
   var backup = {},
       size   = function(n, b, s) {
-        for(var k = "kMGTPEZY", x = 0, g = k.length, b = b || 1024, s = s || "iB"; (x < g) && (n >= Math.pow(b, x)); x++)
-          n /= b;
+        b = b || 1024; s = s || "iB";
+
+        if(n < b && n > -b)
+          for(var k = "m\u00b5npfaz", x = 0, g = k.length; (x < g) && (n < 1); x++)
+            n *= b;
+        else
+          for(var k = "kMGTPEZY", x = 0, g = k.length; (x < g) && (n >= Math.pow(b, x)); x++)
+            n /= b;
+
         return n + (k[x - 1] || "") + s;
       };
 
