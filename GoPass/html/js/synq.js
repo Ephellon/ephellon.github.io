@@ -1,6 +1,7 @@
 /** Ephellon Dantzler - 2015, 2018
   * How to use ([...] is optional):
   * Simply call on SynQ([attribute-name]), and that's it
+  * For in depth help, use SynQ.help([string:item-name])
   * FAQ:
   * Q1) What if I don't want to update elements, just some data?
   * A2)   Use SynQ.push(string:name, string:data[, string:password]),
@@ -257,7 +258,7 @@ SynQ.push = function(name, data, key) {
 
   storage.setItem(SynQ.signature + key + name, data);
 
-  return data;
+  return SynQ.last.push(name), data;
 };
 
 // Pull (get) a resource
@@ -270,7 +271,7 @@ SynQ.pull = function(name, key) {
     SynQ.prevent(data, /[^\u0000-\u00ff]/, UTF8_ONLY_ERROR);
 
   if(key != undefined && key != null)
-    data = SynQ.unlock(storage.getItem(SynQ.signature + "." + name), key);
+    data = storage.getItem(SynQ.signature + "." + name);
   else
     data = storage.getItem(SynQ.signature + name);
 
@@ -290,11 +291,16 @@ SynQ.pull = function(name, key) {
     data = data.join("");
   }
 
+  if(key != undefined && key != null)
+    data = SynQ.unlock(data, key);
+
   return data;
 };
 
 // Remove a resource
 SynQ.pop = function(name, key) {
+  name = name || SynQ.last.pop();
+
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR);
 
   var data = SynQ.pull(name, key);
@@ -397,15 +403,17 @@ SynQ.size = function(number, base, symbol) {
   return i;
 };
 
-SynQ.parseSize = function(size, base) {
+SynQ.parseSize = function(size, base, symbol) {
+  base = base || 1024;
+  symbol = symbol || "iB";
   size = size
     .replace(/^\s*([\d\. ]+[zafpn\u00b5mkMGTPEZY]|[\d\., ]+).*/, "$1")
     .replace(/[^\w\.]/g, "")
+    .replace(symbol, "")
     .replace(/(\d+)?(\.\d+)?/, function($0, $1, $2, $_) {
       $1 = $1 || ""; $2 = $2 || "";
       return $1 + $2.replace(/\./g, "");
     });
-  base = base || 1024;
 
   var sizes = "zafpn\u00b5m kMGTPEZY",
       tail  = size.replace((size = parseInt(size)), "");
@@ -622,6 +630,136 @@ if(!("localStorage" in window))
     this.configurable = false;
     this.enumerable   = true;
   })());
+
+// Helper
+SynQ.help = function(item) {
+  if(item == undefined || item == null)
+    item = "help";
+
+  item = item.replace(/[^a-z\d]|\bsynq\./gi, "");
+
+  var m, i = item.toLowerCase();
+
+  switch(i) {
+    case 'check':
+      m = "Returns the number of bytes (1B = 8b) in use./~Usage: $.@([synq-only])/~Arguments: [Boolean]/~Returns: Integer//synq-only: when set to true, will ony return the amount of owned space $ is using."
+      break;
+
+    case 'clear':
+      m = "Removes all owned items from storage (related to $)./~Usage: $.@([remove-all])/~Arguments: [Boolean]/~Returns: Undefined//remove-all: if set to true, will remove all private items too."
+      break;
+
+    case 'data':
+      m = "Returns the currently owned storage items./~Usage: $.@([show-all])/~Arguments: Boolean/~Returns: Object//show-all: when set to true, will return private items as well."
+      break;
+
+    case 'decodeurl':
+      m = "Decodes a URL string./~Usage: $.@(URL)/~Arguments: String/~Returns: String"
+      break;
+
+    case 'encodeurl':
+      m = "Encodes a URL string./~Usage: $.@(URL)/~Arguments: String/~Returns: String"
+      break;
+
+    case 'esc':
+      m = "The list delimeter for SynQ to use when storing element values./~Usage: $.@ = delimeter/~Types: String"
+      break;
+
+    case 'eventlistener':
+      m = "The Event Listener for $ (fires automatically from $)./~Usage: $.@(event)/~Arguments: Object/~Returns: Undefined"
+      break;
+
+    case 'help':
+      m = "Displays help messages./~Usage: $.@(item-name)/~Arguments: String/~Returns: String"
+      break;
+
+    case 'isnan':
+      m = "Tests to see if an object is a number or not./~Usage: @(object)/~Arguments: */~Returns: Boolean"
+      break;
+
+    case 'last':
+      m = "An array that's used to hold each item's name in the order they're created./~Usage: $.@ = ['name-1', 'name-2'...]/~Types: Array"
+      break;
+
+    case 'lock':
+    case 'unlock':
+      m = "Locks and unlocks a string./~Usage: $.@(data, key)/~Arguments: String, String/~Returns: String"
+      break;
+
+    case 'parsefloat':
+    case 'parseint':
+      m = "Returns a number from an object./~Usage: @(object)/~Arguments: */~Returns: Number | NaN"
+      break;
+
+    case 'parsesize':
+      m = "Returns a number* from an SI formatted** string./~Usage: $.@(number)/~Arguments: String/~Returns: Number//* Does not recognize 'd' (deci), 'h' (hecto) or 'c' (centi)/** Such as '1GB' or '500km'."
+      break;
+
+    case 'parseurl':
+      m = "Returns a URL object./~Usage: $.@(URL)/~Arguments: String/~Returns: Object => {href, protocol, scheme, host, port, path, search, searchParameters}"
+      break;
+
+    case 'pop':
+      m = "Removes, and returns the item from storage./~Usage: $.@([name[, key]])/~Argumments: [String[, String]]/~Returns: String//name: the name of the item to fetch. If left empty, will use the name of the last item created./key: the password to unlock the data with."
+      break;
+
+    case 'prevent':
+      m = "Used to prevent a value from being used./~Usage: $.@(variable, illegal-values, error-message)/~Arguments: (Array|String), (Array|RegExp), String/~Returns: Undefined/~Throws: Error(message)"
+      break;
+
+    case 'pull':
+      m = "Returns the item from the storage./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with."
+      break;
+
+    case 'push':
+      m = "Adds the item to the storage./~Usage: $.@(name, data[, key])/~Arguments: String, String[, String]/~Returns: String data//key: the password to lock the data with."
+      break;
+
+    case 'salt':
+      m = "Salts (encrypts) a string, usually a password./~Usage: $.@(string)/~Arguments: String/~Returns: String"
+      break;
+
+    case 'sign':
+      m = "Hashes a string (think of SHA, or MD5)./~Usage: $.@(string[, fidelity-level])/~Arguments: String[, Float]/~Returns: String//fidelity-level: determines the size of the returned string. The closer to 1 the level is, the shorter the string."
+      break;
+
+    case 'size':
+      m = "1. Returns the maximum amount of space for the storage (in bytes; 1B = 8b)/~Usage: $.@()/~Arguments: NONE/~Returns: Integer//2. Returns the SI formatted version of the given number./~Usage: $.@(number[base, [symbol]])/~Arguments: Number[, Number[, String]]/~Returns: String//base: the base to use, e.g. 1000; default is 1024./symbol: the symbol to append to the returned string, default is 'iB'."
+      break;
+
+    case 'syn':
+      m = "The attribute name(s) for elements to update./~Usage: $.@ = ['name-1', 'name-2'...]/~Types: Array, String"
+      break;
+
+    case 'synq':
+      m = "The main function and container. Updates the storage, while also updating all 'attached' elements./~Usage: $([attribute-name])/~Arguments: String/~Returns: Undefined//attribute-name: if you want to use multiple names, then set the SynQ.syn property."
+      break;
+
+    case 'useglobalsynqtoken':
+      m = "Used to determine if $ should use a local* or global** name.//* $ will save all data for the current URL only, i.e. http:github.com\\page-1 will not have access to http:github.com\\page-2./** $ will save all data for the current host, i.e. http:github.com will be used by $, instead of http:github.com\\page-n."
+      break;
+
+    case 'useutf8synqtoken':
+      m = "Used to instruct SynQ to save data as UTF-16 streams. E.g. 'acdf' will be combined into 'be' (as an example). It does this by combining UTF-8 characters (\u0000 - \u00ff), and generating a UTF-16 character (\u0100 - \uffff)."
+      break;
+
+    case '':
+    case '*':
+      m = "Help is available for the following items:/isNaN/$/$.check/$.clear/$.data/$.decodeURL/$.encodeURL/$.esc/$.eventlistener/$.last/$.lock/$.parseFloat/$.parseInt/$.parseSize/$.parseURL/$.pop/$.prevent/$.pull/$.push/$.salt/$.sign/$.syn/use_global_synq_token/use_utf8_synq_token"
+      break;
+
+    default:
+      m = "Sorry, couldn't find '@'; try $.help('*') to list all items that have help messages."
+      break;
+  }
+
+  m = ("/" + m + "/").replace(/\//g, "\n").replace(/~/g, "\t").replace(/\$/g, "SynQ").replace(/@/g, item).replace(/\\/g, "/").replace(/http\:/g, "http://");
+
+  return m;
+};
+
+// Last item(s)
+SynQ.last = [];
 
 // Auto-update & run
 if(use_global_synq_token == undefined)
