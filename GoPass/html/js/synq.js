@@ -42,24 +42,77 @@ var NO_NAME_ERROR   = "The resource name is missing.",
       "addEventListener": "attachEvent",
       "dispatchEvent":    "fireEvent"
     },
-    use_global_synq_token, use_utf8_synq_token, localStorage, sessionStorage, storage;
+    use_global_synq_token, use_utf8_synq_token, localStorage, sessionStorage, storage, connection;
 
 // IE and Edge?
 for(var property in IE)
   if(IE.hasOwnProperty(property) && !(property in window))
     window[ property ] = window[ IE[property] ];
 
-// Helper functions not under SynQ
-isNaN = isNaN || function(number) {
+/* Helper functions not under SynQ */
+// is the object NaN
+function isNaN(number) {
   return !(+number < Infinity);
 };
 
-parseInt = parseInt || function(number) {
+// return an integer from a string
+function parseInt(number) {
   return +((number + "").replace(/^\s*(\d+).+/, "$1"));
 };
 
-parseFloat = parseFloat || function(number) {
+// return a float from a string
+function parseFloat(number) {
   return +((number + "").replace(/^\s*(\d+\.\d*|\d*\.\d+).+/, "$1"));
+};
+
+// ping an address
+// https://stackoverflow.com/questions/4282151/is-it-possible-to-ping-a-server-from-javascript
+// Powered by: Lorem Picsum
+function ping(address, options) {
+  if(ping.inUse)
+    return 'Currently pinging address, please wait.';
+
+  var fallback = {
+    callback: function() { return arguments },
+    pass:     function() {},
+    fail:     function() {},
+    timeout:  10000
+  };
+
+  address = address || "picsum.photos/512/?random";
+  options = options || fallback;
+
+  ping.inUse    = true;
+  ping.address  = address;
+  ping.callback = options.callback || fallback.callback;
+  ping.pass     = options.pass || fallback.pass;
+  ping.fail     = options.fail || fallback.fail;
+
+  ping.ping = new Image();
+  ping.clear = function(status) {
+    clearTimeout(ping.timeout);
+    ping.inUse = false;
+
+    var time = +(new Date) - ping.start,
+        size = (ping.ping.height * ping.ping.width) || 1;
+
+    return ping.callback.call(null, ping.trip = {
+      time:    time,
+      status:  (status? "pass": "fail"),
+      address: ping.address,
+      resolve: ping.ping.src,
+      size:    size,
+      speed:   size / (time / 1000),
+      uplink:  size / (time / 500)
+    });
+  };
+
+  ping.ping.onload  = function() { return ping.clear(!0), ping.pass.call(null, arguments); };
+  ping.ping.onerror = function() { return ping.clear(!1), ping.fail.call(null, arguments); };
+
+  ping.start    = +(new Date);
+  ping.ping.src = 'https://' + address;
+  ping.timeout  = setTimeout(ping.fail, options.timeout || fallback.timeout);
 };
 
 // The main function
@@ -372,6 +425,13 @@ SynQ.pop = function(name, key) {
 // Broadcast to a global storage
 SynQ.broadcast = function(name, data, key) {
   SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
+
+  if(data == undefined || data == null) {
+    key = (key? '.': '');
+    return key + SynQ.sign(key + name)
+      .replace(/(.{1,4})(.{1,2})?(.{1,2})?(.{1,2})?(.{1,6})?(.{1,12})?/, "$1-$2-$3-$4-$5:$6")
+      .replace(/[\-\:]+$/, "");
+  }
 
   data = data.toString();
 
@@ -791,6 +851,10 @@ SynQ.help = function(item) {
       m = "Returns a URL object./~Usage: $.@(URL)/~Arguments: String/~Returns: Object => {href, protocol, scheme, host, port, path, search, searchParameters}"
       break;
 
+    case 'ping':
+      m = "Pings an address. If no address is given, then pings a random address. Powered by Lorem Picsum (https:picsum.photos)./~Usage: $.@(address[, options])/~Arguments: String[, Object => {callback, pass, fail, timeout}]/~Returns: Undefined//address: must be an address to an image./return: calls on <callback> using ping.trip (which houses the trip information).//ping.trip => {/~address: <address>/~resolve: <image.address>/~size: <image.height * image.width>/~speed: <size \\ time>/~status: 'pass' | 'fail'/~time: <ping -> time>/~uplink: <speed \\ 2>/}";
+      break;
+
     case 'pop':
       m = "Removes, and returns the item from storage./~Usage: $.@([name[, key]])/~Argumments: [String[, String]]/~Returns: String//name: the name of the item to fetch. If left empty, will use the name of the last item created./key: the password to unlock the data with."
       break;
@@ -812,7 +876,7 @@ SynQ.help = function(item) {
       break;
 
     case 'retrieve':
-      m = "Retruns data from the global storage item (see also, '$.broadcast')./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with.";
+      m = "Retruns data from the global storage item (see also, '$.broadcast')./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with./return: if no data is given, then the UUID for <name> will be returned.";
       break;
 
     case 'salt':
@@ -853,7 +917,7 @@ SynQ.help = function(item) {
 
     case '':
     case '*':
-      m = "Help is available for the following items://isNaN/$/$.addEventListener/$.available/$.broadcast/$.cage/$.clear/$.decodeURL/$.encodeURL/$.esc/$.eventlistener/$.last/$.list/$.lock/$.parseFloat/$.parseFunction/$.parseInt/$.parseSize/$.parseURL/$.pop/$.prevent/$.pull/$.push/$.removeEventListener/$.retrieve/$.salt/$.sign/$.syn/$.triggerEvent/use_global_synq_token/use_utf8_synq_token"
+      m = "Help is available for the following items://isNaN/ping/$/~addEventListener/~available/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/use_global_synq_token/use_utf8_synq_token"
       break;
 
     default:
@@ -988,6 +1052,87 @@ if(!("localStorage" in window))
   })());
 
 storage = window.localStorage;
+
+// navigator.connection - Mozilla / Ephellon
+if(!("NetworkInformation" in window))
+  Object.defineProperty(window, "NetworkInformation", new(function() {
+    var keys            = [],
+        NetworkObject   = {},
+        onnetwork       = new Event("online", {bubbles: false, cancelable: false, composed: true});
+
+    ping("", {
+      callback: function(TripInformation) {
+        var k = 1000, M = k * k,
+            t = TripInformation, s = t.speed / k, m = t.time / k;
+
+        Object.defineProperty(NetworkObject, "downlink", {
+          value:        (s - (s % 25)) / 25,
+          writable:     false,
+          configurable: false,
+          enumerable:   true
+        });
+
+        Object.defineProperty(NetworkObject, "downlinkMax", {
+          value:        (s | 0),
+          writable:     false,
+          configurable: false,
+          enumerable:   true
+        });
+
+        Object.defineProperty(NetworkObject, "effectiveType", {
+          value: (function(speed) {
+            if(speed < 500)
+              return '4g';
+            if(speed < 500 * k)
+              return '3g';
+            if(speed < 500 * M)
+              return '2g';
+            return 'slow-2g';
+          })(s),
+          writable:     false,
+          configurable: false,
+          enumerable:   true
+        });
+
+        Object.defineProperty(NetworkObject, "onchange", {
+          value:        null,
+          writable:     true,
+          configurable: false,
+          enumerable:   true
+        });
+
+        Object.defineProperty(NetworkObject, "rtt", {
+          value:        (m - (m % 25)) / 25,
+          writable:     false,
+          configurable: false,
+          enumerable:   true
+        });
+
+        Object.defineProperty(NetworkObject, "saveData", {
+          value:        false,
+          writable:     true,
+          configurable: false,
+          enumerable:   true
+        });
+
+        Object.defineProperty(NetworkObject, "type", {
+          value:        'unknown',
+          writable:     false,
+          configurable: false,
+          enumerable:   true
+        });
+      }
+    });
+
+    this.get = function() {
+      return NetworkObject;
+    };
+
+    this.configurable = false;
+    this.enumerable   = true;
+  })());
+
+connection = navigator.connection || new NetworkInformation();
 
 /* Setup and auto-management */
 // Auto-update & run
