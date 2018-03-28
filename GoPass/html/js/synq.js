@@ -727,6 +727,9 @@ SynQ.parseURL = function(url) {
         data = url.match(/^(([^:\/?#]+):)?\/{2}([^:\/?#]*)?(:\d+)?([^?#]*)(\?[^#]*)?(#.*)?$/),
         i    = 0;
 
+  if(data == null)
+    return {};
+
     return {
         href:             data[i++],
         protocol:         data[i++],
