@@ -281,13 +281,15 @@ SynQ.removeEventListener = function(name, parent) {
   if(parent)
     return SynQ[i] = false, SynQ.pop(SynQ.eventName + '/' + parent + '/#' + name);
 
-  var name = SynQ.eventName + '/' + events[index] + '/#',
-      events = SynQ.events.split(' '),
+  var events = SynQ.events.split(' '),
       popped = [];
 
-  for(var index = 0; index < array.length; index++)
-    for(var s = SynQ.pop(name + 0).split(','), i = 0, l = sub.length; i < l; i++)
-      popped.push(SynQ.pop(name + s[i]));
+  for(var index = 0, listener, values; index < events.length; index++)
+    if(listener = SynQ.pop((parent = SynQ.eventName + '/' + events[index] + '/#') + name))
+      values = SynQ.pop(parent += 0).split(','),
+      values.splice(values.indexOf(name), 1),
+      SynQ.push(parent, values + ""),
+      popped.push(listener);
 
   return SynQ[i] = false, popped;
 };
