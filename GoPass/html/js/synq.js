@@ -364,7 +364,7 @@ SynQ.clear = function(all) {
     if(regexp.test(item))
       storage.removeItem(item);
 
-  return SynQ.triggerEvent('clear', undefined);
+  return SynQ.triggerEvent('clear');
 };
 
 // Push (set) a resource
@@ -395,7 +395,7 @@ SynQ.push = function(name, data, key) {
 
   SynQ.last.push(name);
 
-  return SynQ.triggerEvent('push', data);
+  return SynQ.triggerEvent('push', name);
 };
 
 // Pull (get) a resource
@@ -914,7 +914,7 @@ SynQ.help = function(item) {
       break;
 
     case 'push':
-      m = "Adds the item to the storage./~Usage: $.@(name, data[, key])/~Arguments: String, String[, String]/~Returns: <data>//key: the password to lock the data with."
+      m = "Adds the item to the storage./~Usage: $.@(name, data[, key])/~Arguments: String, String[, String]/~Returns: <name>//key: the password to lock the data with."
       break;
 
     case 'removeeventlistener':
