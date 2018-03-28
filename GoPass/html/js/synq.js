@@ -77,9 +77,11 @@ function ping(address, options) {
     pass:     function() {},
     fail:     function() {},
     timeout:  10000
-  };
+  },
+      x = ((Math.random() * 638) | 0) + 126,
+      y = ((Math.random() * 638) | 0) + 126;
 
-  address = address || "picsum.photos/512/?random";
+  address = address || "picsum.photos/" + y + "/" + x + "/?random";
   options = options || fallback;
 
   ping.inUse    = true;
@@ -94,7 +96,7 @@ function ping(address, options) {
     ping.inUse = false;
 
     var time = +(new Date) - ping.start,
-        size = (ping.ping.height * ping.ping.width) || 1;
+        size = (ping.ping.height * ping.ping.width * 48) || 1;
 
     return ping.callback.call(null, ping.trip = {
       time:    time,
@@ -102,8 +104,8 @@ function ping(address, options) {
       address: ping.address,
       resolve: ping.ping.src,
       size:    size,
-      speed:   size / (time / 1000),
-      uplink:  size / (time / 500)
+      speed:   ((size / time) | 0),
+      uplink:  ((size / time / 2) | 0)
     });
   };
 
@@ -201,22 +203,22 @@ SynQ.eventlistener = function(event) {
   }
 
   update:
-  for(var index = 0, values, value, uuids, uuid, element, lead, attr; index < query.length; index++) {
+  for(var index = 0, values, value, uuids, uuid, element, skip, attr; index < query.length; index++) {
     element = query[index];
     values  = SynQ.pull(".values");
     attr    = element.attributes;
     uuid    = ('synq-uuid' in attr)? attr['synq-uuid'].value: null;
 
-    // Don't overwrite lead elements (similar to CSS' z-index; higher number = higher priority)
-    // synq-lead = number of times to ignore SynQ'ing
-    if("synq-lead" in attr) {
-      lead = +attr['synq-lead'].value;
-      lead |= 0;
-      if(lead > 0) {
-        element.setAttribute('synq-lead', --lead);
+    // Don't overwrite skip elements (higher number = higher priority)
+    // synq-skip = number of times to ignore SynQ'ing
+    if("synq-skip" in attr) {
+      skip = +attr['synq-skip'].value;
+      skip |= 0;
+      if(skip > 0) {
+        element.setAttribute('synq-skip', --skip);
         continue update;
       } else {
-        element.removeAttribute('synq-lead');
+        element.removeAttribute('synq-skip');
       }
     }
 
@@ -334,8 +336,7 @@ SynQ.decodeURL = function(url) {
 // List all of the current SynQ's data (paths)
 SynQ.list = function(all) {
   var regexp = RegExp("^(" +
-                 ("synq://localhost:(443|80)\/.*") +
-                 "|" +
+                 (use_global_synq_token != undefined? "synq://localhost:(443|80)\/.*|": "") +
                  ("synq://" + SynQ.sign(location, 1) + "/").replace(/(\W)/g, "\\$1") +
                  "|" +
                  ("synq://" + SynQ.sign(location.origin, 1) + "/").replace(/(\W)/g, "\\$1")
@@ -666,7 +667,7 @@ SynQ.sign = function(string, fidelity) {
       gamma = 0,
       method;
 
-  fidelity = 18 - Math.floor((fidelity || 0) * 16);
+  fidelity = 18 - (((fidelity || 0) * 16) | 0);
   method = function(s) {
     return (s != undefined)? s.charCodeAt(0): s;
   };
@@ -802,7 +803,7 @@ SynQ.help = function(item) {
       m = "Synchronizes an element's outerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
       break;
 
-    case 'lead':
+    case 'skip':
       m = "Delays synchronizing an element. Especially useful for multiple IFRAMEs with access to the parent document./~Usage: <% $-@=number-of-delays>...<\\%>/~Interpreted Type: Number//$-@: defaults to 0 if no value is given.";
       break;
 
@@ -959,7 +960,7 @@ SynQ.help = function(item) {
 
     case '':
     case '*':
-      m = "Help is available for the following items://<!-- HTML -->//synq-data/synq-html/synq-lead/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~available/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/use_global_synq_token/use_utf8_synq_token"
+      m = "Help is available for the following items://<!-- HTML -->//synq-data/synq-html/synq-skip/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~available/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/use_global_synq_token/use_utf8_synq_token"
       break;
 
     default:
@@ -1107,17 +1108,21 @@ if(!("NetworkInformation" in window))
     ping("", {
       callback: function(TripInformation) {
         var k = 1000, M = k * k,
-            t = TripInformation, s = t.speed / k, m = t.time / k;
+            t = TripInformation, s = t.speed, m = t.time,
+            r = function(x, y) { return (x / y) - ((x / y) % y) };
+
+        s = r(s, 25);
+        m = r(m, 25);
 
         Object.defineProperty(NetworkObject, "downlink", {
-          value:        (s - (s % 25)) / 25,
+          value:        s,
           writable:     false,
           configurable: false,
           enumerable:   true
         });
 
         Object.defineProperty(NetworkObject, "downlinkMax", {
-          value:        (s | 0),
+          value:        s,
           writable:     false,
           configurable: false,
           enumerable:   true
@@ -1146,7 +1151,7 @@ if(!("NetworkInformation" in window))
         });
 
         Object.defineProperty(NetworkObject, "rtt", {
-          value:        (m - (m % 25)) / 25,
+          value:        m,
           writable:     false,
           configurable: false,
           enumerable:   true
