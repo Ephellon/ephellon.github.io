@@ -144,20 +144,22 @@ function SynQ(name) {
     info          = element.tagName;
     attr          = element.attributes;
     id            = ('id' in attr)? attr.id.value: null;
-    uuid          = ('uuid' in attr)? attr.uuid.value: null;
+    uuid          = ('synq-uuid' in attr)? attr['synq-uuid'].value: null;
     copies[info] |= 0;
 
     // Add copies of elements for the UUID to work properly
-    info += (id != null)?
-      "#" + id:
+    info += (id != null || uuid != null)?
+      "#" + (id || uuid):
     ":nth-child(" + (++copies[info]) + ")";
 
-    // Push the element's UUID
-    uuid = SynQ.sign(info, 1);
-    uuids.push(uuid);
+    if(uuid == null) {
+      // Push the element's UUID
+      uuid = SynQ.sign(info, 1);
+      uuids.push(uuid);
 
-    // Set the element's UUID for future references
-    element.setAttribute("uuid", uuid);
+      // Set the element's UUID for future references
+      element.setAttribute('synq-uuid', uuid);
+    }
 
     // Push the messages
     value = fetch(element);
@@ -203,7 +205,7 @@ SynQ.eventlistener = function(event) {
     element = query[index];
     values  = SynQ.pull(".values");
     attr    = element.attributes;
-    uuid    = ('uuid' in attr)? attr.uuid.value: null;
+    uuid    = ('synq-uuid' in attr)? attr['synq-uuid'].value: null;
 
     // Don't overwrite lead elements (similar to CSS' z-index; higher number = higher priority)
     // synq-lead = number of times to ignore SynQ'ing
@@ -808,6 +810,10 @@ SynQ.help = function(item) {
       m = "Synchronizes an element's innerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
       break;
 
+    case 'uuid':
+      m = "The UUID that SynQ generates for each synchronized element./~Usage: <% $-@=static-uuid>...<\\%>/~Interpreted Type: String//$-@: if you set this sttribute, all copies of the element will need to have the same value.";
+      break;
+
     /* JS */
     case 'addeventlistener':
       m = "Adds an event listener to SynQ's push, pull, pop, or clear method./~Usage: $.@(event-name, action)/~Arguments: String, Function/~Returns: Number//event-name: {events}./return: the number of events attached";
@@ -953,7 +959,7 @@ SynQ.help = function(item) {
 
     case '':
     case '*':
-      m = "Help is available for the following items://<!-- HTML -->//synq-data/synq-html/synq-lead/synq-html//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~available/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/use_global_synq_token/use_utf8_synq_token"
+      m = "Help is available for the following items://<!-- HTML -->//synq-data/synq-html/synq-lead/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~available/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/use_global_synq_token/use_utf8_synq_token"
       break;
 
     default:
