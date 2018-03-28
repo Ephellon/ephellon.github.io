@@ -138,15 +138,17 @@ function SynQ(name) {
     return e[n];
   }
 
-  for(var index = 0, element, uuid, value, info, id; index < query.length; index++) {
+  for(var index = 0, element, uuid, value, info, id, attr; index < query.length; index++) {
     // Element information
     element       = query[index];
     info          = element.tagName;
-    id            = element.attributes.id;
+    attr          = element.attributes;
+    id            = ('id' in attr)? attr.id.value: null;
+    uuid          = ('uuid' in attr)? attr.uuid.value: null;
     copies[info] |= 0;
 
     // Add copies of elements for the UUID to work properly
-    info += (id != undefined && id != null)?
+    info += (id != null)?
       "#" + id:
     ":nth-child(" + (++copies[info]) + ")";
 
@@ -201,6 +203,7 @@ SynQ.eventlistener = function(event) {
     element = query[index];
     values  = SynQ.pull(".values");
     attr    = element.attributes;
+    uuid    = ('uuid' in attr)? attr.uuid.value: null;
 
     // Don't overwrite lead elements (similar to CSS' z-index; higher number = higher priority)
     // synq-lead = number of times to ignore SynQ'ing
@@ -217,11 +220,13 @@ SynQ.eventlistener = function(event) {
 
     if(values == undefined || values == null)
       break update;
+
     values = values.split(SynQ.esc);
+
     // UUID is set
     // Write confidently, even if the HTML document has changed
-    if(element.uuid != undefined && element.uuid != null)
-      value = SynQ.pull(".values#" + element.uuid) || values[index],
+    if(uuid != null)
+      value = SynQ.pull(".values#" + uuid) || values[index],
       write(element, value);
     // UUID isn't set
     // Write, assuming the HTML document hasn't changed
