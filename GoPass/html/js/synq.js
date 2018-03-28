@@ -256,7 +256,7 @@ SynQ.addEventListener = function(event, action) {
   var event  = SynQ.eventName + '/' + event + '/#',
       events = (SynQ.pull(event + 0) || "").split(','),
       fn     = SynQ.parseFunction(action),
-      name   = fn[2] || SynQ.sign(fn[0] + " => " + fn[1], 1);
+      name   = fn[2] || events.length;
 
   if(events.indexOf(name) < 0)
     events.push(name);
@@ -274,7 +274,7 @@ SynQ.removeEventListener = function(name, parent) {
   var i = '[[InternalAccess]]';
 
   if(SynQ[i])
-    return action;
+    return name;
   else
     SynQ[i] = true;
 
