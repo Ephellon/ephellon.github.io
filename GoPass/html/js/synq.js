@@ -287,7 +287,7 @@ SynQ.removeEventListener = function(name, parent) {
   for(var index = 0, listener, values; index < events.length; index++)
     if(listener = SynQ.pop((parent = SynQ.eventName + '/' + events[index] + '/#') + name))
       values = SynQ.pop(parent += 0).split(','),
-      values.splice(values.indexOf(name), 1),
+      values.splice(values.indexOf(name) - 1, 1),
       SynQ.push(parent, values + ""),
       popped.push(listener);
 
@@ -311,7 +311,9 @@ SynQ.triggerEvent = function(event, data) {
     fn = SynQ.parseFunction(SynQ.pull(event + events[index]));
     head = fn[0];
     body = fn[1];
+    SynQ[i] = false;
     new Function(head, body).call(null, data);
+    SynQ[i] = true;
   }
 
   return SynQ[i] = false, data;
