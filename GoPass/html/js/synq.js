@@ -197,14 +197,27 @@ SynQ.eventlistener = function(event) {
   }
 
   update:
-  for(var index = 0, values, value, uuids, uuid, element; index < query.length; index++) {
+  for(var index = 0, values, value, uuids, uuid, element, lead, attr; index < query.length; index++) {
     element = query[index];
     values  = SynQ.pull(".values");
+    attr    = element.attributes;
+
+    // Don't overwrite lead elements (similar to CSS' z-index; higher number = higher priority)
+    // synq-lead = number of times to ignore SynQ'ing
+    if("synq-lead" in attr) {
+      lead = +attr['synq-lead'].value;
+      lead |= 0;
+      if(lead > 0) {
+        element.setAttribute('synq-lead', --lead);
+        continue update;
+      } else {
+        element.removeAttribute('synq-lead');
+      }
+    }
 
     if(values == undefined || values == null)
       break update;
     values = values.split(SynQ.esc);
-
     // UUID is set
     // Write confidently, even if the HTML document has changed
     if(element.uuid != undefined && element.uuid != null)
