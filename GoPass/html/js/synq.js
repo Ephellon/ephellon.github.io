@@ -878,7 +878,7 @@ SynQ.help = function(item) {
       break;
 
     case 'parsefloat':
-    case 'parsparseint':
+    case 'parseint':
       m = "Returns a number from an object./~Usage: @(object)/~Arguments: */~Returns: Number | NaN"
       break;
 
