@@ -781,11 +781,29 @@ SynQ.help = function(item) {
   if(item == undefined || item == null)
     item = "help";
 
-  item = item.replace(/[^a-z\d]|\bsynq\./gi, "");
+  item = item.replace(/[^a-z\d]|\bsynq[\.\-]/gi, "");
 
   var m, i = item.toLowerCase();
 
   switch(i) {
+    /* HTML */
+    case 'data':
+      m = "Synchronizes an element's value, or innerHTML (priority to value)./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
+      break;
+
+    case 'html':
+      m = "Synchronizes an element's outerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
+      break;
+
+    case 'lead':
+      m = "Delays synchronizing an element. Especially useful for multiple IFRAMEs with access to the parent document./~Usage: <% $-@=number-of-delays>...<\\%>/~Interpreted Type: Number//$-@: defaults to 0 if no value is given.";
+      break;
+
+    case 'text':
+      m = "Synchronizes an element's innerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
+      break;
+
+    /* JS */
     case 'addeventlistener':
       m = "Adds an event listener to SynQ's push, pull, pop, or clear method./~Usage: $.@(event-name, action)/~Arguments: String, Function/~Returns: Number//event-name: {events}./return: the number of events attached";
       break;
@@ -930,7 +948,7 @@ SynQ.help = function(item) {
 
     case '':
     case '*':
-      m = "Help is available for the following items://isNaN/ping/$/~addEventListener/~available/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/use_global_synq_token/use_utf8_synq_token"
+      m = "Help is available for the following items://<!-- HTML -->//synq-data/synq-html/synq-lead/synq-html//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~available/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/use_global_synq_token/use_utf8_synq_token"
       break;
 
     default:
@@ -941,7 +959,9 @@ SynQ.help = function(item) {
   m = ("/" + m + "/")
     .replace(/\//g, "\n")
     .replace(/~/g, "\t")
+    .replace(/\$-/g, "synq-")
     .replace(/\$/g, "SynQ")
+    .replace(/%/g, "element")
     .replace(/@/g, item)
     .replace(/\\/g, "/")
     .replace(/http(s)?\:/g, "http$1://")
