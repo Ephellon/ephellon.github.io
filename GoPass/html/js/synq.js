@@ -723,12 +723,14 @@ SynQ.parseFunction = function(fn) {
 
 // Parse all URL types (even unconventional ones)
 SynQ.parseURL = function(url) {
+  if(url == undefined || url == null)
+    return {};
+
     var url  = url.toString(),
         data = url.match(/^(([^:\/?#]+):)?\/{2}([^:\/?#]*)?(:\d+)?([^?#]*)(\?[^#]*)?(#.*)?$/),
         i    = 0;
 
-  if(data == null)
-    return {};
+  data = data || "";
 
     return {
         href:             data[i++],
