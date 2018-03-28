@@ -22,16 +22,16 @@
           e.g. SynQ.size(8214, 1000, "m") returns "8.214km"
   * Q7) What if I want more space {See note #3}?
   * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings);
-          the available space will be doubled, max being 10 MiB (10,485,760 b, with UTF-16 disabled).
+          the used space will be doubled, max being 10 MiB (10,485,760 b, with UTF-16 disabled).
   * Q8) How can I see how much space I am using?
-  * A8)   Use SynQ.available([boolean:synq-data-only])
+  * A8)   Use SynQ.used([boolean:synq-data-only])
   *
   * Notes:
   * 1) SynQ.clear will only remove "local" {See note #2} items if the "use_global_synq_token" isn't set
   * 2) By "local" I mean per the unique page identifier (URL),
        i.e. "https://example.com/page-1" won't share data with ".../page-2"
   * 3) Data units are given in Bytes (1B = 8b [0000 0000]), with no regard to encoding.
-       E.g. if SynQ.available() returns "16" it means 16 Bytes (i.e. 16 UTF-8 characters)
+       E.g. if SynQ.used() returns "16" it means 16 Bytes (i.e. 16 UTF-8 characters)
   * 4) According to [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage),
        pretty sure they know what they're talking about
   */
@@ -597,7 +597,7 @@ SynQ.size = function(number, base, symbol) {
 };
 
 // How much space is in use?
-SynQ.available = function(exclusive) {
+SynQ.used = function(exclusive) {
   var size = 0;
 
   for(var item in storage)
@@ -798,7 +798,7 @@ SynQ.help = function(item) {
   switch(i) {
     /* HTML */
     case 'data':
-      m = "Synchronizes an element's value, or innerHTML (priority to value)./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
+      m = "Synchronizes an element's value, or innerText (priority to value)./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
       break;
 
     case 'html':
@@ -814,20 +814,16 @@ SynQ.help = function(item) {
       break;
 
     case 'uuid':
-      m = "The UUID that SynQ generates for each synchronized element./~Usage: <% $-@=static-uuid>...<\\%>/~Interpreted Type: String//$-@: if you set this sttribute, all copies of the element will need to have the same value.";
+      m = "The UUID that SynQ generates for each synchronized element./~Usage: <% $-@=static-uuid>...<\\%>/~Interpreted Type: String//$-@: if you set this attribute, all copies of the element will need to have the same value.";
       break;
 
     /* JS */
     case 'addeventlistener':
-      m = "Adds an event listener to SynQ's push, pull, pop, or clear method./~Usage: $.@(event-name, action)/~Arguments: String, Function/~Returns: Number//event-name: {events}./return: the number of events attached";
-      break;
-
-    case 'available':
-      m = "Returns the number of bytes (1B = 8b) in use./~Usage: $.@([synq-only])/~Arguments: [Boolean]/~Returns: Integer//synq-only: when set to true, will ony return the amount of owned space $ is using."
+      m = "Adds an event listener to SynQ's {events} method./~Usage: $.@(event-name, callback)/~Arguments: String, Function/~Returns: Number//event-name: {events}./return: the number of events attached";
       break;
 
     case 'broadcast':
-      m = "Adds data to the global storage item (see also, '$.retrieve')./~Usage: $.@(name, data)/~Arguments: String, String/~Returns: String//return: a UUID for the data.";
+      m = "Adds data to the global storage item (see also, '$.retrieve')./~Usage: $.@(name[, data[, key]])/~Arguments: String[, String[, String]]/~Returns: String//return: a UUID for the data./data: if no data is given, still returns the UUID./key: the password to lock the data with.";
       break;
 
     case 'cage':
@@ -897,7 +893,7 @@ SynQ.help = function(item) {
       break;
 
     case 'ping':
-      m = "Pings an address. If no address is given, then pings a random address. Powered by Lorem Picsum (https:picsum.photos)./~Usage: $.@(address[, options])/~Arguments: String[, Object => {callback, pass, fail, timeout}]/~Returns: Undefined//address: must be an address to an image./return: calls on <callback> using ping.trip (which houses the trip information).//ping.trip => {/~address: <address>/~resolve: <image.address>/~size: <image.height * image.width>/~speed: <size \\ time>/~status: 'pass' | 'fail'/~time: <ping -> time>/~uplink: <speed \\ 2>/}";
+      m = "Pings an address. If no address is given, then pings a random address. Powered by Lorem Picsum (https:picsum.photos)./~Usage: $.@(address[, options])/~Arguments: String[, Object => {callback, pass, fail, timeout}]/~Returns: Undefined//address: must be an address to an image./return: calls on <callback> using: <callback>.call(null, ping.trip);//ping.trip => {/~address: <address>/~resolve: [image address]/~size: [image height * image.width]/~speed: [image size size \\ time]/~status: 'pass' | 'fail'/~time: [ping time]/~uplink: [speed \\ 2]/}";
       break;
 
     case 'pop':
@@ -905,7 +901,7 @@ SynQ.help = function(item) {
       break;
 
     case 'prevent':
-      m = "Used to prevent a value from being used./~Usage: $.@(variable, illegal-values, error-message)/~Arguments: (Array|String), (Array|RegExp), String/~Returns: Undefined/~Throws: Error(message)"
+      m = "Used to prevent a value from being used./~Usage: $.@(variable, illegal-values, error-message)/~Arguments: (Array|String), (Array|RegExp), String/~Returns: Undefined/~Throws: Error(<message>)"
       break;
 
     case 'pull':
@@ -917,11 +913,11 @@ SynQ.help = function(item) {
       break;
 
     case 'removeeventlistener':
-      m = "Removes a(n) event listener(s)./~Usage: $.@(function-name[, event-name])/~Arguments: String[, String]/~Returns: Array | String//event-name: {events}.";
+      m = "Removes a(n) event listener(s)./~Usage: $.@(function-name[, event-name])/~Arguments: String[, String]/~Returns: Array | String//event-name: {events}. If left empty, will remove <function-name> from every event.";
       break;
 
     case 'retrieve':
-      m = "Retruns data from the global storage item (see also, '$.broadcast')./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with./return: if no data is given, then the UUID for <name> will be returned.";
+      m = "Retruns data from the global storage item (see also, '$.broadcast')./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with.";
       break;
 
     case 'salt':
@@ -937,19 +933,23 @@ SynQ.help = function(item) {
       break;
 
     case 'syn':
-      m = "The attribute name(s) for elements to update./~Usage: $.@ = ['name-1', 'name-2'...]/~Types: Array, String"
+      m = "The attribute name(s) for elements to update./~Usage: $.@ = ['name-1', 'name-2'...]/~Types: Array | String"
       break;
 
     case 'synq':
       m = "The main function and container. Updates the storage, while also updating all 'attached' elements./~Usage: $([attribute-name])/~Arguments: String/~Returns: Undefined//attribute-name: if you want to use multiple names, then set the SynQ.syn property."
       break;
 
-    case 'triggerEvent':
+    case 'triggerevent':
       m = "Triggers all event listeners for an event./~Usage: $.@(event-name[, data])/~Arguments: String[, *]/~Returns: <data>//data: the argument (single array) to pass onto each listener.";
       break;
 
     case 'unpack16':
       m = "Unpacks (decodes) a UTF-16 character into two UTF-8 characters./~Usage: $.@(character)/~Arguments: Character/~Returns: String/return: automatically handles UTF-8 characters, and returns the character iteslf.";
+      break;
+
+    case 'used':
+      m = "Returns the number of bytes (1B = 8b) in use./~Usage: $.@([synq-only])/~Arguments: [Boolean]/~Returns: Integer//synq-only: when set to true, will ony return the amount of owned space $ is using."
       break;
 
     case 'useglobalsynqtoken':
@@ -962,7 +962,7 @@ SynQ.help = function(item) {
 
     case '':
     case '*':
-      m = "Help is available for the following items://<!-- HTML -->//synq-data/synq-html/synq-skip/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~available/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/use_global_synq_token/use_utf8_synq_token"
+      m = "Help is used for the following items://<!-- HTML -->//synq-data/synq-html/synq-skip/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/~used/use_global_synq_token/use_utf8_synq_token"
       break;
 
     default:
