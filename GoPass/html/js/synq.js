@@ -887,7 +887,7 @@ SynQ.help = function(item) {
       break;
 
     case 'parsesize':
-      m = "Returns a number* from an SI formatted** string./~Usage: $.@(number)/~Arguments: String/~Returns: Number//* Does not recognize 'd' (deci), 'h' (hecto) or 'c' (centi)/** Such as '1GB' or '500km'."
+      m = "Returns a number* from an SI formatted** string./~Usage: $.@(number[, base[, symbol]])/~Arguments: String[, Number[, String]]/~Returns: Number//* Does not recognize 'd' (deci), 'h' (hecto) or 'c' (centi)/** Such as '1GB' or '500km'."
       break;
 
     case 'parseurl':
