@@ -155,13 +155,15 @@ function SynQ(name) {
     ":nth-child(" + (++copies[info]) + ")";
 
     if(uuid == null) {
-      // Push the element's UUID
+      // Get the element's UUID
       uuid = SynQ.sign(info, 1);
-      uuids.push(uuid);
 
       // Set the element's UUID for future references
       element.setAttribute('synq-uuid', uuid);
     }
+
+    // Push the UUID
+    uuids.push(uuid);
 
     // Push the messages
     value = fetch(element);
