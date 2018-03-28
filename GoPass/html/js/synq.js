@@ -164,11 +164,12 @@ function SynQ(name) {
 
     // Push the UUID
     uuids.push(uuid);
+    uuid = ".values/#" + uuid;
 
     // Push the messages
     value = fetch(element);
     messages.push(value);
-    SynQ.push(".values#" + uuid, value);
+    SynQ.push(uuid, value);
   }
 
   SynQ.push(".values", messages.join(SynQ.esc));
@@ -205,7 +206,7 @@ SynQ.eventlistener = function(event) {
   }
 
   update:
-  for(var index = 0, values, value, uuids, uuid, element, skip, attr; index < query.length; index++) {
+  for(var index = 0, length = query.length,values, value, uuids, uuid, element, skip, attr; index < length; index++) {
     element = query[index];
     values  = SynQ.pull(".values");
     attr    = element.attributes;
@@ -232,7 +233,7 @@ SynQ.eventlistener = function(event) {
     // UUID is set
     // Write confidently, even if the HTML document has changed
     if(uuid != null)
-      value = SynQ.pull(".values#" + uuid) || values[index],
+      value = SynQ.pull(".values/#" + uuid) || values[index],
       write(element, value);
     // UUID isn't set
     // Write, assuming the HTML document hasn't changed
@@ -254,9 +255,8 @@ SynQ.addEventListener = function(event, action) {
 
   var event  = SynQ.eventName + '/' + event + '/#',
       events = (SynQ.pull(event + 0) || "").split(','),
-      name   = SynQ.parseFunction(action)[2];
-
-  name = (name != ""? name: events.length);
+      fn     = SynQ.parseFunction(action),
+      name   = fn[2] || SynQ.sign(fn[0] + " => " + fn[1], 1);
 
   if(events.indexOf(name) < 0)
     events.push(name);
