@@ -948,6 +948,10 @@ SynQ.help = function(item) {
       m = "Synchronizes an element's value, or innerText (priority to value)./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean"
       break;
 
+    case 'host':
+      m = "Creates a main object (for multiple frames), and is given the highest priority. Also sets the element's [NAME] to its [ID], or [SYNQ-UUID]./~Usage: <% $-@=host-name>...<\\%>/~Interpreted Type: String"
+      break;
+
     case 'html':
       m = "Synchronizes an element's outerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean"
       break;
@@ -961,7 +965,7 @@ SynQ.help = function(item) {
       break;
 
     case 'uuid':
-      m = "The UUID that SynQ generates for each synchronized element./~Usage: <% $-@=static-uuid>...<\\%>/~Interpreted Type: String//$-@: if you set this attribute, all copies of the element will need to have the same value. Otherwise, SynQ will handle this attribute automatically."
+      m = "The UUID that SynQ generates for each synchronized element./~Usage: <% $-@=static-uuid>...<\\%>/~Interpreted Type: String//$-@: if you set [$-@], all copies of the element (including across frames) will need to have the same value. Otherwise, SynQ will handle this assignment automatically."
       break;
 
     /* JS */
@@ -1080,7 +1084,7 @@ SynQ.help = function(item) {
       break;
 
     case 'syn':
-      m = "The attribute name(s) for elements to update./~Usage: $.@ = ['name-1', 'name-2'...]/~Types: Array | String"
+      m = "The attribute name(s) for elements to update./~Usage: $.@ = ['name-1', 'name-2'...]/~Types: Array | String/~Default: {syn}"
       break;
 
     case 'synq':
@@ -1113,7 +1117,7 @@ SynQ.help = function(item) {
 
     case '':
     case '*':
-      m = "Help can be used for the following items://<!-- HTML -->//synq-data/synq-html/synq-skip/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/~used/use_cookie#/use_global#/use_utf8#"
+      m = "Help can be used for the following items://<!-- HTML -->//synq-data/synq-host/synq-html/synq-skip/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/~used/use_cookie#/use_global#/use_utf8#"
       break;
 
     default:
@@ -1131,6 +1135,7 @@ SynQ.help = function(item) {
     .replace(/@/g, item)
     .replace(/\\/g, "/")
     .replace(/http(s)?\:/g, "http$1://")
+    .replace(/\{syn\}/gi, '["' + SynQ.syn.join('","') + '"]')
     .replace(/\{events\}/gi, SynQ.events.split(' ').join(', ').replace(/(.+),\s*(.+?)$/, "$1, or $2"));
 
   return m;
