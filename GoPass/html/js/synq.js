@@ -10,17 +10,17 @@
   * Q2) What if I'd like to get rid of all of my data (in SynQ)?
   * A2)   Use SynQ.clear([boolean:clear-all]) {See note #1}
   * Q3) What if I'd like to synchronize across my entire domain?
-  * A3)   Set the [use_global_synq_token] variable to a defined value
+  * A3)   Set the [use_global_synq_token] variable to a defined value (null counts as defined)
   * Q4) How do I check on the status of my data?
   * A4)   You can use SynQ.list([boolean:show-private]) to show your data
   * Q5) What about the other things I see under SynQ?
   * A5)   Those are for future technologies, but you can use them as you see fit.
-  * Q6) How much space {See note #3} do I have?
-  * A6)   It depends on the browser {See note #4} but you can use SynQ.size() to find the current maximum.
+  * Q6) How much space do I have? {See note #3}
+  * A6)   It depends on the browser but you can use SynQ.size() to find the current maximum.
           The highest is 5 MiB (5,242,880 b, with UTF-16 enabled) because JS uses UTF-16 characters {See note #4} by default.
-          SynQ.size([number:value[, number:base[, string:symbol]]]) also converts "value" in a SI foramatted string,
+          SynQ.size([number:value[, number:base[, string:symbol]]]) also converts "value" into an SI foramatted string,
           e.g. SynQ.size(8214, 1000, "m") returns "8.214km"
-  * Q7) What if I want more space {See note #3}?
+  * Q7) What if I want more space? {See note #3}
   * A7)   Set the [use_utf8_synq_token] variable to a defined value (SynQ will then force UTF-8 data strings);
           the used space will be doubled, max being 10 MiB (10,485,760 b, with UTF-16 disabled).
   * Q8) How can I see how much space I am using?
@@ -30,50 +30,101 @@
   * 1) SynQ.clear will only remove "local" {See note #2} items if the "use_global_synq_token" isn't set
   * 2) By "local" I mean per the unique page identifier (URL),
        i.e. "https://example.com/page-1" won't share data with ".../page-2"
-  * 3) Data units are given in Bytes (1B = 8b [0000 0000]), with no regard to encoding.
-       E.g. if SynQ.used() returns "16" it means 16 Bytes (i.e. 16 UTF-8 characters)
+  * 3) Data units are given in bits and bytes (1B = 8b [0000 0000]), with no regard to encoding.
+       E.g. if SynQ.used() returns "16" it means 16 bits/2 Bytes (i.e. 1 UTF-16 character, or 2 UTF-8 characters)
   * 4) According to [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage),
        pretty sure they know what they're talking about
   */
 
-var NO_NAME_ERROR   = "The resource name is missing.",
+var NO_NAME_ERROR   = "The resource name is missing",
     UTF8_ONLY_ERROR = "Only UTF-8 characters are allowed.",
     IE              = {
       "addEventListener": "attachEvent",
-      "dispatchEvent":    "fireEvent"
-    },
-    use_global_synq_token, use_utf8_synq_token, localStorage, sessionStorage, storage, connection;
+      "dispatchEvent":    "fireEvent",
+      "Event":            "CustomEvent"
+    }, SA = false,
+    window, document, navigator,
+    localStorage, sessionStorage, storage, connection,
+    use_global_synq_token, use_utf8_synq_token, use_cookie_synq_token,
+    internal = '[[InternalAccess]]';
+
+window = window || {};
+document = document || {};
+navigator = navigator || {};
+
+var CustomEvent;
 
 // IE and Edge?
-for(var property in IE)
-  if(IE.hasOwnProperty(property) && !(property in window))
-    window[ property ] = window[ IE[property] ];
+if(typeof CustomEvent == 'object') {
+  for(var property in IE)
+    window[ property ] = window[ IE[property] ] || window[ property ];
+
+  (function() {
+    function CustomEvent (event, parameters) {
+      var e = document.createEvent('CustomEvent');
+      parameters = parameters || { bubbles: false, cancelable: false, detail: undefined };
+      e.initCustomEvent(event, parameters.bubbles, parameters.cancelable, parameters.detail);
+
+      return e;
+    }
+
+    CustomEvent.prototype = Event.prototype;
+
+    window.CustomEvent = CustomEvent;
+  })();
+
+  IE = true;
+} else if(CustomEvent == undefined) {
+  (function() {
+    function CustomEvent (event, parameters) {
+      parameters = parameters || { bubbles: false, cancelable: false, detail: undefined };
+
+      addEventListener(event, parameters);
+    }
+
+    CustomEvent.prototype = Event.prototype;
+
+    window.CustomEvent = CustomEvent;
+  })();
+
+  SA = true; IE = false;
+} else {
+  IE = false;
+}
 
 /* Helper functions not under SynQ */
+// repeat a string
+String.prototype.repeat = String.prototype.repeat || function repeat(number) {
+  for(var string = this.toString(); number-- > 0;)
+    string += string;
+
+  return string;
+};
+
 // is the object NaN
 function isNaN(number) {
   return !(+number < Infinity);
-};
+}
 
 // return an integer from a string
 function parseInt(number) {
   return +((number + "").replace(/^\s*(\d+).+/, "$1"));
-};
+}
 
 // return a float from a string
 function parseFloat(number) {
   return +((number + "").replace(/^\s*(\d+\.\d*|\d*\.\d+).+/, "$1"));
-};
+}
 
 // ping an address
 // https://stackoverflow.com/questions/4282151/is-it-possible-to-ping-a-server-from-javascript
 // Powered by: Lorem Picsum
 function ping(address, options) {
   if(ping.inUse)
-    return 'Currently pinging address, please wait.';
+    return 'Currently pinging an address, please wait.';
 
   var fallback = {
-    callback: function() { return arguments },
+    callback: function() { return arguments; },
     pass:     function() {},
     fail:     function() {},
     timeout:  10000
@@ -87,8 +138,8 @@ function ping(address, options) {
   ping.inUse    = true;
   ping.address  = address;
   ping.callback = options.callback || fallback.callback;
-  ping.pass     = options.pass || fallback.pass;
-  ping.fail     = options.fail || fallback.fail;
+  ping.pass     = options.pass     || fallback.pass;
+  ping.fail     = options.fail     || fallback.fail;
 
   ping.ping = new Image();
   ping.clear = function(status) {
@@ -96,7 +147,7 @@ function ping(address, options) {
     ping.inUse = false;
 
     var time = +(new Date) - ping.start,
-        size = (ping.ping.height * ping.ping.width * 48) || 1;
+        size = (ping.ping.height * ping.ping.width * 64) || 1;
 
     return ping.callback.call(null, ping.trip = {
       time:    time,
@@ -115,14 +166,16 @@ function ping(address, options) {
   ping.start    = +(new Date);
   ping.ping.src = 'https://' + address;
   ping.timeout  = setTimeout(ping.fail, options.timeout || fallback.timeout);
-};
+}
 
 // The main function
 function SynQ(name) {
+  SynQ[internal] = true;
+
   name = name || SynQ.syn.join("],[");
 
   var messages = [],
-      uuids    = [],
+      uuids    = (SynQ.pull(".uuids") || "").split(','),
       copies   = {},
       query    = document.querySelectorAll("[" + name + "]");
 
@@ -135,19 +188,30 @@ function SynQ(name) {
       "innerText":
     ("synq-text" in a)?
       "innerHTML":
-    "outerHTML";
+    ("synq-html" in a)?
+      "outerHTML":
+    "";
+
+    if(n == "")
+      return n;
 
     return e[n];
   }
 
-  for(var index = 0, element, uuid, value, info, id, attr; index < query.length; index++) {
+  for(var index = 0, element, uuid, name, value, info, id, attr, host; index < query.length; index++) {
     // Element information
     element       = query[index];
     info          = element.tagName;
     attr          = element.attributes;
     id            = ('id' in attr)? attr.id.value: null;
+    name          = ('name' in attr)? attr.name.value: null;
     uuid          = ('synq-uuid' in attr)? attr['synq-uuid'].value: null;
+    host          = ('synq-host' in attr)? attr['synq-host'].value: null;
     copies[info] |= 0;
+
+    // Setup hosts
+    if(host != null)
+      element.setAttribute('name', SynQ.host = host || id || uuid || name);
 
     // Add copies of elements for the UUID to work properly
     info += (id != null || uuid != null)?
@@ -163,33 +227,40 @@ function SynQ(name) {
     }
 
     // Push the UUID
-    uuids.push(uuid);
-    uuid = ".values/#" + uuid;
+    if(!~uuids.indexOf(uuid))
+      uuids.push(uuid);
 
     // Push the messages
+    uuid = ".values/#" + uuid;
     value = fetch(element);
+
     messages.push(value);
     SynQ.push(uuid, value);
   }
 
   SynQ.push(".values", messages.join(SynQ.esc));
-  SynQ.push(".uuids", uuids.join(","));
+  SynQ.push(".uuids", uuids.join(','));
 
-  SynQ.eventlistener("SynQ.");
-};
+  SynQ[internal] = false;
+}
 
-SynQ.syn = "synq-data synq-text synq-html".split(" ");
+SynQ.syn = "synq-data synq-text synq-html synq-host".split(" ");
   // change this accordingly; this is the syncronizing attribute for your elements
   // synq-data: .innerText OR .value
   // synq-text: .innerHTML
   // synq-html: .outerHTML
-SynQ.esc  = "<!-- synq-delimeter -->";
+SynQ.esc = "<!-- synq-delimeter -->";
   // change to your liking; this is the list delimeter
 
 /* The event-listeners */
 // eventlistener target
 SynQ.eventlistener = function(event) {
-  var query = document.querySelectorAll("[" + SynQ.syn.join("],[") + "]");
+  SynQ[internal] = true;
+
+  var messages = SynQ.pull(".values") || null,
+      uuids    = (SynQ.pull(".uuids") || "").split(','),
+      copies   = {},
+      query    = document.querySelectorAll("[" + SynQ.syn.join("],[") + "]");
 
   function write(e, m) {
     var a = e.attributes,
@@ -200,58 +271,84 @@ SynQ.eventlistener = function(event) {
       "innerText":
     ("synq-text" in a)?
       "innerHTML":
-    "outerHTML";
+    ("synq-html" in a)?
+      "outerHTML":
+    "";
 
-    e[n] = m;
+    if(n == "")
+      return n;
+
+    e[n] = m? m: e[n];
   }
 
-  update:
-  for(var index = 0, length = query.length,values, value, uuids, uuid, element, skip, attr; index < length; index++) {
-    element = query[index];
-    values  = SynQ.pull(".values");
-    attr    = element.attributes;
-    uuid    = ('synq-uuid' in attr)? attr['synq-uuid'].value: null;
+  updating:
+  for(var index = 0, length = query.length, element, uuid, name, value, info, id, attr, host; index < length; index++) {
+    // Element information
+    element       = query[index];
+    info          = element.tagName;
+    attr          = element.attributes;
+    id            = ('id' in attr)? attr.id.value: null;
+    name          = ('name' in attr)? attr.name.value: null;
+    uuid          = ('synq-uuid' in attr)? attr['synq-uuid'].value: null;
+    host          = ('synq-host' in attr)? attr['synq-host'].value: null;
+    copies[info] |= 0;
 
     // Don't overwrite skip elements (higher number = higher priority)
     // synq-skip = number of times to ignore SynQ'ing
-    if("synq-skip" in attr) {
+    if('synq-skip' in attr) {
       skip = +attr['synq-skip'].value;
       skip |= 0;
       if(skip > 0) {
         element.setAttribute('synq-skip', --skip);
-        continue update;
+        continue updating;
       } else {
         element.removeAttribute('synq-skip');
       }
     }
 
-    if(values == undefined || values == null)
-      break update;
+    if(host != null)
+      element.setAttribute('name', SynQ.host = SynQ.host || host || uuid);
 
-    values = values.split(SynQ.esc);
+    info += (id != null || uuid != null)?
+      "#" + (id || uuid):
+    ":nth-child(" + (++copies[info]) + ")";
+
+    if(uuid == null) {
+      // Get the element's UUID
+      uuid = SynQ.sign(info, 1);
+
+      // Set the element's UUID for future references
+      element.setAttribute('synq-uuid', uuid);
+    }
 
     // UUID is set
     // Write confidently, even if the HTML document has changed
-    if(uuid != null)
-      value = SynQ.pull(".values/#" + uuid) || values[index],
+    if(uuid != null) {
+      value = SynQ.pull(".values/#" + uuid) || "";
       write(element, value);
+    }
     // UUID isn't set
     // Write, assuming the HTML document hasn't changed
-    else
-      value = values[index],
+    else if(messages != null) {
+      messages = messages.split(SynQ.esc);
+      value = messages[index] || "";
       write(element, value);
+    } else {
+      continue updating;
+    }
   }
+
+  SynQ[internal] = false;
 };
 
 // add listener
 SynQ.addEventListener = function(event, action) {
-  SynQ.prevent([event, action], [undefined, null, ""], "Failed to add event listener '" + event + "', please see SynQ.help('addEventListener').");
-  var i = '[[InternalAccess]]';
+  SynQ.prevent([event, action], [undefined, null, ""], "Failed to add event listener '" + event + "'", "addEventListener");
 
-  if(SynQ[i])
-    return action;
+  if(SynQ[internal])
+    return;
   else
-    SynQ[i] = true;
+    SynQ[internal] = true;
 
   var event  = SynQ.eventName + '/' + event + '/#',
       events = (SynQ.pull(event + 0) || "").split(','),
@@ -263,23 +360,22 @@ SynQ.addEventListener = function(event, action) {
 
   SynQ.push(event + 0, events);
   SynQ.push(event + name, action);
-  SynQ[i] = false;
+  SynQ[internal] = false;
 
   return events.length - 1;
 };
 
 // remove listener
 SynQ.removeEventListener = function(name, parent) {
-  SynQ.prevent(name, [undefined, null, ""], "Failed to remove event listener '" + (parent || '*') + "." + name + "', please see SynQ.help('removeEventListener').");
-  var i = '[[InternalAccess]]';
+  SynQ.prevent(name, [undefined, null, ""], "Failed to remove event listener '" + (parent || '*') + "." + name + "'", "removeEventListener");
 
-  if(SynQ[i])
-    return name;
+  if(SynQ[internal])
+    return;
   else
-    SynQ[i] = true;
+    SynQ[internal] = true;
 
   if(parent)
-    return SynQ[i] = false, SynQ.pop(SynQ.eventName + '/' + parent + '/#' + name);
+    return SynQ[internal] = false, SynQ.pop(SynQ.eventName + '/' + parent + '/#' + name);
 
   var events = SynQ.events.split(' '),
       popped = [];
@@ -291,32 +387,31 @@ SynQ.removeEventListener = function(name, parent) {
       SynQ.push(parent, values + ""),
       popped.push(listener);
 
-  return SynQ[i] = false, popped;
+  return SynQ[internal] = false, popped;
 };
 
 // trigger listener
 SynQ.triggerEvent = function(event, data) {
-  SynQ.prevent(event, [undefined, null, ""], "Failed to trigger event '" + event + "', please see SynQ.help('triggerEvent').");
-  var i = '[[InternalAccess]]';
+  SynQ.prevent(event, [undefined, null, ""], "Failed to trigger event '" + event + "'", "triggerEvent");
 
-  if(SynQ[i])
+  if(SynQ[internal])
     return data;
   else
-    SynQ[i] = true;
+    SynQ[internal] = true;
 
   var event  = SynQ.eventName + '/' + event + '/#',
       events = (SynQ.pull(event + 0) || "").split(',');
 
-  for(var index = 1, head, body, fn; index < events.length; index++) {
+  for(var index = 1, head, body, fn, host = SynQ.host; index < events.length; index++) {
     fn = SynQ.parseFunction(SynQ.pull(event + events[index]));
     head = fn[0];
     body = fn[1];
-    SynQ[i] = false;
+    SynQ[internal] = false;
     new Function(head, body).call(null, data);
-    SynQ[i] = true;
+    SynQ[internal] = true;
   }
 
-  return SynQ[i] = false, data;
+  return SynQ[internal] = false, data;
 };
 
 /* The URL-oriented functions */
@@ -342,14 +437,12 @@ SynQ.decodeURL = function(url) {
 // List all of the current SynQ's data (paths)
 SynQ.list = function(all) {
   var regexp = RegExp("^(" +
-                 (use_global_synq_token != undefined? "synq://localhost:(443|80)\/.*|": "") +
-                 ("synq://" + SynQ.sign(location, 1) + "/").replace(/(\W)/g, "\\$1") +
-                 "|" +
-                 ("synq://" + SynQ.sign(location.origin, 1) + "/").replace(/(\W)/g, "\\$1")
-               + ")" + (all? ".+": "[^\\.].+") + "$"),
+                 (use_global_synq_token != undefined || all? "synq://localhost:(443|80)\/.*|": "") +
+                 SynQ.signature.replace(/(\W)/g, "\\$1") +
+               ")" + (all? ".+": "[^\\.].+") + "$"),
       array  = {};
 
-  for(item in storage)
+  for(var item in storage)
     if(regexp.test(item))
       array[item] = storage[item];
 
@@ -359,12 +452,10 @@ SynQ.list = function(all) {
 // The "clear all" option
 SynQ.clear = function(all) {
   var regexp = RegExp("^(" +
-                 ("synq://" + SynQ.sign(location, 1) + "/").replace(/(\W)/g, "\\$1") +
-                 "|" +
-                 ("synq://" + SynQ.sign(location.origin, 1) + "/").replace(/(\W)/g, "\\$1")
-               + ")" + (all? ".+": "[^\\.].+") + "$");
+                 SynQ.signature.replace(/(\W)/g, "\\$1") +
+               ")" + (all? ".+": "(.*\/)?[^\\.].+") + "$");
 
-  for(item in storage)
+  for(var item in storage)
     if(regexp.test(item))
       storage.removeItem(item);
 
@@ -373,7 +464,7 @@ SynQ.clear = function(all) {
 
 // Push (set) a resource
 SynQ.push = function(name, data, key) {
-  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
+  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR, 'push');
 
   data = data.toString();
 
@@ -404,7 +495,7 @@ SynQ.push = function(name, data, key) {
 
 // Pull (get) a resource
 SynQ.pull = function(name, key) {
-  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
+  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR, 'pull');
 
   var data, UTF8 = use_utf8_synq_token != undefined;
 
@@ -437,7 +528,8 @@ SynQ.pull = function(name, key) {
 SynQ.pop = function(name, key) {
   name = name || SynQ.last.pop();
 
-  SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR);
+  SynQ[internal] = true;
+  SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'pop');
 
   var data = SynQ.pull(name, key);
 
@@ -446,12 +538,12 @@ SynQ.pop = function(name, key) {
   else
     storage.removeItem(SynQ.signature + name);
 
-  return SynQ.triggerEvent('pop', data);
+  return SynQ[internal] = false, SynQ.triggerEvent('pop', data);
 };
 
 // Broadcast to a global storage
 SynQ.broadcast = function(name, data, key) {
-  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
+  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR, 'broadcast');
 
   if(data == undefined || data == null) {
     key = (key? '.': '');
@@ -481,7 +573,7 @@ SynQ.broadcast = function(name, data, key) {
   }
 
   // ".name" and "name" won't be interchangeable
-  name = key + SynQ.sign(key + name)
+  name = SynQ.sign(key + name)
     .replace(/(.{1,4})(.{1,2})?(.{1,2})?(.{1,2})?(.{1,6})?(.{1,12})?/, "$1-$2-$3-$4-$5:$6")
     .replace(/[\-\:]+$/, "");
 
@@ -494,12 +586,17 @@ SynQ.broadcast = function(name, data, key) {
 
 // Retrieve a global item
 SynQ.retrieve = function(name, key) {
-  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR);
+  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR, 'retrieve');
 
   var data, UTF8 = use_utf8_synq_token != undefined;
 
   if(UTF8)
     SynQ.prevent(data, /[^\u0000-\u00ff]/, UTF8_ONLY_ERROR);
+
+  // ".name" and "name" won't be interchangeable
+  name = SynQ.sign((key? ".": "") + name)
+    .replace(/(.{1,4})(.{1,2})?(.{1,2})?(.{1,2})?(.{1,6})?(.{1,12})?/, "$1-$2-$3-$4-$5:$6")
+    .replace(/[\-\:]+$/, "");
 
   if(key != undefined && key != null)
     data = storage.getItem('synq://localhost:443/' + name);
@@ -525,16 +622,18 @@ SynQ.retrieve = function(name, key) {
 
 // Remove a global resource
 SynQ.cage = function(name, key) {
-  SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR);
+  SynQ[internal] = true;
+  SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'cage');
 
-  var data = SynQ.retrieve(name, key);
+  var data = SynQ.retrieve(name, key),
+      name = SynQ.broadcast(name, null, key);
 
   if(key != undefined && key != null)
     storage.removeItem('synq://localhost:443/' + name);
   else
     storage.removeItem('synq://localhost:80/' + name);
 
-  return SynQ.triggerEvent('cage', data);
+  return SynQ[internal] = false, SynQ.triggerEvent('cage', data);
 };
 
 /* The space-oriented functions */
@@ -542,62 +641,90 @@ SynQ.cage = function(name, key) {
 SynQ.size = function(number, base, symbol) {
   var backup = {},
       size   = function(n, b, s) {
-        b = b || 1024; s = s || "iB";
+        b = b || 1024;
+        s = s || (n < 1024? 'b': 'iB');
 
         if(n < b && n > -b)
           for(var k = "m\u00b5npfaz", x = 0, g = k.length; (x < g) && (n < 1); x++)
             n *= b;
         else
-          for(var k = "kMGTPEZY", x = 0, g = k.length; (x < g) && (n > b); x++)
+          for(var k = "kMGTPEZY", x = 0, g = k.length; (x < g) && (n >= b); x++)
             n /= b;
 
         return n + (k[x - 1] || "") + s;
-      };
+      },
+      found;
 
-  for(var n in storage)
-    backup[n] = storage[n];
+  number = number || null;
 
-  storage.clear();
+  if((number == null || number == undefined))
+    if(IE && use_cookie_synq_token == undefined) {
+      for(var n in storage)
+        backup[n] = storage[n];
 
-  _1MiB: // 1 MiB
-  for(var s = "_", i = 1, j, l = 1024 * 1024, p = true, m; i <= l; i *= 2)
-    try {
-      storage.setItem("$_TEST_$", s.repeat(i));
-    } catch(e) {
-      m = size(i);
-      p = false;
+      storage.clear();
 
-      break _1MiB;
-    };
+      found = storage.remainingSpace | 0;
 
-  _64MiB: // 64 MiB
-  for(j = l, l *= 10; p && i <= l; i += j)
-    try {
-      storage.setItem("$_TEST_$", s.repeat(i));
-    } catch(e) {
-      m = size(i);
+      for(var n in backup)
+        storage[n] = backup[n];
+    } else {
+      for(var n in storage)
+        backup[n] = storage[n];
 
-      break _64MiB;
-    };
+      storage.clear();
 
-  storage.clear();
+      _1kiB: // 0 b - 1 kiB
+      for(var s = "_", i = 1, j, l = 1024, p = true; p && i < l; i *= 2)
+        try {
+          storage.setItem("SizeTest", s.repeat(i));
+        } catch(e) {
+          p = false;
 
-  for(var n in backup)
-    storage[n] = backup[n];
+          break _1kiB;
+        };
+
+      _1MiB: // 1 kiB - 1 MiB
+      for(j = l, l *= 1024; p && i < l; i *= 2)
+        try {
+          storage.setItem("SizeTest", s.repeat(i));
+        } catch(e) {
+          p = false;
+
+          break _1MiB;
+        };
+
+      _1GiB: // 1 MiB - 1 GiB
+      for(j = l, l *= 1024; p && i < l; i += j)
+        try {
+          storage.setItem("SizeTest", s.repeat(i));
+        } catch(e) {
+          p = false;
+
+          break _1GiB;
+        };
+
+      storage.clear();
+
+      for(var n in backup)
+        storage[n] = backup[n];
+
+      found = i;
+    } // :defined number
 
   SynQ.size = function(number, base, symbol) {
     return (number == undefined || number == null)?
-      SynQ.size.max || "0B":
+      SynQ.size.max | 0:
     SynQ.size.convert(+number, base, symbol)
   };
 
   SynQ.size.convert = size;
-  SynQ.size.max = i *= 2;
+  SynQ.size.max = found *= 2;
 
-  if(number != undefined && number != null)
+  if(number != null)
     return SynQ.size(number, base, symbol);
 
-  return i;
+  return found;
 };
 
 // How much space is in use?
@@ -616,19 +743,21 @@ SynQ.used = function(exclusive) {
 
 // Return a number from an SI formatted string
 SynQ.parseSize = function(size, base, symbol) {
+  var e = "";
+
   base = base || 1024;
-  symbol = symbol || "iB";
-  size = size
+  symbol = symbol || (+size < 1024? 'b': 'iB');
+  size = (size || e)
     .replace(/^\s*([\d\. ]+[zafpn\u00b5mkMGTPEZY]|[\d\., ]+).*/, "$1")
-    .replace(/[^\w\.]/g, "")
-    .replace(symbol, "")
+    .replace(/[^\w\.]/g, e)
+    .replace(symbol, e)
     .replace(/(\d+)?(\.\d+)?/, function($0, $1, $2, $_) {
-      $1 = $1 || ""; $2 = $2 || "";
-      return $1 + $2.replace(/\./g, "");
+      $1 = $1 || e; $2 = $2 || e;
+      return $1 + $2.replace(/\./g, e);
     });
 
   var sizes = "zafpn\u00b5m kMGTPEZY",
-      tail  = size.replace((size = parseInt(size)), "");
+      tail  = size.replace((size = parseInt(size)), e);
 
   return size * Math.pow(base, sizes.indexOf(tail) - 7);
 };
@@ -636,6 +765,7 @@ SynQ.parseSize = function(size, base, symbol) {
 /* The "security" oritned functions */
 // Lock and unlock data (weak security)
 SynQ.lock = function(data, key) {
+  data = data || "";
   key = SynQ.salt(SynQ.sign(key, 0));
 
   for(var index = 0, salted = []; index < data.length; index++)
@@ -652,7 +782,7 @@ SynQ.unlock = function(data, key) {
 
 // KSA algorithm
 SynQ.salt = function(text) {
-  for(var index = 0, exdex = 0, swap = 0, salted = []; index < 256; index++)
+  for(var index = 0, exdex = 0, swap = 0, salted = [], text = text || ""; index < 256; index++)
     salted[index] = index;
 
   for(index = 0; index < 256; index++)
@@ -674,8 +804,9 @@ SynQ.sign = function(string, fidelity) {
       method;
 
   fidelity = 18 - (((fidelity || 0) * 16) | 0);
+
   method = function(s) {
-    return (s != undefined)? s.charCodeAt(0): s;
+    return s? s.charCodeAt(0): s;
   };
 
   array.forEach(function(value, index, self) {
@@ -714,7 +845,7 @@ SynQ.sign = function(string, fidelity) {
 
 // Parse a function (returns a "head" and "body")
 SynQ.parseFunction = function(fn) {
-  SynQ.prevent(fn, [undefined, null, ""], "Failed to parse empty function.");
+  SynQ.prevent(fn, [undefined, null, ""], "Failed to parse empty function", "parseFunction");
 
   fn = fn.toString().replace(/(?:\bfunction(\s+[a-zA-Z\$_]\w*)?)?\s*(\(.*?\))\s*(\{[^]*\})/, "$2 => $3");
 
@@ -731,56 +862,63 @@ SynQ.parseURL = function(url) {
     return {};
 
     var url  = url.toString(),
-        data = url.match(/^(([^:\/?#]+):)?\/{2}([^:\/?#]*)?(:\d+)?([^?#]*)(\?[^#]*)?(#.*)?$/),
-        i    = 0;
+        data = url.match(/^((([^:\/?#]+):)?(?:\/{2})?)(?:([^:]+):([^@]+)@)?(([^:\/?#]*)?(?:\:(\d+))?)?([^?#]*)(\?[^#]*)?(#.*)?$/),
+        i    = 0,
+        e    = "";
 
-  data = data || "";
+  data = data || e;
 
     return {
-        href:             data[i++],
-        protocol:         data[i++],
-        scheme:           data[i++],
-        host:             data[i++],
-        port:             data[i++],
-        path:             data[i++],
-        search:           data[i++],
+        href:             data[i++] || e,
+        origin:           (data[i++] + data[i + 4]) || e,
+        protocol:         data[i++] || e,
+        scheme:           data[i++] || e,
+        username:         data[i++] || e,
+        password:         data[i++] || e,
+        host:             data[i++] || e,
+        hostname:         data[i++] || e,
+        port:             data[i++] || e,
+        pathname:         data[i++] || e,
+        search:           data[i++] || e,
         searchParameters: (function(sd) {
           parsing:
-          for(var i = 0, s = {}, d = (sd = sd || "").slice(1, sd.length).split("&"), n, p, c; i < d.length; i++) {
-            c = d[i].split("=", 2);
-            n = c[0] || "";
+          for(var i = 0, s = {}, e = "", d = sd.slice(1, sd.length).split('&'), n, p, c; sd != e && i < d.length; i++) {
+            c = d[i].split('=');
+            n = c[0] || e;
 
-            if(n == "")
-              continue parsing;
+            p = c.slice(1, c.length).join('=');
 
-            p = c[1] || "";
-            s[n] = p;
+            s[n] = (s[n] != undefined)?
+              s[n] instanceof Array?
+            s[n].concat(p):
+              [s[n], p]:
+            p;
           }
 
           return s;
-        })(data[i - 1]),
-        hash:             data[i++]
+        })(data[i - 1] || e),
+        hash:             data[i++] || e
     };
 };
 
 // Handle errors
-SynQ.prevent = function(variable, failures, message) {
-  function prevent(a, b, c) {
+SynQ.prevent = function(variable, failures, message, helper) {
+  function prevent(a, b, c, d) {
     if(a == b)
-      throw new Error(c);
+      throw new Error(c + (d? ", please see SynQ.help('" + d + "').": "."));
   };
 
   // Array, *, *
   if(variable instanceof Array)
     for(var index = 0, length = variable.length; index < length; index++)
-      SynQ.prevent(variable[index], failures, message);
+      SynQ.prevent(variable[index], failures, message, helper);
   // *, Function, *
   else if(failures instanceof RegExp)
-    prevent(failures.test(variable), true, message);
+    prevent(failures.test(variable), true, message, helper);
   // *, Array, *
   else if(failures instanceof Array)
     for(var index = 0, length = failures.length; index < length; index++)
-      prevent(variable, failures[index], message);
+      prevent(variable, failures[index], message, helper);
 };
 
 // Pack UTF8 characters
@@ -800,43 +938,43 @@ SynQ.help = function(item) {
   if(item == undefined || item == null)
     item = "help";
 
-  item = item.replace(/[^a-z\d]|\bsynq[\.\-]/gi, "");
+  item = item.replace(/[^a-z\d]|synq([\.\-]|_token)/gi, "");
 
   var m, i = item.toLowerCase();
 
   switch(i) {
     /* HTML */
     case 'data':
-      m = "Synchronizes an element's value, or innerText (priority to value)./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
+      m = "Synchronizes an element's value, or innerText (priority to value)./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean"
       break;
 
     case 'html':
-      m = "Synchronizes an element's outerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
+      m = "Synchronizes an element's outerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean"
       break;
 
     case 'skip':
-      m = "Delays synchronizing an element. Especially useful for multiple IFRAMEs with access to the parent document./~Usage: <% $-@=number-of-delays>...<\\%>/~Interpreted Type: Number//$-@: defaults to 0 if no value is given.";
+      m = "Delays synchronizing an element. Especially useful for multiple IFRAMEs with access to the parent document./~Usage: <% $-@=number-of-delays>...<\\%>/~Interpreted Type: Number//$-@: defaults to 0 if no value is given."
       break;
 
     case 'text':
-      m = "Synchronizes an element's innerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean";
+      m = "Synchronizes an element's innerHTML./~Usage: <% $-@>...<\\%>/~Interpreted Type: Boolean"
       break;
 
     case 'uuid':
-      m = "The UUID that SynQ generates for each synchronized element./~Usage: <% $-@=static-uuid>...<\\%>/~Interpreted Type: String//$-@: if you set this attribute, all copies of the element will need to have the same value.";
+      m = "The UUID that SynQ generates for each synchronized element./~Usage: <% $-@=static-uuid>...<\\%>/~Interpreted Type: String//$-@: if you set this attribute, all copies of the element will need to have the same value. Otherwise, SynQ will handle this attribute automatically."
       break;
 
     /* JS */
     case 'addeventlistener':
-      m = "Adds an event listener to SynQ's {events} method./~Usage: $.@(event-name, callback)/~Arguments: String, Function/~Returns: Number//event-name: {events}./return: the number of events attached";
+      m = "Adds an event listener to SynQ's {events} method./~Usage: $.@(event-name, callback)/~Arguments: String, Function/~Returns: Number//event-name: {events}./return: the number of events attached"
       break;
 
     case 'broadcast':
-      m = "Adds data to the global storage item (see also, '$.retrieve')./~Usage: $.@(name[, data[, key]])/~Arguments: String[, String[, String]]/~Returns: String//return: a UUID for the data./data: if no data is given, still returns the UUID./key: the password to lock the data with.";
+      m = "Adds data to the global storage item (see also, '$.retrieve')./~Usage: $.@(name[, data[, key]])/~Arguments: String[, String[, String]]/~Returns: String//return: a UUID for the data./data: if no data is given, still returns the UUID./key: the password to lock the data with."
       break;
 
     case 'cage':
-      m = "Removes data from the global storage item (similar to '$.pop')./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with.";
+      m = "Removes data from the global storage item (similar to '$.pop')./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with."
       break;
 
     case 'clear':
@@ -881,7 +1019,7 @@ SynQ.help = function(item) {
       break;
 
     case 'pack16':
-      m = "Packs (encodes) a UTF-16 character, by using two UTF-8 characters./~Usage: $.@(character[, character])/~Arguments: Character[, Character]/~Returns: String//return: if the second character is missing, then the first character will be returned.";
+      m = "Packs (encodes) a UTF-16 character, by using two UTF-8 characters./~Usage: $.@(character[, character])/~Arguments: Character[, Character]/~Returns: String//return: if the second character is missing, then the first character will be returned."
       break;
 
     case 'parsefloat':
@@ -890,19 +1028,19 @@ SynQ.help = function(item) {
       break;
 
     case 'parsefunction':
-      m = "Returns an array of function data./~Usage: $.@(function-string)/~Arguments: String/~Returns: Array => {0: [function parameters], 1: [function statements], 2: [function name], length: 3}";
+      m = "Returns an array of function data./~Usage: $.@(function-string)/~Arguments: String/~Returns: Array => {0: [function parameters], 1: [function statements], 2: [function name], length: 3}"
       break;
 
     case 'parsesize':
-      m = "Returns a number* from an SI formatted** string./~Usage: $.@(number[, base[, symbol]])/~Arguments: String[, Number[, String]]/~Returns: Number//* Does not recognize 'd' (deci), 'h' (hecto) or 'c' (centi)/** Such as '1GB' or '500km'."
+      m = "Returns a number from an SI formatted* string./~Usage: $.@(number[, base[, symbol]])/~Arguments: String[, Number[, String]]/~Returns: Number//* Does not recognize 'd' (deci), 'h' (hecto) or 'c' (centi)"
       break;
 
     case 'parseurl':
-      m = "Returns a URL object./~Usage: $.@(URL)/~Arguments: String/~Returns: Object => {href, protocol, scheme, host, port, path, search, searchParameters}"
+      m = "Returns a URL object./~Usage: $.@(URL)/~Arguments: String/~Returns: Object => {href, origin, protocol, scheme, username, password, host, port, path, search, searchParameters}"
       break;
 
     case 'ping':
-      m = "Pings an address. If no address is given, then pings a random address. Powered by Lorem Picsum (https:picsum.photos)./~Usage: $.@(address[, options])/~Arguments: String[, Object => {callback, pass, fail, timeout}]/~Returns: Undefined//address: must be an address to an image./return: calls on <callback> using: <callback>.call(null, ping.trip);//ping.trip => {/~address: <address>/~resolve: [image address]/~size: [image height * image.width]/~speed: [image size size \\ time]/~status: 'pass' | 'fail'/~time: [ping time]/~uplink: [speed \\ 2]/}";
+      m = "Pings an address. If no address is given, then pings a random address. Powered by Lorem Picsum (https:picsum.photos)./~Usage: $.@(address[, options])/~Arguments: String[, Object => {callback, pass, fail, timeout}]/~Returns: Undefined//address: must be an address to an image./return: calls on <callback> using: <callback>.call(null, ping.trip);//ping.trip => {/~address: <address>/~resolve: [image address]/~size: [image height * image.width]/~speed: [image size size \\ time]/~status: 'pass' | 'fail'/~time: [ping time]/~uplink: [speed \\ 2]/}"
       break;
 
     case 'pop':
@@ -910,7 +1048,7 @@ SynQ.help = function(item) {
       break;
 
     case 'prevent':
-      m = "Used to prevent a value from being used./~Usage: $.@(variable, illegal-values, error-message)/~Arguments: (Array|String), (Array|RegExp), String/~Returns: Undefined/~Throws: Error(<message>)"
+      m = "Used to prevent a value from being used./~Usage: $.@(variable, illegal-values, error-message[, helper-link])/~Arguments: (Array|String), (Array|RegExp), String[, String]/~Returns: Undefined/~Throws: Error(<message[ + helper-link]>)//helper-link: the word, or phrase used by SynQ.help to display the help message,/~~e.g. SynQ.prevent(null, [null], 'This is an example error', 'example') => \"... see SynQ.help('example')\"."
       break;
 
     case 'pull':
@@ -922,11 +1060,11 @@ SynQ.help = function(item) {
       break;
 
     case 'removeeventlistener':
-      m = "Removes a(n) event listener(s)./~Usage: $.@(function-name[, event-name])/~Arguments: String[, String]/~Returns: Array | String//event-name: {events}. If left empty, will remove <function-name> from every event.";
+      m = "Removes a(n) event listener(s)./~Usage: $.@(function-name[, event-name])/~Arguments: String[, String]/~Returns: Array | String//event-name: {events}. If left empty, will remove <function-name> from every event."
       break;
 
     case 'retrieve':
-      m = "Retruns data from the global storage item (see also, '$.broadcast')./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with.";
+      m = "Retruns data from the global storage item (see also, '$.broadcast')./~Usage: $.@(name[, key])/~Arguments: String[, String]/~Returns: String//key: the password to unlock the data with."
       break;
 
     case 'salt':
@@ -950,28 +1088,32 @@ SynQ.help = function(item) {
       break;
 
     case 'triggerevent':
-      m = "Triggers all event listeners for an event./~Usage: $.@(event-name[, data])/~Arguments: String[, *]/~Returns: <data>//data: the argument (single array) to pass onto each listener.";
+      m = "Triggers all event listeners for an event./~Usage: $.@(event-name[, data])/~Arguments: String[, Array]/~Returns: <data>//data: the arguments to pass onto each listener."
       break;
 
     case 'unpack16':
-      m = "Unpacks (decodes) a UTF-16 character into two UTF-8 characters./~Usage: $.@(character)/~Arguments: Character/~Returns: String/return: automatically handles UTF-8 characters, and returns the character iteslf.";
+      m = "Unpacks (decodes) a UTF-16 character into two UTF-8 characters./~Usage: $.@(character)/~Arguments: Character/~Returns: String/return: automatically handles UTF-8 characters, and returns the character iteslf."
       break;
 
     case 'used':
       m = "Returns the number of bytes (1B = 8b) in use./~Usage: $.@([synq-only])/~Arguments: [Boolean]/~Returns: Integer//synq-only: when set to true, will ony return the amount of owned space $ is using."
       break;
 
-    case 'useglobalsynqtoken':
+    case 'usecookie':
+      m = "Forces the page to use cookies instead of the localStorage./This may increase storage capcity on some browsers*, but not all. See the table below.//Browser (version)/~UTF-16 \\ UTF-8//Chrome (65.0.3325.181)/~22 \\ 44 MiB/Firefox (59.0.2)/~22 \\ 44 MiB/Opera (52.0.2871.40)/~22 \\ 44 MiB/Safari (7534.57.2)**/~22 \\ 44 B/Edge (41.16299.248.0)/~22 \\ 44 MiB/Internet Explorer (11.309.16299.0)**/~32 \\ 64 B//* Obtained values by hand (Windows 10 PC, x64)./** Note that this browser wasn't intended for my machine. Also, the cookie size can be changed by the user."
+      break;
+
+    case 'useglobal':
       m = "Used to determine if $ should use a local* or global** name.//* $ will save all data for the current URL only, i.e. http:github.com\\page-1 will not have access to http:github.com\\page-2./** $ will save all data for the current host, i.e. http:github.com will be used by $, instead of http:github.com\\page-n."
       break;
 
-    case 'useutf8synqtoken':
-      m = "Used to instruct SynQ to save data as UTF-16 streams. E.g. 'acdf' will be combined into 'be' (as an example). It does this by combining UTF-8 characters (\u0000 - \u00ff), and generating a UTF-16 character (\u0100 - \uffff)."
+    case 'useutf8':
+      m = "Used to instruct SynQ to save data as UTF-16 streams, e.g. 'acdf' will be combined into 'be' (as an example)./It does this by combining UTF-8 characters (\u0000 - \u00ff), and generating a UTF-16 character (\u0100 - \uffff)."
       break;
 
     case '':
     case '*':
-      m = "Help is used for the following items://<!-- HTML -->//synq-data/synq-html/synq-skip/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/~used/use_global_synq_token/use_utf8_synq_token"
+      m = "Help can be used for the following items://<!-- HTML -->//synq-data/synq-html/synq-skip/synq-text/synq-uuid//\\* JavaScript *\\//isNaN/ping/$/~addEventListener/~broadcast/~cage/~clear/~decodeURL/~encodeURL/~esc/~eventlistener/~last/~list/~lock/~parseFloat/~parseFunction/~parseInt/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~removeEventListener/~retrieve/~salt/~sign/~syn/~triggerEvent/~used/use_cookie#/use_global#/use_utf8#"
       break;
 
     default:
@@ -984,6 +1126,7 @@ SynQ.help = function(item) {
     .replace(/~/g, "\t")
     .replace(/\$-/g, "synq-")
     .replace(/\$/g, "SynQ")
+    .replace(/\b#/g, "_synq_token")
     .replace(/%/g, "element")
     .replace(/@/g, item)
     .replace(/\\/g, "/")
@@ -995,11 +1138,11 @@ SynQ.help = function(item) {
 
 /* Polyfills */
 // localStorage - Mozilla
-if(!("localStorage" in window))
+if(!("localStorage" in window) || (use_cookie_synq_token != undefined && !SA))
   Object.defineProperty(window, "localStorage", new(function() {
     var keys          = [],
         StorageObject = {},
-        onstorage     = new Event("storage", {bubbles: false, cancelable: false, composed: true});
+        onstorage     = new CustomEvent("storage", {bubbles: false, cancelable: false, composed: true});
 
     Object.defineProperty(StorageObject, "getItem", {
       value: function(key) {
@@ -1026,7 +1169,7 @@ if(!("localStorage" in window))
         if(key == undefined || key == null)
           return;
 
-        document.cookie = escape(key) + "=" + escape(value) + "; expires=Thu, Dec 31 2099 23:59:59 GMT; path=/";
+        document.cookie = escape(key) + "=" + escape(value) + ";expires=Thu, Dec 31 2099 23:59:59 GMT;path=/";
         window.dispatchEvent(onstorage);
       },
       writable:     false,
@@ -1047,7 +1190,7 @@ if(!("localStorage" in window))
         if(key == undefined || key == null)
           return;
 
-        document.cookie = escape(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        document.cookie = escape(key) + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         window.dispatchEvent(onstorage);
       },
       writable:     false,
@@ -1057,11 +1200,11 @@ if(!("localStorage" in window))
     
     Object.defineProperty(StorageObject, "clear", {
       value: function() {
-        if(keys.length == undefined || key.slength == null)
+        if(keys.length == undefined || keys.length == null)
           return;
 
         for(var key in keys)
-          document.cookie = escape(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+          document.cookie = escape(key) + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
 
         window.dispatchEvent(onstorage);
       },
@@ -1070,8 +1213,8 @@ if(!("localStorage" in window))
       enumerable:   false
     });
 
-    Object.defineProperty(StorageObject, "cookie", {
-      value:        true,
+    Object.defineProperty(StorageObject, "type", {
+      value:        'cookie',
       writable:     false,
       configurable: false,
       enumerable:   false
@@ -1109,12 +1252,12 @@ if(!("localStorage" in window))
 
 storage = window.localStorage;
 
-// navigator.connection - Mozilla / Ephellon
-if(!("NetworkInformation" in window))
+// navigator.connection - Mozilla, Ephellon
+if(!("connection" in navigator))
   Object.defineProperty(window, "NetworkInformation", new(function() {
     var keys            = [],
         NetworkObject   = {},
-        onnetwork       = new Event("online", {bubbles: false, cancelable: false, composed: true});
+        onnetwork       = new CustomEvent("online", {bubbles: false, cancelable: false, composed: true});
 
     ping("", {
       callback: function(TripInformation) {
@@ -1192,7 +1335,7 @@ if(!("NetworkInformation" in window))
     this.enumerable   = true;
   })());
 
-connection = navigator.connection || new NetworkInformation();
+connection = navigator.connection;
 
 /* Setup and auto-management */
 // Auto-update & run
@@ -1204,6 +1347,7 @@ else
 SynQ.eventName = '.events';
 SynQ.events = "push pull pop clear broadcast retrieve cage";
 SynQ.last = [];
+SynQ.host = null;
 
-SynQ.eventlistener("SynQ initializer.");
+SynQ.eventlistener();
 window.addEventListener("storage", window.onstorage = SynQ.eventlistener, false);
