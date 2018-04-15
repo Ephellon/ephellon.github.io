@@ -350,7 +350,7 @@ SynQ.addEventListener = function(event, action) {
       name   = fn[2] || events.length;
 
   events = events || "";
-  events = (events.length > 0)? events.split(SynQ.esc): [];
+  events = (events.length > 0)? events.split(SynQ.esc): [name];
 
   if(events.indexOf(name) < 0)
     events.push(name);
@@ -535,9 +535,10 @@ SynQ.push = function(name, data, key, delimiter) {
   SynQ[internal] = true;
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'push');
 
+  var last = SynQ.get(name, key) || "";
+
   delimiter = delimiter || SynQ.esc;
-  data = SynQ.get(name, key) || "";
-  data = (data.length > 0)? data.split(delimiter).concat(data): [];
+  data = (last.length > 0)? last.split(delimiter).concat(data): [data];
   data = SynQ.set(name, data.join(delimiter), key);
 
   return SynQ[internal] = false, SynQ.triggerEvent('push', data);
@@ -551,7 +552,7 @@ SynQ.pull = function(name, key, delimiter) {
   var data = SynQ.get(name, key);
 
   data = data || "";
-  data = (data.length > 0)? data.split(delimiter): [];
+  data = (data.length > 0)? data.split(delimiter): [data];
 
   return SynQ[internal] = false, SynQ.triggerEvent('pull', data);
 }
@@ -671,7 +672,7 @@ SynQ.recall = function(name, key, delimiter) {
 
   var data = SynQ.download(name, key);
   data = data || "";
-  data = (data.length > 0)? data.split(delimiter): [];
+  data = (data.length > 0)? data.split(delimiter): [data];
 
   return SynQ[internal] = false, SynQ.triggerEvent('recall', data);
 }
