@@ -155,11 +155,11 @@ function ping(address, options) {
 // The main function
 function SynQ(name) {
   SynQ[internal] = true;
+
   name = name || null;
 
   if(name == null)
     name = SynQ.syn;
-
   if(name instanceof Array)
     name = name.join('],[');
 
@@ -357,9 +357,8 @@ SynQ.addEventListener = function(event, action) {
 
   SynQ.set(event + 0, events);
   SynQ.set(event + name, action);
-  SynQ[internal] = false;
 
-  return events.length - 1;
+  return SynQ[internal] = false, events.length - 1;
 };
 
 // remove listener
@@ -372,8 +371,7 @@ SynQ.removeEventListener = function(name, parent) {
     SynQ[internal] = true;
 
   if(parent)
-    return SynQ[internal] = false,
-           SynQ.pop(SynQ.eventName + '/' + parent + '/#' + name);
+    return SynQ[internal] = false, SynQ.pop(SynQ.eventName + '/' + parent + '/#' + name);
 
   var events = SynQ.events.split(' '),
       popped = [];
@@ -408,7 +406,7 @@ SynQ.triggerEvent = function(event, data) {
   events = events || "";
   events = (events.length > 0)? events.split(SynQ.esc): [];
 
-  for(var index = 1, head, body, fn, host = SynQ.host; index < events.length; index++) {
+  for(var index = 0, head, body, fn, host = SynQ.host; index < events.length; index++) {
     fn = SynQ.parseFunction(SynQ.get(event + events[index]));
     head = fn[0];
     body = fn[1];
@@ -532,8 +530,8 @@ SynQ.get = function(name, key) {
 
 // Append (push) a resource
 SynQ.push = function(name, data, key, delimiter) {
-  SynQ[internal] = true;
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'push');
+  SynQ[internal] = true;
 
   var last = SynQ.get(name, key) || "";
 
@@ -559,9 +557,9 @@ SynQ.pull = function(name, key, delimiter) {
 
 // Remove a resource
 SynQ.pop = function(name, key) {
+  SynQ[internal] = true;
   name = name || SynQ.last.pop();
 
-  SynQ[internal] = true;
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'pop');
 
   var data = SynQ.get(name, key);
