@@ -1440,7 +1440,7 @@ else
   });
 
 SynQ.eventName = '.events';
-SynQ.events = "push pull pop clear broadcast retrieve cage";
+SynQ.events = "set get pop push pull upload download snip append recall clear";
 SynQ.last = [];
 SynQ.last_upload = [];
 SynQ.host = null;
