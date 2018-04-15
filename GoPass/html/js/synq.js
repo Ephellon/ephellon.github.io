@@ -257,7 +257,7 @@ SynQ.eventlistener = function(event) {
   messages = (messages.length > 0)? messages.split(SynQ.esc): [];
 
   uuids = uuids || "";
-  uuids = (uuids.length > 0)? messages.split(','): [];
+  uuids = (uuids.length > 0)? uuids.split(','): [];
 
   function write(e, m) {
     var a = e.attributes,
