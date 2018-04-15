@@ -1096,7 +1096,7 @@ SynQ.help = function(item) {
       break;
 
     case 'parseurl':
-      m = "Returns a URL object./~Usage: $.@(URL)/~Arguments: String/~Returns: Object => {href, origin, protocol, scheme, username, password, host, port, path, search, searchParameters}"
+      m = "Returns a URL object./~Usage: $.@(URL)/~Arguments: String/~Returns: Object => {href, origin, protocol, scheme, username, password, host, port, path, search, searchParameters, hash}"
       break;
 
     case 'ping':
