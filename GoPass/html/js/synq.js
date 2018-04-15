@@ -329,8 +329,6 @@ SynQ.eventlistener = function(event) {
     else {
       value = messages[index] || "";
       write(element, value);
-    } else {
-      continue updating;
     }
   }
 
