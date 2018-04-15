@@ -154,7 +154,7 @@ function ping(address, options) {
 
 // The main function
 function SynQ(name) {
-  SynQ[internal] = true;
+  ++SynQ[internal];
 
   name = name || null;
 
@@ -232,7 +232,7 @@ function SynQ(name) {
   SynQ.set('.values', messages.join(SynQ.esc));
   SynQ.set('.uuids', uuids.join(','));
 
-  SynQ[internal] = false;
+  --SynQ[internal];
 }
 
 SynQ.syn = "synq-data synq-text synq-html synq-host".split(" ");
@@ -246,7 +246,7 @@ SynQ.esc = "<!-- synq-delimeter -->";
 /* The event-listeners */
 // eventlistener target
 SynQ.eventlistener = function(event) {
-  SynQ[internal] = true;
+  ++SynQ[internal];
 
   var messages = SynQ.get('.values'),
       uuids    = SynQ.get('.uuids'),
@@ -332,7 +332,7 @@ SynQ.eventlistener = function(event) {
     }
   }
 
-  SynQ[internal] = false;
+  --SynQ[internal];
 };
 
 // add listener
@@ -340,9 +340,9 @@ SynQ.addEventListener = function(event, action) {
   SynQ.prevent([event, action], [undefined, null, ""], "Failed to add event listener '" + event + "'", "addEventListener");
 
   if(SynQ[internal])
-    return;
+    return action;
   else
-    SynQ[internal] = true;
+    ++SynQ[internal];
 
   var event  = SynQ.eventName + '/' + event + '/#',
       events = SynQ.get(event + 0),
@@ -358,7 +358,7 @@ SynQ.addEventListener = function(event, action) {
   SynQ.set(event + 0, events);
   SynQ.set(event + name, action);
 
-  return SynQ[internal] = false, events.length - 1;
+  return --SynQ[internal], events.length - 1;
 };
 
 // remove listener
@@ -366,12 +366,12 @@ SynQ.removeEventListener = function(name, parent) {
   SynQ.prevent(name, [undefined, null, ""], "Failed to remove event listener '" + (parent || '*') + "." + name + "'", "removeEventListener");
 
   if(SynQ[internal])
-    return;
+    return parent;
   else
-    SynQ[internal] = true;
+    ++SynQ[internal];
 
   if(parent)
-    return SynQ[internal] = false, SynQ.pop(SynQ.eventName + '/' + parent + '/#' + name);
+    return --SynQ[internal], SynQ.pop(SynQ.eventName + '/' + parent + '/#' + name);
 
   var events = SynQ.events.split(' '),
       popped = [];
@@ -388,7 +388,7 @@ SynQ.removeEventListener = function(name, parent) {
     }
   }
 
-  return SynQ[internal] = false, popped;
+  return --SynQ[internal], popped;
 };
 
 // trigger listener
@@ -398,7 +398,7 @@ SynQ.triggerEvent = function(event, data) {
   if(SynQ[internal])
     return data;
   else
-    SynQ[internal] = true;
+    ++SynQ[internal];
 
   var event  = SynQ.eventName + '/' + event + '/#',
       events = SynQ.get(event + 0);
@@ -410,12 +410,12 @@ SynQ.triggerEvent = function(event, data) {
     fn = SynQ.parseFunction(SynQ.get(event + events[index]));
     head = fn[0];
     body = fn[1];
-    SynQ[internal] = false;
+    --SynQ[internal];
     new Function(head, body).call(null, data);
-    SynQ[internal] = true;
+    ++SynQ[internal];
   }
 
-  return SynQ[internal] = false, data;
+  return --SynQ[internal], data;
 };
 
 /* The URL-oriented functions */
@@ -531,7 +531,7 @@ SynQ.get = function(name, key) {
 // Append (push) a resource
 SynQ.push = function(name, data, key, delimiter) {
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'push');
-  SynQ[internal] = true;
+  ++SynQ[internal];
 
   var last = SynQ.get(name, key) || "";
 
@@ -539,12 +539,12 @@ SynQ.push = function(name, data, key, delimiter) {
   data = (last.length > 0)? last.split(delimiter).concat(data): [data];
   data = SynQ.set(name, data.join(delimiter), key);
 
-  return SynQ[internal] = false, SynQ.triggerEvent('push', data);
+  return --SynQ[internal], SynQ.triggerEvent('push', data);
 };
 
 // Pull a resource
 SynQ.pull = function(name, key, delimiter) {
-  SynQ[internal] = true;
+  ++SynQ[internal];
   delimiter = delimiter || SynQ.esc;
 
   var data = SynQ.get(name, key);
@@ -552,12 +552,12 @@ SynQ.pull = function(name, key, delimiter) {
   data = data || "";
   data = (data.length > 0)? data.split(delimiter): [data];
 
-  return SynQ[internal] = false, SynQ.triggerEvent('pull', data);
+  return --SynQ[internal], SynQ.triggerEvent('pull', data);
 }
 
 // Remove a resource
 SynQ.pop = function(name, key) {
-  SynQ[internal] = true;
+  ++SynQ[internal];
   name = name || SynQ.last.pop();
 
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'pop');
@@ -569,7 +569,7 @@ SynQ.pop = function(name, key) {
   else
     storage.removeItem(SynQ.signature + name);
 
-  return SynQ[internal] = false, SynQ.triggerEvent('pop', data);
+  return --SynQ[internal], SynQ.triggerEvent('pop', data);
 };
 
 // Broadcast to a global storage
@@ -653,33 +653,33 @@ SynQ.download = function(name, key) {
 
 // Append (push) a resource
 SynQ.append = function(name, data, key, delimiter) {
-  SynQ[internal] = true;
+  ++SynQ[internal];
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'append');
 
   delimiter = delimiter || SynQ.esc;
   data = SynQ.download(name, key).split(SynQ.esc).concat(data);
   data = SynQ.upload(name, data.join(delimiter), key);
 
-  return SynQ[internal] = false, SynQ.triggerEvent('append', data);
+  return --SynQ[internal], SynQ.triggerEvent('append', data);
 };
 
 // Pull a resource
 SynQ.recall = function(name, key, delimiter) {
-  SynQ[internal] = true;
+  ++SynQ[internal];
   delimiter = delimiter || SynQ.esc;
 
   var data = SynQ.download(name, key);
   data = data || "";
   data = (data.length > 0)? data.split(delimiter): [data];
 
-  return SynQ[internal] = false, SynQ.triggerEvent('recall', data);
+  return --SynQ[internal], SynQ.triggerEvent('recall', data);
 }
 
 // Remove a global resource
 SynQ.snip = function(name, key) {
   name = name || SynQ.last_upload.pop();
 
-  SynQ[internal] = true;
+  ++SynQ[internal];
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'snip');
 
   var data = SynQ.get(name, key),
@@ -690,7 +690,7 @@ SynQ.snip = function(name, key) {
   else
     storage.removeItem('synq://localhost:80/' + name);
 
-  return SynQ[internal] = false, SynQ.triggerEvent('snip', data);
+  return --SynQ[internal], SynQ.triggerEvent('snip', data);
 };
 
 /* The space-oriented functions */
@@ -1442,6 +1442,7 @@ SynQ.events = "set get pop push pull upload download snip append recall clear";
 SynQ.last = [];
 SynQ.last_upload = [];
 SynQ.host = null;
+SynQ[internal] |= 0;
 
 SynQ.eventlistener();
 window.addEventListener("storage", window.onstorage = SynQ.eventlistener, false);
