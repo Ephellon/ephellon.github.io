@@ -253,8 +253,11 @@ SynQ.eventlistener = function(event) {
       copies   = {},
       query    = document.querySelectorAll('[' + SynQ.syn.join('],[') + ']');
 
-  messages = (messages || "").split(SynQ.esc);
-  uuids = (uuids || "").split(',');
+  messages = messages || "";
+  messages = (messages.length > 0)? messages.split(SynQ.esc): [];
+
+  uuids = uuids || "";
+  uuids = (uuids.length > 0)? messages.split(','): [];
 
   function write(e, m) {
     var a = e.attributes,
@@ -323,8 +326,7 @@ SynQ.eventlistener = function(event) {
     }
     // UUID isn't set
     // Write, assuming the HTML document hasn't changed
-    else if(messages != null) {
-      messages = messages.split(SynQ.esc);
+    else {
       value = messages[index] || "";
       write(element, value);
     } else {
@@ -349,7 +351,8 @@ SynQ.addEventListener = function(event, action) {
       fn     = SynQ.parseFunction(action),
       name   = fn[2] || events.length;
 
-  events = (events || "").split(SynQ.esc);
+  events = events || "";
+  events = (events.length > 0)? events.split(SynQ.esc): [];
 
   if(events.indexOf(name) < 0)
     events.push(name);
@@ -404,7 +407,8 @@ SynQ.triggerEvent = function(event, data) {
   var event  = SynQ.eventName + '/' + event + '/#',
       events = SynQ.get(event + 0);
 
-  events = (events || "").split(SynQ.esc);
+  events = events || "";
+  events = (events.length > 0)? events.split(SynQ.esc): [];
 
   for(var index = 1, head, body, fn, host = SynQ.host; index < events.length; index++) {
     fn = SynQ.parseFunction(SynQ.get(event + events[index]));
@@ -534,8 +538,8 @@ SynQ.push = function(name, data, key, delimiter) {
   SynQ.prevent(name, [undefined, null, ""], NO_NAME_ERROR, 'push');
 
   delimiter = delimiter || SynQ.esc;
-  data = SynQ.get(name, key);
-  data = (data || "").split(SynQ.esc).concat(data);
+  data = SynQ.get(name, key) || "";
+  data = (data.length > 0)? data.split(delimiter).concat(data): [];
   data = SynQ.set(name, data.join(delimiter), key);
 
   return SynQ[internal] = false, SynQ.triggerEvent('push', data);
@@ -548,7 +552,8 @@ SynQ.pull = function(name, key, delimiter) {
 
   var data = SynQ.get(name, key);
 
-  data = (data || "").split(delimiter);
+  data = data || "";
+  data = (data.length > 0)? data.split(delimiter): [];
 
   return SynQ[internal] = false, SynQ.triggerEvent('pull', data);
 }
@@ -666,7 +671,9 @@ SynQ.recall = function(name, key, delimiter) {
   SynQ[internal] = true;
   delimiter = delimiter || SynQ.esc;
 
-  var data = SynQ.download(name, key).split(delimiter);
+  var data = SynQ.download(name, key);
+  data = data || "";
+  data = (data.length > 0)? data.split(delimiter): [];
 
   return SynQ[internal] = false, SynQ.triggerEvent('recall', data);
 }
