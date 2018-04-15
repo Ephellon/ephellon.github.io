@@ -1164,7 +1164,7 @@ SynQ.help = function(item) {
       break;
 
     case 'unpack16':
-      m = "Unpacks (decodes) a UTF-16 character into two UTF-8 characters./~Usage: $.@(character)/~Arguments: Character/~Returns: String/return: automatically handles UTF-8 characters, and returns the character iteslf."
+      m = "Unpacks (decodes) a UTF-16 character into two UTF-8 characters./~Usage: $.@(character)/~Arguments: Character/~Returns: String//return: automatically handles UTF-8 characters, and returns the character iteslf."
       break;
 
     case 'upload':
