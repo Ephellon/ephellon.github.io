@@ -113,7 +113,7 @@ DEPENDENCIES
               <div class="pretty-input">
 <textarea translate="no" class="notranslate">
 var input  = document.body.innerHTML, // should be a very large amount of text
-    output = Mio.com(input, false),   // using [bloat = false] will keep the string in LZW format
+    output = Mio.enc(input, false),   // using [bloat = false] will keep the string in LZW format
     sign   = Mio.sign(output, 1);     // generates a signature using [fidelity = 1], where fidelity = [0, 1]
 
 // add [output] to the localStorage
