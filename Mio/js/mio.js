@@ -5,8 +5,8 @@ var printable = "\b\t\n\v\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQ
     UTF8   = /^[\u0000-\u00ff]+$/i,
     encodeUTF8, decodeUTF8;
 
-atob = atob || unfold;
-btoa = btoa || fold;
+atob = atob || Mio.unfd;
+btoa = btoa || Mio.fldd;
 
 encodeUTF8 = string =>
   unescape(encodeURIComponent(string));
@@ -31,34 +31,41 @@ var Mio = Mio || {
   /** Encodes a string using three different methods
    * 1) (String) => Base64 [A-Z, a-z, 0-9, +/=]
    *    Returns a Base64 string
-   * 2) (String, Boolean) => LZW [\u0010 - \uffff]
+   * 2) (String, Boolean => false) => LZW [\u0100 - \uffff]
    *    Returns a compressed LZW string
-   * 3) (String, Boolean, Boolean) => UTF8 [\u0000 - \u00ff]
+   * 3) (String, Boolean, Boolean => true) => UTF8 [\u0000 - \u00ff]
    *    Returns a UTF-8 friendly, compressed LZW string (i.e. no character is over \u00ff)
    */
   enc: (
-  (string, shrink, UTF8) =>
-    (string = fold(encodeUTF8(string)), shrink)?
-      (string = compress(string), UTF8)?
-        encodeUTF8(string):
+  (string, shrink, UTF8 = Mio.UTF8, m) =>
+    (string = (m = Mio).fold(m.enc8(string)), shrink)?
+      (string = m.compress(string), UTF8)?
+        m.enc8(string):
       string:
     string
   ), // :enc
 
   dec: (
-  (string) =>
-    decodeUTF8(unfold(
-      (folded.test(string))?
+  (string, m) =>
+    (m = Mio).dec8(Mio.unfold(
+      (m.fldd.test(string))?
         string:
-      (UTF8.test(string))?
-        decompress(decodeUTF8(string)):
-      decompress(string)
+      (m.UTF8.test(string))?
+        m.decompress(m.dec8(string)):
+      m.decompress(string)
     ))
   ), // :dec
 
   sign: (string, fidelity, method) =>
-    sign(string, fidelity, method) // :sign
+    Mio.sign(string, fidelity, method) // :sign
 };
+
+Mio.enc8 = encodeUTF8;
+Mio.dec8 = decodeUTF8;
+Mio.UTF8 = UTF8;
+Mio.fldd = folded;
+Mio.book = library;
+Mio.text = printable;
 
 /** Base-64 encoding/decoding
   * Function fold: String => String
@@ -67,7 +74,10 @@ var Mio = Mio || {
 
 // String -> Base-64 String
 // String: String
-var fold = (string) => {
+Mio.fold = (string) => {
+  var printable = printable || Mio.text,
+      library = library || Mio.book;
+
   var list = {}, media = [], output = [], z6 = "000000", z8 = z6 + "00", pd = library[library.length - 1];
 
   for(var index = 0, length = library.length, code; index < length; index++)
@@ -89,11 +99,14 @@ var fold = (string) => {
   // output.push(pd.repeat( 3 - ((output.length - 1) % 4) ));
 
   return output.join("");
-},
+};
 
 // Base-64 String -> String
 // String: String
-unfold = (string) => {
+Mio.unfold = (string) => {
+  var printable = printable || Mio.text,
+      library = library || Mio.book;
+
   var list = {}, media = [], output = [], code, z6 = "000000", z8 = z6 + "00";
 
   if(folded.test(string))
@@ -113,7 +126,7 @@ unfold = (string) => {
       output.push(String.fromCharCode(+("0b" + code)));
 
   return output.join("");
-},
+};
 
 /** LZW (de)compression
   * Function compress: String => String
@@ -122,7 +135,10 @@ unfold = (string) => {
 
 // Base-64 String -> COM-64 String
 // String: String
-compress = (string) => {
+Mio.compress = (string) => {
+  var printable = printable || Mio.text,
+      library = library || Mio.book;
+
   var dictionary = {},
       paragraph  = string + "",  // phrases
       word       = paragraph[0], // phrase
@@ -150,11 +166,14 @@ compress = (string) => {
     output.push(String.fromCharCode(media[i]));
 
   return output.join("");
-},
+};
 
 // COM-64 String -> Base-64 String
 // String: String
-decompress = (string) => {
+Mio.decompress = (string) => {
+  var printable = printable || Mio.text,
+      library = library || Mio.book;
+
   var dictionary = {},
       paragraph  = string + "", // phrases,
       character  = paragraph[0],
@@ -180,7 +199,7 @@ decompress = (string) => {
   }
 
   return output.join("");
-},
+};
 
 /** Hashing/signature function
   * Function sign: String[, Number @Float] => String
@@ -188,8 +207,10 @@ decompress = (string) => {
 
 // String -> Salted Hash Signature
 // String: String[, Number @Float{0...1}[, Boolean]]
-sign = (string, fidelity, method) => {
-  var array = (string = string + "").split(/([^]{16})/),
+Mio.sign = (string, fidelity, method) => {
+  var printable = printable || Mio.text,
+      library = library || Mio.book,
+      array = (string = string + "").split(/([^]{16})/),
       gamma = 0;
 
   fidelity = 18 - Math.floor((fidelity || 0) * 16);
