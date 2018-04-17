@@ -100,13 +100,13 @@ DEPENDENCIES
             <h1 itemprop="name" class="devsite-page-title">Mi/o | Signatures</h1>
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
             <div itemprop="articleBody" class="devsite-article-body clearfix">
-              <p>Mi/o can generate dynamic signatures for text input.</p>
+              <p>Mi/o can generate dynamic signatures for text input. It also take sa <code>fidelity</code> argument (a float, from 0 to 1) to be even more discrete.</p>
               <h2 id="why_mio">When to use signatures</h2>
               <p>Signatures should be used when you want to know text hasn't been changed, such as:</p>
               <ul>
-                <li>Changed password</li>
-                <li>Text additions (there's a "." added to a document, etc.)</li>
-                <li>Fidelity markers (compare <code>[Mio.sign("apple", 0), Mio.sign("apple", 0.5), Mio.sign("apple", 1)]</code> in your console)</li>
+                <li>To verify a password</li>
+                <li>To avoid text additions (there's a "." added to a document, etc.)</li>
+                <li>For fidelity markers (compare <code>Mio.sign("apple", 0)</code>, <code>Mio.sign("apple", 0.5)</code>, and <code>Mio.sign("apple", 1)</code> in your console)</li>
               </ul>
               <h3 id="set_it_up">Signing in Mi/o</h3>
               <p>The example below is editable.</p>
