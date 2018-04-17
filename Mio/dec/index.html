@@ -100,7 +100,7 @@ DEPENDENCIES
             <h1 itemprop="name" class="devsite-page-title">Mi/o | Decompression</h1>
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
             <div itemprop="articleBody" class="devsite-article-body clearfix">
-              <p>Mi/o is an optimized <a href="https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch" target="blank_">LZW</a> algorithm, that also allows the use of the <a href="https://en.wikipedia.org/wiki/Base64" target="blank_">Base64</a> algorithms (<code>atob</code> and <code>btoa</code> in JavaScript).</p>
+              <p>Mi/o is an optimized <a href="https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch" target="blank_">LZW</a> algorithm, that also allows the use of the <a href="https://en.wikipedia.org/wiki/Base64" target="blank_">Base64</a> algorithms (<code>atob</code> and <code>btoa</code> in JavaScript). The <code>Mio.dec</code> method is used to decompress data. It automatically detects LZW or Base64 formatted strings.</p>
               <h2 id="why_mio">When to use compression</h2>
               <p>Although Mi/o is fast, and lossless, I wouldn't trust the algorithms fully on sensitive data. Places you could use Mi/o:</p>
               <ul>
