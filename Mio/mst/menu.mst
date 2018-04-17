@@ -17,7 +17,7 @@
     <ul class="devsite-nav-section devsite-nav-section-collapsed">
       {{ #items }}
       <li class="devsite-nav-item">
-        <a href="{{ href }}" target="blank_" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">
+        <a href="{{ href }}" track-type="leftNav" track-name="titleLink" track-metadata-position="1" data-category="Site-Wide Custom Events" data-label="Left nav" data-action="click" class="devsite-nav-title gc-analytics-event">
           <span>{{ title }}</span>
         </a>
       </li>
