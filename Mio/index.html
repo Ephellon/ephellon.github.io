@@ -100,13 +100,12 @@ DEPENDENCIES
             <h1 itemprop="name" class="devsite-page-title">Mi/o</h1>
             <nav class="devsite-page-nav-embedded devsite-nav"></nav>
             <div itemprop="articleBody" class="devsite-article-body clearfix">
-              <p>Mi/o is an optimized <a href="https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch" target="blank_">LZW</a> algorithm, that also allows the use of the <a href="https://en.wikipedia.org/wiki/Base64" target="blank_">Base64</a> algorithms (<code>atob</code> and <code>btoa</code> in JavaScript).</p>
+              <p>Mi/o is an optimized <a href="https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch" target="blank_">LZW</a> algorithm, that also allows the use of the <a href="https://en.wikipedia.org/wiki/Base64" target="blank_">Base64</a> algorithms (<code>atob</code> and <code>btoa</code> in JavaScript). Mi/o can also be used to create hashes, with a large hash table.</p>
               <h2 id="why_mio">More about Mi/o's algorithms</h2>
               <p>Mi/o is called on as <code>Mio.enc(String data[, Boolean bloat])</code> to encode/compress data, and <code>Mio.dec(String data)</code> to decode/decompress data.</p>
               <ul>
-                <li><code>Mio.enc</code> is also available as <code>Mio.Mi</code> and <code>Mio.com</code></li>
-                <li><code>Mio.dec</code> is also available as <code>Mio.Mo</code></li>
                 <li><code>Boolean bloat</code> tells Mio to leave the encoded data in LZW format <code>false</code>, or Base64 format <code>true</code>; default is <code>false</code></li>
+                <li>Mio also comes with a built-in hashing algorithm, <code>Mio.sign(string[, fidelity])</code></li>
               </ul>
               <h3 id="set_it_up">Example of Mi/o</h3>
               <p>The example below is editable.</p>
