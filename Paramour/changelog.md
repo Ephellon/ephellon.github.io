@@ -15,7 +15,7 @@
 
 ----
 
-# Changelog
+# Change log
 
 __Alpha, v1__
 
