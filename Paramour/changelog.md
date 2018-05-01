@@ -9,13 +9,35 @@
 
 ----
 
-+ [Features](#features)
++ [Change log](#changelog)
 + [Examples](#examples)
 + [Proposals](#proposals)
 
 ----
 
-# Features
+# Changelog
+
+__Alpha, v1__
+
++ Initial proposal
+
+__Beta, v2__
+
+__Gamma, v3__
+
+__Delta, v4__
+
+__Epsilon, v5__
+
+__Zeta, v6__
+
+__Eta, v7__
+
++ Initial release (unstable)
+
+__Theta, v8__
+
+__Iota, v9__
 
 ## Added in Cleopatra, v10
 
@@ -23,8 +45,9 @@
 + [Mini class syntax](#mini-classes)
 + [Single line comment syntax](#single-line-comments)
 + [Multiline comment syntax](#multiline-comments)
-+ JavaScript runtime detection
-+ Self Evaluation Articles (SEAs)
++ `Paramour`
+  - JavaScript runtime detection
+  - Self Evaluation Articles (SEAs)
 
 ----
 
@@ -1044,7 +1067,7 @@ class cls {
 ----
 
 ## Your Wish, v25
-### Removed: Typed Controlled Declarations
+### Removed: Type Controlled Declarations
 ### Paramour (Input)
 ```paramour
 var "String" string = "anon",
