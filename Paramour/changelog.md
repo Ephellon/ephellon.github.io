@@ -3,7 +3,7 @@
 
 + See [Paramour's website](https://ephellon.github.io/Paramour/) for documentation and examples.
 
-+ See [Paramour's change Log](https://github.com/Ephellon/Ephellon.github.io/blob/master/Paramour/changelog.md) for the change log and history.
++ See [Paramour's change log](https://github.com/Ephellon/Ephellon.github.io/blob/master/Paramour/changelog.md) for the change log and history.
 
 + See [this gist](https://gist.github.com/Ephellon/e5e0a74c0dbd971a9375ac24edfef2f3#file-help-md) if you want help on editing Paramour's source code.
 
