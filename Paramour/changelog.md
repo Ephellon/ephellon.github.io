@@ -9,7 +9,7 @@
 
 ----
 
-+ [Change log](#changelog)
++ [Change log](#change-log)
 + [Examples](#examples)
 + [Proposals](#proposals)
 
