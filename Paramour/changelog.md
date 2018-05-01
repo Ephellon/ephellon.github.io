@@ -257,10 +257,10 @@
 ----
 
 # Examples
+
 ## Cleopatra, v10
 ### Mini Functions
 ### Paramour (Input)
-
 ```paramour
 fn(a, b, c) {
   console.log "Hello world!"
@@ -271,7 +271,6 @@ var a = fn(){},
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function fn(a, b, c) {
   console.log("Hello world!")
@@ -285,7 +284,6 @@ var a = function fn(){},
 
 ### Mini Classes
 ### Paramour (Input)
-
 ```paramour
 cls {}
 
@@ -293,7 +291,6 @@ cls.ext {}
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 class cls {}
 
@@ -304,13 +301,11 @@ class ext extends cls {}
 
 ### Single-line Comments
 ### Paramour (Input)
-
 ```paramour
 # comment
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 // comment
 ```
@@ -319,7 +314,6 @@ class ext extends cls {}
 
 ### Multiline Comments
 ### Paramour (Input)
-
 ```paramour
 ###
   comments
@@ -327,7 +321,6 @@ class ext extends cls {}
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 /*
   comments
@@ -339,7 +332,6 @@ class ext extends cls {}
 ## Monica, v11
 ### Defined Operator
 ### Paramour (Input)
-
 ```paramour
 var window = (defined window)?
   window:
@@ -347,7 +339,6 @@ var window = (defined window)?
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 var window = ((window != undefined && window != null))?
   window:
@@ -358,7 +349,6 @@ var window = ((window != undefined && window != null))?
 
 ### Undefined Operator
 ### Paramour (Input)
-
 ```paramour
 var window = (undefined window)?
   {}:
@@ -366,7 +356,6 @@ window;
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 var window = ((window == undefined || window == null))?
   {}:
@@ -377,7 +366,6 @@ window;
 
 ### MVSV
 ### Paramour (Input)
-
 ```paramour
 var (a, b, c) = {};
 const (d, e, f) = [];
@@ -385,7 +373,6 @@ let (g, h) = "";
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 var a = {}, b = {}, c = {};
 const d = [], e = [], f = [];
@@ -397,7 +384,6 @@ let g = "", h = "";
 ## Bond, v12
 ### Case and Default Statements
 ### Paramour (Input)
-
 ```paramour
 switch(name) {
   case('Bob', 'Adam') {
@@ -411,7 +397,6 @@ switch(name) {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 switch(name) {
   case 'Bob':
@@ -432,13 +417,17 @@ switch(name) {
 ## Jasmine, v13
 ### Removed: Operator Statement
 ### Paramour (Input)
-
 ```paramour
+<operator Operator [ParameterType1, ParameterType2]> {
+  # ...
+}
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
+function Operator__ParameterType1_ParameterType2($1, $2) {
+  // ...
+}
 ```
 
 ----
@@ -446,7 +435,6 @@ switch(name) {
 ## Prynne, v14
 ### Spread Type
 ### Paramour (Input)
-
 ```paramour
 fn(...args) {
   console.log args
@@ -454,7 +442,6 @@ fn(...args) {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function fn_Spread() {
   var arity;
@@ -472,7 +459,6 @@ function fn() {
 
 ### Any Type
 ### Paramour (Input)
-
 ```paramour
 fn(*arg) {
   console.log arg
@@ -480,7 +466,6 @@ fn(*arg) {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function fn_Any(arg) {
   console.log(arg)
@@ -496,7 +481,6 @@ function fn() {
 ## Krogstad, v15
 ### Yield
 ### Paramour (Input)
-
 ```paramour
 *gn(value) {
   &> value
@@ -504,7 +488,6 @@ function fn() {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function* gn(value) {
   yield value
@@ -515,7 +498,6 @@ function* gn(value) {
 
 ### Throw New
 ### Paramour (Input)
-
 ```paramour
 fn() {
   +> Error "Nothing here"
@@ -523,7 +505,6 @@ fn() {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function fn() {
   throw new Error("Nothing here")
@@ -534,7 +515,6 @@ function fn() {
 
 ### Docstring Statements
 ### Paramour (Input)
-
 ```paramour
 /** Just a function
  * [String]
@@ -543,7 +523,6 @@ function fn() {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 ("* Just a function\n\
 * [String]\n\
@@ -557,7 +536,6 @@ function fn() {}
 ## Starboy, v16
 ### Conditional Block
 #### Syntaxes
-
 __Is version__
 
 ```paramour
@@ -585,7 +563,6 @@ __Is at-least version__
 ----
 
 ### Paramour (Input)
-
 ```paramour
 # 1.4?*
 console.log "You're using JS v1.4 or higher"
@@ -593,7 +570,6 @@ console.log "You're using JS v1.4 or higher"
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 console.log("You're using JS v1.4 or higher")
 ```
@@ -603,7 +579,6 @@ console.log("You're using JS v1.4 or higher")
 ### JSUnit
 ### Paramour (Input)
 #### Syntaxes
-
 __Before__
 
 ```paramour
@@ -646,7 +621,6 @@ __Tests__
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 (JSUNIT.Test[0] = function() {
   let name = 'anon';
@@ -663,14 +637,12 @@ __Tests__
 ## Caroline, v17
 ### Fat Arrow
 ### Paramour (Input)
-
 ```paramour
 let fn = (...args) => args,
     en = (...errs) +> errs;
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 let fn = (...args) => args,
     en = (...errs) => {throw new errs};
@@ -680,7 +652,6 @@ let fn = (...args) => args,
 
 ### Operator Statements
 #### Syntaxes
-
 __Prefix operator (unary)__
 
 ```paramour
@@ -708,7 +679,6 @@ __Infix operator (binary)__
 ----
 
 ### Paramour (Input)
-
 ```paramour
 [Boolean?] {
   if($1)
@@ -723,7 +693,6 @@ is[*;*] {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function Question_Mark_Suffix_Operator($1) {
   if($1)
@@ -741,7 +710,6 @@ function is__Any_Any($1, $2) {
 
 ### Slice
 ### Paramour (Input)
-
 ```paramour
 let a = 'adam steve bill'.split ' ',
     n = 2;
@@ -755,7 +723,6 @@ a[..];
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 let a = 'adam steve bill'.split(' '),
     n = 2;
@@ -772,7 +739,6 @@ a.slice(0, 0);
 
 ### Splice
 ### Paramour (Input)
-
 ```paramour
 let a = 'adam steve bill'.split ' ',
     n = 2;
@@ -791,7 +757,6 @@ a[..n] = 'anon';
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 let a = 'adam steve bill'.split ' ',
     n = 2;
@@ -814,7 +779,6 @@ a.splice(0, n, 'anon');
 ## Fade, v18
 ### Prototype Shortcuts
 ### Paramour (Input)
-
 ```paramour
 a..b
 
@@ -824,7 +788,6 @@ a@b
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 a.prototype.b
 
@@ -836,14 +799,12 @@ a.prototype.b
 
 ### NaN Operator
 ### Paramour (Input)
-
 ```paramour
 if(NaN a || a == NaN || a === NaN || NaN == a || NaN === a)
   console.log 'NaN';
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 if(!(a <= Infinity) || a!(a <= Infinity) || a!(a <= Infinity) || !(a <= Infinity) || !(a <= Infinity))
   console.log('NaN');
@@ -854,13 +815,11 @@ if(!(a <= Infinity) || a!(a <= Infinity) || a!(a <= Infinity) || !(a <= Infinity
 ## Cool Girl, v19
 ### Controlled parameter types
 ### Paramour (Input)
-
 ```paramour
 fn(String .name) {}
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function fn__String(name) {this.name = name}
 
@@ -873,7 +832,6 @@ function fn() {
 
 ### Top Level Quasis
 ### Paramour (Input)
-
 ```paramour
 let string =
 """
@@ -882,7 +840,6 @@ I'm a "quasi" string.
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 let string =
 "I'm a \"quasi\" string."
@@ -893,7 +850,6 @@ let string =
 ## Backseat Freestyle, v20
 ### Type controlled methods
 ### Paramour (Input)
-
 ```paramour
 cls {
   .mthd(String name) {
@@ -903,7 +859,6 @@ cls {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 class cls {
   mthd__String(name) {
@@ -921,14 +876,12 @@ class cls {
 ## Calm Down, v21
 ### Chained Operators
 ### Paramour (Input)
-
 ```paramour
 if(1 < 2 > 0 != 5)
   console.log 'Should be true';
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 if(1 < 2 && 2 > 0 && 0 != 5)
   console.log('Should be true');
@@ -939,13 +892,11 @@ if(1 < 2 && 2 > 0 && 0 != 5)
 ## Thursday, v22
 ### New
 ### Paramour (Input)
-
 ```paramour
 let error = *Error 'Just an error';
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 let error = new Error('Just an error');
 ```
@@ -955,7 +906,6 @@ let error = new Error('Just an error');
 ## Consuela, v23
 ### Typeof
 ### Paramour (Input)
-
 ```paramour
 "boolean" true;
 "undefined" variable;
@@ -963,7 +913,6 @@ let error = new Error('Just an error');
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 "boolean" == typeof true;
 "undefined" == typeof variable;
@@ -975,7 +924,6 @@ let error = new Error('Just an error');
 ## ..., v24
 ### HTML Tag Types
 ### Paramour (Input)
-
 ```paramour
 write(String message, <*> element) {
   element.innerHTML = message
@@ -983,7 +931,6 @@ write(String message, <*> element) {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function write__String_HTMLAllCollection(message, element) {
   element.innerHTML = message
@@ -998,7 +945,6 @@ function write() {
 
 ### New Tuple Syntax
 ### Paramour (Input)
-
 ```paramour
 var(catcher, value_1) = .{
   "abc", 123, /def/g, [123, 456, 789]
@@ -1018,7 +964,6 @@ var value_4 = catcher.next();
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 var catcher = new Tuple("abc", 123, /def/g, [123, 456, 789]),
     value_1 = Tuple.next;
@@ -1083,7 +1028,6 @@ var self = @
 
 ### Static Method
 ### Paramour (Input)
-
 ```paramour
 cls {
   *method() {}
@@ -1091,7 +1035,6 @@ cls {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 class cls {
   static method() {}
@@ -1103,13 +1046,19 @@ class cls {
 ## Your Wish, v25
 ### Removed: Typed Controlled Declarations
 ### Paramour (Input)
-
 ```paramour
+var "String" string = "anon",
+    "Object" object = {
+      "Function" method: fn() {}
+    };
 ```
 
-### JavaScript (Output)
-
+### JavaScript (Desired Output)
 ```javascript
+var string = (((string = "anon") instanceof String)? string: "backup"),
+    object = (((object = {
+      method: (((Global['__method__'] = fn) instanceof Function)? Global['__method__']: undefined)
+    }) instanceof Object)? object: undefined);
 ```
 
 ----
@@ -1117,14 +1066,12 @@ class cls {
 ## Gold, v27
 ### Null Operator
 ### Paramour (Input)
-
 ```paramour
 if(null variable)
   console.log 'NULL';
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 if(null == variable)
   console.log('NULL');
@@ -1147,7 +1094,6 @@ log(String message, details...) {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 // con -> console
 
@@ -1183,7 +1129,6 @@ function log() {
 ## untitled, v28
 ### Type Annotations
 ### Paramour (Input)
-
 ```paramour
 fn(a, b, c):undefined => {
   # return nothing
@@ -1191,7 +1136,6 @@ fn(a, b, c):undefined => {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function fn(a, b, c) {
   // return nothing
@@ -1202,7 +1146,6 @@ function fn(a, b, c) {
 
 ### Fat Statements
 ### Paramour (Input)
-
 ```paramour
 fn1(...args) -> args;
 fn2(...args) => args;
@@ -1212,7 +1155,6 @@ er2(...args) +> args;
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function fn1(...args) {return args};
 function fn2(...args) {return args};
@@ -1225,7 +1167,6 @@ function er2(...args) {throw new args};
 
 ### Quasi RegExps
 ### Paramour (Input)
-
 ```paramour
 phoneNo(String number):Boolean ->
 ///
@@ -1236,7 +1177,6 @@ phoneNo(String number):Boolean ->
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 function phoneNo__String(number) {return RegExp('^(?(d{3}))?[-s]?(d{3})-?(d{4})', '').test(number)}
 
@@ -1249,7 +1189,6 @@ function phoneNo() {
 
 ### Ranges
 ### Syntaxes
-
 __Inclusive (from A to Z, including Z)__
 ```paramour
 var array = [1..26]
@@ -1265,14 +1204,12 @@ var array = [1...26]
 ====
 
 ### Paramour (Input)
-
 ```paramour
 var array = [1..5],
     brray = [1...5];
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 var array = [1, 2, 3, 4, 5],
     brray = [1, 2, 3, 4];
@@ -1283,7 +1220,6 @@ var array = [1, 2, 3, 4, 5],
 ## Arabella, v30
 ### Prototype Arrow Statements
 ### Paramour (Input)
-
 ```paramour
 cls [
   .mhtd(...args) -> args
@@ -1291,7 +1227,6 @@ cls [
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 class cls {
   mthd__Spread(...args) {
@@ -1312,14 +1247,12 @@ class cls {
 *Note: Does not support the thousands place.*
 
 ### Paramour (Input)
-
 ```paramour
 var m = 1.234.567,
     k = 123456;
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 var m = 1234567,
     k = 123456;
@@ -1330,9 +1263,7 @@ var m = 1234567,
 # Proposals
 
 ## Lexical Phantoms
-
 ### Paramour (Input)
-
 ```paramour
 # $win -> window
   # a global phantom
@@ -1353,7 +1284,6 @@ $win.onload = () {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 // win -> window
   // a global phantom
@@ -1376,7 +1306,6 @@ window.onload = function() {
 ----
 
 ## Custom Syntax Statments (simple)
-
 ### Paramour (Input)
 ```paramour
 var each = 1, every_other = 2;
@@ -1432,7 +1361,6 @@ for(var i = 0, o = [1, 2, 3], item; i < o.length; i += every_other) (function(){
 ----
 
 ## Custom Syntax Statments (difficult)
-
 ### Paramour (Input)
 ```paramour
 # $1 - \j
@@ -1501,9 +1429,7 @@ var interval = setInterval(function() {
 ----
 
 ## Import/Export
-
 ### Paramour (Input)
-
 ```paramour
 # export [String - *], window, this.name
 /** (String $1, * $2)
@@ -1519,7 +1445,6 @@ var interval = setInterval(function() {
 ```
 
 ### JavaScript (Desired Output)
-
 ```javascript
 ("* (String $1, Number $2)\n" +
 " * $1.repeat($2)\n" +
