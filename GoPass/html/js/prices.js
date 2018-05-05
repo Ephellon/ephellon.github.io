@@ -1,7 +1,7 @@
 /* Price Scheme *
-Agency
+Agency ($: The full display name)
   Area
-    Age Group
+    Age Group (_.split ";" => *.split ",")
       Ticket Type
 */
 

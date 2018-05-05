@@ -1,0 +1,39 @@
+/**
+ * The "Foodie" app - A concessions delivery app, exclusive to sporting events (and their stadium(s))
+ * Theme - Black/White with corresponding red and yellow (i.e. dark/light, respectively)
+ *
+ * TODO:
+ * Login/Signup - use device IEID and/or phone number
+ * Account management - transaction history, seating assistance, ticket information, and concession ordering
+ * Seating assistance - use of ticket information to help the customer find their seat
+ *
+ * Typical ordering experience (for a returning customer):
+ * The user opens the app, and sent to the main menu ("Add Order," "Help," and "More")
+ * 
+ */;
+
+var user = {},
+    order,
+    refund,
+    Foodie = {
+  user: {
+    place: {
+      order
+      refund
+    }
+  }
+};
+
+/** (String Item-ID)
+ * {String} id - The item's ID
+ */
+order(String id) {
+  
+}
+
+/** (String... Item-IDs)
+ * {String Array} - The items' IDs
+ */
+order(String ids...) {
+  
+}

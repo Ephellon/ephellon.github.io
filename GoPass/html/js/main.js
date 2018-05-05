@@ -1,6 +1,6 @@
 var window, document, console;
 
-// GLobal types
+// Global types
 window.icon = "i";
 window.logo = "l";
 window.bttn = "b";
@@ -24,11 +24,22 @@ function Hand(error) {
   console.log(error);
 };
 
+// Polyfills
+Object.values = Object.values || function values(object) {
+  var values = [];
+
+  for(var key in object)
+    if(object.hasOwnProperty(key) && object.propertyIsEnumerable(key))
+      values.push(object[key]);
+
+  return values;
+};
+
 // defined variable
 window.defined =
 // Boolean: Object*
 function defined(variable) {
-  return variable != undefined && variable != null;
+  return ((variable != undefined) && (variable != null));
 };
 
 // toogle the full screen status of the document
@@ -40,14 +51,16 @@ function toggleFullScreen(state) {
       cancel  = doc.exitFullscreen      || doc.mozCancelFullScreen    || doc.webkitExitFullscreen      || doc.msExitFullscreen,
       isFull  = doc.fullscreenElement   || doc.mozFullScreenElement   || doc.webkitFullscreenElement   || doc.msFullscreenElement;
 
-  state = defined(state)? state: isFull;
+  state = defined(state)?
+    state:
+  isFull;
 
   if(defined(request) && (!isFull | state))
     request.call(docEl);
   else if(defined(cancel) && (isFull | !state))
     cancel.call(doc);
   else if(!defined(request) | !defined(cancel))
-    console.warn(new Error("Full Screen API not supported.")),
+    Toss(new Error("Full Screen API is not supported."), !1),
     scrollTo(0, 1);
 };
 
@@ -64,7 +77,7 @@ function format(date, string) {
 
   string = string || "MM/DD/YYYY<br>hh:mm";
 
-  function f(n){return("00"+n).slice(-2)}
+  function f(n){return("00"+n).slice(-2)};
 
   return string
     .replace(/Y{3,4}/g, year)
@@ -81,12 +94,14 @@ function format(date, string) {
 window.random =
 // Number: [Number[, Number[, Boolean]]]
 function random(left, right, integer) {
-  left = defined(left)? left: 0;
+  left  = defined(left)?   left: 0;
   right = defined(right)? right: 1;
 
   var number = left + (Math.random() * right);
 
-  return (integer)? Math.round(number): number;
+  return (integer)?
+    (number | 0):
+  number;
 };
 
 var g = {
@@ -104,7 +119,7 @@ var g = {
   }
 },
     f = "MM/DD/YYYY<br>hh:mm",
-    u = "https://api-bwipjs.rhcloud.com/?bcid=azteccode&text=";
+    u = "https://bwipjs-api.metafloor.com/?bcid=azteccode&text=";
 
 window.initial = {
   "get": g,
@@ -112,16 +127,21 @@ window.initial = {
   "barcode_api_url": u
 };
 
+// Global variables
 var now  = window.now  = (new Date),
+
     // Dawn of the current day should be ~6 AM
-    dawn = window.dawn = new Date(now[g.FY], now[g.M], now[g.D], 6, 0, random(0, 59, true), random(0, 59, true)),
+    dawn = window.dawn = new Date(now[g.FY], now[g.M], now[g.D], 6, 0, random(0, 59, !0), random(0, 59, !0)),
+
     // Dusk of the next day should be 3 AM
     dusk = window.dusk = new Date(now[g.FY], now[g.M], now[g.D] + 1, 3, 0, 0, 0),
+
     // the code for the Aztec barcode should be 77 digits long
     code = window.code = random().toString().replace(/[0\.]/g, "").repeat(77).slice(-77);
 
+// Parse Mustache templates
 window.parseMST =
-// Void: String, Object<Element>
+// Void: String, Object<Element>[, String]
 function parseMST(target, data, file) {
   var t = $(target), d = data, f = file, M = Mustache;
 
@@ -135,3 +155,47 @@ function parseMST(target, data, file) {
       t.html(M.render(contents, d));
     });
 };
+
+// Void: [String[, String[, Number[, String]]]]
+// handle the price information from [prices.js]
+function getPrice(agency, locale, disability, ticket) {
+  var list = [];
+
+  if(defined(agency))
+    if(defined(locale))
+      if(defined(disability))
+        if(defined(ticket))
+          return prices[agency][locale][disability][ticket];
+        else
+          return Object.values(prices[agency][locale][disability]);
+      else
+        return Object.values(prices[agency][locale][!1]);
+    else
+      for(locale in prices[agency])
+        list.push( getPrice(prices[agency][locale]) );
+
+  return list;
+};
+
+// Add the [onswipe] events to the document
+// swipehorizontal, swipevertical
+(function(d) {
+  var ce = function(e, n) {
+    var a = d.createEvent("CustomEvent");
+    a.initCustomEvent(n, !0, !0, e.target);
+    e.target.dispatchEvent(a);
+    a = null;
+    return !1;
+  },
+      nm = !0,
+      sp = {x :0, y: 0},
+      ep = {x: 0, y: 0},
+      touch = {
+        touchstart: function(e) {sp = {x: e.touches[0].pageX, y: e.touches[0].pageY}},
+        touchmove: function(e) {nm = !1; ep = {x: e.touches[0].pageX, y: e.touches[0].pageY}},
+        touchend: function(e) {if(nm) ce(e, "touch"); else var x = ep.x - sp.x, xr = Math.abs(x), y = ep.y - sp.y, yr = Math.abs(y), nm = (ce(e, "swipe" + (Math.max(xr, yr) > 50? xr > yr? "horizontal": "vertical": "")), !0);},
+        touchcancel: function(e) {nm = !1}
+      };
+
+  for(var a in touch) d.addEventListener(a, touch[a], !1);
+})(document);
