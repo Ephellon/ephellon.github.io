@@ -741,6 +741,10 @@ a[..1];
 # same as: a[0..1]
 # => 'adam'
 
+a[..n];
+# same as: a[0..n]
+# => ['adam', 'steve']
+
 a[..];
 # => ['']
 ```
@@ -753,6 +757,10 @@ let a = 'adam steve bill'.split(' '),
 a.slice(0, 1);
 // same as: a[0..1]
 // => 'adam'
+
+a.slice(0, n);
+// same as: a[0..n]
+// => ['adam', 'steve']
 
 a.slice(0, 0);
 // => ['']
@@ -829,7 +837,7 @@ if(NaN a || a == NaN || a === NaN || NaN == a || NaN === a)
 
 ### JavaScript (Desired Output)
 ```javascript
-if(!(a <= Infinity) || a!(a <= Infinity) || a!(a <= Infinity) || !(a <= Infinity) || !(a <= Infinity))
+if(!(a <= Infinity) || !(a <= Infinity) || !(a <= Infinity) || !(a <= Infinity) || !(a <= Infinity))
   console.log('NaN');
 ```
 
@@ -1009,7 +1017,7 @@ var value_4 = catcher.next();
 ### Type Controlled Declarations
 ### Paramour (Input)
 ```paramour
-var "String" string = "anon",
+var "String" string = "anon": "backup",
     "Object" object = {
       "Function" method: fn() {}
     };
@@ -1028,7 +1036,7 @@ var string = (((string = "anon") instanceof String)? string: "backup"),
 ### Strict User Compiling
 ### JavaScript (Input)
 ```javascript
-var output = Paramour(input, {strict: true});
+var output = Paramour("var self = @", {strict: true});
 ```
 
 ### Paramour (Input)
@@ -1130,6 +1138,7 @@ function log__String_Spread() {
       details = [].slice.call(arguments).slice(1, arguments.length);
   console.log(message);
 }
+
 function log() {
   var index = 0, args = arguments, types = Types.apply(null, arguments).split(','), check = Types.check, oftype = Types.oftype;
 
@@ -1212,16 +1221,19 @@ function phoneNo() {
 
 ### Ranges
 ### Syntaxes
-__Inclusive (from A to Z, including Z)__
+
+__From-To (from A to Z, inclusive)__
+
 ```paramour
 var array = [1..26]
 # [1 ... 26]
 ```
 
-__Exclusive (from A to Z, excluding Z, i.e. from A to Y)__
+__From-With (from A to A + Z, inclusive)__
+
 ```paramour
 var array = [1...26]
-# [1 ... 25]
+# [1 ... 27]
 ```
 
 ====
@@ -1230,12 +1242,18 @@ var array = [1...26]
 ```paramour
 var array = [1..5],
     brray = [1...5];
+
+# nrray = [-5..10] => [-5 ... 10]
+# Nrray = [-5...10] => [-5 ... 5]
 ```
 
 ### JavaScript (Desired Output)
 ```javascript
 var array = [1, 2, 3, 4, 5],
-    brray = [1, 2, 3, 4];
+    brray = [1, 2, 3, 4, 5, 6];
+
+// nrray = [-5..10] => [-5 ... 10]
+// Nrray = [-5...10] => [-5 ... 5]
 ```
 
 ----
@@ -1244,7 +1262,7 @@ var array = [1, 2, 3, 4, 5],
 ### Prototype Arrow Statements
 ### Paramour (Input)
 ```paramour
-cls [
+cls {
   .mhtd(...args) -> args
 }
 ```
