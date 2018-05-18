@@ -948,14 +948,14 @@ let error = new Error('Just an error');
 ### HTML Tag Types
 ### Paramour (Input)
 ```paramour
-write(String message, <*> element) {
+write(String message, <div> element) {
   element.innerHTML = message
 }
 ```
 
 ### JavaScript (Desired Output)
 ```javascript
-function write__String_HTMLAllCollection(message, element) {
+function write__String_HTMLDivElement(message, element) {
   element.innerHTML = message
 }
 
