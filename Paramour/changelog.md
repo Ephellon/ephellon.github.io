@@ -1410,16 +1410,10 @@ for(var i = 0, o = [1, 2, 3], item; i < o.length; i += every_other) (function(){
 
 {when($1 of $2) $$} {
   var interval = setInterval(() {
-    #@1.6?*
-    if($1 instanceof $2)
-    #?
-    #@1.6?!
-    if($1.constructor == $2)
-    #?
-      {
-        clearInterval interval;
-        $$
-      }
+    if($1.constructor === $2) {
+      clearInterval interval;
+      $$
+    }
   }, 10);
 }
 
@@ -1460,7 +1454,7 @@ var fruits = [
 ];
 
 var interval = setInterval(function() {
-  if(fruits instanceof String) {
+  if(fruits.constructor === String) {
     clearInterval(interval);
     throw new TypeError("The fruits array was changed. Stop touching stuff.")
   }
