@@ -1236,7 +1236,7 @@ var array = [1...26]
 # [1 ... 27]
 ```
 
-====
+----
 
 ### Paramour (Input)
 ```paramour
