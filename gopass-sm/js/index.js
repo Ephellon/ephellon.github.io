@@ -1,103 +1,77 @@
-function $(query) {
-  return document.querySelector(query);
-}
+function parse(text, ...values) {
+  var date = new Date(),
+      year = date.getFullYear(), // year
+      dayo = date.getDate(),     // day of month
+      mont = date.getMonth(),    // month
+      hour = date.getHours(),    // hour
+      mins = date.getMinutes(),  // minutes
 
-function format(date, string) {
-  return string
-  .replace(/Y{4}/g, date.getFullYear())
-  .replace(/Y{2}/g, (date.getFullYear() + "").slice(2, 2))
-  .replace(/M{2}/g, date.getMonth() + 1)
-  .replace(/D{2}/g, date.getDate())
-  .replace(/h{2}/g, date.getHours())
-  .replace(/h/g, date.getHours() % 12)
-  .replace(/m{2}/g, (date.getMinutes() + "").replace(/^(\d)$/, "0$1"))
-  .replace(/s{2}/g, (date.getSeconds() + "").replace(/^(\d)$/, "0$1"));
-}
+      tomo = new Date(+date + 86400000),
+      Year = tomo.getFullYear(), // year
+      Dayo = tomo.getDate(),     // day of month
+      Mont = tomo.getMonth(),    // month
+      Hour = tomo.getHours(),    // hour
+      Mins = tomo.getMinutes(),  // minutes
 
-var now = (new Date),
-    dawn = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6, (Math.random() * 20) | 0, 0, 0),
-    dusk = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 3, 0, 0, 0),
-    H = $("#H b"),
-    M = $("#M b"),
-    S = $("#S b"),
-    A = $(".A .date"),
-    B = $(".B .date"),
-    C = $(".A .ticket-id"),
-    D = $(".B .phone"),
-    code = Math.random().toString().replace(/0\./g, "").repeat(77).slice(0, 77),
-    time;
+      dawn = new Date(year, mont, dayo, 6),
+      dusk = new Date(Year, Mont, Dayo, 3),
 
-A.innerHTML = format(dawn, "MM/DD/YYYY<br>hh:mm");
-B.innerHTML = format(dusk, "MM/DD/YYYY<br>hh:mm");
+      YEAR = dusk.getFullYear(), // year
+      DAYO = dusk.getDate(),     // day of month
+      MONT = dusk.getMonth(),    // month
 
-$("#ticket-id").innerHTML = (+code).toString(16).slice(0, 8).toUpperCase();
+      HOUR = date.getHours()   - dusk.getHours(),   // hours
+      MINS = date.getMinutes() - dusk.getMinutes(), // minutes
+      SECS = date.getSeconds() - dusk.getSeconds(); // seconds
 
-setInterval(function() {
-  now = (new Date);
-  var h = 23 + (dusk.getHours() - now.getHours()),
-      m = 59 + (dusk.getMinutes() - now.getMinutes()),
-      s = 59 + (dusk.getSeconds() - now.getSeconds());
-  H.innerHTML = (h > 0)? h: "0";
-  M.innerHTML = (m > 0)? (m + "").replace(/^(\d)$/, "0$1"): "00";
-  S.innerHTML = (s > 0)? (s + "").replace(/^(\d)$/, "0$1"): "00";
-}, 1000);
-
-$(".front").addEventListener("swipehorizontal",
-$(".front > .return").onclick = function() {
-  $(".flip-container").classList = "flip-container hover";
-});
-
-function upimg() {
-$("#aztec").src = $("#aztec-copy").src = "http://bwipjs-api.metafloor.com/?bcid=azteccode&text=" + Math.random().toString().replace(/0\./g, "").repeat(77).slice(0, 77);
-  $("#aztec").onerror = function() {
-    $("#aztec").src = $("#aztec-copy").src = "img/bu." + Math.floor(Math.random() * 6) + ".png";
+  var O = {
+    z: (n, p) => `00${ n + (p | 0) }`.slice(-2)
   };
-};
-upimg();
 
-$(".back").addEventListener("swipehorizontal",
-$(".back > .return").onclick = function() {
-  $(".flip-container").classList = "flip-container";
-  upimg();
+  return (text.raw || [text])
+    .map((value, index) => value
+      .replace(/\#\{([^\{\}]+?)\}/g, ($0, $1, $_, $$) => {
+        var children = [];
+
+        for(var child in O)
+          children.push(child);
+
+        return eval($1.replace( RegExp(`\\b(${ children.join('|') })\\b`, 'g'), 'O["$1"]' ));
+      }) + (values[index] || '')
+    );
+};
+
+$(document).ready(event => {
+
+  setInterval(function() {    
+    $('#time h1')
+      .text(parse `#{ z(23 - HOUR) }:#{ z(59 - MINS) }:#{ z(59 - SECS) }`);
+  }, 500);
+
+  $('#act .date')
+    .attr('time', +new Date)
+    .html(parse `#{ z(mont, 1) } / #{ z(dayo, 1) } / #{ year }<br/>#{ z(hour) } : #{ z(mins) }`);
+
+  $('#exp .date')
+    .attr('time', parse `#{ dusk }`)
+    .html(parse `#{ z(MONT, 1) } / #{ z(DAYO, 1) } / #{ YEAR }<br/>03 : 00`);
+
+  SynQ();
 });
 
-$("#aztec").onclick = function() {
-  $("#aztec-copy").style.display = "initial";
-}
+$('#vend').contextmenu(event => {
+  event.preventDefault(true);
 
-$("#aztec-copy").onclick = function() {
-  $("#aztec-copy").style.display = "none";
-}
+  $('#act .date')
+    .attr('time', +new Date)
+    .html(parse `#{ z(mont, 1) } / #{ z(dayo, 1) } / #{ year }<br/>#{ z(hour) } : #{ z(mins) }`);
 
-$("body").onclick != function() {
-  $("#header").setAttribute("class", "");
-  $("#footer").setAttribute("class", "");
+  navigator.vibrate(1000);
+});
 
-  clearTimeout(time);
+$('#tid').text(parse `#{ (+date).toString(36) }`);
 
-  time =
-  setTimeout(function() {
-    $("#header").setAttribute("class", "hidden");
-    $("#footer").setAttribute("class", "hidden");
-  }, 20000);
-};
-
-(function(d) {
-  var ce = function(e, n) {
-    var a = d.createEvent("CustomEvent");
-    a.initCustomEvent(n, !0, !0, e.target);
-    e.target.dispatchEvent(a);
-    a = null;
-    return !1;
-  },
-      nm = !0,
-      sp = {x :0, y: 0},
-      ep = {x: 0, y: 0},
-      touch = {
-        touchstart: function(e) {sp = {x: e.touches[0].pageX, y: e.touches[0].pageY}},
-        touchmove: function(e) {nm = !1; ep = {x: e.touches[0].pageX, y: e.touches[0].pageY}},
-        touchend: function(e) {if(nm) ce(e, "touch"); else var x = ep.x - sp.x, xr = Math.abs(x), y = ep.y - sp.y, yr = Math.abs(y), nm = (ce(e, "swipe" + (Math.max(xr, yr) > 50? xr > yr? "horizontal": "vertical": "")), !0);},
-        touchcancel: function(e) {nm = !1}
-      };
-  for(var a in touch) d.addEventListener(a, touch[a], !1);
-})(document);
+setInterval(() => {
+  $('#app-container')
+    .attr('class', (screen.width < screen.height? 'portrait': 'landscape'))
+}, 1);

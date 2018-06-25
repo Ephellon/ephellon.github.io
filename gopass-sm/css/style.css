@@ -1,306 +1,273 @@
-html, body {
-  height: 1440px;
-  width: 720px;
-  overflow: hidden;
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
-  position: absolute;
-  padding: 0;
-  margin: 0;
-  border: none;
+/** GoPass Asset Images
+ * https://image.ibb.co/nt4K2d/dart_ticket_bg.jpg
+ * https://image.ibb.co/jn7vay/dcta_ticket_bg.jpg
+ * https://image.ibb.co/dQMMFy/fwta_ticket_bg.jpg
+ * https://image.ibb.co/eaTq8J/golink.png
+ * https://image.ibb.co/cK4V8J/gopass.png
+ * https://image.ibb.co/cpzxoJ/gopool.png
+ * https://image.ibb.co/fYWA8J/gowallet.png
+ * https://image.ibb.co/jB7iTJ/home_icon.png
+ * https://image.ibb.co/evWXNd/more_icon.png
+ * https://image.ibb.co/fate2d/plan_icon.png
+ * https://image.ibb.co/mXPaay/wallet_icon.png
+ * https://image.ibb.co/iTzmhd/buy_icon.png
+ * https://image.ibb.co/d8JJvy/cart.png
+ */
 
-  font-family: arial;
-  font-size: 30px;
+:root {
+  --light-blue: #4A90E2;
+  --blue: #007DBA;
+  --dark-blue: #00205B;
+  --green: #6DB90E;
+  --yellow: #FFCD00;
+  --red: #9E2B2C;
+  --white: #FFFFFF;
+  --black: #000000;
 }
 
-body:before {
-  animation: glow ease-in-out 1.5s alternate infinite;
-  background: url("../img/bg.png");
-  background-size: cover;
-  content: " ";
-
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1;
+[white] {
+  background-color: var(--white);
 }
 
-h4 {
-  line-height: 70%;
+[blue] {
+  background-color: var(--blue);
 }
 
-a {
-  font-size: 67%;
-  color: #000;
-
-  position: absolute;
-  margin-top: -2%;
-  margin-left: -8%;
+[light-blue], [blue="light"] {
+  background-color: var(--light-blue);
 }
 
-b {
-  font-weight: bold;
+[dark-blue], [blue="dark"] {
+  background-color: var(--dark-blue);
 }
 
-.logo {
-  position: absolute;
-  margin-left: 40%;
-  margin-top: 3%;
+[yellow] {
+  background-color: var(--yellow);
 }
 
-.return {
-  margin-left: 80%;
-  margin-top: 2%;
+[red] {
+  background-color: var(--red);
 }
 
-#container {
-  height: 58%;
-  width: 80%;
-  margin-left: 10%;
-  margin-top: 25%;
-
-  text-align: center;
+[black] {
+  background-color: var(--black);
 }
 
-#container:after {
-  content: "----";
-  font-size: 10px;
-
-  position: absolute;
-  margin-top: 7%;
-
-  background: #21508C;
-  border: 1px solid #888;
-  border-radius: 100%;
-  color: rgba(0,0,0,0);
-}
-
-#status {
-  background: radial-gradient(#7D9E1A, #5F8211);
-  border: 7px solid #EBE8E4;
-  border-top: none;
-  border-bottom: none;
+[--white] {
   color: #fff;
-  padding: 8%;
-  padding-top: 10%;
-  padding-bottom: 10%;
-  margin-top: -1%;
 }
 
-#timer {
-  margin-top: -10%;
-  font-size: 45px;
+[--blue] {
+  color: var(--blue);
 }
 
-#H, #M, #S {
-  padding: 5%;
+[--light-blue], [--blue="light"] {
+  color: var(--light-blue);
 }
 
-#H b::after, #M b::after, #S b::after {
-  font-size: 40%;
-  font-weight: initial;
-  position: absolute;
-  text-align: center;
-  margin-top: 10%;
+[--dark-blue], [--blue="dark"] {
+  color: var(--dark-blue);
 }
 
-#H b::after {
-  content: "HOURS";
-  margin-left: -10%;
+[--yellow] {
+  color: var(--yellow);
 }
 
-#M b::after {
-  content: "MIN.";
-  margin-left: -7%;
+[--red] {
+  color: var(--red);
 }
 
-#S b::after {
-  content: "SEC.";
-  margin-left: -7%;
+[--black] {
+  color: var(--black);
 }
 
-#age {
-  font-weight: bold;
-  padding: 5%;
+* {
+  font-family: Roboto, Arial, Sans-Serif, Sans, Monospace;
 }
 
-.back #age {
+html, body, #app-container {
+  border: 0;
+  margin: 0;
+  overflow: hidden;
   padding: 0;
+
+  height: 100vh;
+  width:  100vw;
 }
 
-.A, .B {
-  padding-left: 10%;
-  padding-right: 10%;
-  line-height: 40px;
-}
-
-.A {
-  float: left;
-}
-
-.B {
-  float: right;
-}
-
-.front .A, .front .B {
-  font-size: 27px;
-  margin-top: 2%;
-}
-
-.back .A, .back .B {
-  padding: 5px;
-  line-height: 40px;
-}
-
-.back .A {
-  text-align: left;
-  padding-left: 15px;
-}
-
-.back .B {
-  text-align: right;
-  padding-right: 15px;
-  margin-top: 0;
-}
-
-.return.flip {
-  -webkit-transform: scaleY(-1);
-  -moz-transform: scaleY(-1);
-  -o-transform: scaleY(-1);
-  transform: scaleY(-1);
-
-  -ms-filter: "FlipV";
-  filter: FlipV;
-}
-
-#header, #footer {
-  padding: 0;
-  position: absolute;
-  margin-left: -5%;
-  width: 105%;
-}
-
-#header img, #footer img {
-  border: 5px solid #21508C;
-  width: 100%;
-}
-
-#header img {
-  border-bottom: none;
-}
-
-#header {
-  margin-top: 0%; /* 53% */
-}
-
-#footer {
-  margin-top: 12%; /* 37% */
-}
-
-#footer img {
-  border-top: none;
-  max-width: 725px;
-  margin-left: 25px;
-  margin-top: 7px;
-}
-
-#aztec {
+#app-container {
   background: #fff;
-  border: 10px solid #fff;
-  margin-top: -20px;
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 0;
+  outline: none;
 }
 
-#aztec-copy {
-  background: #fff;
-  display: none;
-  position: absolute;
-  padding: 5%;
+#head, #hair {
+  color: #fff;
+
+  position: fixed;
+
+  height: 3.25em;
+  width:  100vw;
+}
+
+#hair {
+  margin-top: -0.05em;
   z-index: 9;
-  margin-left: -45%;
-  margin-top: 10%;
 }
 
-.hidden img {
-  transition: all 2s;
-  opacity: 0;
+#head {
+  background: url("https://image.ibb.co/cK4V8J/gopass.png") 10% center/auto 45% no-repeat,
+    #fff;
+  margin-top: 3.15em;
 }
 
-#header.hidden img {
-  margin-top: calc(-12% - 120px);
+#x {
+  font-family: monospace !important;
+  font-size: 3em;
+
+  margin-top: -0.4em;
 }
 
-#footer.hidden img {
-  margin-top: calc(12% + 120px);
-}
-
-@keyframes glow {
-  0% { opacity: 0.5 }
-   33% { opacity: 1 }
-  100% { opacity: 1 }
-}
-
-/* Flipping Animation: David Walsh, Unaffiliated */
-
-/* entire container, keeps perspective */
-.flip-container {
-  perspective: 100%;
-
-  background: #EBE8E4;
-  border: 1px solid rgba(0,0,0,0);
-  border-radius: 7px;
-  color: #000;
-  padding: 0;
-  padding-bottom: 5px;
-  box-shadow: 5px 5px 35px 10px rgba(0,0,0,0.3);
-}
-
-.flip-container:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  content: " ";
-  background: radial-gradient(transparent 0%, #7FA118 40%, transparent 100%);
-  z-index: -1;
-}
-
-/* flip the pane when [focused] */
-.flip-container:focus .flipper, .flip-container.hover .flipper {
-  transform: rotateY(180deg);
-}
-
-.flip-container, .front, .back {
-  width: 100%;
-  height: 100%;
-}
-
-/* flip speed goes here */
-.flipper {
-  transition: 0.6s;
-  transform-style: preserve-3d;
-
+#ticket {
+  margin-top: 7em;
   position: relative;
 }
 
-/* hide back of pane during swap */
-.front, .back {
-  backface-visibility: hidden;
+.hidden-services {
+  display: none;
+}
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#hair {
+  padding: 1em;
+}
+
+#hair a {
   position: absolute;
-  top: 0;
-  left: 0;
 }
 
-/* front pane, placed above back */
-.front {
-  z-index: 2;
-  /* for firefox 31 */
-  transform: rotateY(0deg);
+#hair .o:first-of-type {
+  margin-left: calc(50% - 24px);
 }
 
-/* back, initially hidden pane */
-.back {
-  transform: rotateY(180deg);
+#time {
+  padding: 0.25em 1em 1em;
+}
+
+#vend {
+  padding: 1em;
+}
+
+#vend > *:not(:last-child) {
+  padding-right: 1.25em;
+}
+
+#act, #exp {
+  font-size: 14px;
+
+  vertical-align: top;
+
+  display: inline-block;
+}
+
+#act {
+  color: var(--dark-blue) !important;
+}
+
+#exp {
+  color: var(--red) !important;
+}
+
+#auth {
+  background: var(--yellow);
+
+  transition: background 2s;
+}
+
+#auth:hover {
+  background: var(--green) !important;
+}
+
+#text, #over {
+  position: absolute;
+
+  height: 100%;
+  width: 100%;
+}
+
+#text {
+  color: #fff;
+  font-size: 14px;
+
+  padding: 1em;
+
+  z-index: 9;
+}
+
+#text h1, #text h6 {
+  margin: 0;
+}
+
+#tid {
+  text-transform: uppercase;
+}
+
+#vid {
+  mix-blend-mode: multiply;
+
+  transition: background 2s;
+}
+
+/* Landscape mode */
+
+#app-container.landscape {
+  font-size: 200%;
+}
+
+#app-container.landscape * {
+  color: var(--white) !important;
+}
+
+#app-container.landscape #head,
+#app-container.landscape #vend
+{
+  display: none !important;
+}
+
+#app-container.landscape #hair {
+  padding: 0.5em;
+}
+
+#app-container.landscape #hair #x {
+  font-size: 1em;
+}
+
+#app-container.landscape #hair .o {
+  margin-top: -0.6em;
+  position: fixed;
+}
+
+#app-container.landscape #ticket {
+  margin: 0 !important;
+}
+
+#app-container.landscape #time {
+  background: transparent;
+
+  padding-left: 0.5em;
+  position: fixed;
+  z-index: 9;
+}
+
+#app-container.landscape #auth #text {
+  margin-top: 15em;
 }
