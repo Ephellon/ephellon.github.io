@@ -193,7 +193,7 @@ a {
   transition: background 2s;
 }
 
-#auth:hover {
+#auth.focus {
   background: var(--green) !important;
 }
 
