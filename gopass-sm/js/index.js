@@ -1,5 +1,5 @@
 function parse(text, ...values) {
-  var date = new Date(),
+  var date = new Date(parse.date),
       year = date.getFullYear(), // year
       dayo = date.getDate(),     // day of month
       mont = date.getMonth(),    // month
@@ -28,7 +28,7 @@ function parse(text, ...values) {
     z: (n, p) => `00${ n + (p | 0) }`.slice(-2)
   };
 
-  return (text.raw || [text])
+  return parse.date = +new Date, (text.raw || [text])
     .map((value, index) => value
       .replace(/\#\{([^\{\}]+?)\}/g, ($0, $1, $_, $$) => {
         var children = [];
@@ -37,39 +37,63 @@ function parse(text, ...values) {
           children.push(child);
 
         return eval($1.replace( RegExp(`\\b(${ children.join('|') })\\b`, 'g'), 'O["$1"]' ));
-      }) + (values[index] || '')
-    );
+      }) + ( /^(\d+|false|null)$/.test(values[index] + '')? values[index]: '' ));
 };
 
 $(document).ready(event => {
 
-  setInterval(function() {    
+  let act = parse.date = +SynQ.get('act') || +new Date;
+
+  setInterval(function() {
     $('#time h1')
       .text(parse `#{ z(23 - HOUR) }:#{ z(59 - MINS) }:#{ z(59 - SECS) }`);
   }, 500);
 
   $('#act .date')
-    .attr('time', +new Date)
-    .html(parse `#{ z(mont, 1) } / #{ z(dayo, 1) } / #{ year }<br/>#{ z(hour) } : #{ z(mins) }`);
+    .attr('time', act = act || +new Date)
+    .html(parse `#{ z(mont, 1) } / #{ z(--dayo, 1) } / #{ year }<br/>#{ z(hour) } : #{ z(mins) }`);
 
   $('#exp .date')
     .attr('time', parse `#{ dusk }`)
-    .html(parse `#{ z(MONT, 1) } / #{ z(DAYO, 1) } / #{ YEAR }<br/>03 : 00`);
+    .html(parse `#{ z(MONT, 1) } / #{ z(--DAYO, 1) } / #{ YEAR }<br/>03 : 00`);
 
+  SynQ.set('act', act);
   SynQ();
 });
 
 $('#vend').contextmenu(event => {
   event.preventDefault(true);
 
+  let act = parse.date = +new Date;
+
   $('#act .date')
-    .attr('time', +new Date)
+    .attr('time', act)
     .html(parse `#{ z(mont, 1) } / #{ z(dayo, 1) } / #{ year }<br/>#{ z(hour) } : #{ z(mins) }`);
+
+  SynQ.set('act', act);
 
   navigator.vibrate(1000);
 });
 
-$('#tid').text(parse `#{ (+date).toString(36) }`);
+$('#tid').text(parse `#{ (+date || +new Date).toString(36) }`);
+
+$('#auth').on('touchstart', event => {
+  event.preventDefault(true);
+
+  let auth = event.target;
+
+  auth = (auth.id == 'auth')? auth: auth.parentElement;
+  $(auth).attr('class', 'focus');
+});
+
+$('#auth').on('touchend', event => {
+  event.preventDefault(true);
+
+  let auth = event.target;
+
+  auth = (auth.id == 'auth')? auth: auth.parentElement;
+  $(auth).attr('class', '');
+});
 
 setInterval(() => {
   $('#app-container')
