@@ -15,9 +15,10 @@
   <script type="text/javascript">
   window.use_global_synq_token = true;
 
-  if(location.protocol !== 'file:')
-    alert(location.protocol),
-    window.location = 'file://sdcard/gopass-sm/index.html';
+  if(location.protocol !== 'file:') {
+    alert(location.protocol);
+    window.location = 'file:///sdcard/gopass-sm/index.html';
+  }
   </script>
 
   <link rel="stylesheet" href="css/style.css">
