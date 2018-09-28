@@ -781,7 +781,7 @@ a[0..1] = 'susan';
 # a.splice(0, 1, 'susan') => ['steve'] / ['susan', 'bill']
 
 a[..] = 'adam';
-# a.splie(0, 0, 'adam') => [] / ['adam', 'susan', 'bill']
+# a.splice(0, 0, 'adam') => [] / ['adam', 'susan', 'bill']
 
 a[..n] = 'anon';
 # a.splice(0, n, 'anon') => ['susan', 'bill'] / ['anon']
@@ -798,7 +798,7 @@ a.splice(0, 1);
 a.splice(0, 1, 'susan');
 // => ['steve'] / ['susan', 'bill']
 
-a.splie(0, 0, 'adam');
+a.splice(0, 0, 'adam');
 // => [] / ['adam', 'susan', 'bill']
 
 a.splice(0, n, 'anon');
