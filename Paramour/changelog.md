@@ -179,7 +179,7 @@ __Iota, v9__
 ## Added in ..., v24
 
 + [New HTML tag types](#html-tag-types)
-+ [New Tuple Syntax](#tuple)
++ [New Tuple Syntax](#new-tuple-syntax)
 + [New type controlled declarations](#type-controlled-declarations)
 + `Paramour`
   - `self`
