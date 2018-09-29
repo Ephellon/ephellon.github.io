@@ -1354,16 +1354,18 @@ var each = 1, every_other = 2;
 # $1 - \j
 # %1 - \l+
 # &1 - ${reserved words}
+# $@ - random variable name (static for each statement)
 
 {for($1 $2 in %3) $$} {
-  for(var i = 0, o = %3, l = o.length, $2; i < l; i += $1)
-    $$ use $2 = o[i];
+  for(var $@:index = 0, $@:array = %3, $@:length = array.length, $2; index < length; index += $1)
+    $$ use $2 = array[index];
 }
 
 # the statements below match the pattern above
   # $1 - "each", "every_other"
   # $2 - "item"
   # %3 - "[1, 2, 3]"
+  # $@:... - creates a "link" for the word "...", i.e. "$@:index" will replace all "index" with the correct random name
   # $$ - "{\n  console.log(item);\n}"
 
 for(each item in [1, 2, 3]) {
@@ -1381,6 +1383,7 @@ var each = 1, every_other = 2;
 // $1 - \j
 // %1 - \l+
 // &1 - ${reserved words}
+// $@ - random variable name (static for each statement)
 
 // for statement
 
@@ -1388,15 +1391,16 @@ var each = 1, every_other = 2;
   // $1 - "each", "every_other"
   // $2 - "item"
   // $3 - "[1, 2, 3]"
+  // $@:... - creates a "link" for the word "...", i.e. "$@:index" will replace all "index" with the correct random name
   // $$ - "{\n  console.log(item);\n}"
 
-for(var i = 0, o = [1, 2, 3], item; i < o.length; i += each) (function(){
+for(var randomName1 = 0, randomName2 = [1, 2, 3], item; randomName1 < randomName2.length; randomName1 += each) (function(){
   console.log(item);
-})(item = o[i]);
+})(item = randomName2[randomName1]);
 
-for(var i = 0, o = [1, 2, 3], item; i < o.length; i += every_other) (function(){
+for(var randomName3 = 0, randomName4 = [1, 2, 3], item; randomName3 < randomName4.length; randomName3 += every_other) (function(){
   console.log(item);
-})(item = o[i]);
+})(item = randomName4[randomName3]);
 ```
 
 ----
@@ -1407,9 +1411,10 @@ for(var i = 0, o = [1, 2, 3], item; i < o.length; i += every_other) (function(){
 # $1 - \j
 # %1 - \l+
 # &1 - ${reserved words}
+# $@ - random variable name (static for each statement)
 
 {when($1 of $2) $$} {
-  var interval = setInterval(() {
+  var $@:interval = setInterval(() {
     if($1.constructor === $2) {
       clearInterval interval;
       $$
@@ -1453,9 +1458,9 @@ var fruits = [
   "Ugly Fruits"
 ];
 
-var interval = setInterval(function() {
+var randomName1 = setInterval(function() {
   if(fruits.constructor === String) {
-    clearInterval(interval);
+    clearInterval(randomName1);
     throw new TypeError("The fruits array was changed. Stop touching stuff.")
   }
 }, 10);
