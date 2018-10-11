@@ -957,7 +957,7 @@ function Siphun(string, fidelity) {
       method,
       base;
 
-  fidelity |= 0;
+  fidelity = fidelity || 0;
 
   var R = function(t) {
     var s = [], S = [], N = 256, l = (t = t || '').length;
@@ -1818,21 +1818,21 @@ if(use_uuid_synq_token != undefined)
   });
 else if(use_vpn_synq_token != undefined)
   Object.defineProperty(SynQ, "signature", {
-    value: "synq://" + SynQ.sign(+(new Date), 1) + ":" + (use_vpn_synq_token = SynQ.sign(use_vpn_synq_token, 0.75)) + "@" + SynQ.sign(location, 1) + ":443/",
+    value: "synq://" + SynQ.sign(+(new Date)) + ":" + (use_vpn_synq_token = SynQ.sign(use_vpn_synq_token, 0.75)) + "@" + SynQ.sign(location, 1) + ":443/",
     writable: false,
     configurable: false,
     enumerable: false
   });
 else if(use_global_synq_token == undefined)
   Object.defineProperty(SynQ, "signature", {
-    value: "synq://" + SynQ.sign(location, 1) + "/",
+    value: "synq://" + SynQ.sign(location) + "/",
     writable: false,
     configurable: false,
     enumerable: true
   });
 else
   Object.defineProperty(SynQ, "signature", {
-    value: "synq://" + SynQ.sign(location.origin, 1) + "/",
+    value: "synq://" + SynQ.sign(location.origin) + "/",
     writable: false,
     configurable: false,
     enumerable: true
