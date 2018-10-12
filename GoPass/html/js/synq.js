@@ -331,7 +331,7 @@ SynQ.eventlistener = function(event) {
   }
 
   updating:
-  for(var index = 0, length = query.length, element, uuid, name, value, info, id, attr, host, obj = false; index < length; obj = false, index++) {
+  for(var index = 0, length = query.length, element, uuid, name, value, info, id, attr, host, obj = false, skip; index < length; obj = false, index++) {
     // Element information
     element       = query[index];
     info          = element.tagName;
