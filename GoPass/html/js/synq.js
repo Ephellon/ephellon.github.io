@@ -1011,7 +1011,7 @@ function Siphun(string, fidelity) {
       );
 
   result.splice(fidelity, result.length - fidelity);
-  base = (((gamma | 32) % 20) + (fidelity % 16));
+  base = (((gamma | 32) % 20) + (fidelity % 16)) | 16;
 
   result.forEach(function(value, index, self) { return self.splice(index, 1, Math.abs(value ^ gamma).toString(base)) });
 
@@ -1818,7 +1818,7 @@ connection = navigator.connection;
 // Auto-update & run
 if(use_uuid_synq_token != undefined)
   Object.defineProperty(SynQ, "signature", {
-    value: (use_uuid_synq_token + ""),
+    value: ("synq://" + use_uuid_synq_token + "/"),
     writable: false,
     configurable: false,
     enumerable: true
