@@ -774,7 +774,7 @@ SynQ.find = function(query, all, results) {
   var owned = SynQ.list(all), test;
 
   if(query instanceof RegExp)
-    test = function() { return query.test.call(query, arguments) };
+    test = function(string) { return query.test(string) };
   else
     test = function(string) { return string == (query += "") || !!~string.indexOf(query) };
 
