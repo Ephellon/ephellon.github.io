@@ -129,7 +129,7 @@ function ping(address, options) {
     return 'Currently pinging an address, please wait.';
 
   var fallback = {
-    callback: function() { return arguments; },
+    callback: function(trip) { return trip },
     pass:     function() {},
     fail:     function() {},
     timeout:  10000
@@ -171,6 +171,8 @@ function ping(address, options) {
   ping.start    = +(new Date);
   ping.ping.src = 'https://' + address;
   ping.timeout  = setTimeout(ping.fail, options.timeout || fallback.timeout);
+
+  return ping.trip = ping.trip || { time: 0, status: 'fail', address: address, resolve: address, size: 0, speed: 0, uplink: 0 };
 }
 
 // The main function
@@ -1580,7 +1582,7 @@ SynQ.help = function(item) {
 
     case '':
     case '*':
-      m = "Help can be used for the following items://<!-- HTML -->//$-attr/$-data/$-host/$-html/$-skip/$-text/$-uuid//\\* JavaScript *\\//ping/$/~addEventListener/~append - Global push/~clear/~decodeURL/~deflate/~download - Global get/~enocdeURL/~esc/~eventlistener/~find/~get/~help/~host/~inflate/~last/~list/~lock/~pack/~pack16/~parseFunction/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~recall - Global pull/~removeEventListener/~salt/~set/~sign/~signature/~size/~snip - Global pop/~syn/~triggerEvent/~unlock/~unpack/~unpack16/~upload - Global set/~used/cookie#/global#/utf16#/uuid#/vpn#"
+      m = "Help can be used for the following items://<!-- HTML -->//$-attr/$-data/$-host/$-html/$-skip/$-text/$-uuid//\\* JavaScript *\\//ping/$/~addEventListener/~append#push/~clear/~decodeURL/~deflate/~download#get/~enocdeURL/~esc/~eventlistener/~find/~get/~help/~host/~inflate/~last/~list/~lock/~pack/~pack16/~parseFunction/~parseSize/~parseURL/~pop/~prevent/~pull/~push/~recall#pull/~removeEventListener/~salt/~set/~sign/~signature/~size/~snip#pop/~syn/~triggerEvent/~unlock/~unpack/~unpack16/~upload#set/~used/cookie#/global#/utf16#/uuid#/vpn#"
       break;
 
     default:
@@ -1595,8 +1597,9 @@ SynQ.help = function(item) {
     .replace(/\\/g, "/")
     .replace(/\$-/g, "synq-")
     .replace(/\$/g, "SynQ")
-    .replace(/\b(?:use_?)?(\w+)#/g, "use_$1_synq_token")
+    .replace(/\b(?:use_?)?(\w+)#(?!\b)/g, "use_$1_synq_token")
     .replace(/%/g, "element")
+    .replace(/#(\w+)/g, " - Global $1")
     .replace(/@/g, item)
     .replace(/\b(https?|synq)\:/g, "$1://")
     .replace(/(\w+\s+\|(?:[\w \|]+?))( ?[^\w |])/g, '($1)$2')
