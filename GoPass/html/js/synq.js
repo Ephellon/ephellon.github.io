@@ -254,7 +254,7 @@ function SynQ(name) {
 
     // Get/Set the element's UUID
     if(uuid == null)
-      uuid = (obj? '!': '') + SynQ.sign(info, 1);
+      uuid = (obj? '!': '') + SynQ.sign(info);
     else if(obj)
       uuid = /^!/.test(uuid)? uuid: '!' + uuid;
 
@@ -363,7 +363,7 @@ SynQ.eventlistener = function(event) {
 
     // Get the element's UUID
     if(uuid == null)
-      uuid = SynQ.sign(info, 1);
+      uuid = SynQ.sign(info);
 
     // UUID is set
     // Write confidently, even if the HTML document has changed
@@ -916,7 +916,7 @@ SynQ.parseSize = function(size, base, symbol) {
 // Lock and unlock data (weak security)
 SynQ.lock = function(data, key) {
   data = data || "";
-  key = SynQ.salt(SynQ.sign(key, 0));
+  key = SynQ.salt(SynQ.sign(key, 1));
 
   for(var index = 0, salted = []; index < data.length; index++)
     salted.push(String.fromCharCode(
@@ -957,7 +957,7 @@ function Siphun(string, fidelity) {
       method,
       base;
 
-  fidelity = fidelity || 0;
+  fidelity = +fidelity || 0;
 
   var R = function(t) {
     var s = [], S = [], N = 256, l = (t = t || '').length;
@@ -1154,12 +1154,18 @@ function(object, filter, space, indent) {
       ltypes = [Boolean, Number, String],
       atypes = [Array, Map, Set, WeakMap, WeakSet],
       otypes = [Object, Int8Array, Int16Array, Int32Array, Uint8Array, Uint8ClampedArray, Uint16Array, Uint32Array, Float32Array, Float64Array],
-      type = (object && !!~atypes.indexOf(object.constructor))?
+      constructor = ((object && object.constructor)? object.constructor: null),
+      type =
+      (!!~atypes.indexOf(constructor))?
         '[]':
-      (object && !!~otypes.indexOf(object.constructor))?
+      (!!~otypes.indexOf(constructor))?
         '{}':
+      (!!~ltypes.indexOf(constructor))?
+        '':
       (object && typeof object == 'object' && 'toJSON' in object)?
         '""':
+      (object !== undefined && object !== null)?
+        '{}':
       '';
 
   if(object === undefined || object === null || !!~ltypes.indexOf(object.constructor))
@@ -1259,9 +1265,9 @@ SynQ.inflate = function(string, mutator) {
   var object, R = RegExp, regexp,
       parse = SynQ.inflate,
       type =
-      /^\{[^]*\}$/.test(string)?
+      /^\s*\{[^]*\}\s*$/.test(string)?
         'object':
-      /^\[[^]*\]$/.test(string)?
+      /^\s*\[[^]*\]\s*$/.test(string)?
         'array':
       'literal';
 
@@ -1270,10 +1276,10 @@ SynQ.inflate = function(string, mutator) {
   switch(type) {
     case 'object':
       object = {};
-      if(/\{\s*(?:,\s*)?\}/.test(string))
+      if(/^\s*\{(?:[,\s]*)?\}\s*$/.test(string))
         break;
       else
-        for(var regexp = /\{([^]*)\}/, string = string.replace(/^\{/, '^').replace(/\}$/, '$'), dummy; regexp.test(string);)
+        for(var regexp = /\s*\{([^]*)\}\s*/, string = string.replace(/^\s*\{/, '^').replace(/\}\s*$/, '$'), dummy; regexp.test(string);)
           string = string.replace(regexp, function($0, $1, $$, $_) {
             for(var layer = 0, index = 0; layer >= 0 && index < $1.length; index++)
               layer += $1[index] == '{'? 1: $1[index] == '}'? -1: 0;
@@ -1281,26 +1287,27 @@ SynQ.inflate = function(string, mutator) {
             return (dummy = $1.split('')).splice(index, 1, ')@'), dummy = dummy.join(''),
               '@(' + dummy.slice(0, index).replace(/\{/g, '#(').replace(/\}/g, ')#') + dummy.slice(index, dummy.length) + (layer < 0? '}': '');
           });
-      string = string.replace(/#\(/g, '{').replace(/\)#/g, '}').replace(/@\(/, '{').replace(/\)@/, '}');
+      string = string/* All */.replace(/#\(/g, '{').replace(/\)#/g, '}')/* First */.replace(/@\(/, '{').replace(/\)@/, '}');
 
       string
-        .split(/\s*("(?:[^\\"]|\\.)*?"\s*\:\s*(?:null|true|false|\d+|"(?:[^\\"]|\\.)*?"|\[[^]*\]|\{[^]*\}|@\([^]*?\)@))(?=\s*,|(?:\s*,)?\s*\$\s*$)/)
+        .split(/\s*("(?:[^\\"]|\\.)*?"\s*(?:\:\s*(?:null|true|false|\d+|"(?:[^\\"]|\\.)*?"|\[[^]*\]|\{[^]*\}|@\([^]*?\)@)(?=\s*,|(?:\s*,)?\s*\$\s*$))?)/)
         .map(function(value) {
           if(/^([\{\s,\}]+|[\^\$])$/.test(value = value.replace(/@\(/g, '{').replace(/\)@/g, '}')) || /^\^|\$$/.test(value)) return;
 
-          value.replace(/\s*"(?:[^\\"]|\\.)*?"\s*\:\s*(null|true|false|\d+|"(?:[^\\"]|\\.)*?"|\[[^]*\]|\{[^]*\})/);
-          return (R.$2 == "")?
-            "":
-          object[R.$1] = mutator(R.$1, parse(R.$2.replace(/^\^|\$$/g, ''), mutator));
+          value.replace(/\s*"((?:[^\\"]|\\.)*?)"\s*(?:\:\s*(null|true|false|\d+|"(?:[^\\"]|\\.)*?"|\[[^]*\]|\{[^]*\}))?/);
+
+          return (R.$2 && R.$2.length)?
+            object[R.$1] = mutator(R.$1, parse(R.$2.replace(/^\^|\$$/g, ''), mutator)):
+          object[R.$1] = mutator(R.$1, R.$1.replace(/^\^|\$$/g, ''), mutator);
         });
       break;
 
     case 'array':
       object = [];
-      if(/\[\s*(?:,\s*)?\]/.test(string))
+      if(/^\s*\[\s*(?:,\s*)?\]\s*$/.test(string))
         break;
       else
-        for(var regexp = /\[([^]*)\]/, string = string.replace(/^\[/, '^').replace(/\]$/, '$'), dummy; regexp.test(string);)
+        for(var regexp = /\s*\[([^]*)\]\s*/, string = string.replace(/^\[/, '^').replace(/\]$/, '$'), dummy; regexp.test(string);)
           string = string.replace(regexp, function($0, $1, $$, $_) {
             for(var layer = 0, index = 0; layer >= 0 && index < $1.length; index++)
               layer += $1[index] == '['? 1: $1[index] == ']'? -1: 0;
@@ -1308,11 +1315,11 @@ SynQ.inflate = function(string, mutator) {
             return (dummy = $1.split('')).splice(index, 1, ')@'), dummy = dummy.join(''),
               '@(' + dummy.slice(0, index).replace(/\[/g, '#(').replace(/\]/g, ')#') + dummy.slice(index, dummy.length) + (layer < 0? ']': '');
           });
-      string = string.replace(/#\(/g, '[').replace(/\)#/g, ']').replace(/@\(/, '[').replace(/\)@/, ']');
+      string = string/* All */.replace(/#\(/g, '[').replace(/\)#/g, ']')/* First */.replace(/@\(/, '[').replace(/\)@/, ']');
 
       var index = 0;
       string
-        .split(/\s*(null|true|false|\d+|"(?:[^\\"]|\\.)*?"|\[[^]*\]|\{[^]*\}|@\([^]*?\)@)(?=\s*,|(?:\s*,)?\s*\$\s*$)/)
+        .split(/\s*(null|true|false|\d+|"(?:[^\\"]|\\.)*?"|\[[^]*\]|\{[^]*\}|@\([^]*?\)@|\s*)(?=\s*,|(?:\s*,)?\s*\$\s*$)/)
         .map(function(value) {
           if(/^([\[\s,\]]+|[\^\$])$/.test(value = value.replace(/@\(/g, '[').replace(/\)@/g, ']')) || /^\^|\$$/.test(value)) return;
 
@@ -1324,7 +1331,7 @@ SynQ.inflate = function(string, mutator) {
     default:
       var isString, flags;
 
-      object = (isString = /^"(.*)"$/.test(string))? R.$1: +string <= +Infinity? +string: string === "null"? null: string === "true";
+      object = (isString = /^"(.*)"$/.test(string))? R.$1: string.length && +string <= +Infinity? +string: /\b(true|false)\b/.test(string)? !(string.length - 4): null;
 
       if(isString && /\$\=([imguy]+)$/.test(object)) {
         flags = R.$1;
