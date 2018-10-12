@@ -960,10 +960,10 @@ function Siphun(string, fidelity) {
   fidelity = +fidelity || 0;
 
   var R = function(t) {
-    var s = [], S = [], N = 256, l = (t = t || '').length;
+    var s = [], S = [], N = 256, u = '', l = (t = (t || u) + u).length;
 
     if(!l)
-      return '';
+      return u;
     else
       t = ' ' + t;
 
@@ -978,20 +978,22 @@ function Siphun(string, fidelity) {
     }
 
     for(var n = -1; n < N; n++)
-      S.push(t[s[n]] || '');
+      S.push(t[s[n]] || u);
 
-    return S.join('');
+    return S.join(u);
   };
 
   fidelity = 2 + ((fidelity * 14) | 0);
 
   method = function(s) { return s? s.charCodeAt(0): s };
 
-  array.forEach(function(value, index, array) {
+  array.forEach(function(value, index, self) {
     return (value == '')?
-      (array = array || this).splice(index, 1):
-    gamma += (value.charCodeAt(0) % 13) | 0
+      (self = self || this).splice(index, 1):
+    R(value).split('').forEach(function(character, position) { gamma += +R(character.charCodeAt(0) + index) * (position | 1) })
   });
+
+  gamma = +R(gamma);
 
   for(var index = 0, length = array.length, last = length - 1; index < length; index++)
     for(var self = array[index], next = (array[index + 1] || ""), mirror = array[last], a, b, c, d, e, f, g = gamma, i = 0, j = self.length, k = mirror.length, l = length, m = k - 1, q = fidelity; i < j; ++i, --m, gamma = g += a + b + c + d + e + f)
@@ -1011,7 +1013,7 @@ function Siphun(string, fidelity) {
       );
 
   result.splice(fidelity, result.length - fidelity);
-  base = (((gamma | 32) % 20) + (fidelity % 16)) | 16;
+  base = ((gamma % 20) + (fidelity % 16)) | 16;
 
   result.forEach(function(value, index, self) { return self.splice(index, 1, Math.abs(value ^ gamma).toString(base)) });
 
