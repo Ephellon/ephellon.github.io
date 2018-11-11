@@ -82,11 +82,11 @@ function BookMark(title, href = window.location, image) {
 }
 
 window.addEventListener('message', function(event) {
-  if(event.origin != '#web-to-plex') return console.log('Message from:', event.origin);
-
   let data = event.data;
 
-	console.log('Web/Bookmarking:', { data });
+  if (!data.web_to_plex) return;
+
+  console.log('Web/Bookmarking:', { data });
 
   BookMark(`${ data.title } (${ data.year })`, data.url, data.img);
 }, false);
