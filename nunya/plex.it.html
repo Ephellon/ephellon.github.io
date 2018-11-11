@@ -70,10 +70,10 @@
 <script src="https://static.plex.tv/assets/plexit-frame/index-ba16c6d6c8cb5d7fc20ccbd8c7bc98f8326ce9a03424368e5e65e89789db7112.js"></script>
 <script>
 function BookMark(title, href = window.location, image) {
-  let urls = load('URLs') || [],
+  let urls = load('bookmarks') || [],
       name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '');
 
-  save('URLs', urls.concat(name));
+  save('bookmarks', urls.concat(name));
 
   return save(name, {
     url: href,
