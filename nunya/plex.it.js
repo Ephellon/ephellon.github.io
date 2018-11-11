@@ -42,7 +42,7 @@
 
 		create: function () {
 			// Frame URL:
-			var url = "https://gist.githubusercontent.com/Ephellon/944edf9869400602f88e98d9672da423/raw/99a650b3231b16dafaedc98f07991b722ffeab55/index.html";
+			var url = "https://ephellon.github.io/nunya/plex.it.html";
 
 			url += '?url=' + encodeURIComponent(window.location.href);
 			url += '&host=' + encodeURIComponent(window.location.host);
