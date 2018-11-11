@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>Plex It!</title>
+  <meta charset="utf-8">
+
+  <link href="https://static.plex.tv/assets/plexit/index-75982dc538f700c48148f84ccae5dc001fa18aa2187387e9d2192d15bed45363.css" media="screen" rel="stylesheet" />
+
+  <script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-6111912-22', 'plex.tv');
+	ga('send', 'pageview');
+  </script>
+
+  <style>
+  td {
+    text-align: center;
+  }
+  </style>
+</head>
+
+<body translate="no" >
+  <script type="text/template" id="closebutton-template">
+  <i class="icon-close"></i>
+</script>
+
+<script type="text/template" id="looking-template">
+  <h1 class="pull-center">Looking for videos...</h1>
+</script>
+
+<script type="text/template" id="empty-template">
+</script>
+
+<script type="text/template" id="header-template">
+  <div class="thumb-container">
+    <img class="thumb">
+    <div class="thumb-overlay"></div>
+  </div>
+
+  <div class="navbar">
+    <button class="queue-btn active" title="Queue"><i class="icon-plus"></i></button><button class="recommend-btn" title="Recommend"><i class="icon-share"></i></button><button class="play-btn" title="Play"><i class="icon-screen"></i></button>
+  </div>
+</script>
+
+<script type="text/template" id="sunset-template">
+  <table><tbody><tr><td>Searching for videos...</td></tr><tbody></table>
+</script>
+
+<script>
+  var PLEXIT = {
+    queueEmail: '',
+    token: '', // Will be filled in by a separate request
+    myPlexUrl: 'https://plex.tv',
+    queueUrl: 'https://plex.tv/queue',
+    nodeUrl: 'https://node.plexapp.com:32443/system/services/url/lookup',
+    nodeHost: 'https://node.plexapp.com:32443'
+  };
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="https://static.plex.tv/assets/jquery-1.9.1-4514122fa0b1addc7cf9b74971cbef98af5e9afed30eef9e4dc36650616447b5.js"><\/script>')</script>
+<script src="https://static.plex.tv/assets/plexit-frame/index-ba16c6d6c8cb5d7fc20ccbd8c7bc98f8326ce9a03424368e5e65e89789db7112.js"></script>
+<script>
+      function BookMark(title, href = window.location, image) {
+  let urls = load('URLs') || [],
+      name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '');
+
+  save('URLs', urls.concat(name));
+
+  return save(name, {
+    url: href,
+    img: image
+  });
+}
+
+function load(name) {
+  return JSON.parse(localStorage.getItem(btoa(name)));
+}
+
+function save(name, data) {
+  return localStorage.setItem(btoa(name), JSON.stringify(data));
+}
+
+document.body.onload = function() { setTimeout(function() {
+
+    document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
+
+    let table = document.body.querySelector('table'),
+        array = load('URLs');
+
+    if(array && array.length) {
+        let strings = [],
+            compiled = [],
+            object = {},
+            width = 8;
+
+        for(let count = 0, length = Math.ceil(array.length / width); count < length; count++)
+            for(let index = width * count++, name, url, obj; index < count * width; index++) {
+                name = array[index];
+                obj = load(name);
+
+                if(name && obj)
+                    object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
+                    `<td id="local-${ name }" local="{:name} ({:url})" name="${ name }" url="${ url.replace(/^(.*?\/\/.*?\/).*$/, '$1') }">
+                        <a href="${ url }" target="_blank">
+                            <img src="${ obj.img }" />
+                            <label>${ name }</label>
+                        </a>
+                    </td>`: null;
+            }
+
+        for(let index = 0, length = array.length, string; index < length; index++)
+            if(string = object[array[index]])
+                compiled.push(string);
+
+        for(let index = 0, length = compiled.length, string = ''; index <= length; index++) {
+            if((index > 0 && index % 3 == 0) || index >= length)
+                strings.push(string),
+                string = '';
+            if(index < length)
+                string += compiled[index];
+        }
+
+        let html = '';
+
+        strings.map(string =>
+            html += `<tr>${ string }</tr>`
+        );
+
+        table.innerHTML = `<table><tbody>${ html }</tbody></table>`;
+    }
+
+    let messages = {
+            "and": "{:{*}}",
+            "disabled": "Not yet implemented",
+            "is-shy": "Can only be accessed via: {*}",
+            "is-slow": "Resource intensive (loads slowly)",
+            "local": "Opens a link to ^{*}",
+            "pop-ups": "Contains annoying/intrusive ads and/or pop-ups",
+            "save-file": "Uses {*} before using your manager(s)",
+            // $0.99 one time; $0.99 - $9.99/mon
+            "cost-cash-low": "At least {*} (fair)",
+            // $9.99 one time; $9.99 - $29.99/mon
+            "cost-cash-med": "At least {*} (pricy)",
+            // $29.99 one time; $29.99 - $99.99/mon
+            "cost-cash-hig": "At least {*} (expensive)"
+        },
+        parse = (string, attribute, element) => {
+            return string
+                .replace(/\{\$\}/g, element.title)
+                .replace(/\{\*\}/g, element.getAttribute(attribute))
+                .replace(/\{\:([\w\- ]+)\}/g, ($0, $1, $$, $_) =>
+                    $1.split(' ').map($1 => parse(element.getAttribute($1), $1, element))
+                )
+                .replace(/\^([a-z])/gi, ($0, $1, $$, $_) => $1.toUpperCase());
+        },
+        selectors = [];
+
+    for(let key in messages)
+        selectors.push(`[${ key }]`);
+
+    let elements = document.querySelectorAll(selectors.join(','));
+
+    for(let element, index = 0, length = elements.length; index < length; index++)
+        for(let attribute in messages)
+            if(attribute in (element = elements[index]).attributes)
+                element.title = `${ parse(messages[attribute], attribute, element) }. ${ element.title }`;
+}, 1000)};
+</script>
+</body>
+</html>
