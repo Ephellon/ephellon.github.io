@@ -69,7 +69,7 @@
 <script>window.jQuery || document.write('<script src="https://static.plex.tv/assets/jquery-1.9.1-4514122fa0b1addc7cf9b74971cbef98af5e9afed30eef9e4dc36650616447b5.js"><\/script>')</script>
 <script src="https://static.plex.tv/assets/plexit-frame/index-ba16c6d6c8cb5d7fc20ccbd8c7bc98f8326ce9a03424368e5e65e89789db7112.js"></script>
 <script>
-      function BookMark(title, href = window.location, image) {
+function BookMark(title, href = window.location, image) {
   let urls = load('URLs') || [],
       name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '');
 
@@ -80,6 +80,16 @@
     img: image
   });
 }
+
+window.addEventListener('message', function(event) {
+  if(event.origin != '#web-to-plex') return;
+
+  let data = event.data;
+
+	console.log('Web/Bookmarking:', { data });
+
+  BookMark(`${ data.title } (${ data.year })`, data.url, data.img);
+}, false);
 
 function load(name) {
   return JSON.parse(localStorage.getItem(btoa(name)));
