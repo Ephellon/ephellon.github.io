@@ -82,7 +82,7 @@ function BookMark(title, href = window.location, image) {
 }
 
 window.addEventListener('message', function(event) {
-  if(event.origin != '#web-to-plex') return;
+  if(event.origin != '#web-to-plex') return console.log('Message from:', event.origin);
 
   let data = event.data;
 
