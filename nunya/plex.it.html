@@ -220,6 +220,15 @@ let HANDLE = {
   }
 };
 
+window.addEventListener('message', event => {
+  if(!~event.origin.indexOf('#plexit'))
+    return;
+
+  event.dataTransfer.setData('text/plain', event.data);
+
+  HANDLE.drop(event);
+});
+
 </script>
 </body>
 </html>
