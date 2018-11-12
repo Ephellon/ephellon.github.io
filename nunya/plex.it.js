@@ -52,11 +52,13 @@
 			// Token used to make sure the bookmarklet matches the user
 			url += '&queue_email=';
 			url += '&plex=' + !!window.IAMPLEX;
+      			// Serialized JSON data
+      			url += '&data=' + window.location.hash.replace('#plexit:', encodeURIComponent(window.location.href.replace(window.location.hash, '')) + '#');
 
 			var element = document.createElement('iframe');
 			element.id = frameId;
 			element.src = url;
-            element.style.display = 'block';
+            		element.style.display = 'block';
 			element.style.position = 'fixed';
 			element.style.top = '0';
 			element.style.left = sidebar.width * -1 + 'px';
