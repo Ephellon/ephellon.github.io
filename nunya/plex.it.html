@@ -202,13 +202,9 @@ let HANDLE = {
   drop: event => {
     event.preventDefault(true);
 
-    let url  = new URL(getURLData('url')),
-        data = url.hash;
-
-    url  = url.replace(data, '');
-    data = JSON.parse(atob(data.replace('#plexit:', '')));
-
-    let name = data.name,
+    let data = JSON.parse(atob(event.dataTransfer.getData('text/plain'))),
+        url  = data.url || location.href,
+        name = data.name,
         year = data.year,
         icon = data.image;
 
@@ -223,6 +219,7 @@ let HANDLE = {
     </td>`;
   }
 };
+
 </script>
 </body>
 </html>
