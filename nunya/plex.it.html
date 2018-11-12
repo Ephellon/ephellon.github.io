@@ -202,10 +202,8 @@ let HANDLE = {
   drop: event => {
     event.preventDefault(true);
 
-    let data = JSON.parse(atob(getURLData('data'))).split('#', 2),
-        url  = data[0];
-
-    data = JSON.parse(atob(data[1]));
+    let data = JSON.parse(atob(getURLData('data'))),
+        url  = getURLData('url');
 
     let name = data.name,
         year = data.year,
