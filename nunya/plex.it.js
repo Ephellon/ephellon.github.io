@@ -11,6 +11,9 @@
 	var frameId = 'plexit-bookmarklet-frame';
 	var frame = document.getElementById(frameId);
 
+ 	var masterClass = 'web-to-plex-button';
+  	var master = document.querySelector(masterClass);
+
 	// If the frame is already in the document, the user clicked the bookmarklet
 	// multiple times, but we do not want to open another frame no top of it, so
 	// return immediately.
@@ -120,5 +123,5 @@
 	// everything off.
 
 	frame = sidebar.create();
-	document.body.appendChild(frame);
+	document.body.insertBefore(frame, master);
 })();
