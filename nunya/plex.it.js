@@ -11,8 +11,7 @@
 	var frameId = 'plexit-bookmarklet-frame';
 	var frame = document.getElementById(frameId);
 
- 	var masterClass = 'web-to-plex-button';
-  	var master = document.querySelector(masterClass);
+ 	vvar master = document.querySelector('.web-to-plex-button');
 
 	// If the frame is already in the document, the user clicked the bookmarklet
 	// multiple times, but we do not want to open another frame no top of it, so
