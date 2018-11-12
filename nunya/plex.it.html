@@ -81,7 +81,8 @@ function BookMark(title, href = window.location, image) {
   let urls = load('bookmarks') || [],
       name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '');
 
-  save('bookmarks', urls.concat(name));
+  if(!~urls.indexOf(name))
+    save('bookmarks', urls.concat(name));
 
   return save(name, {
     url: href,
@@ -95,6 +96,15 @@ function load(name) {
 
 function save(name, data) {
   return localStorage.setItem(btoa(name), JSON.stringify(data));
+}
+
+function getURLData(t) {
+    var e = new RegExp("[?|&]" + t + "=([^&;]+?)(&|#|;|$)")
+        .exec(window.location.search);
+    if(e) {
+        var n = decodeURIComponent(e[1]);
+        return log(t + ": " + n), n
+    }
 }
 
 document.body.onload = function() { setTimeout(function() {
@@ -183,29 +193,6 @@ document.body.onload = function() { setTimeout(function() {
                 element.title = `${ parse(messages[attribute], attribute, element) }. ${ element.title }`;
 }, 1000)};
 
-let GRAB = (host, pathname = location.pathname.toString(), R = RegExp) => ({
-  'amazon': { name: '[data-automation-id="title"], #aiv-content-title, .dv-node-dp-title', year: '[data-automation-id="release-year-badge"], .release-year', img: '.av-bgimg__div, div[style*="sgp-catalog-images"]', alt: [ s => s.replace(/(?:\(.+?\)|(\d+)|\d+\s+seasons?\s+(\d+))\s*$/gi, ''), s => s ] },
-  'couchpotato': { name: '[itemprop="description"]', year: '[itemprop="description"] + *', img: 'img[src*="wp-content"]' },
-  'fandango': { name: '.subnav__title', year: '.movie-details__release-date', img: '.movie-details__movie-img', zlt: [ s => s.split(/\n+/)[0].trim(), s => s.replace(/.*(\d{4}).*/, '$1').trim() ] },
-  'google': { name: 'h1', year: `h1 ~ span${ pathname.startsWith('/store/movies/')? 'first': 'last' }-of-type`, img: 'img[alt="cover art" i]', alt: [ s => s.replace(/\(\s*(\d{4})\s*\).*?$/, ''), s => (R.$1 || s).replace(/^.*(\d+)/, '$1') ] },
-  'gostream': { name: '[itemprop="name"]:not(meta)', year: '.mvic-desc [href*="year/"]', img: '.hiddenz' },
-  'hulu': { name: '#content [class$="__name"]', year: '#content [class$="__meta"] [class$="segment"]:last-child', img: '', alt: [ s => s, s => s.replace(/.*\((\d{4})\).*/, '$1') ] },
-  'imdb': { name: '.originalTitle, .title_wrapper h1', year: '.title_wrapper #titleYear, .title_wrapper [href*="/releaseinfo"]', img: 'img[alt$="poster" i]', alt: [ s => s, s => s.replace(/Series\s+(\d{4}).*?/i, '$1') ], child: true },
-  'itunes': { name: '[class*="movie-header__title"], h1[itemprop="name"], h1', year: '[datetime], .release-date > *:last-child', img: '[class*="product"] ~ * picture img', alt: [ s => s.replace(/\s*\((\d+)\)\s*/, ''), s => s.replace(/[^]*(\d{4})[^]*?$/g, '$1') ] },
-  'letterboxd': { name: '.headline-1[itemprop="name"]', year: 'small[itemprop="datePublished"]', img: '.image' },
-  'metacritic': { name: '.product_page_title > *, .product_title', year: '.product_page_title > .release_year, .product_data .release_data', img: '.summary_img', alt: [ s => s.replace(/\s+/g, ' '), s => s.replace(/\s+/g, ' ') ] },
-  'movieo': { name: '#doc_title', year: 'meta[itemprop="datePublished"]', img: 'img.poster' },
-  'netflix': { name: '.video-title h4', year: 'null', img: '' },
-  'rottentomatoes': { name: '.playButton + .title, [itemprop="name"]', year: '.playButton + .title + *, [itemprop="name"] .subtle', img: '[class*="posterimage" i]', alt: [ s => s.replace(/(.+)\:[^]*$/, /^\/m/i.test(pathname) == 'movie'? '$&': '$1'), s => s.replace(/\D+/g, '') ] },
-  'themoviedb': { name: '.title > span > *:not(.release_date)', year: '.title .release_date', img: 'img.poster' },
-  'trakt': { name: '.mobile-title', year: '.mobile-title .year', img: '.poster img.real[alt="poster" i]', alt: [ s => s.replace(/(.+)(\d{4}).*?$/, '$1').replace(/\s*\:\s*Season.*$/i, ''), s => (R.$2 || s) ] },
-  'thetvdb': { name: '#series_title', year: 'null', img: 'img[src*="/posters/"]' },
-  'tvmaze': { name: 'header.columns > h1', year: '#year', img: 'figure img', alt: [ s => s, s => s.replace(/\((\d+).+\)/, '$1') ] },
-  'verizon': { name: (!!~pathname.indexOf('/ondemand/')? decodeURL(pathname.replace(/.+\/tvshows?\/([^\/]+?)\/.*/)): '.detail *, .copy > .title'), year: '.rating *, #showDetails > * > *:nth-child(4) *:last-child, ' + (/\bmovies?\b/.test(pathname)? '.copy > .details': '.summary ~ .title ~ *'), img: '.cover img', plain: true },
-  'vrv': { name: '[class^="series"] .title, .series', year: '.additional-information-item', img: '.poster-wrapper img', alt: [ s => s.replace(/(unrated|mature|tv-?\d{1,2})\s*$/i, ''), s => s.replace(/.+(\d{4}).*/, '$1') ] },
-  'vudu': { name: '.head-big', year: '.container .row:first-child .row ~ * > .row span', img: 'img[src*="poster"]', alt: [ s => s.replace(/\((\d{4})\)/, ''), s => console.log(typeof s) || s? s.split(/\s*\|\s*/).reverse()[0]: R.$1 ] },
-}[host.replace(/(?:[\w\.]+?\.)?(\w+)\.\w+$/, '$1').toLowerCase()]);
-
 let HANDLE = {
   drag: event => {
     event.preventDefault(true);
@@ -215,50 +202,26 @@ let HANDLE = {
   drop: event => {
     event.preventDefault(true);
 
-    let url = event.dataTransfer.getData('text/plain'),
-        table = document.querySelector('#wtp--plex-it-plugin'),
-        host = (new URL(url)).hostname,
-        data = GRAB(host) || {},
-        name = (data.plain)? data.name: document.querySelector(data.name) || document.title,
-        year = document.querySelector(data.year) || (new Date).getFullYear(),
-        img  = document.querySelector(data.img),
-        ele  = e => e instanceof Element;
+    let data = JSON.parse(atob(getURLData('data'))).split('#', 2),
+        url  = data[0];
 
-    if(img == 'none')
-      img = data.img || '//ephellon.github.io/nunya/plex.filler.png';
-    else if(ele(img) && img.tagName != 'IMG')
-      img = getComputedStyle(img).backgroundImage;
-    else if(ele(img))
-      img = img.src;
-    else
-      img = data.img;
+    data = JSON.parse(atob(data[1]));
 
-    if(data.child)
-      name = name.childNodes[0];
+    let name = data.title,
+        year = data.year,
+        icon = data.image;
 
-    if(data.alt)
-      name = data.alt[0](data.plain || !ele(name)? name: name.textContent),
-      year = data.alt[1](ele(year)? year.textContent: year + '');
-
-    name = name.trim();
-    year = year.trim();
-
-    if(data.zlt)
-      name = data.zlt[0](name),
-      year = data.zlt[1](year);
-
-    BookMark(name, url, img);
+    BookMark(name + year, url, icon);
 
     table.innerHTML +=
     `<td id="local-${ name }" title="${ (name == document.title)? 'Visit': 'Watch' } &quot;${ name } (${ year })&quot;">
         <a href="${ url }" target="_blank">
-            <img src="${ img }" alt="${ name } (${ year })" />
+            <img src="${ icon }" alt="${ name } (${ year })" />
             <label>${ name }</label>
         </a>
     </td>`;
   }
 };
-
 </script>
 </body>
 </html>
