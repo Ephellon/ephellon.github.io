@@ -202,8 +202,11 @@ let HANDLE = {
   drop: event => {
     event.preventDefault(true);
 
-    let data = JSON.parse(atob(getURLData('data'))),
-        url  = getURLData('url');
+    let url  = new URL(getURLData('url')),
+        data = url.hash;
+
+    url  = url.replace(data, '');
+    data = JSON.parse(atob(data.replace('#plexit:', '')));
 
     let name = data.name,
         year = data.year,
