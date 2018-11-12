@@ -221,10 +221,10 @@ let HANDLE = {
 };
 
 window.addEventListener('message', event => {
-  if(!~event.origin.indexOf('#plexit'))
+  if(event.data.indexOf('#plexit:') !== 0)
     return;
 
-  event.dataTransfer.setData('text/plain', event.data);
+  event.dataTransfer.setData('text/plain', event.data.replace('#plexit:', ''));
 
   HANDLE.drop(event);
 });
