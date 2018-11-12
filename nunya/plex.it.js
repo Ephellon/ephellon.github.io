@@ -52,8 +52,6 @@
 			// Token used to make sure the bookmarklet matches the user
 			url += '&queue_email=';
 			url += '&plex=' + !!window.IAMPLEX;
-      			// Serialized JSON data
-      			url += '&data=' + window.location.hash.replace('#plexit:', encodeURIComponent(window.location.href.replace(window.location.hash, '')));
 
 			var element = document.createElement('iframe');
 			element.id = frameId;
