@@ -206,7 +206,7 @@ let HANDLE = {
     event.preventDefault(true);
 
     let data = JSON.parse(atob(event.dataTransfer.getData('text/plain'))),
-        url  = data.url || location.href,
+        url  = data.url || getURLData('url') || location.href,
         name = data.name,
         year = data.year,
         icon = data.image;
