@@ -20,7 +20,6 @@
   <style>
 #wtp--plex-it-plugin {
   background: #fff2;
-  border-radius: 16px;
   text-align: center;
 
   padding: 15px 0;
@@ -72,7 +71,7 @@
 </script>
 
 <script type="text/template" id="sunset-template">
-  <ul id="wtp--plex-it-plugin" ondrop="HANDLE.drop(event)" ondragover="HANDLE.drag(event)"></ul>
+  <ul id="wtp--plex-it-plugin" class="minimal-scrollbar" ondrop="HANDLE.drop(event)" ondragover="HANDLE.drag(event)"></ul>
 </script>
 
 <script>
@@ -125,6 +124,7 @@ function getURLData(t) {
 document.body.onload = function() { setTimeout(function() {
 
     document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
+    document.querySelector('div.page').setAttribute('overflow: hidden!important;');
 
     let ul = document.body.querySelector('#wtp--plex-it-plugin'),
         array = load('bookmarks');
