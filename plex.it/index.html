@@ -129,7 +129,7 @@ function getURLData(t) {
 document.body.onload = function() { setTimeout(function() {
 
     document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
-    document.querySelector('div.page').setAttribute('style', 'overflow: hidden!important;');
+    document.querySelector('div.page').setAttribute('style', 'overflow:hidden!important;top:0!important;bottom:auto!important;');
 
     let ul = document.body.querySelector('#wtp--plex-it-plugin'),
         array = load('bookmarks');
