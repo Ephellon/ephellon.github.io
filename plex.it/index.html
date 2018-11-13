@@ -18,6 +18,8 @@
   </script>
 
   <style>
+[type="text/template"] {display: none}
+div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
 #wtp--plex-it-plugin {
   background: #fff2;
   overflow: auto;
@@ -131,7 +133,6 @@ function getURLData(t) {
 document.body.onload = function() { setTimeout(function() {
 
     document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
-    document.querySelector('div.page').setAttribute('style', 'overflow:hidden!important;top:0!important;bottom:0!important;');
 
     let ul = document.body.querySelector('#wtp--plex-it-plugin'),
         array = load('bookmarks');
