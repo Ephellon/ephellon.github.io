@@ -202,7 +202,6 @@ let HANDLE = {
   },
   drop: event => {
     event.preventDefault(true);
-    console.log(event.data)
     let hash = event.dataTransfer.getData('text/plain'),
         data = JSON.parse(atob(hash)),
         url  = data.url || getURLData('url') || location.href,
@@ -212,7 +211,7 @@ let HANDLE = {
         id = [data.imdb, data.tmdb, data.tvdb].join('-');
     let marks = document.querySelector('#wtp--plex-it-plugin'),
         html =
-        `<li id="local-${ id }" title="Watch &quot;${ name } (${ year })&quot;" draggable="true" ondragover="(event => {document.querySelector('#local-${ id }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ hash }')})(event)">
+        `<li id="local-${ id }" title="Watch &quot;${ name } (${ year })&quot;" draggable="true" ondragover="(event => {document.querySelector('#local-${ id }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ hash }')})(event)" ondrop="(event => HANDLE.drop(event))(event)">
           <a href="${ url }" target="_blank">
               <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon })"></div>
               <label>${ name } (${ year })</label>
