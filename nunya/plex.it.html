@@ -133,7 +133,7 @@ document.body.onload = function() { setTimeout(function() {
                     `<td id="local-${ name }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
                         <a href="${ url }" target="_blank">
                             <img src="${ obj.image }" />
-                            <label>${ name }</label>
+                            <label>${ name } (${ obj.year })</label>
                         </a>
                     </td>`: null;
             }
@@ -215,8 +215,8 @@ let HANDLE = {
       document.querySelector('table tbody').innerHTML +=
       `<td id="local-${ name }" title="Watch &quot;${ name } (${ year })&quot;">
           <a href="${ url }" target="_blank">
-              <img src="${ icon }" alt="${ name } (${ year })" />
-              <label>${ name }</label>
+              <img src="${ icon }" />
+              <label>${ name } (${ year })</label>
           </a>
       </td>`;
   }
