@@ -217,6 +217,7 @@ let HANDLE = {
     let marks = document.querySelector('#wtp--plex-it-plugin'),
         html =
         `<li id="local-${ id }" title="Watch &quot;${ name } (${ year })&quot;" draggable="true" ondragover="(event => document.querySelector('#local-${ id }').remove())(event)">
+          <i class="icon-checkmark" title="Remove &quot;${ name } (${ year })&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
           <a href="${ url }" target="_blank">
               <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon })"></div>
               <label>${ name } (${ year })</label>
