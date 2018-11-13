@@ -46,16 +46,14 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
   display: none;
 }
 
-#wtp--plex-it-plugin a:hover::before {
-  background: radial-gradient(farthest-corner at 50% 50%,#32323280 50%,#323232 100%)!important;
-  box-shadow: 0 0 0 2px #CC7B19!important;
-  display: inline-block!important;
+#wtp--plex-it-plugin div:hover::before {
+  border: 2px solid #CC7B19!important;
+  box-shadow: 0px 0px 150px 0px #0008 inset!important;
   height: 180px!important;
   width: 127px!important;
-  position: absolute!important;
-  content: '';
   z-index: 999!important;
   transition: all 0.4s!important;
+  margin-left: calc(50% - 64px)!important;
 }
 
 #wtp--plex-it-plugin img {
@@ -175,7 +173,7 @@ document.body.onload = function() { setTimeout(function() {
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
                     `<li id="local-${ name }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
                         <a href="${ url }" target="_blank">
-                            <img src="${ obj.image }" />
+                            <div style="background: url(${ obj.image }) contain"></div>
                             <label>${ name } (${ obj.year })</label>
                         </a>
                         <hr>
@@ -257,7 +255,7 @@ let HANDLE = {
       document.querySelector('#wtp--plex-it-plugin').innerHTML +=
       `<li id="local-${ name }" title="Watch &quot;${ name } (${ year })&quot;">
           <a href="${ url }" target="_blank">
-              <img src="${ icon }" />
+              <div style="background: url(${ icon }) contain"></div>
               <label>${ name } (${ year })</label>
           </a>
           <hr>
