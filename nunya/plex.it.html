@@ -229,7 +229,7 @@ window.onlocationchange = event => {
 
   hash = hash.replace('#plexit:', '');
 
-  HANDLE.drop({ ...event, dataTransfer: { getData: type => hash } });
+  HANDLE.drop({ ...event, dataTransfer: { getData: type => hash }, preventDefault: () => {} });
 };
 
 function watchlocationchange() {
