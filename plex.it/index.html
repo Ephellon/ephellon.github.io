@@ -41,22 +41,22 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
   padding: 15px;
 }
 
-#wtp--plex-it-plugin li {
+#wtp--plex-it-plugin [id^="local-"]:hover li {
   list-style: none;
   text-align: center;
 }
 
-#wtp--plex-it-plugin li:last-child hr {
+#wtp--plex-it-plugin [id^="local-"]:hover li:last-child hr {
   display: none;
 }
 
-#wtp--plex-it-plugin .img:hover::before {
+#wtp--plex-it-plugin [id^="local-"]:hover .img::before {
   border: 2px solid #CC7B19!important;
   box-shadow: 0px 0px 150px 0px #0008 inset!important;
   z-index: 999!important;
 }
 
-#wtp--plex-it-plugin .img {
+#wtp--plex-it-plugin [id^="local-"]:hover .img {
   background-size: contain!important;
   height: 180px!important;
   width: 128px!important;
@@ -64,21 +64,21 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
   margin-left: calc(50% - 64px)!important;
 }
 
-#wtp--plex-it-plugin label {
+#wtp--plex-it-plugin [id^="local-"]:hover label {
   display: inline-block;
   text-decoration: inherit!important;
 }
 
-a {
+[id^="local-"]:hover a {
   color: #fff!important;
   text-decoration: none;
   cursor: pointer!important;
 }
-a:hover {
+[id^="local-"]:hover a:hover {
   text-decoration: underline;
 }
 
-hr {border: 1px solid #6668}
+[id^="local-"]:hover hr {border: 1px solid #6668}
   </style>
 </head>
 
