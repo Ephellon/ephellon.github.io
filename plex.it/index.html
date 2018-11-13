@@ -226,7 +226,11 @@ let HANDLE = {
     if(BookMark(id, url, data)) {
       marks.innerHTML = html + marks.innerHTML;
     } else {
-        (marks.querySelector('[id^="local-"]') || {}).outerHTML = html;
+        try {
+          marks.querySelector(`#local-${ id }`).outerHTML = html;
+        } catche(error) {
+          marks.innerHTML = html + marks.innerHTML;
+        }
     }
   }
 };
