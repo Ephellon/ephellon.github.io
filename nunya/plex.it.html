@@ -227,9 +227,9 @@ window.onlocationchange = event => {
   if(!~hash.indexOf('#plexit:'))
     return;
 
-  event.dataTransfer.setData('text/plain', hash.replace('#plexit:', ''));
+  hash = hash.replace('#plexit:', '');
 
-  HANDLE.drop(event);
+  HANDLE.drop({ ...event, dataTransfer: { getData: type => hash } });
 };
 
 function watchlocationchange() {
