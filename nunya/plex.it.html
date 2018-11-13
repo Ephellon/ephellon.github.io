@@ -221,16 +221,26 @@ let HANDLE = {
   }
 };
 
-window.addEventListener('message', event => {
-  console.log('Heard:', event.data);
-
-  if(event.data.indexOf('#plexit:') !== 0)
+window.onlocationchange = event => {
+  if(!~event.data.indexOf('#plexit:'))
     return;
 
-  event.dataTransfer.setData('text/plain', event.data.replace('#plexit:', ''));
+  event.dataTransfer.setData('text/plain', event.data.replace(/^.*#plexit:/, ''));
 
   HANDLE.drop(event);
-});
+};
+
+function watchlocationchange() {
+    watchlocationchange.pathname = watchlocationchange.pathname || location.pathname;
+
+    if (watchlocationchange.pathname != location.pathname) {
+        watchlocationchange.pathname = location.pathname;
+        if(window.onlocationchange)
+            return window.onlocationchange(new Event('locationchange', { data: location.pathname, bubbles: true }));
+    }
+}
+
+setInterval(watchlocationchange, 1000);
 
 </script>
 </body>
