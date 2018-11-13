@@ -100,15 +100,14 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
 <script>window.jQuery || document.write('<script src="https://static.plex.tv/assets/jquery-1.9.1-4514122fa0b1addc7cf9b74971cbef98af5e9afed30eef9e4dc36650616447b5.js"><\/script>')</script>
 <script src="index.js"></script>
 <script>
-function BookMark(title, href = window.location, etc) {
+function BookMark(id, href = window.location, etc) {
   let urls = load('bookmarks') || [],
-      name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '').toLowerCase(),
-      ex   = !~urls.indexOf(name);
+      name = id.replace(/[^\w\$\-\+\.\;\(\)]+/g, '').toLowerCase(),
+      ex   = !~urls.indexOf(id);
   if(ex)
     save('bookmarks', urls.concat(name));
-  return save(name, {
+  return save(id, {
     url: href,
-    name: title,
     ...etc
   }), ex;
 }
@@ -219,7 +218,7 @@ let HANDLE = {
           </a>
           <hr>
         </li>`;
-    if(BookMark(name + year, url, data)) {
+    if(BookMark(id, url, data)) {
       marks.innerHTML = html + marks.innerHTML;
     } else {
         marks.firstChildElement.outerHTML = html;
