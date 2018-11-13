@@ -202,6 +202,7 @@ let HANDLE = {
   },
   drop: event => {
     event.preventDefault(true);
+    console.log(event.data)
     let hash = event.dataTransfer.getData('text/plain'),
         data = JSON.parse(atob(hash)),
         url  = data.url || getURLData('url') || location.href,
