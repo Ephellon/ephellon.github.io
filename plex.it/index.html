@@ -135,10 +135,9 @@ document.body.onload = function() { setTimeout(function() {
             object = {},
             width = 8;
         for(let count = 0, length = Math.ceil(array.length / width); count < length; count++)
-            for(let index = width * count++, name, url, obj, id; index < count * width; index++) {
+            for(let index = width * count++, name, url, obj; index < count * width; index++) {
                 name = array[index];
                 obj = load(name);
-                id = [obj.imdb, obj.tmdb, obj.tvdb].join('-');
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
                     `<li id="local-${ id }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
