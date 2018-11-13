@@ -80,16 +80,17 @@
 <script>
 function BookMark(title, href = window.location, etc) {
   let urls = load('bookmarks') || [],
-      name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '').toLowerCase();
+      name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '').toLowerCase(),
+      ex   = !~urls.indexOf(name);
 
-  if(ex = !~urls.indexOf(name))
+  if(ex)
     save('bookmarks', urls.concat(name));
 
   return save(name, {
     url: href,
     name: title,
     ...etc
-  }), !ex;
+  }), ex;
 }
 
 function load(name) {
