@@ -220,7 +220,7 @@ let HANDLE = {
     if(BookMark(id, url, data)) {
       marks.innerHTML = html + marks.innerHTML;
     } else {
-        marks.firstChildElement.outerHTML = html;
+        (marks.querySelector('*') || {}).outerHTML = html;
     }
   }
 };
