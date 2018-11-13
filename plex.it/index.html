@@ -18,6 +18,7 @@
   </script>
 
   <style>
+body {font-family: Open Sans Semibold,Helvetica Neue,Helvetica,Arial,sans-serif!important}
 [type="text/template"] {display: none}
 div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
 #wtp--plex-it-plugin {
@@ -40,6 +41,10 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
   list-style: none;
   text-align: center;
 }
+#wtp--plex-it-plugin li:hover {
+  background: radial-gradient(farthest-corner at 50% 50%,#32323280 50%,#323232 100%);
+  box-shadow: 0 0 0 2px #CC7B19;
+}
 
 #wtp--plex-it-plugin li:last-child hr {
   display: none;
@@ -51,6 +56,15 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
 
 #wtp--plex-it-plugin label {
   display: inline-block;
+}
+
+a {
+  color: #fff!important;
+  text-decoration: none;
+  cursor: pointer!important;
+}
+a:hover {
+  text-decoration: underline;
 }
   </style>
 </head>
