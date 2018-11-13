@@ -38,6 +38,10 @@
   text-align: center;
 }
 
+#wtp--plex-it-plugin li:last-child hr {
+  display: none;
+}
+
 #wtp--plex-it-plugin img {
   max-height: 180px;
 }
@@ -148,6 +152,7 @@ document.body.onload = function() { setTimeout(function() {
                             <img src="${ obj.image }" />
                             <label>${ name } (${ obj.year })</label>
                         </a>
+                        <hr>
                     </li>`: null;
             }
 
@@ -229,6 +234,7 @@ let HANDLE = {
               <img src="${ icon }" />
               <label>${ name } (${ year })</label>
           </a>
+          <hr>
       </li>`;
   }
 };
