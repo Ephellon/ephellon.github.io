@@ -1,38 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Plex It!</title>
-
   <link href="index.css" media="screen" rel="stylesheet" />
-
   <script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-6111912-22', 'plex.tv');
-	ga('send', 'pageview');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-6111912-22', 'plex.tv');
+    ga('send', 'pageview');
   </script>
-
   <style>
 body {font-family: Open Sans Semibold,Helvetica Neue,Helvetica,Arial,sans-serif!important}
 [type="text/template"] {display: none}
 div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
-
 #wtp--plex-it-plugin {
   background: #fff2;
   overflow: auto;
   text-align: center;
-
   padding: 15px 0;
-
   height: 100%;
   width: 100%;
 }
-
 #wtp--plex-it-plugin:empty {
   padding-right: 15px!important;
 }
@@ -40,21 +31,17 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
   content: 'Your list is empty. Hover over the Web to Plex button';
   padding: 15px;
 }
-
 #wtp--plex-it-plugin [id^="local-"] li {
   list-style: none;
   text-align: center;
 }
-
 #wtp--plex-it-plugin [id^="local-"]r li:last-child hr {
   display: none;
 }
-
 #wtp--plex-it-plugin [id^="local-"]:hover .img {
   box-shadow: 0px 0px 150px 0px #0008 inset, 0 0 0 2px #CC7B19!important;
   z-index: 999!important;
 }
-
 #wtp--plex-it-plugin [id^="local-"] .img {
   background-size: contain!important;
   height: 180px!important;
@@ -62,12 +49,10 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
   transition: all 0.4s!important;
   margin-left: calc(50% - 64px)!important;
 }
-
 #wtp--plex-it-plugin [id^="local-"] label {
   display: inline-block;
   text-decoration: inherit!important;
 }
-
 [id^="local-"] a {
   color: #fff!important;
   text-decoration: none;
@@ -76,40 +61,31 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
 [id^="local-"] a:hover {
   text-decoration: underline;
 }
-
 [id^="local-"] hr {border: 1px solid #6668}
   </style>
 </head>
-
 <body translate="no" style="text-align: center">
   <img src="bell.png" height="180"/>
-
   <script type="text/template" id="closebutton-template">
   <i class="icon-close"></i>
 </script>
-
 <script type="text/template" id="looking-template">
   <h1 class="pull-center">Loading list...</h1>
 </script>
-
 <script type="text/template" id="empty-template">
 </script>
-
 <script type="text/template" id="header-template">
   <div class="thumb-container">
     <img class="thumb">
     <div class="thumb-overlay"></div>
   </div>
-
   <div class="navbar">
     <button class="queue-btn active" title="Queue"><i class="icon-plus"></i></button><button class="recommend-btn" title="Recommend"><i class="icon-share"></i></button><button class="play-btn" title="Play"><i class="icon-screen"></i></button>
   </div>
 </script>
-
 <script type="text/template" id="sunset-template">
   <ul id="wtp--plex-it-plugin" class="minimal-scrollbar" ondrop="HANDLE.drop(event)" ondragover="HANDLE.drag(event)"></ul>
 </script>
-
 <script>
   var PLEXIT = {
     queueEmail: '',
@@ -120,7 +96,6 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
     nodeHost: 'https://node.plexapp.com:32443'
   };
 </script>
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="https://static.plex.tv/assets/jquery-1.9.1-4514122fa0b1addc7cf9b74971cbef98af5e9afed30eef9e4dc36650616447b5.js"><\/script>')</script>
 <script src="index.js"></script>
@@ -129,25 +104,20 @@ function BookMark(title, href = window.location, etc) {
   let urls = load('bookmarks') || [],
       name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '').toLowerCase(),
       ex   = !~urls.indexOf(name);
-
   if(ex)
     save('bookmarks', urls.concat(name));
-
   return save(name, {
     url: href,
     name: title,
     ...etc
   }), ex;
 }
-
 function load(name) {
   return JSON.parse(localStorage.getItem(btoa(name)));
 }
-
 function save(name, data) {
   return localStorage.setItem(btoa(name), JSON.stringify(data));
 }
-
 function getURLData(t) {
     var e = new RegExp("[?|&]" + t + "=([^&;]+?)(&|#|;|$)")
         .exec(window.location.search);
@@ -156,25 +126,19 @@ function getURLData(t) {
         return log(t + ": " + n), n
     }
 }
-
 document.body.onload = function() { setTimeout(function() {
-
     document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
-
     let ul = document.body.querySelector('#wtp--plex-it-plugin'),
-        array = load('bookmarks');
-
+        array = load('bookmarks').reverse();
     if(array && array.length) {
         let strings = [],
             compiled = [],
             object = {},
             width = 8;
-
         for(let count = 0, length = Math.ceil(array.length / width); count < length; count++)
             for(let index = width * count++, name, url, obj; index < count * width; index++) {
                 name = array[index];
                 obj = load(name);
-
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
                     `<li id="local-${ name }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
@@ -185,11 +149,9 @@ document.body.onload = function() { setTimeout(function() {
                         <hr>
                     </li>`: null;
             }
-
         for(let index = 0, length = array.length, string; index < length; index++)
             if(string = object[array[index]])
                 compiled.push(string);
-
         for(let index = 0, length = compiled.length, string = ''; index <= length; index++) {
             if((index > 0 && index % 3 == 0) || index >= length)
                 strings.push(string),
@@ -197,14 +159,10 @@ document.body.onload = function() { setTimeout(function() {
             if(index < length)
                 string += compiled[index];
         }
-
         let html = '';
-
         strings.map(string => html += string);
-
         ul.innerHTML = html;
     }
-
     let messages = {
             "and": "{:{*}}",
             "disabled": "Not yet implemented",
@@ -230,34 +188,27 @@ document.body.onload = function() { setTimeout(function() {
                 .replace(/\^([a-z])/gi, ($0, $1, $$, $_) => $1.toUpperCase());
         },
         selectors = [];
-
     for(let key in messages)
         selectors.push(`[${ key }]`);
-
     let elements = document.querySelectorAll(selectors.join(','));
-
     for(let element, index = 0, length = elements.length; index < length; index++)
         for(let attribute in messages)
             if(attribute in (element = elements[index]).attributes)
                 element.title = `${ parse(messages[attribute], attribute, element) }. ${ element.title }`;
 }, 1000)};
-
 let HANDLE = {
   drag: event => {
     event.preventDefault(true);
-
     event.dataTransfer.dropEffect = 'copy';
   },
   drop: event => {
     event.preventDefault(true);
-
     let data = JSON.parse(atob(event.dataTransfer.getData('text/plain'))),
         url  = data.url || getURLData('url') || location.href,
         name = data.name,
         year = data.year,
         icon = data.image;
-
-    if(BookMark(name + year, url, data))
+    BookMark(name + year, url, data);
       document.querySelector('#wtp--plex-it-plugin').innerHTML +=
       `<li id="local-${ name }" title="Watch &quot;${ name } (${ year })&quot;">
           <a href="${ url }" target="_blank">
@@ -268,30 +219,22 @@ let HANDLE = {
       </li>`;
   }
 };
-
 window.onlocationchange = event => {
   let hash = location.hash;
-
   if(!~hash.indexOf('#plexit:'))
     return;
-
   hash = hash.replace('#plexit:', '');
-
   HANDLE.drop({ ...event, dataTransfer: { getData: type => hash }, preventDefault: () => {} });
 };
-
 function watchlocationchange() {
     watchlocationchange.href = watchlocationchange.href || location.href;
-
     if (watchlocationchange.href != location.href) {
         watchlocationchange.href = location.href;
         if(window.onlocationchange)
             return window.onlocationchange(new Event('locationchange', { bubbles: true }));
     }
 }
-
 setInterval(watchlocationchange, 1000);
-
 </script>
 </body>
 </html>
