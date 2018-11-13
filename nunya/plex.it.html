@@ -211,7 +211,7 @@ let HANDLE = {
 
     BookMark(name + year, url, icon);
 
-    document.querySelector('table').innerHTML +=
+    document.querySelector('table tbody').innerHTML +=
     `<td id="local-${ name }" title="${ (name == document.title)? 'Visit': 'Watch' } &quot;${ name } (${ year })&quot;">
         <a href="${ url }" target="_blank">
             <img src="${ icon }" alt="${ name } (${ year })" />
