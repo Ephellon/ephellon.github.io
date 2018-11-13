@@ -26,19 +26,19 @@
   width: 100%;
 }
 
-#wtp--plex-it-plugin td {
-  text-align: center;
-}
-
-#wtp--plex-it-plugin td:empty::after {
+#wtp--plex-it-plugin:empty::after {
   content: 'Your list is empty';
 }
 
-table img {
+#wtp--plex-it-plugin li {
+  text-align: center;
+}
+
+#wtp--plex-it-plugin img {
   max-height: 180px;
 }
 
-tabel label {
+#wtp--plex-it-plugin label {
   display: inline-block;
 }
   </style>
@@ -68,7 +68,7 @@ tabel label {
 </script>
 
 <script type="text/template" id="sunset-template">
-  <table id="wtp--plex-it-plugin" ondrop="HANDLE.drop(event)" ondragover="HANDLE.drag(event)"><tbody><tr><td>Your list is empty</td></tr><tbody></table>
+  <ul id="wtp--plex-it-plugin" ondrop="HANDLE.drop(event)" ondragover="HANDLE.drag(event)"></ul>
 </script>
 
 <script>
@@ -122,7 +122,7 @@ document.body.onload = function() { setTimeout(function() {
 
     document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
 
-    let table = document.body.querySelector('#wtp--plex-it-plugin'),
+    let ul = document.body.querySelector('#wtp--plex-it-plugin'),
         array = load('bookmarks');
 
     if(array && array.length) {
@@ -138,12 +138,12 @@ document.body.onload = function() { setTimeout(function() {
 
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
-                    `<td id="local-${ name }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
+                    `<li id="local-${ name }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
                         <a href="${ url }" target="_blank">
                             <img src="${ obj.image }" />
                             <label>${ name } (${ obj.year })</label>
                         </a>
-                    </td>`: null;
+                    </li>`: null;
             }
 
         for(let index = 0, length = array.length, string; index < length; index++)
@@ -160,11 +160,9 @@ document.body.onload = function() { setTimeout(function() {
 
         let html = '';
 
-        strings.map(string =>
-            html += `<tr>${ string }</tr>`
-        );
+        strings.map(string => html += string);
 
-        table.innerHTML = `<table><tbody>${ html }</tbody></table>`;
+        ul.innerHTML = html;
     }
 
     let messages = {
@@ -220,13 +218,13 @@ let HANDLE = {
         icon = data.image;
 
     if(BookMark(name + year, url, data))
-      document.querySelector('table tbody').innerHTML +=
-      `<td id="local-${ name }" title="Watch &quot;${ name } (${ year })&quot;">
+      document.querySelector('#wtp--plex-it-plugin').innerHTML +=
+      `<li id="local-${ name }" title="Watch &quot;${ name } (${ year })&quot;">
           <a href="${ url }" target="_blank">
               <img src="${ icon }" />
               <label>${ name } (${ year })</label>
           </a>
-      </td>`;
+      </li>`;
   }
 };
 
