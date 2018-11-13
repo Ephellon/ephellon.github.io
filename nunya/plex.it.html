@@ -222,10 +222,12 @@ let HANDLE = {
 };
 
 window.onlocationchange = event => {
-  if(!~event.data.indexOf('#plexit:'))
+  let hash = location.hash;
+
+  if(!~hash.indexOf('#plexit:'))
     return;
 
-  event.dataTransfer.setData('text/plain', event.data.replace(/^.*#plexit:/, ''));
+  event.dataTransfer.setData('text/plain', hash.replace('#plexit:', ''));
 
   HANDLE.drop(event);
 };
@@ -236,7 +238,7 @@ function watchlocationchange() {
     if (watchlocationchange.href != location.href) {
         watchlocationchange.href = location.href;
         if(window.onlocationchange)
-            return window.onlocationchange(new Event('locationchange', { data: location.href, bubbles: true }));
+            return window.onlocationchange(new Event('locationchange', { bubbles: true }));
     }
 }
 
