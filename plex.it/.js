@@ -44,7 +44,7 @@
 
 		create: function () {
 			// Frame URL:
-			var url = "https://ephellon.github.io/nunya/plex.it.html";
+			var url = "https://ephellon.github.io/plex.it/";
 
 			url += '?url=' + encodeURIComponent(window.location.href);
 			url += '&host=' + encodeURIComponent(window.location.host);
