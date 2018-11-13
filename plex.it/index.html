@@ -62,7 +62,7 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
   cursor: pointer!important;
 }
 [id^="local-"] hr {border: 1px solid #6668}
-[id^="local-"] .icon-close {color:#f00!important;display:flex;margin-left:90%;margin-top:0}
+[id^="local-"] i {color:#26F45A!important;display:flex;margin-left:90%;margin-top:0}
   </style>
 </head>
 <body translate="no" style="text-align: center">
@@ -142,7 +142,7 @@ document.body.onload = function() { setTimeout(function() {
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
                     `<li id="local-${ name }" title="Watch &quot;${ name = obj.name } (${ year = obj.year })&quot;" ondragover="(event => {document.querySelector('#local-${ name }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ btoa(JSON.stringify(obj)) }')})(event)" ondrop="(event => HANDLE.drop(event))(event)">
-                        <i class="icon-close" title="Remove &quot;${ name } (${ year })&quot;" onclick="document.querySelector('#local-${ name }').remove()"></i>
+                        <i class="icon-checkmark" title="Remove &quot;${ name } (${ year })&quot;" onclick="document.querySelector('#local-${ name }').remove()"></i>
                         <a href="${ url }" target="_blank">
                             <div class="img" style="background: url(${ obj.image })"></div>
                             <label>${ name } (${ year })</label>
