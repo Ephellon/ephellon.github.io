@@ -202,7 +202,8 @@ let HANDLE = {
   },
   drop: event => {
     event.preventDefault(true);
-    let data = JSON.parse(atob(event.dataTransfer.getData('text/plain'))),
+    let hash = event.dataTransfer.getData('text/plain'),
+        data = JSON.parse(atob(hash)),
         url  = data.url || getURLData('url') || location.href,
         name = data.name,
         year = data.year,
@@ -210,7 +211,7 @@ let HANDLE = {
         id = [data.imdb, data.tmdb, data.tvdb].join('-');
     let marks = document.querySelector('#wtp--plex-it-plugin'),
         html =
-        `<li id="local-${ id }" title="Watch &quot;${ name } (${ year })&quot;">
+        `<li id="local-${ id }" title="Watch &quot;${ name } (${ year })&quot;" draggable="true" ondragover="(event => {document.querySelector('#local-${ id }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ hash }')})(event)">
           <a href="${ url }" target="_blank">
               <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon })"></div>
               <label>${ name } (${ year })</label>
@@ -220,7 +221,7 @@ let HANDLE = {
     if(BookMark(id, url, data)) {
       marks.innerHTML = html + marks.innerHTML;
     } else {
-        (marks.querySelector('*') || {}).outerHTML = html;
+        (marks.querySelector('[id^="local-"]') || {}).outerHTML = html;
     }
   }
 };
