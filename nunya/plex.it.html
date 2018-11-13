@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -211,6 +211,8 @@ let HANDLE = {
         name = data.name,
         year = data.year,
         icon = data.image;
+
+    console.log('Heard:', { ...data, url });
 
     BookMark(name + year, url, icon);
 
