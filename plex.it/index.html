@@ -140,7 +140,7 @@ document.body.onload = function() { setTimeout(function() {
                 obj = load(name);
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
-                    `<li id="local-${ id }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
+                    `<li id="local-${ name }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
                         <a href="${ url }" target="_blank">
                             <div class="img" style="background: url(${ obj.image })"></div>
                             <label>${ name } (${ obj.year })</label>
