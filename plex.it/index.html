@@ -208,15 +208,20 @@ let HANDLE = {
         name = data.name,
         year = data.year,
         icon = data.image;
-    BookMark(name + year, url, data);
-      document.querySelector('#wtp--plex-it-plugin').innerHTML +=
-      `<li id="local-${ name }" title="Watch &quot;${ name } (${ year })&quot;">
+    let marks = document.querySelector('#wtp--plex-it-plugin'),
+        html =
+        `<li id="local-${ name }" title="Watch &quot;${ name } (${ year })&quot;">
           <a href="${ url }" target="_blank">
               <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon })"></div>
               <label>${ name } (${ year })</label>
           </a>
           <hr>
-      </li>`;
+        </li>`;
+    if(BookMark(name + year, url, data)) {
+      marks.innerHTML = html + marks.innerHTML;
+    } else {
+        marks.firstChild.outerHTML = html;
+    }
   }
 };
 window.onlocationchange = event => {
