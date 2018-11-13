@@ -231,12 +231,12 @@ window.onlocationchange = event => {
 };
 
 function watchlocationchange() {
-    watchlocationchange.pathname = watchlocationchange.pathname || location.pathname;
+    watchlocationchange.href = watchlocationchange.href || location.href;
 
-    if (watchlocationchange.pathname != location.pathname) {
-        watchlocationchange.pathname = location.pathname;
+    if (watchlocationchange.href != location.href) {
+        watchlocationchange.href = location.href;
         if(window.onlocationchange)
-            return window.onlocationchange(new Event('locationchange', { data: location.pathname, bubbles: true }));
+            return window.onlocationchange(new Event('locationchange', { data: location.href, bubbles: true }));
     }
 }
 
