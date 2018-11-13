@@ -78,17 +78,18 @@
 <script>window.jQuery || document.write('<script src="https://static.plex.tv/assets/jquery-1.9.1-4514122fa0b1addc7cf9b74971cbef98af5e9afed30eef9e4dc36650616447b5.js"><\/script>')</script>
 <script src="https://static.plex.tv/assets/plexit-frame/index-ba16c6d6c8cb5d7fc20ccbd8c7bc98f8326ce9a03424368e5e65e89789db7112.js"></script>
 <script>
-function BookMark(title, href = window.location, image) {
+function BookMark(title, href = window.location, etc) {
   let urls = load('bookmarks') || [],
-      name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '');
+      name = title.replace(/[^\w\$\-\+\.\;\(\)]+/g, '').toLowerCase();
 
-  if(!~urls.indexOf(name))
+  if(ex = !~urls.indexOf(name))
     save('bookmarks', urls.concat(name));
 
   return save(name, {
     url: href,
-    img: image
-  });
+    name: title,
+    ...etc
+  }), !ex;
 }
 
 function load(name) {
@@ -128,9 +129,9 @@ document.body.onload = function() { setTimeout(function() {
 
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
-                    `<td id="local-${ name }" local="{:name} ({:url})" name="${ name }" url="${ url.replace(/^(.*?\/\/.*?\/).*$/, '$1') }">
+                    `<td id="local-${ name }" title="Watch &quot;${ name = obj.name } (${ obj.year })&quot;">
                         <a href="${ url }" target="_blank">
-                            <img src="${ obj.img }" />
+                            <img src="${ obj.image }" />
                             <label>${ name }</label>
                         </a>
                     </td>`: null;
@@ -209,15 +210,14 @@ let HANDLE = {
         year = data.year,
         icon = data.image;
 
-    BookMark(name + year, url, icon);
-
-    document.querySelector('table tbody').innerHTML +=
-    `<td id="local-${ name }" title="${ (name == document.title)? 'Visit': 'Watch' } &quot;${ name } (${ year })&quot;">
-        <a href="${ url }" target="_blank">
-            <img src="${ icon }" alt="${ name } (${ year })" />
-            <label>${ name }</label>
-        </a>
-    </td>`;
+    if(BookMark(name + year, url, data))
+      document.querySelector('table tbody').innerHTML +=
+      `<td id="local-${ name }" title="Watch &quot;${ name } (${ year })&quot;">
+          <a href="${ url }" target="_blank">
+              <img src="${ icon }" alt="${ name } (${ year })" />
+              <label>${ name }</label>
+          </a>
+      </td>`;
   }
 };
 
