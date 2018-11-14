@@ -1,5 +1,5 @@
 function log() {
-    window.console && ("function" == typeof console.log.apply ? console.log.apply(console, arguments) : console.log(Array.prototype.slice.call(arguments)))
+    // window.console && ("function" == typeof console.log.apply ? console.log.apply(console, arguments) : console.log(Array.prototype.slice.call(arguments)))
 }
 function getUrlParam(t) {
     var e = new RegExp("[?|&]" + t + "=([^&;]+?)(&|#|;|$)")
