@@ -86,7 +86,7 @@ div.page {overflow:hidden!important; top:0!important; bottom:0!important;}
   </div>
 </script>
 <script type="text/template" id="sunset-template">
-  <ul id="wtp--plex-it-plugin" class="minimal-scrollbar" ondrop="HANDLE.drop(event)" ondragover="HANDLE.drag(event)"></ul>
+  <ul synq-html id="wtp--plex-it-plugin" class="minimal-scrollbar" ondrop="HANDLE.drop(event)" ondragover="HANDLE.drag(event)"></ul>
 </script>
 <script>
   var PLEXIT = {
@@ -148,7 +148,7 @@ document.body.onload = function() { setTimeout(function() {
                 obj = load(name);
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
-                    `<li synq-html id="local-${ id = name }" title="Open &quot;${ name = obj.name } (${ year = obj.year })&quot;" ondragover="(event => {document.querySelector('#local-${ name }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ btoa(JSON.stringify(obj)) }')})(event)" ondrop="(event => HANDLE.drop(event))(event)">
+                    `<li id="local-${ id = name }" title="Open &quot;${ name = obj.name } (${ year = obj.year })&quot;" ondragover="(event => {document.querySelector('#local-${ name }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ btoa(JSON.stringify(obj)) }')})(event)" ondrop="(event => HANDLE.drop(event))(event)">
                         <i class="icon-checkmark" title="Remove &quot;${ name } (${ year })&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
                         <a href="${ url }" target="_parent">
                             <div class="img" style="background: url(${ obj.image })"></div>
@@ -220,7 +220,7 @@ let HANDLE = {
         id = [data.imdb, data.tmdb, data.tvdb].join('-');
     let marks = document.querySelector('#wtp--plex-it-plugin'),
         html =
-        `<li synq-html id="local-${ id }" title="Open &quot;${ name } (${ year })&quot;" draggable="true" ondragover="(event => document.querySelector('#local-${ id }').remove())(event)">
+        `<li id="local-${ id }" title="Open &quot;${ name } (${ year })&quot;" draggable="true" ondragover="(event => document.querySelector('#local-${ id }').remove())(event)">
           <i class="icon-close" title="Remove &quot;${ name } (${ year })&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
           <a href="${ url }" target="_parent">
               <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon })"></div>
