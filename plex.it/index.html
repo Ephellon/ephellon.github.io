@@ -170,6 +170,7 @@ document.body.onload = function() { setTimeout(function() {
         let html = '';
         strings.map(string => html += string);
         ul.innerHTML = html;
+        SynQ();
     }
     let messages = {
             "and": "{:{*}}",
@@ -237,6 +238,7 @@ let HANDLE = {
           marks.innerHTML = html + marks.innerHTML;
         }
     }
+    SynQ();
   }
 };
 window.onlocationchange = event => {
