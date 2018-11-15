@@ -109,8 +109,9 @@ window.onlocationchange = event => {
   if(!~hash.indexOf('#plexit:'))
     return;
   hash = hash.replace('#plexit:', '');
-  HANDLE.drop({ ...event, dataTransfer: { getData: type => hash }, preventDefault: () => {} });
+  window.postMessage({ ...event, dataTransfer: { getData: type => hash }, preventDefault: () => {}, handler: 'drop' });
 };
+
 function watchlocationchange() {
     watchlocationchange.href = watchlocationchange.href || location.href;
     if (watchlocationchange.href != location.href) {
@@ -119,6 +120,7 @@ function watchlocationchange() {
             return window.onlocationchange(new Event('locationchange', { bubbles: true }));
     }
 }
+
 setInterval(watchlocationchange, 1000);
 setInterval(SynQ, 5000);
 </script>
