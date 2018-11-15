@@ -10,7 +10,7 @@ function getUrlParam(t) {
     }
 }
 function sendAnalyticsEvent(t, e, n) {
-    n = n || host, ga("send", "event", t, e, n)
+//     n = n || host, ga("send", "event", t, e, n)
 }
 function findBestConnection(t) {
     timestamp = (new Date)
