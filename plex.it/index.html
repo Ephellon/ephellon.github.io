@@ -109,7 +109,7 @@ window.onlocationchange = event => {
   if(!~hash.indexOf('#plexit:'))
     return;
   hash = hash.replace('#plexit:', '');
-  window.postMessage({ ...event, hash, preventDefault: () => {}, handler: 'drop', plexit: true });
+  window.postMessage({ ...event, hash, handler: 'drop', plexit: true });
 };
 
 function watchlocationchange() {
