@@ -25,7 +25,7 @@ let plugin = {
                 // PREFERRED [year:number, null, undefined]
             image = document.querySelector('.postbody img').src,
                 // OPTIONAL [image:string]
-            id = plugin.getID();
+            IMDbID = plugin.getID();
                 // the rest of the code is up to you, but should be limited to a layout similar to this
 
         // REQUIRED [{ type:'movie', 'show'; title:string; year:number }]
