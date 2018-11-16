@@ -1,6 +1,13 @@
 // Web to Plex - Toloka Plugin
 // Aurthor(s) - @chmez (2017)
 
+/* Minimal Required Layout *
+  plugin {
+    url:  string,
+    init: function => ({ type:string, title:string, year:number|null|undefined })
+  }
+*/
+
 // REQUIRED [plugin:object]: The plugin object
 let plugin = {
     // REQUIRED [plugin.url]: this is what you ask Web to Plex access to; currently limited to a single domain
@@ -23,7 +30,7 @@ let plugin = {
         return { type: 'movie', title, year, image, IMDbID };
     },
 
-    // OPTIONAL: the rest of this code is purely for your code functionality
+    // OPTIONAL: the rest of this code is purely for functionality
     "getID": () => {
         let links = document.querySelectorAll('.postlink'),
             regex = /^https?\:\/\/(?:w{3}\.)?imdb\.com\/title\/(tt\d+)/i;
