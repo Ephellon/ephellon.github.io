@@ -2,8 +2,8 @@
  * Aurthor(s) - @chmez (2017)
  */
 
-// REQUIRED [const plugin:object]: The plugin constant, must be a constant
-const plugin = {
+// REQUIRED [var plugin:object]: The plugin variable, must be a variable
+var plugin = {
     // REQUIRED [plugin.url]: this is what you ask Web to Plex access to; currently limited to a single domain
     url: "https://toloka.to/t*",
 
@@ -34,7 +34,7 @@ const plugin = {
 };
 
 // the rest of the code is up to you, but should be limited to a layout similar to this
-let id = plugin.getID();
+var id = plugin.getID();
 
 if(id)
     plugin.init(id);
