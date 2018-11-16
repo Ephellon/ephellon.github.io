@@ -2,8 +2,8 @@
  * Aurthor(s) - @chmez (2017)
  */
 (() => {
-    // REQUIRED [var plugin:object]: The plugin constant, must be a constant
-    const plugin = {
+    // REQUIRED [plugin:object]: The plugin object
+    let plugin = {
         // REQUIRED [plugin.url]: this is what you ask Web to Plex access to; currently limited to a single domain
         url: "https://toloka.to/t*",
 
@@ -29,7 +29,7 @@
 
             // REQUIRED [{ type:'movie', 'show'; title:string; year:number; target:'web-to-plex' }]
             // PREFERRED [{ image:string; IMDbID:string; TMDbID:string, number; TVDbID:string, number }]
-            return { type: 'movie', title, year, image, IMDbID, target: 'web-to-plex' };
+            return { type: 'movie', title, year, image, IMDbID, url, target: 'web-to-plex' };
         }
     };
 
@@ -38,4 +38,6 @@
 
     if(id)
         return plugin.init(id);
+
+    return plugin;
 })();
