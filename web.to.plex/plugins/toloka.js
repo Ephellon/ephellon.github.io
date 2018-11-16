@@ -22,12 +22,14 @@ const plugin = {
     init: (IMDbID) => {
         let title = document.querySelector('.maintitle').textContent.replace(/^[^\/]+\/\s+([^\(]+)\(([\d]{4})/, '$1').trim(),
                 // REQUIRED [title:string]
-            year = RegExp.$2;
+            year = RegExp.$2,
                 // PREFERRED [year:number, null, undefined]
+            image = document.querySelector('.postbody img');
+                // OPTIONAL [image:string]
 
-        // REQUIRED [{ type:'movie', 'show'; title:string; year:number; target:'web-to-plex', 'web-to-plex:plexit' }]
-        // PREFERRED [{ IMDbID:string; TMDbID:string, number; TVDbID:string, number }]
-        window.postMesage({ type: 'movie', title, year, IMDbID, target: 'web-to-plex' }, '*');
+        // REQUIRED [{ type:'movie', 'show'; title:string; year:number; target:'web-to-plex' }]
+        // PREFERRED [{ image:string; IMDbID:string; TMDbID:string, number; TVDbID:string, number }]
+        window.postMesage({ type: 'movie', title, year, image, IMDbID, target: 'web-to-plex' }, '*');
     }
 };
 
