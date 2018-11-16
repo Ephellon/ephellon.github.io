@@ -28,8 +28,8 @@ let plugin = {
             id = plugin.getID();
                 // the rest of the code is up to you, but should be limited to a layout similar to this
 
-        // REQUIRED [{ type:'movie', 'show'; title:string; year:number; target:'web-to-plex' }]
+        // REQUIRED [{ type:'movie', 'show'; title:string; year:number }]
         // PREFERRED [{ image:string; IMDbID:string; TMDbID:string, number; TVDbID:string, number }]
-        return { type: 'movie', title, year, image, IMDbID, url, target: 'web-to-plex' };
+        return { type: 'movie', title, year, image, IMDbID };
     }
 };
