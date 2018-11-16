@@ -24,7 +24,7 @@ const plugin = {
                 // REQUIRED [title:string]
             year = RegExp.$2,
                 // PREFERRED [year:number, null, undefined]
-            image = document.querySelector('.postbody img');
+            image = document.querySelector('.postbody img').src;
                 // OPTIONAL [image:string]
 
         // REQUIRED [{ type:'movie', 'show'; title:string; year:number; target:'web-to-plex' }]
