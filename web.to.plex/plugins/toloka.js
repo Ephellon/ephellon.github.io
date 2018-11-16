@@ -29,12 +29,14 @@ const plugin = {
 
         // REQUIRED [{ type:'movie', 'show'; title:string; year:number; target:'web-to-plex' }]
         // PREFERRED [{ image:string; IMDbID:string; TMDbID:string, number; TVDbID:string, number }]
-        window.postMessage({ type: 'movie', title, year, image, IMDbID, target: 'web-to-plex' }, '*');
+        return { type: 'movie', title, year, image, IMDbID, target: 'web-to-plex' };
     }
 };
 
 // the rest of the code is up to you, but should be limited to a layout similar to this
-let id = plugin.getID();
+let id = plugin.getID(), data;
 
 if(id)
-    plugin.init(id);
+    data = plugin.init(id);
+
+data
