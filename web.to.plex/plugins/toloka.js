@@ -2,7 +2,7 @@
 * Aurthor(s) - @chmez (2017)
 */
 // REQUIRED [plugin:object]: The plugin object
-let plugin = {
+const plugin = {
     // REQUIRED [plugin.url]: this is what you ask Web to Plex access to; currently limited to a single domain
     url: "https://toloka.to/t*",
 
