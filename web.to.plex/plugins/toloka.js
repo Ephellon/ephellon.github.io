@@ -2,7 +2,7 @@
 // Aurthor(s) - @chmez (2017)
 
 // REQUIRED [plugin:object]: The plugin object
-{
+let plugin = {
     // REQUIRED [plugin.url]: this is what you ask Web to Plex access to; currently limited to a single domain
     "url": "https://toloka.to/",
 
@@ -32,6 +32,4 @@
         // PREFERRED [{ image:string; IMDbID:string; TMDbID:string, number; TVDbID:string, number }]
         return { type: 'movie', title, year, image, IMDbID, url, target: 'web-to-plex' };
     }
-
-    // no trailing semicolon
-}
+};
