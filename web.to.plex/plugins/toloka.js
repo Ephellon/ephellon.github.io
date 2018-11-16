@@ -19,7 +19,7 @@ let plugin = {
     // REQUIRED [plugin.init]: this is what Web to Plex will call on when the url is detected
     // it will always be fired after the page and Web to Plex have been loaded
     "init": () => {
-        let title = document.querySelector('.maintitle').textContent.replace(/[^\/]+\/\s+([^\(]+)\(([\d]{4})\)\s*$/, '$1').trim(),
+        let title = document.querySelector('.maintitle').textContent.replace(/^.+\/(.+?)\(([\d]{4})\)\s*$/, '$1').trim(),
                 // REQUIRED [title:string]
             year = RegExp.$2,
                 // PREFERRED [year:number, null, undefined]
