@@ -29,7 +29,7 @@ const plugin = {
 
         // REQUIRED [{ type:'movie', 'show'; title:string; year:number; target:'web-to-plex' }]
         // PREFERRED [{ image:string; IMDbID:string; TMDbID:string, number; TVDbID:string, number }]
-        window.postMesage({ type: 'movie', title, year, image, IMDbID, target: 'web-to-plex' }, '*');
+        window.postMessage({ type: 'movie', title, year, image, IMDbID, target: 'web-to-plex' }, '*');
     }
 };
 
