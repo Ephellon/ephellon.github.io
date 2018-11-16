@@ -4,7 +4,7 @@
 // REQUIRED [plugin:object]: The plugin object
 let plugin = {
     // REQUIRED [plugin.url]: this is what you ask Web to Plex access to; currently limited to a single domain
-    "url": "https://toloka.to/",
+    "url": "https://toloka.to",
 
     // OPTIONAL: this is purely for your code functionality
     "getID": () => {
