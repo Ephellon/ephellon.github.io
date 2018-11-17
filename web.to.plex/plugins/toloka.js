@@ -11,7 +11,7 @@
 // REQUIRED [plugin:object]: The plugin object
 let plugin = {
     // REQUIRED [plugin.url]: this is what you ask Web to Plex access to; currently limited to a single domain
-    "url": "https://toloka.to",
+    "url": "*://*.toloka.to/*",
 
     // REQUIRED [plugin.init]: this is what Web to Plex will call on when the url is detected
     // it will always be fired after the page and Web to Plex have been loaded
