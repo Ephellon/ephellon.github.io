@@ -16,11 +16,12 @@ let plugin = {
     // REQUIRED [plugin.init]: this is what Web to Plex will call on when the url is detected
     // it will always be fired after the page and Web to Plex have been loaded
     "init": () => {
-        let title = document.querySelector('.maintitle').textContent.replace(/^.+\/(.+?)\(([\d]{4})\)\s*$/, '$1').trim(),
+        let title = document.queryBy('.maintitle').first.textContent.replace(/^.+\/(.+?)\(([\d]{4})\)\s*$/, '$1').trim(),
                 // REQUIRED [title:string]
+                // you have access to the exposed "helper.js" file within the plugin
             year = RegExp.$2,
                 // PREFERRED [year:number, null, undefined]
-            image = document.querySelector('.postbody img').src,
+            image = document.queryBy('.postbody img').first.src,
                 // OPTIONAL [image:string]
             IMDbID = plugin.getID();
                 // the rest of the code is up to you, but should be limited to a layout similar to this
