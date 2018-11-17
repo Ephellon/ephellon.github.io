@@ -217,7 +217,7 @@ let HANDLE = {
         name = data.name,
         year = data.year,
         icon = data.image,
-        id = [data.imdb, data.tmdb, data.tvdb].join('-');
+        id = [data.imdb || 'tt-', data.tmdb | 0, data.tvdb | 0].join('-');
     let marks = document.querySelector('#wtp--plex-it-plugin'),
         html =
         `<li id="local-${ id }" title="Open &quot;${ name } (${ year })&quot;" draggable="true" ondragover="(event => document.querySelector('#local-${ id }').remove())(event)">
