@@ -2,7 +2,7 @@
 // Aurthor(s) - @ephellon (2018)
 
 let plugin = {
-    "url": "*://*.shanaproject.com/*",
+    "url": "*://*.shanaproject.com/series/*",
 
     "init": () => {
         let title = document.querySelector('#header_big h2'),
