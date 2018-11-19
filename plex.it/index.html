@@ -212,9 +212,14 @@ let HANDLE = {
   },
   drop: event => {
     event.preventDefault(true);
+
     let hash = event.dataTransfer.getData('text/plain'),
-        data = JSON.parse(atob(hash)),
-        url  = data.url || getURLData('url') || location.href,
+        data = JSON.parse(atob(hash));
+
+    if(data instanceof Array)
+      return data.forEach(entry => HANDLE.drop({ ...event, dataTransfer: { getData: type => btoa(JSON.stringify(entry)) }, preventDefault: () => {} }));
+
+    let url  = data.url || getURLData('url') || location.href,
         name = data.name,
         year = data.year,
         icon = data.image,
