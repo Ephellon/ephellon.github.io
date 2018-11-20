@@ -229,7 +229,7 @@ let HANDLE = {
         `<li id="local-${ id }" title="Open &quot;${ name } (${ year })&quot;" draggable="true" ondragover="(event => document.querySelector('#local-${ id }').remove())(event)">
           <i class="icon-close" title="Remove &quot;${ name } (${ year })&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
           <a href="${ url }" target="_parent">
-              <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon })"></div>
+              <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon }) center/contain no-repeat"></div>
               <label>${ name } (${ year })</label>
           </a>
           <hr>
