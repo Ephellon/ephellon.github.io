@@ -19,7 +19,7 @@ let plugin = {
         let title = document.queryBy('.maintitle').first.textContent.replace(/^.+\/(.+?)\(([\d]{4})\)\s*$/, '$1').trim(),
                 // REQUIRED [title:string]
                 // you have access to the exposed "helper.js" file within the plugin
-            year = RegExp.$2,
+            year = +RegExp.$2,
                 // PREFERRED [year:number, null, undefined]
             image = document.queryBy('.postbody img').first.src,
                 // OPTIONAL [image:string]
