@@ -14,7 +14,9 @@ html {
 </head>
 
 <body translate="no">
-<h1>Pushpellet API</h1>
+<!-- START OF HTML -->
+
+<h1>Pushpellet API ({ pusher URL })</h1>
 <h2>API Parameters</h2>
 <h3>message</h3>
 <ul>
@@ -34,47 +36,28 @@ html {
 <hr>
 <h2>Send to an e-mail address</h2>
 <h3>cURL</h3>
-<p><code>curl &quot;{ pusher URL }/?message=the message to send&amp;email=email@example.com&quot;</code></p>
+<p><code>curl &quot;{ pusher URL }?message=the message to send&amp;email=email@example.com&quot;</code></p>
 <h3>HTTP (GET)</h3>
-<p><code>{ pusher URL }/?message=the message to send&amp;email=email@example.com</code></p>
+<p><code>{ pusher URL }?message=the message to send&amp;email=email@example.com</code></p>
 <h3>jQuery</h3>
-<pre><code class="javascript">$.get('{ pusher URL }/?message=the message to send&amp;email=email@example.com', null, status =&gt; {
-  (status === 'OK')?
-    console.log('Message sent'):
-  console.warn(status)
-}, 'text');
+<pre><code class="javascript">$.get('{ pusher URL }?message=the message to send&amp;email=email@example.com');
 </code></pre>
 <h3>JavaScript</h3>
-<pre><code class="javascript">fetch('{ pusher URL }/?message=the message to send&amp;email=email@example.com')
-  .then(response =&gt; response.text())
-  .then(status =&gt; {
-    (status === 'OK')?
-      console.log('Message sent'):
-    console.warn(status)
-  })
+<pre><code class="javascript">fetch('{ pusher URL }?message=the message to send&amp;email=email@example.com', { method: 'GET' });
 </code></pre>
 <hr>
 <h2>Send to a (Sprint) phone number</h2>
 <h3>cURL</h3>
-<p><code>curl &quot;{ pusher URL }/?message=the message to send&amp;phone=555-555-5555&quot;</code></p>
+<p><code>curl &quot;{ pusher URL }?message=the message to send&amp;phone=555-555-5555&quot;</code></p>
 <h3>HTTP (GET)</h3>
-<p><code>{ pusher URL }/?message=the message to send&amp;phone=555-555-5555</code></p>
+<p><code>{ pusher URL }?message=the message to send&amp;phone=555-555-5555</code></p>
 <h3>jQuery</h3>
-<pre><code class="javascript">$.get('{ pusher URL }/?message=the message to send&amp;phone=555-555-5555', null, status =&gt; {
-  (status === 'OK')?
-    console.log('Message sent'):
-  console.warn(status)
-}, 'text');
+<pre><code class="javascript">$.get('{ pusher URL }?message=the message to send&amp;phone=555-555-5555');
 </code></pre>
 <h3>JavaScript</h3>
-<pre><code class="javascript">fetch('{ pusher URL }/?message=the message to send&amp;phone=555-555-5555')
-  .then(response =&gt; response.text())
-  .then(status =&gt; {
-    (status === 'OK')?
-      console.log('Message sent'):
-    console.warn(status)
-  })
+<pre><code class="javascript">fetch('{ pusher URL }?message=the message to send&amp;phone=555-555-5555', { method: 'GET' });
 </code></pre>
+
 <!-- END OF HTML -->
 <script>
 /* Setup Pre-requisites and Dependencies */
@@ -89,7 +72,7 @@ try {
 
 /** Aesthetic purposes ONLY: START **/
 
-document.body.innerHTML = document.body.innerHTML.replace(/\{\s*pusher url\s*\}/gi, location.origin);
+document.body.innerHTML = document.body.innerHTML.replace(/\{\s*pusher url\s*\}/gi, location.origin + location.pathname);
 
 /** DONE **/
 
