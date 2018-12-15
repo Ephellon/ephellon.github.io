@@ -13,7 +13,7 @@ let plugin = {
                 document.queryBy('main > h1').first.textContent
             ).trim(),
             year = +(document.queryBy('div.clear > p.flat').first.textContent.trim().replace(/[^]*(\d{4})[^]*/, '$1')),
-            IMDbID = document.queryBy('[href*="/title/tt"]').first.textContent.replace(/^[^\:]+:/, '');
+            IMDbID = document.queryBy('[href*="/title/tt"]').first.href.replace(/[^]*(tt\d+)[^]*/, '$1');
 
         return { type: 'show', title, year, IMDbID };
     }
