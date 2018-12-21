@@ -33,7 +33,7 @@ let plugin = {
 
     // OPTIONAL: the rest of this code is purely for functionality
     "getID": () => {
-        let links = document.querySelectorAll('.postlink'),
+        let links = document.queryBy('.postlink'),
             regex = /^https?\:\/\/(?:w{3}\.)?imdb\.com\/title\/(tt\d+)/i;
 
         for(let link in links)
