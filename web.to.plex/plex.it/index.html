@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plex It!</title>
+  <link href="index.css" media="screen" rel="stylesheet" />
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-6111912-22', 'plex.tv');
+    ga('send', 'pageview');
+  </script>
+  <style>
+body {font-family: Open Sans Semibold,Helvetica Neue,Helvetica,Arial,sans-serif!important}
+[type="text/template"] {display:none}
+div.page {top:0!important;bottom:0!important}
+#wtp--plex-it-plugin {
+  list-style: none;
+  text-align: center;
+  padding: 15px 0;
+  height: 100%;
+  width: 100%;
+}
+#wtp--plex-it-plugin:empty {
+  padding-right: 15px!important;
+}
+#wtp--plex-it-plugin:empty::after {
+  content: 'Your list is empty. Use the Web to Plex button to add items';
+  padding: 15px;
+}
+#wtp--plex-it-plugin [id^="local-"] li {
+  list-style: none;
+  text-align: center;
+}
+#wtp--plex-it-plugin [id^="local-"]r li:last-child hr {
+  display: none;
+}
+#wtp--plex-it-plugin [id^="local-"]:hover .img {
+  box-shadow: 0px 0px 150px 0px #0008 inset, 0 0 0 2px #CC7B19!important;
+  z-index: 999!important;
+}
+#wtp--plex-it-plugin [id^="local-"] .img {
+  background-size: contain!important;
+  height: 180px!important;
+  width: 128px!important;
+  transition: all 0.4s!important;
+  margin-left: calc(50% - 64px)!important;
+}
+#wtp--plex-it-plugin [id^="local-"] label {
+  display: inline-block;
+  text-decoration: inherit!important;
+}
+[id^="local-"] a {
+  color: #fff!important;
+  text-decoration: none;
+}
+[id^="local-"] a:hover {
+  text-decoration: underline;
+  cursor: pointer!important;
+}
+[id^="local-"] hr {border: 1px solid #6668}
+[id^="local-"]:last-child hr {display:none!important}
+[id^="local-"] i {color:#26F45A!important;display:flex;margin-left:90%;margin-top:0;cursor:pointer}
+[id^="local-"] .icon-close {color:#FF2A2A!important}
+  </style>
+</head>
+<body translate="no" style="text-align: center">
+  <img src="bell.png" height="180"/>
+  <script type="text/template" id="closebutton-template">
+  <i class="icon-close"></i>
+</script>
+<script type="text/template" id="looking-template">
+  <h1 class="pull-center">Loading list...</h1>
+</script>
+<script type="text/template" id="empty-template">
+</script>
+<script type="text/template" id="header-template">
+  <div class="thumb-container">
+    <img class="thumb">
+    <div class="thumb-overlay"></div>
+  </div>
+  <div class="navbar">
+    <button class="queue-btn active" title="Queue"><i class="icon-plus"></i></button><button class="recommend-btn" title="Recommend"><i class="icon-share"></i></button><button class="play-btn" title="Play"><i class="icon-screen"></i></button>
+  </div>
+</script>
+<script type="text/template" id="sunset-template">
+  <ul synq-html id="wtp--plex-it-plugin" class="minimal-scrollbar" ondrop="HANDLE.drop(event)" ondragover="HANDLE.drag(event)"></ul>
+</script>
+<script>
+  var PLEXIT = {
+    queueEmail: '',
+    token: '', // Will be filled in by a separate request
+    myPlexUrl: 'https://plex.tv',
+    queueUrl: 'https://plex.tv/queue',
+    nodeUrl: 'https://node.plexapp.com:32443/system/services/url/lookup',
+    nodeHost: 'https://node.plexapp.com:32443'
+  };
+
+  var use_uuid_synq_token = 'web.to.plex/plex.it';
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="https://static.plex.tv/assets/jquery-1.9.1-4514122fa0b1addc7cf9b74971cbef98af5e9afed30eef9e4dc36650616447b5.js"><\/script>')</script>
+<script src="index.js"></script>
+<script src="synq.js"></script>
+<script>
+function BookMark(id, href = window.location, etc) {
+  let urls = load('bookmarks') || [],
+      name = id.replace(/[^\w\$\-\+\.\;\(\)]+/g, '').toLowerCase(),
+      ex   = !~urls.indexOf(id);
+  if(ex)
+    save('bookmarks', urls.concat(name));
+  return save(id, {
+    url: href,
+    ...etc
+  }), ex;
+}
+function load(name) {
+  return JSON.parse(SynQ.get(btoa(name)));
+}
+function save(name, data) {
+  return SynQ.set(btoa(name), JSON.stringify(data));
+}
+function kill(name) {
+  return SynQ.pop(btoa(name));
+}
+function getURLData(t) {
+    var e = new RegExp("[?|&]" + t + "=([^&;]+?)(&|#|;|$)")
+        .exec(window.location.search);
+    if(e) {
+        var n = decodeURIComponent(e[1]);
+        return log(t + ": " + n), n
+    }
+}
+document.body.onload = function() { setTimeout(function() {
+    document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
+    let ul = document.body.querySelector('#wtp--plex-it-plugin'),
+        array = (load('bookmarks') || []).reverse();
+    if(array && array.length) {
+        let strings = [],
+            compiled = [],
+            object = {},
+            MAX = 8;
+        for(let count = 0, length = MAX; count < length;)
+            for(let index = MAX * count++, name, year, url, obj, id; index < count * MAX; index++) {
+                name = array[index];
+                obj = load(name);
+                if(name && obj)
+                    object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
+                    `<li id="local-${ id = name }" title="Open &quot;${ name = obj.name }${ year = obj.year? ` (${ obj.year })`: '' }&quot;" ondragover="(event => {document.querySelector('#local-${ name }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ btoa(JSON.stringify(obj)) }')})(event)" ondrop="(event => HANDLE.drop(event))(event)">
+                        <i class="icon-checkmark" title="Remove &quot;${ name }${ year }&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
+                        <a href="${ url }" target="_parent">
+                            <div class="img" style="background: url(${ obj.image }) center/contain no-repeat"></div>
+                            <label>${ name }${ year }</label>
+                        </a>
+                        <hr>
+                    </li>`: null;
+            }
+        for(let index = 0, length = array.length, string; index < length; index++)
+            if(string = object[array[index]])
+                compiled.push(string);
+        for(let index = 0, length = compiled.length, string = ''; index <= length; index++) {
+            if((index > 0 && index % 3 == 0) || index >= length)
+                strings.push(string),
+                string = '';
+            if(index < length)
+                string += compiled[index];
+        }
+        let html = '';
+        strings.map(string => html += string);
+        ul.innerHTML = html;
+        SynQ();
+    }
+    let messages = {
+            "and": "{:{*}}",
+            "disabled": "Not yet implemented",
+            "is-shy": "Can only be accessed via: {*}",
+            "is-slow": "Resource intensive (loads slowly)",
+            "local": "Opens a link to ^{*}",
+            "pop-ups": "Contains annoying/intrusive ads and/or pop-ups",
+            "save-file": "Uses {*} before using your manager(s)",
+            // $0.99 one time; $0.99 - $9.99/mon
+            "cost-cash-low": "At least {*} (fair)",
+            // $9.99 one time; $9.99 - $29.99/mon
+            "cost-cash-med": "At least {*} (pricy)",
+            // $29.99 one time; $29.99 - $99.99/mon
+            "cost-cash-hig": "At least {*} (expensive)"
+        },
+        parse = (string, attribute, element) => {
+            return string
+                .replace(/\{\$\}/g, element.title)
+                .replace(/\{\*\}/g, element.getAttribute(attribute))
+                .replace(/\{\:([\w\- ]+)\}/g, ($0, $1, $$, $_) =>
+                    $1.split(' ').map($1 => parse(element.getAttribute($1), $1, element))
+                )
+                .replace(/\^([a-z])/gi, ($0, $1, $$, $_) => $1.toUpperCase());
+        },
+        selectors = [];
+    for(let key in messages)
+        selectors.push(`[${ key }]`);
+    let elements = document.querySelectorAll(selectors.join(','));
+    for(let element, index = 0, length = elements.length; index < length; index++)
+        for(let attribute in messages)
+            if(attribute in (element = elements[index]).attributes)
+                element.title = `${ parse(messages[attribute], attribute, element) }. ${ element.title }`;
+}, 1000)};
+let HANDLE = {
+  drag: event => {
+    event.preventDefault(true);
+    event.dataTransfer.dropEffect = 'copy';
+  },
+  drop: event => {
+    event.preventDefault(true);
+
+    let hash = event.dataTransfer.getData('text/plain'),
+        data = JSON.parse(atob(hash));
+
+    if(data instanceof Array)
+      return data.forEach(entry => HANDLE.drop({ ...event, dataTransfer: { getData: type => btoa(JSON.stringify(entry)) }, preventDefault: () => {} }));
+
+    let url  = data.url || getURLData('url') || location.href,
+        name = data.name,
+        year = data.year,
+        icon = data.image,
+        id = [data.imdb || 'tt-', data.tmdb | 0, data.tvdb | 0].join('-');
+    let marks = document.querySelector('#wtp--plex-it-plugin'),
+        html =
+        `<li id="local-${ id }" title="Open &quot;${ name }${ year = year? ` (${ year })`: '' }&quot;" draggable="true" ondragover="(event => document.querySelector('#local-${ id }').remove())(event)">
+          <i class="icon-close" title="Remove &quot;${ name }${ year }&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
+          <a href="${ url }" target="_parent">
+              <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon }) center/contain no-repeat"></div>
+              <label>${ name }${ year }</label>
+          </a>
+          <hr>
+        </li>`;
+    if(BookMark(id, url, data)) {
+      marks.innerHTML = html + marks.innerHTML;
+    } else {
+        try {
+          marks.querySelector(`#local-${ id }`).outerHTML = html;
+        } catch(error) {
+          marks.innerHTML = html + marks.innerHTML;
+        }
+    }
+    SynQ();
+  }
+};
+window.onlocationchange = event => {
+  let hash = location.hash;
+  if(!~hash.indexOf('#plexit:'))
+    return;
+  hash = hash.replace('#plexit:', '');
+  HANDLE.drop({ ...event, dataTransfer: { getData: type => hash }, preventDefault: () => {} });
+};
+function watchlocationchange() {
+    watchlocationchange.href = watchlocationchange.href || location.href;
+    if (watchlocationchange.href != location.href) {
+        watchlocationchange.href = location.href;
+        if(window.onlocationchange)
+            return window.onlocationchange(new Event('locationchange', { bubbles: true }));
+    }
+}
+setInterval(watchlocationchange, 1000);
+setInterval(SynQ, 5000);
+</script>
+</body>
+</html>
