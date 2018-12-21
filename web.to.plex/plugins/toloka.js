@@ -18,7 +18,7 @@ let plugin = {
     "init": () => {
         let title = document.queryBy('.maintitle').first.textContent.replace(/^.+\/(.+?)\(([\d]{4})\)\s*$/, '$1').trim(),
                 // REQUIRED [title:string]
-                // you have access to the exposed "helper.js" file within the plugin
+                // you have access to the exposed "helper.js" file within the extension
             year = +RegExp.$2,
                 // PREFERRED [year:number, null, undefined]
             image = document.queryBy('.postbody img').first.src,
