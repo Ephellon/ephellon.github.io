@@ -8,6 +8,8 @@
   }
 */
 
+alert('Running amazon.js [GitHub]');
+
 // REQUIRED [script:object]: The script object
 let script = {
     // REQUIRED [script.url]: this is what you ask Web to Plex access to; currently limited to a single domain
