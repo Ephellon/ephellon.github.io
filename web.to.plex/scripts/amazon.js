@@ -10,6 +10,9 @@
 
 // REQUIRED [script:object]: The script object
 let script = {
+    // REQUIRED [script.url]: this is what you ask Web to Plex access to; currently limited to a single domain
+    "url": "*://*.amazon.com/*",
+
     // PREFERRED [script.ready]: a function to determine that the page is indeed ready
     "ready": () => !$('[data-automation-id="imdb-rating-badge"], #most-recent-reviews-content > *:first-child').empty,
 
