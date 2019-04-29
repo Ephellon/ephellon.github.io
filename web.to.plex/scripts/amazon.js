@@ -19,7 +19,7 @@ let script = {
     // REQUIRED [script.init]: it will always be fired after the page and Web to Plex have been loaded
     // OPTIONAL [ready]: if using script.ready, Web to Plex will pass a boolean of the ready state
     "init": (ready) => {
-        let Y, R = RegExp;
+        let X, Y, R = RegExp;
 
         let title = $('[data-automation-id="title"], #aiv-content-title, .dv-node-dp-title')
                     .first.textContent
@@ -31,9 +31,9 @@ let script = {
                         Y.first.textContent.trim():
                     +(R.$1 || R.$2 || YEAR),
                 // PREFERRED [year:number, null, undefined]
-            image = getComputedStyle(
-                        $('.av-bgimg__div, div[style*="sgp-catalog-images"]').first
-                    ).backgroundImage,
+            image = (X = $('.av-bgimg__div, div[style*="sgp-catalog-images"]')).empty?
+                $('.av-fallback-packshot img').src:
+            getComputedStyle(X).backgroundImage,
                 // the rest of the code is up to you, but should be limited to a layout similar to this
             type = script.getType();
 
