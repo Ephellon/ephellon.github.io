@@ -27,9 +27,11 @@ let script = {
                     .trim(),
                 // REQUIRED [title:string]
                 // you have access to the exposed "helper.js" file within the extension
-            year = !(Y = $('[data-automation-id="release-year-badge"], .release-year')).empty?
-                        Y.first.textContent.trim():
-                    +(R.$1 || R.$2 || YEAR),
+            year = (
+                !(Y = $('[data-automation-id="release-year-badge"], .release-year')).empty?
+                    Y.first.textContent.trim():
+                +(R.$1 || R.$2 || YEAR)
+            ),
                 // PREFERRED [year:number, null, undefined]
             image = (
                 (X = $('.av-bgimg__div, div[style*="sgp-catalog-images"]')).empty?
