@@ -33,7 +33,7 @@ let script = {
                 // PREFERRED [year:number, null, undefined]
             image = (X = $('.av-bgimg__div, div[style*="sgp-catalog-images"]')).empty?
                 $('.av-fallback-packshot img').src:
-            getComputedStyle(X).backgroundImage,
+            getComputedStyle(X.first).backgroundImage,
                 // the rest of the code is up to you, but should be limited to a layout similar to this
             type = script.getType();
 
