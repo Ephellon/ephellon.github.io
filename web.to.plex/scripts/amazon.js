@@ -31,9 +31,11 @@ let script = {
                         Y.first.textContent.trim():
                     +(R.$1 || R.$2 || YEAR),
                 // PREFERRED [year:number, null, undefined]
-            image = (X = $('.av-bgimg__div, div[style*="sgp-catalog-images"]')).empty?
-                $('.av-fallback-packshot img').src:
-            getComputedStyle(X.first).backgroundImage,
+            image = (
+                (X = $('.av-bgimg__div, div[style*="sgp-catalog-images"]')).empty?
+                    $('.av-fallback-packshot img').src:
+                getComputedStyle(X.first).backgroundImage
+            ),
                 // the rest of the code is up to you, but should be limited to a layout similar to this
             type = script.getType();
 
