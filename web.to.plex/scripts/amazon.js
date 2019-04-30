@@ -36,7 +36,7 @@ let script = {
             image = (
                 (X = $('.av-bgimg__div, div[style*="sgp-catalog-images"]')).empty?
                     $('.av-fallback-packshot img').src:
-                getComputedStyle(X.first).backgroundImage
+                getComputedStyle(X.first).backgroundImage.replace(/[^]*url\((.+?)\)[^]*/i, "$1")
             ),
                 // the rest of the code is up to you, but should be limited to a layout similar to this
             type = script.getType();
