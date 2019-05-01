@@ -1,7 +1,7 @@
 let script = {
     "url": "*://*.couchpotato.life/*/*",
 
-    "ready": !$('.media-body .clearfix').empty && $('.media-body .clearfix').first.children.length,
+    "ready": () => !$('.media-body .clearfix').empty && $('.media-body .clearfix').first.children.length,
 
     "init": (ready) => {
         let _title, _year, _image, R = RegExp;
