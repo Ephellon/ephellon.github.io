@@ -30,7 +30,7 @@ let script = {
     },
 
     "getIMDbID": () => {
-        let link = $('href*="imdb.com/title/tt"]');
+        let link = $('[href*="imdb.com/title/tt"]');
 
         if(!link.empty)
             return link.href
