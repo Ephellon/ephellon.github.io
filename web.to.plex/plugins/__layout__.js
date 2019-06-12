@@ -1,4 +1,4 @@
-let script = {
+let plugin = {
     // required
     "url": "< URL RegExp >",
     // Example: *://*.amazon.com/*/video/(detail|buy)/*
@@ -11,7 +11,7 @@ let script = {
     "ready": () => { /* return a boolean to describe if the page is ready */ },
 
     // optional
-    "timeout": 1000, // if the script fails to complete, retry after ... milisecoonds
+    "timeout": 1000, // if the plugin fails to complete, retry after ... milisecoonds
 
     // required
     "init": (ready) => {
@@ -20,7 +20,7 @@ let script = {
         let title = $('#title').first,
             year  = $('#year').first,
             image = $('#image').first,
-            type  = script.getType(); // described below
+            type  = plugin.getType(); // described below
 
         return { type, title, year, image };
     },
