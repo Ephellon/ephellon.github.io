@@ -11,7 +11,7 @@
 // REQUIRED [script:object]: The script object
 let script = {
     // REQUIRED [script.url]: this is what you ask Web to Plex access to; currently limited to a single domain
-    "url": "*://*.amazon.com/*",
+    "url": "*://*.amazon.com/*/video/detail/*",
 
     // PREFERRED [script.ready]: a function to determine that the page is indeed ready
     "ready": () => !$('[data-automation-id="imdb-rating-badge"], #most-recent-reviews-content > *:first-child').empty,
@@ -19,7 +19,7 @@ let script = {
     // REQUIRED [script.init]: it will always be fired after the page and Web to Plex have been loaded
     // OPTIONAL [ready]: if using script.ready, Web to Plex will pass a boolean of the ready state
     "init": (ready) => {
-        let X, Y, R = RegExp;
+        let _title, _year, _image, R = RegExp;
 
         let title = $('[data-automation-id="title"], #aiv-content-title, .dv-node-dp-title')
                     .first.textContent
@@ -28,15 +28,15 @@ let script = {
                 // REQUIRED [title:string]
                 // you have access to the exposed "helper.js" file within the extension
             year = (
-                !(Y = $('[data-automation-id="release-year-badge"], .release-year')).empty?
-                    Y.first.textContent.trim():
+                !(_year = $('[data-automation-id="release-year-badge"], .release-year')).empty?
+                    _year.first.textContent.trim():
                 +(R.$1 || R.$2 || YEAR)
             ),
                 // PREFERRED [year:number, null, undefined]
             image = (
-                (X = $('.av-bgimg__div, div[style*="sgp-catalog-images"]')).empty?
+                (_image = $('.av-bgimg__div, div[style*="sgp-catalog-images"]')).empty?
                     $('.av-fallback-packshot img').src:
-                getComputedStyle(X.first).backgroundImage.replace(/[^]*url\((["']?)(.+?)\1\)[^]*/i, '$2')
+                getComputedStyle(_image.first).backgroundImage.replace(/[^]*url\((["']?)(.+?)\1\)[^]*/i, '$2')
             ),
                 // the rest of the code is up to you, but should be limited to a layout similar to this
             type = script.getType();
@@ -48,7 +48,7 @@ let script = {
 
     // OPTIONAL: the rest of this code is purely for functionality
     "getType": () => {
-        return !$('[data-automation-id*="seasons"], [class*="seasons"], [class*="episodes"], [class*="series"]').empty?
+        return !$('[data-automation-id*="season"], [class*="season"], [class*="episode"], [class*="series"]').empty?
             'tv':
         'movie'
     },

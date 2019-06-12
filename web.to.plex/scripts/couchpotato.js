@@ -1,5 +1,5 @@
 let script = {
-    "url": "*://*.couchpotato.life/*/*",
+    "url": "*://*.couchpotato.life/(movies|shows)/*",
 
     "ready": () => !$('.media-body .clearfix').empty && $('.media-body .clearfix').first.children.length,
 
@@ -33,7 +33,7 @@ let script = {
         let link = $('[href*="imdb.com/title/tt"]');
 
         if(!link.empty)
-            return link.href
+            return link.first.href
                 .replace(/^.*imdb\.com\/title\//, '')
                 .replace(/\/(?:maindetails\/?)?$/, '');
     },
