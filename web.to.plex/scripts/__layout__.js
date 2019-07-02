@@ -11,7 +11,7 @@ let script = {
     "ready": () => { /* return a boolean to describe if the page is ready */ },
 
     // optional
-    "timeout": 1000, // if the script fails to complete, retry after ... milisecoonds
+    "timeout": 1000, // if the script fails to complete, retry after ... milliseconds
 
     // required
     "init": (ready) => {
