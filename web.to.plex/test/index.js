@@ -81,7 +81,7 @@ document.querySelectorAll('#movie, #tv-show').forEach(element => {
     element.onmouseup = event => {
         let self = event.target;
 
-        as(self.id);
+        location.hash = '#' + self.id;
     };
 });
 
