@@ -82,6 +82,7 @@ document.querySelectorAll('#movie, #tv-show').forEach(element => {
         let self = event.target;
 
         location.hash = '#' + self.id;
+        as(self.id);
     };
 });
 
