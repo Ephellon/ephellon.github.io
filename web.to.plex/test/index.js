@@ -90,11 +90,15 @@ document.querySelectorAll('[target="frame"]').forEach(element => {
         frame = $('#frame'),
         loading = $('#loading');
 
-    element.onmouseup = event =>
+    element.onmouseup = event => {
         loading.setAttribute('loading', true);
+        loading.removeAttribute('style');
+    }
 
-    frame.onload = frame.onerror = event =>
+    frame.onload = frame.onerror = event => {
         loading.setAttribute('loading', false);
+        setTimeout(() => loading.setAttribute('style', 'display:none'), 500);
+    }
 });
 
 document.body.onload = event => /#(movie|tv-show)/i.test(location.hash)? as(`${ location.hash.replace('#', '') }`): as('movie');
