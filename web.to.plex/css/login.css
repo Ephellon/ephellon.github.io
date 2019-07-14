@@ -1,5 +1,5 @@
 html, body {
-    background: url("img/noise.png") fixed, center / cover no-repeat linear-gradient(#CC7B19, #F34245);
+    background: url("../img/noise.png") fixed, center / cover no-repeat linear-gradient(#CC7B19, #F34245);
     font-family: noto, noto sans, roboto, roboto sans, sans-serif, monospace;
     outline: none;
 
@@ -55,7 +55,7 @@ html, body {
 
 /* Body */
 #body {
-    background: center / contain no-repeat url("noise.png");
+    background: center / contain no-repeat url("../img/noise.png");
     border-top: 1px solid #000;
 
     position: absolute;
