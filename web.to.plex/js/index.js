@@ -117,14 +117,31 @@ async function as(type, id) {
                 data.similar = json;
         });
 
+    console.log(data);
+
     return modify(data);
+}
+
+async function popular(type) {
+    type = type.replace(/(-show)?$/, '');
+
+    fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}`, { method: 'GET' })
+        .then(r => r.json())
+        .then(json => {
+            let { results } = json,
+                length = results.length;
+
+            let item = results[(Math.random()*length)|0];
+
+            return as(type, item.id);
+        });
 }
 
 document.querySelectorAll('#movie, #tv-show').forEach(element => {
     element.onmouseup = event => {
         let self = event.target;
 
-        as(self.id);
+        popular(self.id);
     };
 });
 
@@ -161,5 +178,5 @@ document.body.onload = event => {
 
     /\?(movie|tv-show)(?:=(\d+))?/i.test(location.search)?
         as(R.$1, R.$2):
-    as('movie', [429617,399579,458156,301528,456740][(Math.random()*5)|0]);
+    popular(['movie','tv-show'][+(Math.random>0.5)]);
 };
