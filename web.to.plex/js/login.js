@@ -44,7 +44,7 @@ document.body.onload = event => {
 
         /* Main Page */
         if(data.apikey && data.country)
-            return open(`index.html${location.search||''}`, '_self');
+            return open(`${location.search||''}`, '_self');
     }
 };
 
@@ -88,7 +88,7 @@ $('#login').onmouseup = async event => {
     SynQ.set('login-data', data);
 
     /* Main Page */
-    open(`index.html${location.search||''}`, '_self');
+    open(`${location.search||''}`, '_self');
 };
 
 $('#help').onmouseup = event => open('https://developers.themoviedb.org/3', '_blank');
