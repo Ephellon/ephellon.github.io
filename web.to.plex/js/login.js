@@ -44,7 +44,7 @@ document.body.onload = event => {
 
         /* Main Page */
         if(data.apikey && data.country)
-            return open(`index.html${location.search}`, '_self');
+            return open(`index.html${location.search||''}`, '_self');
     }
 };
 
@@ -64,6 +64,12 @@ $('#login').onmouseup = async event => {
     await fetch(`https://api.themoviedb.org/3/configuration/countries?api_key=${apikey}`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
+            if(json.status_message) {
+                $('#apikey').setAttribute('valid', false);
+                alert(json.status_message);
+                throw json.status_message;
+            }
+
             json.filter(object => object.iso_3166_1 === country);
 
             if(!json.length) {
@@ -82,7 +88,7 @@ $('#login').onmouseup = async event => {
     SynQ.set('login-data', data);
 
     /* Main Page */
-    open(`index.html`, '_self');
+    open(`index.html${location.search||''}`, '_self');
 };
 
 $('#help').onmouseup = event => open('https://developers.themoviedb.org/3', '_blank');
