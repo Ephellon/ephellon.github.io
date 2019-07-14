@@ -1879,6 +1879,9 @@ connection = navigator.connection;
 /* Setup and auto-management */
 // Auto-update & run
 document.addEventListener('readystatechange', function(event) {
+  if('signature' in SynQ)
+    return;
+
   if(use_uuid_synq_token != undefined)
     Object.defineProperty(SynQ, "signature", {
       value: ("synq://" + use_uuid_synq_token + "/"),
