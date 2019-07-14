@@ -59,7 +59,7 @@ html, body {
 
 /* Body */
 #body {
-    background: right / contain no-repeat url("../img/noise.png");
+    background: right / contain no-repeat;
     border-top: 1px solid #000;
 
     position: absolute;
