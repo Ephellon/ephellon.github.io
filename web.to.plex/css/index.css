@@ -26,6 +26,10 @@ html, body {
     width: 100%;
 }
 
+#info {
+    font-size: 24px;
+}
+
 #head > * {
     vertical-align: middle;
 }
