@@ -246,3 +246,9 @@ $('#search').addEventListener('keyup', event => {
             .then(u => clearTimeout(searching));
     }, 500);
 });
+
+$('#logout').onmouseup = event => {
+    SynQ.clear();
+
+    open(location.search||'', '_self');
+};
