@@ -1562,7 +1562,7 @@ SynQ.help = function(item) {
       break;
 
     case 'sign':
-      m = "Hashes a string (think of SHA, or MD5)./~Usage: $.@(string[, fidelity-level])/~Arguments: String[, Float]/~Returns: String//fidelity-level: determines the size of the returned string. The closer to 1 the level is, the shorter the string."
+      m = "Hashes a string (think of SHA, or MD5)./~Usage: $.@(string[, fidelity-level])/~Arguments: String[, Float]/~Returns: String//fidelity-level: determines the output of the string. Rolls the input."
       break;
 
     case 'signature':
@@ -1878,34 +1878,37 @@ connection = navigator.connection;
 
 /* Setup and auto-management */
 // Auto-update & run
-if(use_uuid_synq_token != undefined)
-  Object.defineProperty(SynQ, "signature", {
-    value: ("synq://" + use_uuid_synq_token + "/"),
-    writable: false,
-    configurable: false,
-    enumerable: true
-  });
-else if(use_vpn_synq_token != undefined)
-  Object.defineProperty(SynQ, "signature", {
-    value: "synq://" + SynQ.sign(+(new Date)) + ":" + (use_vpn_synq_token = SynQ.sign(use_vpn_synq_token, 0.75)) + "@" + SynQ.sign(location, 1) + ":443/",
-    writable: false,
-    configurable: false,
-    enumerable: false
-  });
-else if(use_global_synq_token != undefined)
-  Object.defineProperty(SynQ, "signature", {
-    value: "synq://" + SynQ.sign(location.origin) + "/",
-    writable: false,
-    configurable: false,
-    enumerable: true
-  });
-else
-  Object.defineProperty(SynQ, "signature", {
-    value: "synq://" + SynQ.sign(location.origin + location.pathname) + "/",
-    writable: false,
-    configurable: false,
-    enumerable: true
-  });
+document.addEventListener('readystatechange', function(event) {
+  if(use_uuid_synq_token != undefined)
+    Object.defineProperty(SynQ, "signature", {
+      value: ("synq://" + use_uuid_synq_token + "/"),
+      writable: false,
+      configurable: false,
+      enumerable: true
+    });
+  else if(use_vpn_synq_token != undefined)
+    Object.defineProperty(SynQ, "signature", {
+      value: "synq://" + SynQ.sign(+(new Date)) + ":" + (use_vpn_synq_token = SynQ.sign(use_vpn_synq_token, 0.75)) + "@" + SynQ.sign(location, 1) + ":443/",
+      writable: false,
+      configurable: false,
+      enumerable: false
+    });
+  else if(use_global_synq_token != undefined)
+    Object.defineProperty(SynQ, "signature", {
+      value: "synq://" + SynQ.sign(location.origin) + "/",
+      writable: false,
+      configurable: false,
+      enumerable: true
+    });
+  else
+    Object.defineProperty(SynQ, "signature", {
+      value: "synq://" + SynQ.sign(location.origin + location.pathname) + "/",
+      writable: false,
+      configurable: false,
+      enumerable: true
+    });
+
+});
 
 SynQ.eventName = '.events';
 SynQ.events = "set get pop push pull upload download snip append recall import export clear copy";
