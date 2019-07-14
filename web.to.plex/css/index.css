@@ -121,11 +121,11 @@ html, body {
     width: 28%;
 }
 
-#similar > *:nth-child(even) {
+#similar > *:nth-child(even), #search+label > *:nth-child(even) {
     background: #0001;
 }
 
-#similar a {
+*:not(#id) a {
     color: inherit !important;
     text-decoration: inherit !important;
 }
@@ -153,7 +153,7 @@ html, body {
     position: absolute;
 
     height: 90%;
-    width: 45%;
+    width: 25%;
 
     transition: all 0.25s ease-in-out;
 }
@@ -166,12 +166,74 @@ html, body {
     background: #D32225;
 }
 
-#foot button:first-child {
-    left: 8%;
+#foot button:first-of-type {
+    left: 48%;
 }
 
-#foot button:last-child {
+#foot button:last-of-type {
     right: 1%;
+}
+
+input[type="text"], input[type="password"], input[type] + label[for] {
+    background: #ffffff80;
+    border: 3px solid #0000;
+    border-radius: 3px;
+    color: #0008;
+    display: block;
+    font-family: inherit;
+    font-size: 16px;
+    outline: none;
+
+    height: 45%;
+    width: 35%;
+    line-height: 1.5em;
+
+    margin: 0;
+    padding: 6px 12px;
+
+    left: 10%;
+    position: absolute;
+    vertical-align: middle;
+    top: 15%;
+
+    transition: background 0.2s;
+}
+
+input[type="text"] + input, input[type="password"] + input {
+    margin-top: 6%;
+}
+
+input:valid:not(:placeholder-shown) {
+    background: #40ff4080;
+}
+
+input:not(:valid) {
+    background: #ff404080;
+}
+
+input[type] + label[for] {
+    background: #fff;
+    display: none;
+    overflow: auto;
+
+    bottom: 85%;
+    top: -350%;
+
+    height: auto;
+}
+
+input[type]:valid:not(:placeholder-shown) + label[for] {
+    display: initial;
+}
+
+#results:empty:before {
+    content: 'Prss [Enter] to search';
+
+    color: #6668;
+    display: block;
+    text-align: center;
+
+    margin-top: 25%;
 }
 
 /* Miscellaneous */
