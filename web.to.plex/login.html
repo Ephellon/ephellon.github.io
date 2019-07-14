@@ -1,0 +1,30 @@
+<html>
+<head>
+  <title>Web to Plex | Login</title>
+
+  <link rel="icon" href="img/loading.png"/>
+</head>
+  <body>
+
+  <div id="head">
+      Login to Web to Plex
+  </div>
+
+  <div id="body">
+      <input id="apikey" type="text" placeholder="Enter your TMDb API key (32 characters)" pattern="[A-Fa-f0-9]{32}"/>
+      <input id="country" type="text" placeholder="Enter your country code (2 characters)" pattern="[A-Za-z]{2}"/>
+  </div>
+
+  <div id="foot">
+      <button id="login">Login</button>
+      <button id="help">
+          Help
+      </button>
+  </div>
+
+  <span id="loading" loading="false"><img src="img/loading.png" /></span>
+
+  <script src="js/login.js"></script>
+  <script src="js/synq.js"></script>
+</body>
+</html>
