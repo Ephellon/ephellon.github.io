@@ -207,12 +207,12 @@ input[type="text"] + input, input[type="password"] + input {
     margin-top: 6%;
 }
 
-input:valid:not(:placeholder-shown) {
+input:valid:not(:placeholder-shown), input[valid="true"] {
     background: #40ff4080;
 }
 
-input:not(:valid) {
-    background: #ff404080;
+input:not(:valid), input[valid="false"] {
+    background: #ff404080 !important;
 }
 
 input[type] + label[for] {
