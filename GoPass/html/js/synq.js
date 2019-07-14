@@ -45,7 +45,7 @@
         pretty sure they know what they're talking about
   */
 
-var NO_NAME_ERROR   = "The resource name is missing",
+var NO_NAME_ERROR   = "The resource name is missing.",
     UTF8_ONLY_ERROR = "Only UTF-8 characters are allowed.",
     NULL_KEY_ERROR  = "The [use_vpn_synq_token] flag is set, therefore all entries require a password.",
     IE              = {
@@ -161,7 +161,8 @@ function ping(address, options) {
       resolve: ping.ping.src,
       size:    size,
       speed:   ((size / time) | 0),
-      uplink:  ((size / time / 2) | 0)
+      uplink:  ((size / time / 2) | 0),
+      removed: delete ping.ping
     });
   };
 
@@ -176,7 +177,7 @@ function ping(address, options) {
 }
 
 // The main function
-function SynQ(name) {
+var SynQ = function SynQ(name) {
   ++SynQ[internal];
 
   name = name || null;
@@ -189,7 +190,13 @@ function SynQ(name) {
   var messages = [],
       uuids    = SynQ.get('.uuids'),
       copies   = {},
-      query    = document.querySelectorAll('[' + name + ']');
+      query;
+
+  try {
+    query = document.querySelectorAll('[' + name + ']');
+  } catch(error) {
+    return error;
+  }
 
   uuids = (uuids || "").split(',');
 
@@ -277,7 +284,7 @@ function SynQ(name) {
   SynQ.set('.uuids', uuids.join(',').replace(/^,+|,+$/g, ''));
 
   --SynQ[internal];
-}
+};
 
 SynQ.syn = "synq-attr synq-data synq-text synq-html synq-host".split(" ");
   // change this accordingly; this is the syncronizing attribute for your elements
@@ -295,7 +302,13 @@ SynQ.eventlistener = function(event) {
   var messages = SynQ.get('.values'),
       uuids    = SynQ.get('.uuids'),
       copies   = {},
-      query    = document.querySelectorAll('[' + SynQ.syn.join('],[') + ']');
+      query;
+
+  try {
+    query = document.querySelectorAll('[' + SynQ.syn.join('],[') + ']');
+  } catch(error) {
+    return error;
+  }
 
   messages = messages || "";
   messages = (messages.length > 0)? messages.split(SynQ.esc): [];
@@ -505,7 +518,7 @@ SynQ.decodeURL = function(url) {
 SynQ.list = function(all) {
   var signature = SynQ.shadow || SynQ.signature,
       regexp = RegExp("^(" +
-                 (use_global_synq_token != undefined || all? "synq://localhost:(443|80)\/.*|": "") +
+                 (use_global_synq_token != undefined || all? "synq://localhost:(443|80)\/|": "") +
                  signature.replace(/(\W)/g, "\\$1") +
                ")" + (all? ".+": "[^\\.].+") + "$"),
       array  = {};
@@ -531,6 +544,30 @@ SynQ.clear = function(all) {
   return SynQ.triggerEvent('clear');
 };
 
+// Import items from the storage
+SynQ.import = function(name) {
+  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR, 'import');
+
+  var data = storage.getItem(name);
+
+  storage.setItem(SynQ.signature + name, data);
+
+  SynQ.last.push(name);
+
+  return SynQ.triggerEvent('import', name);
+};
+
+// Export items to the storage
+SynQ.export = function(name) {
+  SynQ.prevent(name, [undefined, null], NO_NAME_ERROR, 'export');
+
+  var data = storage.getItem(SynQ.signature + name);
+
+  storage.setItem(name, data);
+
+  return SynQ.triggerEvent('export', name);
+};
+
 // Push (set) a resource
 SynQ.set = function(name, data, key) {
   SynQ.prevent(name, [undefined, null], NO_NAME_ERROR, 'set');
@@ -545,7 +582,7 @@ SynQ.set = function(name, data, key) {
 
   if(key != undefined && key != null)
     data = SynQ.lock(data, key),
-    key  = /^./.test(name)? '': '.';
+    key  = /^\./.test(name)? '': '.';
   else
     key = "";
 
@@ -652,7 +689,7 @@ SynQ.upload = function(name, data, key) {
 
   if(key != undefined && key != null)
     data = SynQ.lock(data, key),
-    key  = /^./.test(name)? '': '.';
+    key  = /^\./.test(name)? '': '.';
   else
     key = "";
 
@@ -727,7 +764,7 @@ SynQ.recall = function(name, key, delimiter) {
   data = (data.length > 0)? data.split(delimiter): [data];
 
   return --SynQ[internal], SynQ.triggerEvent('recall', data);
-}
+};
 
 // Remove a global resource
 SynQ.snip = function(name, key) {
@@ -753,7 +790,7 @@ SynQ.snip = function(name, key) {
 SynQ.find = function(query, all, results) {
   results = results || [];
 
-  if(/^synq:\/\/(\w+)\/\?/.test(query)) {
+  if(/^synq:\/\/([^\n\r\f\v]+)\/\?/.test(query)) {
     var url = SynQ.parseURL(query),
         original = SynQ.signature,
         shadow = url.origin + '/',
@@ -785,7 +822,7 @@ SynQ.find = function(query, all, results) {
       results.push(entry);
 
   return results;
-}
+};
 
 /* The space-oriented functions */
 // Test data limits (in Bytes -> iB) or return an SI formated value
@@ -1112,7 +1149,7 @@ SynQ.pack = function(string) {
     array.push(SynQ.pack16(string[index++], string[index++]));
 
   return array.join("");
-}
+};
 
 // Unpack UTF16 characters
 SynQ.unpack = function(string) {
@@ -1124,7 +1161,7 @@ SynQ.unpack = function(string) {
       data.push(String.fromCharCode(+("0b" + array[index])));
 
   return data.join("");
-}
+};
 
 // Pack UTF8 characters (helper)
 SynQ.pack16 = function(a, b) {
@@ -1419,6 +1456,10 @@ SynQ.help = function(item) {
       m = "The list delimeter for $ to use when storing element values./~Usage: $.@ = delimeter/~Types: String/~Current: '{esc}'/~Default: '%%'"
       break;
 
+    case 'export':
+      m = "Exports (copies) data to the storage object./~Usage: $.@(name)/~Arguments: String~/Returns: <name>"
+      break;
+
     case 'eventlistener':
       m = "The Event Listener for $ (fires automatically from $)./~Usage: $.@(event)/~Arguments: Object/~Returns: Undefined"
       break;
@@ -1433,6 +1474,10 @@ SynQ.help = function(item) {
 
     case 'help':
       m = "Displays help messages./~Usage: $.@(item-name)/~Arguments: String/~Returns: String"
+      break;
+
+    case 'import':
+      m = "Imports (copies) data from the storage object./~Usage: $.@(name)/~Arguments: String~/Returns: <name>"
       break;
 
     case 'inflate':
@@ -1618,11 +1663,17 @@ SynQ.help = function(item) {
 
 /* Polyfills */
 // localStorage - Mozilla
-if(!("localStorage" in window) || (use_cookie_synq_token != undefined && !SA))
+if(!("localStorage" in window || "sessionStorage" in window) || (use_cookie_synq_token != undefined && !SA))
   Object.defineProperty(window, "localStorage", new(function() {
     var keys          = [],
         StorageObject = {},
-        onstorage     = new CustomEvent("storage", {bubbles: false, cancelable: false, composed: true});
+        onstorage;
+
+    try {
+      onstorage = new CustomEvent("storage", {bubbles: false, cancelable: false, composed: true});
+    } catch(error) {
+      onstorage = window.onstorage;
+    }
 
     Object.defineProperty(StorageObject, "getItem", {
       value: function(key) {
@@ -1715,7 +1766,7 @@ if(!("localStorage" in window) || (use_cookie_synq_token != undefined && !SA))
       for(keys; keys.length > 0; keys.splice(0, 1))
         StorageObject.removeItem(keys[0]);
 
-      for(var cookie, key, index = 0, cookies = document.cookie.split(/\s*;\s*/); index < cookies.length; index++) {
+      for(var cookie, key, index = 0, cookies = (document.cookie || '').split(/\s*;\s*/); index < cookies.length; index++) {
         cookie = cookies[index].split(/\s*=\s*/);
         if(cookie.length > 1)
           key = unescape(cookie[0]),
@@ -1739,7 +1790,13 @@ if(!("connection" in navigator))
   Object.defineProperty(window, "NetworkInformation", new(function() {
     var keys            = [],
         NetworkObject   = {},
-        onnetwork       = new CustomEvent("online", {bubbles: false, cancelable: false, composed: true});
+        onnetwork;
+
+    try {
+      onnetwork = new CustomEvent("online", {bubbles: false, cancelable: false, composed: true});
+    } catch(error) {
+      onnetwork = null;
+    }
 
     ping("", {
       callback: function(TripInformation) {
@@ -1835,23 +1892,23 @@ else if(use_vpn_synq_token != undefined)
     configurable: false,
     enumerable: false
   });
-else if(use_global_synq_token == undefined)
-  Object.defineProperty(SynQ, "signature", {
-    value: "synq://" + SynQ.sign(location) + "/",
-    writable: false,
-    configurable: false,
-    enumerable: true
-  });
-else
+else if(use_global_synq_token != undefined)
   Object.defineProperty(SynQ, "signature", {
     value: "synq://" + SynQ.sign(location.origin) + "/",
     writable: false,
     configurable: false,
     enumerable: true
   });
+else
+  Object.defineProperty(SynQ, "signature", {
+    value: "synq://" + SynQ.sign(location.origin + location.pathname) + "/",
+    writable: false,
+    configurable: false,
+    enumerable: true
+  });
 
 SynQ.eventName = '.events';
-SynQ.events = "set get pop push pull upload download snip append recall clear";
+SynQ.events = "set get pop push pull upload download snip append recall import export clear copy";
 SynQ.last = [];
 SynQ.last_upload = [];
 SynQ.host = null;
@@ -1859,4 +1916,6 @@ SynQ.shadow = null;
 SynQ[internal] |= 0;
 
 SynQ.eventlistener();
-window.addEventListener("storage", window.onstorage = SynQ.eventlistener, false);
+
+if('addEventListener' in window)
+  window.addEventListener("storage", window.onstorage = SynQ.eventlistener, false);
