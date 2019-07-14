@@ -40,7 +40,7 @@ function modify({ type, title, year, info }) {
     $('#info').setAttribute('type', type);
 
     $('#movie').removeAttribute('active');
-    $('#tv-show').removeAttribute('active');
+    $('#tv').removeAttribute('active');
 
     $(`#${ type }`).setAttribute('active', true);
 
@@ -67,18 +67,21 @@ function modify({ type, title, year, info }) {
 async function as(type, id) {
     open(`blank.html`, 'frame');
 
-    let data = {};
+    let data = {},
+        tv = type == 'tv';
     await fetch(`https://api.themoviedb.org/3/${ type }/${ id }?api_key=${ apikey }`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
+            let tv = type == 'tv';
+
             let poster = json.backdrop_path,
-                title  = json[type == 'tv'? 'original_name': 'title'],
-                releaseDate = json[type == 'tv'? 'first_air_date': 'release_date'],
+                title  = json[tv? 'original_name': 'title'],
+                releaseDate = json[tv? 'first_air_date': 'release_date'],
                 year   = parseInt(releaseDate),
                 genre  = json.genres.map(g => g.name).sort().join(' / '),
                 imdb   = json.imdb_id,
                 description = json.overview,
-                runtime = (m => {let h=0;for(;m>=60;m-=60,h++);return [h,m>9?m:'0'+m]})(+json.runtime).join(':');
+                runtime = (m => {let h=0;for(;m>=60;m-=60,h++);return [h,m>9?m:'0'+m]})(+json[tv?'episode_run_time':'runtime']).join(':')+(tv?'/Eps':'');
         
             data = {
                 type, title, year,
@@ -93,11 +96,17 @@ async function as(type, id) {
         });
 
     // Content Rating
-    await fetch(`https://api.themoviedb.org/3/${ type }/${ id }/${ type == 'tv'? 'content_ratings': 'release_dates' }?api_key=${ apikey }`, { method: 'GET' })
+    await fetch(`https://api.themoviedb.org/3/${ type }/${ id }/${ tv? 'content_ratings': 'release_dates' }?api_key=${ apikey }`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
-            if(json.results && json.results.length)
-                data.info.rating = json.results.filter(result => result.iso_3166_1 === country)[0].release_dates.filter(o => o[type == 'tv'? 'rating': 'certification'])[0][type == 'tv'? 'rating': 'certification'];
+            if(json.results && json.results.length) {
+                let results = json.results.filter(result => result.iso_3166_1 === country)[0] || json.results.filter(results => results.iso_3166_1)[0];
+
+                if(tv)
+                    data.info.rating = results.rating;
+                else
+                    data.info.rating = results.release_dates.filter(o => o.certification)[0].certification;
+            }
         });
 
     // Trailer Links
@@ -106,15 +115,17 @@ async function as(type, id) {
         .then(json => {
             if(json.results && json.results.length)
                 data.info.TMDB = json.results.filter(result => result.iso_3166_1 === country)[0].key,
-                data.info.TVDB = (type == 'tv'? data.info.TMDB: null);
+                data.info.TVDB = (tv? data.info.TMDB: null);
         });
 
     // Similar Content
     await fetch(`https://api.themoviedb.org/3/${ type }/${ id }/similar?api_key=${ apikey }`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
-            if(json && json.length)
-                data.similar = json;
+            let { results } = json;
+
+            if(results && results.length)
+                data.similar = results;
         });
 
     console.log(data);
@@ -123,8 +134,6 @@ async function as(type, id) {
 }
 
 async function popular(type) {
-    type = type.replace(/(-show)?$/, '');
-
     fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
@@ -137,7 +146,7 @@ async function popular(type) {
         });
 }
 
-document.querySelectorAll('#movie, #tv-show').forEach(element => {
+document.querySelectorAll('#movie, #tv').forEach(element => {
     element.onmouseup = event => {
         let self = event.target;
 
@@ -176,7 +185,7 @@ document.body.onload = event => {
         return open('login.html', '_self');
     }
 
-    /\?(movie|tv-show)(?:=(\d+))?/i.test(location.search)?
+    /\?(movie|tv)(?:=(\d+))?/i.test(location.search)?
         as(R.$1, R.$2):
-    popular(['movie','tv-show'][+(Math.random>0.5)]);
+    popular(['movie','tv'][+(Math.random>0.5)]);
 };
