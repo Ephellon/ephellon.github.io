@@ -213,9 +213,9 @@ document.body.onload = event => {
 };
 
 let searching;
-$('#search').addEventListener('change', event => {
+$('#search').addEventListener('keyup', event => {
     if(searching)
-        return searching;
+        clearTimeout(searching);
 
     let type = $('#info').getAttribute('type'),
         query = $('#search').value;
@@ -226,9 +226,14 @@ $('#search').addEventListener('change', event => {
         await fetch(`https://api.themoviedb.org/3/search/${type}?api_key=${apikey}&query=${encodeURIComponent(query)}`)
             .then(r => r.json())
             .then(json => {
-                let { results } = json;
+                let { results } = json,
+                    valid = !!(results && results.length);
 
-                if(results && results.length)
+                console.log(query, valid);
+
+                $('#search').setAttribute('valid', valid);
+
+                if(valid)
                     for(let index = 0, length = results.length; index < length; index++) {
                         let { title, name, id, release_date, first_air_date } = results[index];
 
@@ -238,6 +243,6 @@ $('#search').addEventListener('change', event => {
 </div>`;
                     }
             })
-            .then(u => searching = u);
-    }, 250);
+            .then(u => clearTimeout(searching));
+    }, 500);
 });
