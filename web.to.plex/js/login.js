@@ -44,7 +44,7 @@ document.body.onload = event => {
 
         /* Main Page */
         if(data.apikey && data.country)
-            return open('index.html', '_self');
+            return open(`index.html${location.search}`, '_self');
     }
 };
 
