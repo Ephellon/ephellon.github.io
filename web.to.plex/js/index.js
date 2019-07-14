@@ -66,14 +66,15 @@ function modify({ type, title, year, similar, info }) {
 
     $('#similar').innerHTML = '';
 
-    for(let index = 0, length = similar.length; index < length; index++) {
-        let item = similar[index];
+    if(similar)
+        for(let index = 0, length = similar.length; index < length; index++) {
+            let item = similar[index];
 
-        $('#similar').innerHTML +=
-`<li>
-    \u2023 <a href="?${type}=${item.id}">${item[tv?'original_name':'title']} (${item[tv?'first_air_date':'release_date'].slice(0,4)})</a>
-</li>`;
-    }
+            $('#similar').innerHTML +=
+    `<li>
+        \u2023 <a href="?${type}=${item.id}">${item[tv?'original_name':'title']} (${item[tv?'first_air_date':'release_date'].slice(0,4)})</a>
+    </li>`;
+        }
 
 }
 
