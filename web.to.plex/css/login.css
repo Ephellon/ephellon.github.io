@@ -1,5 +1,5 @@
 html, body {
-    background: url("../img/noise.png") fixed, center / cover no-repeat linear-gradient(#CC7B19, #F34245);
+    background: url("img/noise.png") fixed, center / cover no-repeat linear-gradient(#CC7B19, #F34245);
     font-family: noto, noto sans, roboto, roboto sans, sans-serif, monospace;
     outline: none;
 
@@ -55,7 +55,7 @@ html, body {
 
 /* Body */
 #body {
-    background: center / contain no-repeat url("../img/noise.png");
+    background: center / contain no-repeat url("noise.png");
     border-top: 1px solid #000;
 
     position: absolute;
@@ -104,6 +104,43 @@ html, body {
 
     height: 100%;
     width: 75%;
+}
+
+input[type="text"], input[type="password"] {
+    background: #ffffff80;
+    border: 3px solid #0000;
+    border-radius: 3px;
+    color: #0008;
+    display: block;
+    font-family: inherit;
+    font-size: 16px;
+    outline: none;
+
+    height: 10%;
+    width: 30%;
+    line-height: 1.5em;
+
+    margin: 0;
+    padding: 6px 12px;
+
+    left: 35%;
+    position: absolute;
+    vertical-align: middle;
+    top: 25%;
+
+    transition: background 0.2s;
+}
+
+input[type="text"] + input, input[type="password"] + input {
+    margin-top: 6%;
+}
+
+input:valid:not(:placeholder-shown) {
+    background: #40ff4080;
+}
+
+input:not(:valid) {
+    background: #ff404080;
 }
 
 /* Foot */
