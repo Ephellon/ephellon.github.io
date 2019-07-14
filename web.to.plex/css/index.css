@@ -1,5 +1,5 @@
 html, body {
-    background: url("../img/noise.png") fixed, center / cover no-repeat linear-gradient(#CC7B19, #F34245);
+    background: url("../img/noise.png") fixed, right / cover no-repeat linear-gradient(#CC7B19, #F34245);
     font-family: noto, noto sans, roboto, roboto sans, sans-serif, monospace;
     outline: none;
 
@@ -55,7 +55,7 @@ html, body {
 
 /* Body */
 #body {
-    background: center / contain no-repeat url("../img/noise.png");
+    background: right / contain no-repeat url("../img/noise.png");
     border-top: 1px solid #000;
 
     position: absolute;
@@ -68,11 +68,12 @@ html, body {
 #id {
     color: #197BCC;
     font-family: monospace;
+    font-size: 12px;
     text-align: center;
     text-shadow: 0 0 5px #000;
 
-    left: calc(50% - 100px);
-    position: absolute;
+    margin-left: calc(50% - 100px);
+    z-index: 9;
 
     width: 200px;
 }
@@ -99,11 +100,34 @@ html, body {
     border: 1px solid #0000;
     outline: none;
 
-    margin-left: 12.5%;
-    margin-top: 0%;
+    position: absolute;
+    right: 0%;
+    top: 0%;
 
     height: 100%;
-    width: 75%;
+    width: 72%;
+}
+
+#similar {
+    color: #ffffff80;
+
+    left: 0;
+    position: absolute;
+    top: 0;
+
+    margin: 0;
+    padding: 0;
+
+    width: 28%;
+}
+
+#similar > *:nth-child(even) {
+    background: #0001;
+}
+
+#similar a {
+    color: inherit !important;
+    text-decoration: inherit !important;
 }
 
 /* Foot */
@@ -158,15 +182,19 @@ html, body {
 #loading {
     transition: all 0.5s;
 
-    left: calc(50% - 24px);
+    left: calc(64% - 24px);
     position: absolute;
     top: calc(50% - 24px);
 }
 
-[loading=true] {
+[loading] {
+    transition: all 0.5s;
+}
+
+[loading=true], iframe[loading=false] {
     opacity: 1;
 }
 
-[loading=false] {
+[loading=false], iframe[loading=true] {
     opacity: 0;
 }
