@@ -34,7 +34,7 @@ let $ = selector => document.querySelector(selector),
         10768: "War & Politics",
       };
 
-function modify({ type, title, year, info }) {
+function modify({ type, title, year, similar, info }) {
     let object = { title, year, ...info };
 
     $('#info').setAttribute('type', type);
@@ -54,7 +54,8 @@ function modify({ type, title, year, info }) {
     $('#poster').setAttribute('src', poster);
 
     let { imdb, tmdb, tvdb } = object,
-        ids = { imdb, tmdb, tvdb };
+        ids = { imdb, tmdb, tvdb },
+        tv = type == 'tv';
 
     for(let id in ids)
         $(`#${ id }`).setAttribute('href', (
@@ -62,6 +63,18 @@ function modify({ type, title, year, info }) {
                 `https://www.youtube.com/embed/${ object[id.toUpperCase()] }`:
             `blank.html`
         ));
+
+    $('#similar').innerHTML = '';
+
+    for(let index = 0, length = similar.length; index < length; index++) {
+        let item = similar[index];
+
+        $('#similar').innerHTML +=
+`<li>
+    \u2023 <a href="?${type}=${item.id}">${item[tv?'original_name':'title']} (${item[tv?'first_air_date':'release_date'].slice(0,4)})</a>
+</li>`;
+    }
+
 }
 
 async function as(type, id) {
@@ -74,7 +87,7 @@ async function as(type, id) {
         .then(json => {
             let tv = type == 'tv';
 
-            let poster = json.backdrop_path,
+            let poster = json.backdrop_path || json.poster_path,
                 title  = json[tv? 'original_name': 'title'],
                 releaseDate = json[tv? 'first_air_date': 'release_date'],
                 year   = parseInt(releaseDate),
@@ -105,7 +118,8 @@ async function as(type, id) {
                 if(tv)
                     data.info.rating = results.rating;
                 else
-                    data.info.rating = results.release_dates.filter(o => o.certification)[0].certification;
+                    data.info.rating = results.release_dates.filter(o => o.certification)[0],
+                    data.info.rating = (data.info.rating? data.info.rating.certification: 'NR');
             }
         });
 
@@ -134,7 +148,7 @@ async function as(type, id) {
 }
 
 async function popular(type) {
-    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}`, { method: 'GET' })
+    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*995)|0)||1}`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
             let { results } = json,
@@ -151,7 +165,7 @@ document.querySelectorAll('#movie, #tv').forEach(element => {
         let self = event.target;
         let data = await popular(self.id);
 
-        location.hash = `#${self.id}-${data.info.tmdb}`;
+        location.search = `?${self.id}=${data.info.tmdb}`;
     };
 });
 
@@ -161,11 +175,13 @@ document.querySelectorAll('[target="frame"]').forEach(element => {
         loading = $('#loading');
 
     element.onmouseup = event => {
+        frame.setAttribute('loading', true);
         loading.setAttribute('loading', true);
         loading.removeAttribute('style');
     }
 
     frame.onload = frame.onerror = event => {
+        frame.setAttribute('loading', false);
         loading.setAttribute('loading', false);
         setTimeout(() => loading.setAttribute('style', 'display:none'), 500);
     }
@@ -183,14 +199,14 @@ document.body.onload = event => {
         country = data.country;
     } else {
         /* Login Page */
-        return open('login.html', '_self');
+        return open(`login.html${location.search}`, '_self');
     }
 
-    /#(movie|tv)(?:-(\d+))?/i.test(location.hash)?
+    /\?(movie|tv)(?:\=(\d+))?/i.test(location.search)?
         as(R.$1, R.$2):
     (async() => {
         let data = await popular(['movie','tv'][+(Math.random>0.5)]);
 
-        location.hash = `#${data.type}-${data.info.tmdb}`;
+        location.search = `?${data.type}=${data.info.tmdb}`;
     })();
 };
