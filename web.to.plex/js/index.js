@@ -200,7 +200,7 @@ document.body.onload = event => {
         country = data.country;
     } else {
         /* Login Page */
-        return open(`login.html${location.search}`, '_self');
+        return open(`login.html${location.search||''}`, '_self');
     }
 
     /\?(movie|tv)(?:\=(\d+))?/i.test(location.search)?
@@ -211,3 +211,33 @@ document.body.onload = event => {
         location.search = `?${data.type}=${data.info.tmdb}`;
     })();
 };
+
+let searching;
+$('#search').addEventListener('change', event => {
+    if(searching)
+        return searching;
+
+    let type = $('#info').getAttribute('type'),
+        query = $('#search').value;
+
+    searching = setTimeout(async() => {
+        $('#results').innerHTML = '';
+
+        await fetch(`https://api.themoviedb.org/3/search/${type}?api_key=${apikey}&query=${encodeURIComponent(query)}`)
+            .then(r => r.json())
+            .then(json => {
+                let { results } = json
+
+                if(results && results.length)
+                    for(let index = 0, length = results.length; index < length; index++) {
+                        let { title, id, release_date } = results[index];
+
+                        $('#results').innerHTML +=
+`<div>
+    \u2023 <a href="?${type}=${id}">${title} (${(release_date||'N/A').slice(0,4)})</a>
+</div>`;
+                    }
+            })
+            .then(u => searching = u);
+    }, 250);
+});
