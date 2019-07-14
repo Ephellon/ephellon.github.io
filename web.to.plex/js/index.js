@@ -226,15 +226,15 @@ $('#search').addEventListener('change', event => {
         await fetch(`https://api.themoviedb.org/3/search/${type}?api_key=${apikey}&query=${encodeURIComponent(query)}`)
             .then(r => r.json())
             .then(json => {
-                let { results } = json
+                let { results } = json;
 
                 if(results && results.length)
                     for(let index = 0, length = results.length; index < length; index++) {
-                        let { title, id, release_date } = results[index];
+                        let { title, name, id, release_date, first_air_date } = results[index];
 
                         $('#results').innerHTML +=
 `<div>
-    \u2023 <a href="?${type}=${id}">${title} (${(release_date||'N/A').slice(0,4)})</a>
+    \u2023 <a href="?${type}=${id}">${title||name} (${(release_date||first_air_date||'N/A').slice(0,4)})</a>
 </div>`;
                     }
             })
