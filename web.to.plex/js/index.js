@@ -37,6 +37,8 @@ let $ = selector => document.querySelector(selector),
 function modify({ type, title, year, similar, info }) {
     let object = { title, year, ...info };
 
+    document.title = `Web to Plex | ${title} (${year})`;
+
     $('#info').setAttribute('type', type);
 
     $('#movie').removeAttribute('active');
@@ -228,8 +230,6 @@ $('#search').addEventListener('keyup', event => {
             .then(json => {
                 let { results } = json,
                     valid = !!(results && results.length);
-
-                console.log(query, valid);
 
                 $('#search').setAttribute('valid', valid);
 
