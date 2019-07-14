@@ -130,11 +130,11 @@ async function as(type, id) {
 
     console.log(data);
 
-    return modify(data);
+    return modify(data), data;
 }
 
 async function popular(type) {
-    fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}`, { method: 'GET' })
+    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
             let { results } = json,
@@ -147,10 +147,11 @@ async function popular(type) {
 }
 
 document.querySelectorAll('#movie, #tv').forEach(element => {
-    element.onmouseup = event => {
+    element.onmouseup = async event => {
         let self = event.target;
+        let data = await popular(self.id);
 
-        popular(self.id);
+        location.hash = `#${self.id}-${data.info.tmdb}`;
     };
 });
 
@@ -185,7 +186,11 @@ document.body.onload = event => {
         return open('login.html', '_self');
     }
 
-    /\?(movie|tv)(?:=(\d+))?/i.test(location.search)?
+    /#(movie|tv)(?:-(\d+))?/i.test(location.hash)?
         as(R.$1, R.$2):
-    popular(['movie','tv'][+(Math.random>0.5)]);
+    (async() => {
+        let data = await popular(['movie','tv'][+(Math.random>0.5)]);
+
+        location.hash = `#${data.type}-${data.info.tmdb}`;
+    })();
 };
