@@ -74,7 +74,7 @@ function modify({ type, title, year, similar, info }) {
 
             $('#similar').innerHTML +=
     `<li>
-        \u2023 <a href="?${type}=${item.id}">${item[tv?'original_name':'title']} (${item[tv?'first_air_date':'release_date'].slice(0,4)})</a>
+        \u2023 <a href="?${type}=${item.id}">${item[tv?`${/^u[sk]$/i.test(country)?'':'original_'}name`:'title']} (${item[tv?'first_air_date':'release_date'].slice(0,4)})</a>
     </li>`;
         }
 
@@ -91,7 +91,7 @@ async function as(type, id) {
             let tv = type == 'tv';
 
             let poster = json.backdrop_path || json.poster_path,
-                title  = json[tv? 'original_name': 'title'],
+                title  = json[tv? `${/^u[sk]$/i.test(country)?'':'original_'}name`: 'title'],
                 releaseDate = json[tv? 'first_air_date': 'release_date'],
                 year   = parseInt(releaseDate),
                 genre  = json.genres.map(g => g.name).sort().join(' / '),
@@ -239,7 +239,7 @@ $('#search').addEventListener('keyup', event => {
 
                         $('#results').innerHTML +=
 `<div>
-    \u2023 <a href="?${type}=${id}">${title||name} (${(release_date||first_air_date||'N/A').slice(0,4)})</a>
+    \u2023 <a href="?${type}=${id}">${name||title} (${(release_date||first_air_date||'N/A').slice(0,4)})</a>
 </div>`;
                     }
             })
