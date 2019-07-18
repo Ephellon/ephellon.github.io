@@ -53,7 +53,7 @@ function modify({ type, title, year, similar, info }) {
 
     let poster = `https://image.tmdb.org/t/p/original${ object.poster }`;
     $('body').setAttribute('style', `background: url("img/noise.png") fixed, right / cover no-repeat, url("${ poster }") fixed, center / cover no-repeat;`);
-    $('body').setAttribute('description', object.description)
+    $('#body').setAttribute('description', object.description)
     $('#poster').setAttribute('src', poster);
 
     let { imdb, tmdb, tvdb } = object,
