@@ -52,7 +52,8 @@ function modify({ type, title, year, similar, info }) {
             element.innerHTML = object[key] || "";
 
     let poster = `https://image.tmdb.org/t/p/original${ object.poster }`;
-    $('#body').setAttribute('style', `background-image: url("${ poster }")`);
+    $('body').setAttribute('style', `background: url("../img/noise.png") fixed, right / cover no-repeat, url("${ poster }") fixed, center / cover no-repeat;`);
+    $('body').setAttribute('description', object.description)
     $('#poster').setAttribute('src', poster);
 
     let { imdb, tmdb, tvdb } = object,
@@ -98,11 +99,11 @@ async function as(type, id) {
                 imdb   = json.imdb_id,
                 description = json.overview,
                 runtime = (m => {let h=0;for(;m>=60;m-=60,h++);return [h,m>9?m:'0'+m]})(+json[tv?'episode_run_time':'runtime']).join(':')+(tv?'/Eps':'');
-        
+
             data = {
                 type, title, year,
                 'info': {
-                    runtime, genre, poster,
+                    runtime, genre, poster, description,
                     'release-date': `${ releaseDate.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, ($0, $1, $2, $3, $$, $_) => `${['January','February','March','April','May','June','July','August','September','October','November','December'][(+$2)-1]} ${$3}, ${$1}`) } (${ country })`,
 
                     'imdb': imdb,

@@ -77,6 +77,21 @@ html, body {
     width: 100%;
 }
 
+div#body[description]:after {
+    content: attr(description);
+
+    background: #0008;
+    color: #fff;
+    text-align: left;
+    text-shadow: 0 0 3px #000;
+
+    position: absolute;
+    left: 28%;
+
+    height: 100%;
+    width: 100%;
+}
+
 #id {
     color: #197BCC;
     font-family: monospace;
