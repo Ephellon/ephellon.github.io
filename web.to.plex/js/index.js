@@ -40,11 +40,11 @@ function modify({ type, title, year, similar, info }) {
     document.title = `Web to Plex | ${title} (${year})`;
 
     $('#info').setAttribute('type', type);
-
     $('#movie').removeAttribute('active');
     $('#tv').removeAttribute('active');
-
     $(`#${ type }`).setAttribute('active', true);
+    $('#yutb').innerHTML = object.trailer || 'N/A';
+    $('#yutb').setAttribute('href', !object.trailer? 'blankt.html': `https://www.youtube.com/embed/${ object.trailer }`);
 
     let element;
     for(let key in object)
@@ -52,19 +52,21 @@ function modify({ type, title, year, similar, info }) {
             element.innerHTML = object[key] || "";
 
     let poster = `https://image.tmdb.org/t/p/original${ object.poster }`;
-    $('body').setAttribute('style', `background: url("img/noise.png") fixed, right / cover no-repeat, url("${ poster }") fixed, center / cover no-repeat;`);
-    $('#body').setAttribute('description', object.description)
+    $('body').setAttribute('style', `background: url("img/noise.png") fixed, url("${ poster }") fixed center / cover no-repeat;`);
+    $('#body').setAttribute('description', object.description || 'No description availabe');
     $('#poster').setAttribute('src', poster);
 
-    let { imdb, tmdb, tvdb } = object,
-        ids = { imdb, tmdb, tvdb },
+    let { imdb, tmdb } = object,
+        ids = { imdb, tmdb },
         tv = type == 'tv';
 
     for(let id in ids)
         $(`#${ id }`).setAttribute('href', (
-            id == 'tmdb'?
-                `https://www.youtube.com/embed/${ object[id.toUpperCase()] }`:
-            `blank.html`
+            object[id]?
+                id == 'tmdb'?
+                    `https://www.themoviedb.org/${type}/${object[id]}`:
+                `https://www.imdb.com/title/${object[id]}`:
+            ($(`#${ id }`).target = 'frame', 'blank.html')
         ));
 
     $('#similar').innerHTML = '';
@@ -132,8 +134,7 @@ async function as(type, id) {
         .then(r => r.json())
         .then(json => {
             if(json.results && json.results.length)
-                data.info.TMDB = json.results.filter(result => result.iso_3166_1 === country)[0].key,
-                data.info.TVDB = (tv? data.info.TMDB: null);
+                data.info.trailer = json.results.filter(result => result.iso_3166_1 === country)[0].key;
         });
 
     // Similar Content
@@ -236,11 +237,14 @@ $('#search').addEventListener('keyup', event => {
 
                 if(valid)
                     for(let index = 0, length = results.length; index < length; index++) {
-                        let { title, name, id, release_date, first_air_date } = results[index];
+                        let { title, year, name, id, release_date, first_air_date, vote_average, vote_count, genre_ids, adult } = results[index];
+
+						year = (release_date||first_air_date||'').slice(0,4);
+						genre_ids = genre_ids.map(i=>genres[i]).join('/');
 
                         $('#results').innerHTML +=
-`<div>
-    \u2023 <a href="?${type}=${id}">${name||title} (${(release_date||first_air_date||'N/A').slice(0,4)})</a>
+`<div title="${vote_average}/10 rating (${vote_count} votes)">
+    <span class="rating">${adult?'XXX':''}</span> \u2023 <a href="?${type}=${id}">${name||title} ${year?`(${year}) `:''}${genre_ids?'&bullet; ':''}${genre_ids}</a>
 </div>`;
                     }
             })
