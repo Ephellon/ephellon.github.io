@@ -134,7 +134,7 @@ html, body {
 
     position: absolute;
     right: 0%;
-    top: 0%;
+    top: -0.125%;
     z-index: 3;
 
     height: 100%;
@@ -189,7 +189,7 @@ html, body {
     position: absolute;
 
     height: 90%;
-    width: 25%;
+    width: 15%;
 
     transition: all 0.25s ease-in-out;
 }
@@ -203,7 +203,7 @@ html, body {
 }
 
 #foot button:first-of-type {
-    left: 48%;
+    left: 67%;
 }
 
 #foot button:last-of-type {
@@ -227,7 +227,7 @@ input[type="text"], input[type="password"], input[type] + label[for] {
     margin: 0;
     padding: 6px 12px;
 
-    left: 10%;
+    left: 28%;
     position: absolute;
     vertical-align: middle;
     top: 15%;
