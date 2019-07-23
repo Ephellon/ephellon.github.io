@@ -153,7 +153,7 @@ async function as(type, id) {
 }
 
 async function popular(type) {
-    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*995)|0)||1}`, { method: 'GET' })
+    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*10)|0)||1}`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
             let { results } = json,
