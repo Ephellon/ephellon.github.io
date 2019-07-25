@@ -54,7 +54,7 @@ function modify({ type, title, year, similar, info }) {
     let poster = `https://image.tmdb.org/t/p/original${ object.poster[0] }`;
     $('body').setAttribute('style', `background: url("img/noise.png") fixed, url("${ poster }") fixed center / cover no-repeat;`);
     $('#body').setAttribute('description', object.description || 'No description availabe');
-    $('#poster').setAttribute('src', `https://image.tmdb.org/t/p/original${object.poster[1]}`);
+    $('#poster').setAttribute('src', `https://image.tmdb.org/t/p/original${object.poster[1]||'/'}`);
 
     let { imdb, tmdb } = object,
         ids = { imdb, tmdb },
