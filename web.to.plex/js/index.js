@@ -51,10 +51,10 @@ function modify({ type, title, year, similar, info }) {
         if(element = $(`#${ key }`))
             element.innerHTML = object[key] || "";
 
-    let poster = `https://image.tmdb.org/t/p/original${ object.poster }`;
+    let poster = `https://image.tmdb.org/t/p/original${ object.poster[0] }`;
     $('body').setAttribute('style', `background: url("img/noise.png") fixed, url("${ poster }") fixed center / cover no-repeat;`);
     $('#body').setAttribute('description', object.description || 'No description availabe');
-    $('#poster').setAttribute('src', poster);
+    $('#poster').setAttribute('src', `https://image.tmdb.org/t/p/original${object.poster[1]}`);
 
     let { imdb, tmdb } = object,
         ids = { imdb, tmdb },
@@ -93,7 +93,7 @@ async function as(type, id) {
         .then(json => {
             let tv = type == 'tv';
 
-            let poster = json.backdrop_path || json.poster_path,
+            let poster = [json.backdrop_path, json.poster_path],
                 title  = json[tv? `${/^u[sk]$/i.test(country)?'':'original_'}name`: 'title'],
                 releaseDate = json[tv? 'first_air_date': 'release_date'],
                 year   = parseInt(releaseDate),
