@@ -126,12 +126,25 @@ function kill(name) {
   return SynQ.pop(btoa(name));
 }
 function getURLData(t) {
-    var e = new RegExp("[?|&]" + t + "=([^&;]+?)(&|#|;|$)")
-        .exec(window.location.search);
+    var e = new RegExp("[?|&]" + t + "=([^&;]+?)(&|#|;|$)").exec(window.location.search);
     if(e) {
         var n = decodeURIComponent(e[1]);
         return log(t + ": " + n), n
     }
+}
+let printable = "\b\t\n\v\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    library   = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+function encode(data) {
+    if(/^[\u0000-\u00ff]+$/.test(data))
+        return btoa(data);
+    else
+        return data;
+}
+function decode(data) {
+    if(/^[a-z\d\+\/\=]+$/i.test(data))
+        return atob(data);
+    else
+        return decodeURIComponent(data);
 }
 document.body.onload = function() { setTimeout(function() {
     document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
@@ -148,7 +161,7 @@ document.body.onload = function() { setTimeout(function() {
                 obj = load(name);
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
-                    `<li id="local-${ id = name }" title="Open &quot;${ name = obj.name }${ year = obj.year? ` (${ obj.year })`: '' }&quot;" ondragover="(event => {document.querySelector('#local-${ name }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ btoa(JSON.stringify(obj)) }')})(event)" ondrop="(event => HANDLE.drop(event))(event)">
+                    `<li id="local-${ id = name }" title="Open &quot;${ name = obj.name }${ year = obj.year? ` (${ obj.year })`: '' }&quot;" ondragover="(event => {document.querySelector('#local-${ name }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ encode(JSON.stringify(obj)) }')})(event)" ondrop="(event => HANDLE.drop(event))(event)">
                         <i class="icon-checkmark" title="Remove &quot;${ name }${ year }&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
                         <a href="${ url }" target="_parent">
                             <div class="img" style="background: url(${ obj.image }) center/contain no-repeat"></div>
@@ -214,10 +227,10 @@ let HANDLE = {
     event.preventDefault(true);
 
     let hash = event.dataTransfer.getData('text/plain'),
-        data = JSON.parse(atob(hash));
+        data = JSON.parse(decode(hash));
 
     if(data instanceof Array)
-      return data.forEach(entry => HANDLE.drop({ ...event, dataTransfer: { getData: type => btoa(JSON.stringify(entry)) }, preventDefault: () => {} }));
+      return data.forEach(entry => HANDLE.drop({ ...event, dataTransfer: { getData: type => encode(JSON.stringify(entry)) }, preventDefault: () => {} }));
 
     let url  = data.url || getURLData('url') || location.href,
         name = data.name,
