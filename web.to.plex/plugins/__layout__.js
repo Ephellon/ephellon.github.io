@@ -1,4 +1,12 @@
-let plugin = {
+// optional
+// "Friendly Name" requires: api|username|password|token
+// api - the user's api tokens (external, such as TMDb/OMDb)
+// username - the user's usernames (internal, such as Radarr/Sonarr/etc.)
+// password - the user's passwords (internal)
+// token - the user's tokens (internal)
+// Example: "Web to Plex" requires: api, token
+
+let script = {
     // required
     "url": "< URL RegExp >",
     // Example: *://*.amazon.com/*/video/(detail|buy)/*
@@ -11,7 +19,7 @@ let plugin = {
     "ready": () => { /* return a boolean to describe if the page is ready */ },
 
     // optional
-    "timeout": 1000, // if the plugin fails to complete, retry after ... milliseconds
+    "timeout": 1000, // if the script fails to complete, retry after ... milliseconds
 
     // required
     "init": (ready) => {
@@ -20,7 +28,7 @@ let plugin = {
         let title = $('#title').first,
             year  = $('#year').first,
             image = $('#image').first,
-            type  = plugin.getType(); // described below
+            type  = script.getType(); // described below
 
         return { type, title, year, image };
     },
