@@ -146,6 +146,34 @@ function decode(data) {
     else
         return decodeURIComponent(data);
 }
+function Notify(message, status = 1) {
+    let element = document.queryBy('#not').first || document.furnish('span#not',
+        {
+            style:
+                `
+                background: #${ '50080C58CC0805C8'.substr(status*4, 4) };
+                border: 1px solid #0008;
+                border-radius: 5px;
+                color: #fff;
+                font-size: 12px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                position: absolute;
+                left: 10px;
+                top: 15px;
+
+                height: 22px;
+                width: calc(100% - 50px);
+                `
+        },
+    message);
+
+    document.body.appendChild(element);
+
+    setTimeout(() => element.remove(), 4000);
+}
 document.body.onload = function() { setTimeout(function() {
     document.querySelectorAll('[type="text/template"]').forEach( e => e.remove() );
     let ul = document.body.querySelector('#wtp--plex-it-plugin'),
@@ -162,7 +190,7 @@ document.body.onload = function() { setTimeout(function() {
                 if(name && obj)
                     object[name] = (!/^(null|undefined)?$/.test( url = obj.url || '' ))?
                     `<li id="local-${ id = name }" title="Open &quot;${ name = obj.name }${ year = obj.year? ` (${ obj.year })`: '' }&quot;" ondragover="(event => {document.querySelector('#local-${ name }').remove(); event.dataTransfer.dropEffect = 'move'; event.dataTransfer.setData('text/plain', '${ encode(JSON.stringify(obj)) }')})(event)" ondrop="(event => HANDLE.drop(event))(event)">
-                        <i class="icon-checkmark" title="Remove &quot;${ name }${ year }&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
+                        <i class="icon-checkmark" title="Remove &quot;${ name }${ year }&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }'); Notify('Removed ${ name }${ year }', 0);"></i>
                         <a href="${ url }" target="_parent">
                             <div class="img" style="background: url(${ obj.image }) center/contain no-repeat"></div>
                             <label>${ name }${ year }</label>
@@ -190,7 +218,9 @@ document.body.onload = function() { setTimeout(function() {
             "disabled": "Not yet implemented",
             "is-shy": "Can only be accessed via: {*}",
             "is-slow": "Resource intensive (loads slowly)",
+            "is-dead": "Isn't meant to show the Web to Plex button",
             "local": "Opens a link to ^{*}",
+            "not-safe": "Updated irregularly, may drop support",
             "pop-ups": "Contains annoying/intrusive ads and/or pop-ups",
             "save-file": "Uses {*} before using your manager(s)",
             // $0.99 one time; $0.99 - $9.99/mon
@@ -240,7 +270,7 @@ let HANDLE = {
     let marks = document.querySelector('#wtp--plex-it-plugin'),
         html =
         `<li id="local-${ id }" title="Open &quot;${ name }${ year = year? ` (${ year })`: '' }&quot;" draggable="true" ondragover="(event => document.querySelector('#local-${ id }').remove())(event)">
-          <i class="icon-close" title="Remove &quot;${ name }${ year }&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }')"></i>
+          <i class="icon-close" title="Remove &quot;${ name }${ year }&quot;" onclick="document.querySelector('#local-${ id }').remove(); kill('${ id }'); Notify('Removed ${ name }${ year }', 0);"></i>
           <a href="${ url }" target="_parent">
               <div class="img" style="background: url(bell.png) center/contain no-repeat, url(${ icon }) center/contain no-repeat"></div>
               <label>${ name }${ year }</label>
@@ -249,12 +279,14 @@ let HANDLE = {
         </li>`;
     if(BookMark(id, url, data)) {
       marks.innerHTML = html + marks.innerHTML;
+      Notify(`Bookmarked "${ name }${ year }"`, 1);
     } else {
         try {
           marks.querySelector(`#local-${ id }`).outerHTML = html;
         } catch(error) {
           marks.innerHTML = html + marks.innerHTML;
         }
+        Notify(`Updated "${ name }"`, 2);
     }
     SynQ();
   }
@@ -276,6 +308,186 @@ function watchlocationchange() {
 }
 setInterval(watchlocationchange, 1000);
 setInterval(SynQ, 5000);
+(function(parent) {
+/* SortBy.js */
+/** Usage + Example
+ // document.queryBy( selectors )...
+
+ let index = 0;
+ // the order given is the order handled
+ document.queryBy("div:last-child, div:nth-child(2), div:first-child")
+   .forEach((element, index, array) => element.innerHTML = index + 1);
+
+ // output w/sortBySelector:
+ <div>3</div>
+ <div>2</div>
+ <div>1</div> <!-- handles the last div first, like the selector -->
+
+ // output w/o sortBySelector:
+ <div>1</div>
+ <div>2</div>
+ <div>3</div>
+ */
+    parent.queryBy = parent.queryBy || function queryBy(selectors, container = parent) {
+        // Helpers
+        let copy  = array => [...array],
+            query = (SELECTORS, CONTAINER = container) => CONTAINER.querySelectorAll(SELECTORS);
+
+        // Get rid of enclosing syntaxes: [...] and (...)
+        let regexp = /(\([^\(\)]+?\)|\[[^\[\]]+?\])/g,
+            pulled = [],
+            media  = [],
+            index, length;
+
+        // The index shouldn't be longer than the length of the selector's string
+        // Keep this to prevent infinite loops
+        for(index = 0, length = selectors.length; index++ < length && regexp.test(selectors);)
+          selectors = selectors.replace(regexp, ($0, $1, $$, $_) => '\b--' + pulled.push($1) + '\b');
+
+        let order       = selectors.split(','),
+            dummy       = copy(order),
+            output      = [],
+            generations = 0;
+
+        // Replace those syntaxes (they were ignored)
+        for(index = 0, length = dummy.length, order = [], regexp = /[\b]--(\d+)[\b]/g; index < length; index++)
+          order.push(dummy[index].replace(regexp, ($0, $1, $$, $_) => pulled[+$1 - 1]));
+
+        // Make sure to put the elements in order
+        // Handle the :parent (pseudo) selector
+        for(index = 0, length = order.length; index < length; generations = 0, index++) {
+          let selector = order[index], ancestor;
+
+          selector = selector
+            .replace(/\:nth-parent\((\d+)\)/g, ($0, $1, $$, $_) => (generations -= +$1, ''))
+            .replace(/(\:{1,2}parent\b|<\s*(\*|\s*(,|$)))/g, ($0, $$, $_) => (--generations, ''))
+            .replace(/<([^<,]+)?/g, ($0, $1, $$, $_) => (ancestor = $1, --generations, ''))
+            .replace(/^\s+|\s+$/g, '');
+
+          let elements = query(selector),
+              parents = [], parent;
+
+          for(; generations < 0; generations++)
+            elements.forEach( element => {
+                let P = element, Q = P.parentElement, R = (Q? Q.parentElement: {}),
+                    E = C => [...query(ancestor, C)],
+                    F, G;
+
+                for(let I = 0, L = -generations; ancestor && !!R && !!Q && !!P && I < L; I++)
+                  parent = !!~E(R).indexOf(Q)? Q: G;
+
+                for(let I = 0, L = -generations; !!Q && !!P && I < L; I++)
+                  parent = Q = (P = Q).parentElement;
+
+                if(!~parents.indexOf(parent))
+                  parents.push(parent);
+            });
+          media.push(parents.length? parents: elements);
+        }
+
+        // Create a continuous array from the sub-arrays
+        for(index = 1, length = media.length; index < length; index++)
+          media.splice(0, 1, copy(media[0]).concat( copy(media[index]) ));
+        output = [].slice.call(media[0]).filter( value => value );
+
+        // Remove repeats
+        for(index = 0, length = output.length, media = []; index < length; index++)
+          if(!~media.indexOf(output[index]))
+            media.push(output[index]);
+
+        let properties = { writable: false, enumerable: false, configurable: false };
+
+        Object.defineProperties(media, {
+            first: {
+                value: media[0],
+                ...properties
+            },
+            last: {
+                value: media[media.length - 1],
+                ...properties
+            },
+            child: {
+                value: index => media[index - 1],
+                ...properties
+            },
+            empty: {
+                value: !media.length,
+                ...properties
+            },
+        });
+
+        return media;
+    };
+
+/** Adopted from <https://github.com/crislin2046/createElement>
+ * LICENSE: MIT (2018)
+ */
+    parent.furnish = parent.furnish || function furnish(TAGNAME, ATTRIBUTES = {}, ...CHILDREN) {
+        let u = v => v && v.length, R = RegExp, name = TAGNAME, attributes = ATTRIBUTES, children = CHILDREN;
+
+        if( !u(name) )
+            throw TypeError(`TAGNAME cannot be ${ (name === '')? 'empty': name }`);
+
+        let options = attributes.is === true? { is: true }: null;
+
+        delete attributes.is;
+
+        name = name.split(/([#\.][^#\.\[\]]+)/).filter( u );
+
+        if(name.length <= 1)
+            name = name[0].split(/^([^\[\]]+)(\[.+\])/).filter( u );
+
+        if(name.length > 1)
+            for(let n = name, i = 1, l = n.length, t, v; i < l; i++)
+                if((v = n[i].slice(1, n[i].length)) && (t = n[i][0]) == '#')
+                    attributes.id = v;
+                else if(t == '.')
+                    attributes.classList = [].slice.call(attributes.classList || []).concat(v);
+                else if(/\[(.+)\]/.test(n[i]))
+                    R.$1.split('][').forEach(N => attributes[(N = N.replace(/\s*=\s*(?:("?)([^]*)\1)?/, '=$2').split('=', 2))[0]] = N[1] || '');
+        name = name[0];
+
+        let element = document.createElement(name, options);
+
+        if(attributes.classList instanceof Array)
+            attributes.classList = attributes.classList.join(' ');
+
+        Object.entries(attributes).forEach(
+            ([name, value]) => (/^(on|(?:(?:inner|outer)(?:HTML|Text)|textContent|class(?:List|Name)|value)$)/.test(name))?
+				(typeof value == 'string' && /^on/.test(name))?
+					(() => {
+                        try {
+                            /* Can't make a new function(eval) */
+                            element[name] = new Function('', value);
+                        } catch (__error) {
+                            try {
+                                /* Not a Chrome (extension) state */
+                                chrome.tabs.getCurrent(tab => chrome.tabs.executeScript(tab.id, { code: `document.furnish.__cache__ = () => {${ value }}` }, __cache__ => element[name] = __cache__[0] || parent.furnish.__cache__ || value));
+                            } catch (_error) {
+                                throw __error, _error;
+                            }
+                        }
+                	})():
+                element[name] = value:
+            element.setAttribute(name, value)
+        );
+
+        children
+            .filter( child => child !== undefined && child !== null )
+            .forEach(
+                child =>
+                    child instanceof Element?
+                        element.append(child):
+                    child instanceof Node?
+                        element.appendChild(child):
+                    element.appendChild(
+                        parent.createTextNode(child)
+                    )
+            );
+
+        return element;
+    }
+})(document);
 </script>
 </body>
 </html>
