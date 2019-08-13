@@ -3,7 +3,7 @@ var use_global_synq_token = true;
 let $ = selector => document.querySelector(selector),
     R = RegExp,
     apikey, country,
-    genres  = {
+    genres = {
         28:    "Action",
         12:    "Adventure",
         16:    "Animation",
@@ -32,7 +32,7 @@ let $ = selector => document.querySelector(selector),
         10766: "Soap Opera",
         10767: "Talk",
         10768: "War & Politics",
-      };
+    };
 
 function modify({ type, title, year, similar, info }) {
     let object = { title, year, ...info };
@@ -140,11 +140,20 @@ async function as(type, id) {
     // Similar Content
     await fetch(`https://api.themoviedb.org/3/${ type }/${ id }/similar?api_key=${ apikey }`, { method: 'GET' })
         .then(r => r.json())
-        .then(json => {
+        .then(async json => {
             let { results } = json;
 
             if(results && results.length)
                 data.similar = results;
+            else
+                await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*5)|0)||1}`, { method: 'GET' })
+                    .then(r => r.json())
+                    .then(json => {
+                        let { results } = json;
+
+                        if(results && results.length)
+                            data.similar = results;
+                    });
         });
 
     console.log(data);
@@ -153,7 +162,7 @@ async function as(type, id) {
 }
 
 async function popular(type) {
-    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*10)|0)||1}`, { method: 'GET' })
+    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*30)|0)||1}`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
             let { results } = json,
