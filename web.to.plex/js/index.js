@@ -100,7 +100,7 @@ async function as(type, id) {
                 genre  = json.genres.map(g => g.name).sort().join(' / '),
                 imdb   = json.imdb_id,
                 description = json.overview,
-                runtime = (m => {let h=0;for(;m>=60;m-=60,h++);return [h,m>9?m:'0'+m]})(+json[tv?'episode_run_time':'runtime']).join(':')+(tv?'/Eps':'');
+                runtime = (m => {let h=0;for(;m>=60;m-=60,h++);return [h,m>9?m:'0'+m]})(json[tv?'episode_run_time':'runtime']|0).join(':')+(tv?'/Eps':'');
 
             data = {
                 type, title, year,
