@@ -98,13 +98,15 @@ async function as(type, id) {
                 genre  = json.genres.map(g => g.name).sort().join(' / '),
                 imdb   = json.imdb_id,
                 description = json.overview,
-                runtime = (m => {let h=0;for(;m>=60;m-=60,h++);return [h,m>9?m:'0'+m]})(json[tv?'episode_run_time':'runtime']|0).join(':')+(tv?'/Eps':'');
+                runtime = (m => {let h=0;for(;m>=60;m-=60,h++);return [h,m>9?m:'0'+m]})(json[tv?'episode_run_time':'runtime']|0).join(':')+(tv?'/Eps':''),
+                { vote_average, vote_count } = json;
 
             data = {
                 type, title, year,
                 'info': {
                     runtime, genre, poster, description,
                     'release-date': `${ releaseDate.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, ($0, $1, $2, $3, $$, $_) => `${['January','February','March','April','May','June','July','August','September','October','November','December'][(+$2)-1]} ${$3}, ${$1}`) } (${ country })`,
+                    'votes': `${vote_average||0}/10 (${vote_count||0} votes)`,
 
                     'imdb': imdb,
                     'tmdb': id,
