@@ -91,8 +91,6 @@ async function as(type, id) {
     await fetch(`https://api.themoviedb.org/3/${ type }/${ id }?api_key=${ apikey }`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
-            let tv = type == 'tv';
-
             let poster = [json.backdrop_path, json.poster_path],
                 title  = json[tv? `${/^u[sk]$/i.test(country)?'':'original_'}name`: 'title'],
                 releaseDate = json[tv? 'first_air_date': 'release_date'],
@@ -242,7 +240,7 @@ $('#search').addEventListener('keyup', event => {
                 let { results } = json,
                     valid = !!(results && results.length);
 
-                $('#search').setAttribute('valid', valid);
+                $('#search').setAttribute('valid', valid? true: results.length? '': false);
 
                 if(valid)
                     for(let index = 0, length = results.length; index < length; index++) {
@@ -264,5 +262,5 @@ $('#search').addEventListener('keyup', event => {
 $('#logout').onmouseup = event => {
     SynQ.clear();
 
-    open(location.search||'', '_self');
+    open(location.search || '', '_self');
 };
