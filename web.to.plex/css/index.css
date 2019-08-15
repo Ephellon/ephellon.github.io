@@ -304,3 +304,16 @@ input[type]:valid:not(:placeholder-shown) + label[for] {
 [loading=false], iframe[loading=true] {
     opacity: 0;
 }
+
+*::-webkit-scrollbar {
+    background: #000;
+    width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #0000;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #FFF8;
+}

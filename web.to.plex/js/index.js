@@ -106,7 +106,7 @@ async function as(type, id) {
                 'info': {
                     runtime, genre, poster, description,
                     'release-date': `${ releaseDate.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, ($0, $1, $2, $3, $$, $_) => `${['January','February','March','April','May','June','July','August','September','October','November','December'][(+$2)-1]} ${$3}, ${$1}`) } (${ country })`,
-                    'votes': `${vote_average||0}/10 (${vote_count||0} votes)`,
+                    'votes': `${(vote_average * 10)|0}% (${vote_count||0} votes)`,
 
                     'imdb': imdb,
                     'tmdb': id,
@@ -242,7 +242,7 @@ $('#search').addEventListener('keyup', event => {
                 let { results } = json,
                     valid = !!(results && results.length);
 
-                $('#search').setAttribute('valid', valid? true: results.length? '': false);
+                $('#search').setAttribute('valid', valid? true: results? false: '');
 
                 if(valid)
                     for(let index = 0, length = results.length; index < length; index++) {
