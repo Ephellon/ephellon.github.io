@@ -890,6 +890,7 @@ input[type=text]:focus, textarea:focus {
     color: #ffffff;
 }
 .close-container {
+    color: red;
     position: absolute;
     top: 8px;
     right: 13px;
@@ -898,5 +899,3 @@ input[type=text]:focus, textarea:focus {
     z-index: 10000;
     cursor: pointer;
 }
-/*
-*/
