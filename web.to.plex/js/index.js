@@ -43,7 +43,7 @@ function modify({ type, title, year, similar, info }) {
     $('#movie').removeAttribute('active');
     $('#tv').removeAttribute('active');
     $(`#${ type }`).setAttribute('active', true);
-    $('#yutb').innerHTML = object.trailer || 'N/A';
+    $('#yutb').innerHTML = object.trailer || '';
     $('#yutb').setAttribute('href', !object.trailer? 'blankt.html': `https://www.youtube.com/embed/${ object.trailer }`);
 
     let element;
