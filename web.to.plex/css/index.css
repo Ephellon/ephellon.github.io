@@ -128,6 +128,14 @@ html, body {
     cursor: not-allowed;
 }
 
+.icon {
+    height: 16px !important;
+    width: 16px !important;
+
+    margin: -4px;
+    padding-right: 6px;
+}
+
 #frame {
     border: 1px solid #0000;
     outline: none;

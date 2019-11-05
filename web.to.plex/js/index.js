@@ -43,13 +43,16 @@ function modify({ type, title, year, similar, info }) {
     $('#movie').removeAttribute('active');
     $('#tv').removeAttribute('active');
     $(`#${ type }`).setAttribute('active', true);
-    $('#yutb').innerHTML = object.trailer || '';
+    $('#yutb').innerHTML = `<img class=icon src="img/youtube.png"/>${object.trailer || 'not found'}`;
     $('#yutb').setAttribute('href', !object.trailer? 'blankt.html': `https://www.youtube.com/embed/${ object.trailer }`);
 
     let element;
     for(let key in object)
         if(element = $(`#${ key }`))
-            element.innerHTML = object[key] || "";
+            if(/^[it]mdb$/i.test(key))
+                element.innerHTML = `<img class=icon src="img/${key}.png" />${object[key] || ''}`;
+            else
+                element.innerHTML = object[key] || '';
 
     let poster = `https://image.tmdb.org/t/p/original${ object.poster[0] }`;
     $('body').setAttribute('style', `background: url("img/noise.png") fixed, url("${ poster }") fixed center / cover no-repeat;`);
@@ -71,16 +74,8 @@ function modify({ type, title, year, similar, info }) {
 
     $('#similar').innerHTML = '';
 
-    if(similar)
-        for(let index = 0, length = similar.length; index < length; index++) {
-            let item = similar[index];
-
-            $('#similar').innerHTML +=
-    `<li>
-        \u2023 <a href="?${type}=${item.id}">${item[tv?`${/^u[sk]$/i.test(country)?'':'original_'}name`:'title']} (${item[tv?'first_air_date':'release_date'].slice(0,4)})</a>
-    </li>`;
-        }
-
+    if(similar && similar.length)
+        similar.map(item => $('#similar').innerHTML += `<li>\u2023 <a href="?${type}=${item.id}">${item[tv?`${/^u[sk]$/i.test(country)?'':'original_'}name`:'title']} (${item[tv?'first_air_date':'release_date'].slice(0,4)})</a></li>`);
 }
 
 async function as(type, id) {
