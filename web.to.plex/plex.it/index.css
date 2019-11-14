@@ -362,7 +362,7 @@ body {
     font-size: 14px;
     line-height: 1.5em;
     color: #ffffff;
-    background: #222222 url('https://static.plex.tv/assets/plexit/background-0bbf4ab2f8638af38b308db6a9462c17e484f038cd64352e7698a8fbaab951a6.png');
+    background: url(noise.png) fixed, url(background.png) no-repeat fixed center/cover, #3f4245;
     border-right: 2px solid #000000;
     -webkit-box-shadow: inset -15px 0 25px #1f1f1f;
     -moz-box-shadow: inset -15px 0 25px #1f1f1f;
