@@ -34,6 +34,21 @@ let $ = selector => document.querySelector(selector),
         10768: "War & Politics",
     };
 
+function comify(number = 0) {
+    number = (number + '')
+        .split('')
+        .reverse()
+        .join('')
+        .replace(/(\d{3})/g, '$1,')
+        .split('')
+        .reverse()
+        .join('')
+        .replace(/,+/g, ',')
+        .replace(/^,+|,+$/g, '');
+
+    return number;
+}
+
 function modify({ type, title, year, similar, info }) {
     let object = { title, year, ...info };
 
@@ -101,7 +116,7 @@ async function as(type, id) {
                 'info': {
                     runtime, genre, poster, description,
                     'release-date': `${ releaseDate.replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, ($0, $1, $2, $3, $$, $_) => `${['January','February','March','April','May','June','July','August','September','October','November','December'][(+$2)-1]} ${$3}, ${$1}`) } (${ country })`,
-                    'votes': `${(vote_average * 10)|0}% (${vote_count||0} votes)`,
+                    'votes': `${(vote_average * 10)|0}% (${comify(vote_count||0)} votes)`,
 
                     'imdb': imdb,
                     'tmdb': id,
@@ -247,7 +262,7 @@ $('#search').addEventListener('keyup', event => {
 						genre_ids = genre_ids.map(i=>genres[i]).join('/');
 
                         $('#results').innerHTML +=
-`<div title="${vote_average}/10 rating (${vote_count} votes)">
+`<div title="${vote_average}/10 rating (${comify(vote_count)} votes)">
     <span class="rating">${adult?'XXX':''}</span> \u2023 <a href="?${type}=${id}">${name||title} ${year?`(${year}) `:''}${genre_ids?'&bullet; ':''}${genre_ids}</a>
 </div>`;
                     }
