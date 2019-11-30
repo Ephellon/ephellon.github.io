@@ -1,0 +1,48 @@
+{
+    "name": "Web to Plex",
+    "short_name": "🌐»Plex",
+    "description": "A website for the Web to Plex extension to get media information more robustly.",
+
+    "background_color": "#CC7B19",
+    "theme_color": "#F34245",
+
+    "display": "standalone",
+    "dir": "ltr",
+    "orientation": "any",
+
+    "scope": "/",
+    "start_url": "/web.to.plex/",
+
+    "related_applications": [{
+        "platform": "chrome",
+        "url": "https://chrome.google.com/webstore/detail/web-to-plex/kmcinnefmnkfnmnmijfmbiaflncfifcn",
+        "id": "kmcinnefmnkfnmnmijfmbiaflncfifcn"
+    }],
+    "prefer_related_applications": false,
+
+    "icons": [{
+        "src": "/web.to.plex/img/512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    },{
+        "src": "/web.to.plex/img/256.png",
+        "sizes": "256x256",
+        "type": "image/png"
+    },{
+        "src": "/web.to.plex/img/192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    },{
+        "src": "/web.to.plex/img/128.png",
+        "sizes": "128x128",
+        "type": "image/png"
+    },{
+        "src": "/web.to.plex/img/48.png",
+        "sizes": "48x48",
+        "type": "image/png"
+    },{
+        "src": "/web.to.plex/img/16.png",
+        "sizes": "16x16",
+        "type": "image/png"
+    }]
+}

@@ -1,55 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Web to Plex</title>
-  <link rel="shortcut icon" href="img/48.png"/>
-  <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <title>Web to Plex</title>
+    <base href="/web.to.plex/"/>
+
+    <meta charset="utf-8"/>
+    <meta name="theme-color" content="#F34245"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="A website for the Web to Plex extension to get media information more robustly."/>
+
+    <link rel="shortcut icon" href="img/48.png"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="manifest" href="manifest.json"/>
 </head>
 <body>
-  <div id="head">
-      <div id="info" type="movie">
-          <span id="title">Movie</span>
-          (<span id="year">1970</span>)
-          <div id="meta">
-              <span id="rating">NR</span>
-              <span id="runtime">0:00</span>
-              <span id="genre">N/A</span>
-              <span id="release-date">January 1, 1970</span>
-              <span id="votes">0% (0 votes)</span>
-          </div>
-          <div id="id">
-              <a id="imdb" target="_blank"></a>
-              <a id="tmdb" target="_blank"></a>
-              <a id="yutb" target="frame"></a>
-              <a id="abou" target="frame" href="blank.html">about</a>
-          </div>
-      </div>
-      <span id="logout" title="Logout">&#x2718;</span>
-  </div>
+    <div id="head">
+        <span id="back" title="Back to...">&larrfs;</span>
+        <div id="info" type="movie">
+            <span id="title">Movie</span>
+            (<span id="year">1970</span>)
+            <div id="meta">
+                <span id="rating">NR</span>
+                <span id="runtime">0:00</span>
+                <span id="genre">N/A</span>
+                <span id="release-date">January 1, 1970</span>
+                <span id="votes">0% (0 votes)</span>
+            </div>
+            <div id="id">
+                <a id="imdb" target="_blank"></a>
+                <a id="tmdb" target="_blank"></a>
+                <a id="yutb" target="frame"></a>
+                <a id="abou" target="frame" href="blank.html">about</a>
+            </div>
+        </div>
+        <span id="logout" title="Logout">&#x2718;</span>
+    </div>
 
-  <div id="body">
-      <iframe id="frame" name="frame" srcdoc="<style>html,body{margin:0;padding:0;overflow:hidden}</style>">
-          Frames are not supported...
-      </iframe>
+    <div id="body">
+        <iframe id="frame" name="frame" srcdoc="<style>html,body{margin:0;padding:0;overflow:hidden}</style>">
+            Frames are not supported...
+        </iframe>
 
-      <ul id="similar"></ul>
-  </div>
+        <ul id="similar"></ul>
+    </div>
 
-  <div id="foot">
-      <span id="search-holder">
-          <input id="search" type="text" placeholder="search" autocomplete="off" autofill="off"/>
-          <label id="results" for="search"></label>
-      </span>
-      <button id="movie" active>Movies</button>
-      <button id="tv">TV Shows</button>
-  </div>
+    <div id="foot">
+        <span id="search-holder">
+            <input id="search" type="text" placeholder="search" autocomplete="off" autofill="off"/>
+            <label id="results" for="search"></label>
+        </span>
+        <button id="movie" active>Movies</button>
+        <button id="tv">TV Shows</button>
+    </div>
 
-  <img id="poster"/>
+    <img id="poster"/>
 
-  <span id="loading" loading="false"><img src="img/48.png" /></span>
+    <span id="loading" loading="false"><img src="img/48.png" /></span>
 
-
-  <script src="js/index.js"></script>
-  <script src="js/synq.js"></script>
+    <script src="js/synq.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

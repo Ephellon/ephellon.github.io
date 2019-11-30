@@ -184,6 +184,16 @@ async function popular(type) {
         });
 }
 
+document.querySelectorAll('#back, #movie, #tv, #similar a').forEach(element => {
+    element.onmousedown = async event => {
+        let title = $('#title').textContent,
+            year  = $('#year').textContent;
+
+        SynQ.set('last-item', location.search);
+        SynQ.set('last-title', `${ title } (${ year })`);
+    };
+});
+
 document.querySelectorAll('#movie, #tv').forEach(element => {
     element.onmouseup = async event => {
         let self = event.target;
@@ -212,7 +222,14 @@ document.querySelectorAll('[target="frame"]').forEach(element => {
 });
 
 document.body.onload = event => {
-    let data = SynQ.get('login-data');
+    let data = SynQ.get('login-data'),
+        last_item = SynQ.get('last-item') || '?',
+        last_title = SynQ.get('last-title') || '...';
+
+    if(last_title) {
+        $('#back').setAttribute('title', `Back to "${ last_title }"`);
+        $('#back').onmouseup = event => open(last_item, '_self');
+    }
 
     if(data) {
         data = decodeURIComponent(data);
@@ -276,3 +293,17 @@ $('#logout').onmouseup = event => {
 
     open(location.search || '', '_self');
 };
+
+if('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+            .register('/web.to.plex/service-worker.js', { scope: '.' })
+            .then(worker => {
+                // Success
+                console.log(`Service Worker registered [${ worker.scope }]:`, worker);
+            }, error => {
+                // Error
+                console.error(`Service Worker not registered:`, error)
+            });
+    });
+}

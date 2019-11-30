@@ -61,12 +61,19 @@ html, body {
     display: none;
 }
 
-#logout {
+#logout, #back {
     cursor: pointer;
 
     position: absolute;
     right: 1%;
     top: 1%;
+}
+
+#back {
+    display: flex;
+
+    left: 1%;
+    right: unset;
 }
 
 /* Body */
