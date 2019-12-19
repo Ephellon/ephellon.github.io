@@ -2,7 +2,7 @@
 <gupdate xmlns='https://www.google.com/update2/response' protocol='2.0'>
   <app appid='kmcinnefmnkfnmnmijfmbiaflncfifcn'>
     <updatecheck
-        version='4.1.1.1'
+        version='4.1.1.6'
         codebase='https://github.com/SpaceK33z/web-to-plex/blob/master/src.crx'
     />
   </app>
