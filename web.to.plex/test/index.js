@@ -101,4 +101,12 @@ document.querySelectorAll('[target="frame"]').forEach(element => {
     }
 });
 
-document.body.onload = event => /#(movie|tv-show)/i.test(location.hash)? as(`${ location.hash.replace('#', '') }`): as('movie');
+document.body.onload = async(event) => {
+    await(
+        /#(movie|tv-show)/i.test(location.hash)?
+            as(`${ location.hash.replace('#', '') }`):
+        as('movie')
+    );
+
+    location.hash = '';
+};
