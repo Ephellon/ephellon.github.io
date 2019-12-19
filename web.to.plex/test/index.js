@@ -108,5 +108,6 @@ document.body.onload = async(event) => {
         as('movie')
     );
 
-    location.hash = '';
+    if(location.hash.length)
+        open(location.pathname, '_self');
 };
