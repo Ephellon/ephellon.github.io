@@ -171,8 +171,14 @@ html, body {
     width: 28%;
 }
 
-#similar > *:nth-child(even), #search+label > *:nth-child(even) {
+#similar > *:nth-child(even), #search + label > *:nth-child(even) {
     background: #0001;
+}
+
+#similar > *:hover {
+    color: #fff;
+
+    transition: all 0.1s;
 }
 
 *:not(#id) a {
