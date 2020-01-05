@@ -1,10 +1,10 @@
 {
     "addons": {
         //"{05243336-ce19-46df-95af-680070c96134}":
-        "minkcbos@gmail.com": {
+        "mink.cbos@gmail.com": {
             "updates": [
                 {
-                    "version": "4.1.1.7",
+                    "version": "4.1.1.8",
                     "update_link": "https://github.com/SpaceK33z/web-to-plex/blob/master/moz.xpi",
                     "applications": {
                         "gecko": { "strict_min_version": "57.0" }
