@@ -156,7 +156,7 @@ async function as(type, id) {
             if(results && results.length)
                 data.similar = results;
             else
-                await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*5)|0)||1}`, { method: 'GET' })
+                await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*10)|0)||1}`, { method: 'GET' })
                     .then(r => r.json())
                     .then(json => {
                         let { results } = json;
@@ -172,7 +172,7 @@ async function as(type, id) {
 }
 
 async function popular(type) {
-    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*30)|0)||1}`, { method: 'GET' })
+    return await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${apikey}&page=${((Math.random()*50)|0)||1}`, { method: 'GET' })
         .then(r => r.json())
         .then(json => {
             let { results } = json,
