@@ -172,7 +172,7 @@ html, body {
 }
 
 #similar > *:nth-child(even), #search + label > *:nth-child(even) {
-    background: #0001;
+    background-color: #0001 !important;
 }
 
 #similar > *:hover {
@@ -299,7 +299,16 @@ input[type]:valid:not(:placeholder-shown) + label[for] {
 }
 
 #results a {
+    display: block;
+    overflow: hidden;
     text-shadow: none !important;
+}
+
+#results .overview {
+    color: #6664;
+
+    height: 75%;
+    width: calc(100% - 100px);
 }
 
 /* Miscellaneous */

@@ -273,15 +273,20 @@ $('#search').addEventListener('keyup', event => {
 
                 if(valid)
                     for(let index = 0, length = results.length; index < length; index++) {
-                        let { title, year, name, id, release_date, first_air_date, vote_average, vote_count, genre_ids, adult } = results[index];
+                        let { title, year, name, id, release_date, first_air_date, vote_average, vote_count, genre_ids, adult, poster_path, overview } = results[index];
 
 						year = (release_date||first_air_date||'').slice(0,4);
 						genre_ids = genre_ids.map(i=>genres[i]).join('/');
 
-                        $('#results').innerHTML +=
-`<div title="${vote_average}/10 rating (${comify(vote_count)} votes)">
-    <span class="rating">${adult?'XXX':''}</span> \u2023 <a href="?${type}=${id}">${name||title} ${year?`(${year}) `:''}${genre_ids?'&bullet; ':''}${genre_ids}</a>
-</div>`;
+                        $('#results').innerHTML += index < 5?
+`<a href="?${type}=${id}" title="${vote_average}/10 rating (${comify(vote_count)} votes)" style="background: url(https://image.tmdb.org/t/p/original${poster_path}) center right/contain no-repeat; height: 100px;">
+    <span class="rating">${adult?'XXX':''}</span> \u2023 <span>${name||title} ${year?`(${year}) `:''}${genre_ids?'&bullet; ':''}${genre_ids}</span>
+    <div class="overview">${overview}</div>
+</a>`:
+
+`<a href="?${type}=${id}" title="${vote_average}/10 rating (${comify(vote_count)} votes)">
+    <span class="rating">${adult?'XXX':''}</span> \u2023 <span>${name||title} ${year?`(${year}) `:''}${genre_ids?'&bullet; ':''}${genre_ids}</span>
+</a>`;
                     }
             })
             .then(u => clearTimeout(searching));
