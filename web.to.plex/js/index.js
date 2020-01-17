@@ -59,7 +59,7 @@ function modify({ type, title, year, similar, info }) {
     $('#tv').removeAttribute('active');
     $(`#${ type }`).setAttribute('active', true);
     $('#yutb').innerHTML = `<img class=icon src="img/youtube.png"/>${object.trailer || 'not found'}`;
-    $('#yutb').setAttribute('href', !object.trailer? 'blankt.html': `https://www.youtube.com/embed/${ object.trailer }`);
+    $('#yutb').setAttribute('href', !object.trailer? 'blank.html': `https://www.youtube.com/embed/${ object.trailer }`);
 
     let element;
     for(let key in object)
