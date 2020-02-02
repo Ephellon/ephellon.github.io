@@ -4,7 +4,7 @@
         "mink.cbos@gmail.com": {
             "updates": [
                 {
-                    "version": "4.1.1.8",
+                    "version": "4.1.1.11",
                     "update_link": "https://github.com/SpaceK33z/web-to-plex/blob/master/moz.xpi",
                     "applications": {
                         "gecko": { "strict_min_version": "57.0" }
