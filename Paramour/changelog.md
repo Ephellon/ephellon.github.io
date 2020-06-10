@@ -1086,7 +1086,7 @@ var "String" string = "anon",
 
 ### JavaScript (Desired Output)
 ```javascript
-var string = (((string = "anon") instanceof String)? string: "backup"),
+var string = (((string = "anon") instanceof String)? string: undefined),
     object = (((object = {
       method: (((Global['__method__'] = fn) instanceof Function)? Global['__method__']: undefined)
     }) instanceof Object)? object: undefined);
