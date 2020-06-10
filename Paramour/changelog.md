@@ -1394,13 +1394,13 @@ var each = 1, every_other = 2;
   // $@:... - creates a "link" for the word "...", i.e. "$@:index" will replace all "index" with the correct random name
   // $$ - "{\n  console.log(item);\n}"
 
-for(var randomName1 = 0, randomName2 = [1, 2, 3], item; randomName1 < randomName2.length; randomName1 += each) (function(){
+for(var randomName1 = 0, randomName2 = [1, 2, 3], randomName3 = randomName2.length, item; randomName1 < randomName3; randomName1 += each) (function(){
   console.log(item);
 })(item = randomName2[randomName1]);
 
-for(var randomName3 = 0, randomName4 = [1, 2, 3], item; randomName3 < randomName4.length; randomName3 += every_other) (function(){
+for(var randomName4 = 0, randomName5 = [1, 2, 3], randomName6 = randomName5.length, item; randomName4 < randomName6; randomName4 += every_other) (function(){
   console.log(item);
-})(item = randomName4[randomName3]);
+})(item = randomName5[randomName4]);
 ```
 
 ----
