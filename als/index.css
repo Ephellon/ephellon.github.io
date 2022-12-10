@@ -70,10 +70,8 @@ header {
     background: var(--bd);
     text-align: center;
 
-    height: -webkit-fill-available;
-    height: -moz-available;
-    width: -webkit-fill-available;
-    width: -moz-available;
+    height: 100%;
+    width: 100%;
 
     position: absolute;
     top: 0;
@@ -200,8 +198,7 @@ footer {
     display: block;
     text-align: center;
 
-    width: -webkit-fill-available;
-    width: -moz-available;
+    width: 100%;
 
     padding: .5rem;
 
