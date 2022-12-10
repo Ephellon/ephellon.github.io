@@ -69,7 +69,7 @@ Yeager
  *                   __/ |                   __/ |
  *                  |___/                   |___/
  */
-.trim().split(/\s+/).filter(n=>n).map(n=>(top.peers||=[]).push(n));
+.trim().split(/[\n\r\f]+/).filter(n=>n).map(n=>(top.peers||=[]).push(n));
 /***
  *       _____
  *      / ____|
