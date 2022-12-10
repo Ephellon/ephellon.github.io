@@ -638,6 +638,9 @@ $('#prev').addEventListener('mouseup', event => {
     $('footer').dataset.step = ind + 2;
 });
 
-setInterval(due => {
-    due.innerText = toTimeString(new Date('Dec 12 2022 08:00:00 GMT-0700') - new Date);
-}, 100, $('#due'));
+let due23_2 = new Date('Dec 12 2022 08:00:00 GMT-0700');
+
+if(new Date < due23_2)
+    setInterval(due => {
+        due.innerHTML = `&mdash; Due in ${ toTimeString(due23_2 - new Date) }.`;
+    }, 100, $('#due'));
