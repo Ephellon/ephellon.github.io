@@ -1,0 +1,238 @@
+@font-face {
+    font-family: Roobert;
+    font-weight: normal;
+    src: url("Roobert.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: Roobert-Bold;
+    font-weight: bold;
+    src: url("Roobert-Bold.woff2") format("woff2");
+}
+
+:root {
+    --bd: #0008;
+    --bg: #eee;
+    --bt: #999;
+    --fg: #000b;
+    --tx: #fff;
+    --blue: #00aced;
+
+    background: url('background.jpg') center / cover no-repeat;
+    color: var(--tx);
+    font-family: Roobert, sans-serif, monospace;
+    font-size: 15pt;
+
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    overflow: hidden;
+}
+
+* {
+    font-family: inherit;
+}
+
+body {
+    background: var(--bd);
+    border: 0;
+    margin: 0;
+    padding: 0;
+
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+article {
+    margin: -1.15rem 0;
+}
+
+h1, h2, h3 {
+    background: var(--bd);
+    text-align: center;
+
+    margin-bottom: 0;
+    padding: .5rem 0;
+}
+
+h4, h5, h6 {
+    background: var(--bd);
+    text-align: center;
+
+    margin-top: 0;
+    padding: 0;
+}
+
+header {
+    background: var(--bd);
+    text-align: center;
+
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+header ~ article {
+    opacity: 0;
+}
+
+footer::after {
+    content: "Step " attr(data-step) " of " attr(data-steps);
+
+    display: block;
+}
+
+[top]::before {
+    content: attr(top);
+
+    position: absolute;
+    transform: translate(0,-100%);
+}
+
+[bot]::after {
+    content: attr(bot);
+
+    position: absolute;
+}
+
+section[id]:not(:target) {
+    display: none;
+}
+
+section:is(:target, :not([id]))[footer="off"i] ~ footer,
+section:is(:target, :not([id]))[prev="off"i] ~ footer #prev,
+section:is(:target, :not([id]))[skip="off"i] ~ footer #skip,
+section:is(:target, :not([id]))[next="off"i] ~ footer #next {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+ol, ul {
+    list-style: none;
+
+    max-height: 73vh;
+    height: fit-content;
+    overflow: auto;
+
+    margin: .5rem;
+}
+
+section:not(#_) li::before {
+    content: "\21c5";
+
+    display: inline-block;
+
+    padding: 0 .5rem;
+    margin: 0 .5rem 0 0;
+}
+
+li {
+    background: var(--fg);
+    border: 0;
+    border-radius: 3px;
+
+    max-width: 30rem;
+    width: fit-content;
+
+    padding: 0.25rem;
+    margin: 0.25rem;
+}
+
+#_ ol {
+    list-style: decimal;
+}
+
+#_ ul {
+    list-style: disc;
+}
+
+[tip]::after {
+    content: "\2139";
+
+    background: var(--blue);
+    border: 0;
+    border-radius: 3px;
+    color: var(--tx);
+    display: inline-block;
+
+    padding: 0 .5rem;
+    margin: 0 0 0 .5rem;
+}
+
+[tip]:focus::after {
+    content: attr(tip);
+
+    display: block;
+    font-size: 125%;
+    text-align: left;
+
+    width: 15rem;
+
+    padding: .5rem;
+    position: absolute;
+    left: 50%;
+    bottom: 5rem;
+    transform: translate(-50%);
+}
+
+video {
+    height: auto;
+    width: 100vw;
+
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: -1;
+    transform: translate(-50%);
+}
+
+footer {
+    background: var(--fg);
+    display: block;
+    text-align: center;
+
+    width: -webkit-fill-available;
+
+    padding: .5rem;
+
+    position: absolute;
+    bottom: 0;
+}
+
+button, select {
+    background: var(--bt);
+    border: 0;
+    border-radius: 3px;
+    color: var(--tx);
+    cursor: pointer;
+
+    height: fit-content;
+    width: fit-content;
+
+    padding: 0.25rem;
+}
+
+button a {
+    color: inherit;
+    cursor: inherit;
+    text-decoration: none;
+}
+
+li button {
+    margin-left: 2rem;
+}
+
+li button::after {
+    content: "❌";
+}
+
+#next {
+    background: var(--blue);
+}

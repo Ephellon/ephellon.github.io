@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang=en dir=ltr>
+    <head>
+        <meta charset=utf-8>
+        <title>Peer Assessment</title>
+
+        <link rel=stylesheet href=index.css>
+        <script type=text/javascript src=sortable.js></script>
+    </head>
+    <body>
+        <header>
+            <h1>Reaper Flight 23-2</h1>
+            <h4>Peer Assessment &mdash; Due in <span id=due></span>.</h4>
+            <div>
+                <p>
+                    <strong>Nothing is saved</strong>. If you refresh the page, you'll have to start over.
+                </p>
+                <p>
+                    Pressing <button tip="Tips look like so.">Tips</button> will display extra information for the corresponding item.
+                </p>
+                <p>
+                    Pressing the <button>❌</button> button will give 0 points to the individual in the current category.
+                </p>
+            </div>
+            <hr>
+            <div>
+                <p>Choose your name from the list below:</p>
+                <select id=name></select>
+                <br>
+                <button id=start>Start</button>
+            </div>
+        </header>
+
+        <article>
+            <!-- Rank the categories -->
+            <section id=-1 prev=off skip=off>
+                <h1>Rank each category based on importance to you.</h1>
+                <h4>This step establishes scores using these preferences.</h4>
+
+                <ol id=cats top="Most important" bot="Least important">
+                    <li><button tip="Considered multiple perspectives and approaches before making decisions. Displayed critical thinking and open mindedness.">Accepting</button></li>
+                    <li><button tip="Disregarded their personal agenda to assist the team in achieving its goal(s).">Altruistic</button></li>
+                    <li><button tip="Considered the effects of decisions to help the group establish, commit, and maintain a course of action.">Attentive</button></li>
+                    <li><button tip="Fostered an environment based on trust and respect.">Inclusive</button></li>
+                    <li><button tip="Accomplished goals without sacrificing relationships. Often sacrificed personal gain.">Influential</button></li>
+                    <li><button tip="Kept the team headed towards its goal(s).">Motivated</button></li>
+                    <li><button tip="Maintained their image according to AFI 36-2903.">Professional</button></li>
+                    <li><button tip="Controlled their emotions and impulses (while also adapting to changes).">Rational</button></li>
+                    <li><button tip="Resolved conflicts to bring the team together. Also showed little to no judgment.">Sensible</button></li>
+                    <li><button tip="Always led the team towards its goal(s). Often put the team's needs before their own.">Team Oriented</button></li>
+                </ol>
+            </section>
+
+            <!-- Rank the people -->
+            <hr id=fill style=display:none>
+
+            <!-- Display the scores -->
+            <section id=_ skip=off next=off>
+                <h1>Stratification</h1>
+            </section>
+
+            <!-- Footer -->
+            <footer data-step=1 data-steps=12>
+                <button id=prev>
+                    &larr; Back
+                </button>
+
+                <!-- <button id=skip>
+                    Skip &curarr;
+                </button> -->
+
+                <button id=next>
+                    Next &rarr;
+                </button>
+            </footer>
+        </article>
+
+        <video src="MQ-9_Reaper.mp4" autoplay muted loop></video>
+
+        <script type=text/javascript src=index.js></script>
+    </body>
+</html>
