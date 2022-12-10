@@ -23,10 +23,10 @@
     font-family: Roobert, sans-serif, monospace;
     font-size: 15pt;
 
-    height: -moz-available;
     height: -webkit-fill-available;
-    width: -moz-available;
+    height: -moz-available;
     width: -webkit-fill-available;
+    width: -moz-available;
     overflow: hidden;
 }
 
@@ -41,8 +41,9 @@ body {
     padding: 0;
 
     height: -webkit-fill-available;
-    width: -moz-available;
+    height: -moz-available;
     width: -webkit-fill-available;
+    width: -moz-available;
 
     position: absolute;
     top: 0;
@@ -74,8 +75,9 @@ header {
     text-align: center;
 
     height: -webkit-fill-available;
-    width: -moz-available;
+    height: -moz-available;
     width: -webkit-fill-available;
+    width: -moz-available;
 
     position: absolute;
     top: 0;
@@ -202,8 +204,8 @@ footer {
     display: block;
     text-align: center;
 
-    width: -moz-available;
     width: -webkit-fill-available;
+    width: -moz-available;
 
     padding: .5rem;
 
