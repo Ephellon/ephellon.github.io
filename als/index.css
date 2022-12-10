@@ -23,7 +23,9 @@
     font-family: Roobert, sans-serif, monospace;
     font-size: 15pt;
 
+    height: -moz-available;
     height: -webkit-fill-available;
+    width: -moz-available;
     width: -webkit-fill-available;
     overflow: hidden;
 }
@@ -39,6 +41,7 @@ body {
     padding: 0;
 
     height: -webkit-fill-available;
+    width: -moz-available;
     width: -webkit-fill-available;
 
     position: absolute;
@@ -71,6 +74,7 @@ header {
     text-align: center;
 
     height: -webkit-fill-available;
+    width: -moz-available;
     width: -webkit-fill-available;
 
     position: absolute;
@@ -198,6 +202,7 @@ footer {
     display: block;
     text-align: center;
 
+    width: -moz-available;
     width: -webkit-fill-available;
 
     padding: .5rem;
