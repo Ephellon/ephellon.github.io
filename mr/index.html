@@ -4,7 +4,7 @@
         <meta charset=utf-8>
         <title>Automatic Morning Reports</title>
 
-        <link rel=stylesheet href=mr.css>
+        <link rel=stylesheet href="mr.css">
         <script type=text/javascript src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
         <script type=text/javascript src="mr.js"></script>
     </head>
@@ -15,8 +15,8 @@
         </header>
         <article id=form>
             <div>
-                <label id=old-report for=report ondrop="handle.drop(event)" ondragover="handle.dragover(event)">
-                    <input hidden type=file id=report accept='application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' onchange="handle.drop(event)">
+                <label id=old-report for=report>
+                    <input hidden type=file id=report accept='application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'>
 
                     <h1><u>Upload</u> or <u>Drop</u> yesterday's report here!</h1>
                 </label>
@@ -29,9 +29,9 @@
         <br>
 
         <div style=text-align:center>
-            <button id=login onclick="handle.login(event)">Login to RAMPOD</button>
+            <button id=login>Login to RAMPOD</button>
 
-            <button disabled id=generate onclick="handle.generate(event)" title="You must login to RAMPOD first">Generate Morning Report</button>
+            <button disabled id=generate title="You must login to RAMPOD first">Generate Morning Report</button>
         </div>
     </body>
 </html>
