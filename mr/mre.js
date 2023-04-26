@@ -344,7 +344,7 @@ let encode = encodeURIComponent;
 // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // //
 
-let RAMPOD = false,
+let RAMPOD = location.hostname.endsWith('.af.mil'),
     UPLOAD = false;
 
 let ELLSWORTH = 513,
@@ -580,4 +580,4 @@ let handle = {
 $('#old-morning-report').addEventListener('drop', handle.drop);
 $('#old-morning-report').addEventListener('dragover', handle.dragover);
 $('#morning-report-file').addEventListener('change', handle.drop);
-$('#generate-morning-report').addEventListener('mouseup', handle.generate);
+$('#generate-morning-report').addEventListener('mouseup', handle.generate); 
