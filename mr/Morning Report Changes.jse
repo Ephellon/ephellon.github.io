@@ -1,0 +1,30 @@
+var Shell = WScript.CreateObject("WScript.Shell");
+
+var console = {
+    log: function log() {
+        for(var index = 0; index < arguments.length; index++)
+            WScript.Echo(arguments[index]);
+    }
+};
+
+function send() {
+    for(var i = 0; i < arguments.length; ++i) {
+        Shell.SendKeys(arguments[i]);
+        wait(30);
+    }
+}
+
+function wait(ms) {
+    WScript.Sleep(ms);
+}
+
+var Apps = ['RAMPOD', 'Global Eye Reports'];
+for(var i = 0; i < Apps.length; ++i)
+    Shell.AppActivate(Apps[i]);
+
+wait(5000);
+
+send([
+    '{F12}',
+    "" // Add bookmark.js logic here
+]);
