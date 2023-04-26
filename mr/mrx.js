@@ -148,11 +148,6 @@ try {
     /* Ignore the error... */
 }
 
-// https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API/Recording_a_media_element#utility_functions
-function wait(delay = 100, value) {
-    return new Promise(resolve => setTimeout(resolve, delay, value));
-}
-
 function $(selector, container = document, multiple = false) {
     return multiple?
         [...container?.querySelectorAll(selector)]:
@@ -309,30 +304,6 @@ Object.defineProperties(parseURL, {
     },
 });
 
-function range(range = 'A1') {
-    let field = [];
-    let [start, stop = start, skip = 1] = range.toUpperCase().split(':', 3),
-        [[_a, _1], [_z, _0]] = [start, stop].map(s => s.split(/(\d+)/, 2)),
-        library = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-    let A = 0, Z = 0, i = 0, j = 0;
-    for(let c of _a)
-        A += ++i * -~library.indexOf(c);
-
-    for(let c of _z)
-        Z += ++j * -~library.indexOf(c);
-
-    for(let a = A - 1, c = library[a]; a < Z; c = library[++a])
-        for(let _ = +(_1 == '*'? _0 == '*'? 999: _0: _1); _ <= _0; _ += +skip)
-            field[c+_] = field.push(c+_);
-
-    return field;
-}
-
-function parseHTML(html = '') {
-    return (new DOMParser).parseFromString(html, 'text/html');
-}
-
 let encode = encodeURIComponent;
 
 // // // // // // // // // // // // // // // //
@@ -344,7 +315,7 @@ let encode = encodeURIComponent;
 // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // //
 
-let RAMPOD = location.hostname.endsWith('.af.mil'),
+let RAMPOD = /RAMPOD/i.test(location.hostname) && location.hostname.endsWith('.af.mil'),
     UPLOAD = false;
 
 // System/network
@@ -415,12 +386,12 @@ let ALL = 'ALL', ANY = 0,
     WRALC = 534,
     XAISS = 7811;
 
-let ON = 'ON',
-    OFF = 'OFF';
+let ON = 'ON', OFF = 'OFF';
 
-const PARTS_PRODUCED = 'https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2/parts_produced.cfm';
-const RECEIVED_PARTS = 'https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2/received_reports.cfm';
-const STATUS_SUMMARY = 'https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2/status_summary.cfm';
+const GLOBAL_EYE = 'https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2';
+const PARTS_PRODUCED = `${GLOBAL_EYE}/parts_produced.cfm`;
+const RECEIVED_PARTS = `${GLOBAL_EYE}/received_reports.cfm`;
+const STATUS_SUMMARY = `${GLOBAL_EYE}/status_summary.cfm`;
 
 let [Day, Mon, day, year, time, offset] = (new Date + '').split(' ', 6);
 let today = [day, Mon, year].join('-');
@@ -441,15 +412,15 @@ function partsProduced(location = ELLSWORTH, workCenter = ANY) {
             submitRange: 'Submit',
             startDate2: yesterday,
             endDate2: today,
-            shiftStartTime: encode('00:00'),
+            shiftStartTime: encode('00:01'),
             shiftEndTime: encode('23:59'),
             squad: '',
             acft: '',
         }).href;
-    
+
     let frame = document.createElement('iframe');
     frame.src = url;
-    frame.dataset.location = [workCenter, location].join('@');
+    frame.dataset.location = ['parts-produced', workCenter, location].join('/');
 
     document.body.append(frame);
 
@@ -465,7 +436,7 @@ function partsReceived(location = ELLSWORTH, workCenter = ANY) {
             sys_id: B1B,
             startDate: yesterday,
             endDate: today,
-            shiftStartTime: encode('00:00'),
+            shiftStartTime: encode('00:01'),
             shiftEndTime: encode('23:59'),
             acft: '',
             status: '',
@@ -473,10 +444,10 @@ function partsReceived(location = ELLSWORTH, workCenter = ANY) {
             type: 'R',
             lru: '',
         }).href;
-    
+
     let frame = document.createElement('iframe');
     frame.src = url;
-    frame.dataset.location = [workCenter, location].join('@');
+    frame.dataset.location = ['received-parts', workCenter, location].join('/');
 
     document.body.append(frame);
 
@@ -487,12 +458,13 @@ function partsReceived(location = ELLSWORTH, workCenter = ANY) {
 function statusSummary(location = ELLSWORTH, workCenter = ANY) {
     let url = parseURL(STATUS_SUMMARY)
         .addSearch({
+            loc_id: ELLSWORTH, // ← FIX-ME: not seen, change later
             wc: workCenter,
         }).href;
-    
+
     let frame = document.createElement('iframe');
     frame.src = url;
-    frame.dataset.location = [workCenter, location].join('@');
+    frame.dataset.location = ['status-summary', workCenter, location].join('/');
 
     document.body.append(frame);
 
@@ -500,63 +472,54 @@ function statusSummary(location = ELLSWORTH, workCenter = ANY) {
 }
 
 // Load master-book (the one the user dropped in)
-let Book = XLSX.utils.book_new();
+let Book = XLSX.utils.book_new(),
+    { table_to_sheet, book_append_sheet } = XLSX.utils;
+
+Object.defineProperties(top, {
+    REPORT_STATUS: {
+        set(value = '') {
+            let [text, color = 'whtie'] = value.split('|>', 2),
+                status = $('#report-status');
+
+            status.style.color = `var(--${ color })`;
+            status.innerHTML = value;
+        },
+    },
+});
+
+REPORT_STATUS = 'Loading reports...|>yellow';
 
 Promise.allSettled([
     // 1. 24hr Prod
     // 2. E Pro
-    partsProduced(ELLSWORTH, AISFS)//.then(response => response.text()).then(parseHTML)
-        .then(body => {
-            let table = $('#offEquip', body);
-    
-            return XLSX.utils.table_to_sheet(table);
-        }).then((sheet = {}) => {
-            XLSX.utils.book_append_sheet(Book, sheet, '24hr Prod');
-            XLSX.utils.book_append_sheet(Book, sheet, 'E Pro');
-        }),
-    
+    partsProduced(ELLSWORTH, AISFS)
+        .then(body => [table_to_sheet($('#offEquip', body)), '24hr Prod', 'E Pro']),
+
     // 3. 24hr Recd
-    partsReceived(ELLSWORTH, ALL)//.then(response => response.text()).then(parseHTML)
-        .then(body => {
-            let table = $('#receivedReport', body);
-    
-            return XLSX.utils.table_to_sheet(table);
-        }).then((sheet = {}) => {
-            XLSX.utils.book_append_sheet(Book, sheet, '24hr Recd');
-        }),
-    
+    partsReceived(ELLSWORTH, ALL)
+        .then(body => [table_to_sheet($('#receivedReport', body)), '24hr Recd']),
+
     // 4. Status Summary EAFB
-    statusSummary(ELLSWORTH, ALL)//.then(response => response.text()).then(parseHTML)
-        .then(body => {
-            let table = $('#statusSummary', body);
-    
-            return XLSX.utils.table_to_sheet(table);
-        }).then((sheet = {}) => {
-            XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary EAFB');
-        }),
-    
+    statusSummary(ELLSWORTH, ALL)
+        .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary EAFB']),
+
     // 5. D Pro
-    partsProduced(DYESS, ALL)//.then(response => response.text()).then(parseHTML)
-        .then(body => {
-            let table = $('#offEquip', body);
-    
-            return XLSX.utils.table_to_sheet(table);
-        }).then((sheet = {}) => {
-            XLSX.utils.book_append_sheet(Book, sheet, 'D Pro');
-        }),
-    
+    partsProduced(DYESS, ALL)
+        .then(body => [table_to_sheet($('#offEquip', body)), 'D Pro']),
+
     // 6. Status Summary Dyess*
-    statusSummary(DYESS, ALL)//.then(response => response.text()).then(parseHTML)
-        .then(body => {
-            let table = $('#statusSummary', body);
-    
-            return XLSX.utils.table_to_sheet(table);
-        }).then((sheet = {}) => {
-            XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary Dyess');
-        }),
+    statusSummary(DYESS, ALL)
+        .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary Dyess']),
 ])
     // 7. Add to new book
-    .then(() => {
+    .then((sheets = []) => {
         // Then append to respective sheet(s)
+        for(let [sheet, ...names] of sheets)
+            for(let name of names)
+                book_append_sheet(Book, sheet, name);
+
+        REPORT_STATUS = 'Saving reports...|>green';
+
         XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
-    });
+    })
+    .then(() => REPORT_STATUS = 'Complete.|>green');
