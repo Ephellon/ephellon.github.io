@@ -347,15 +347,76 @@ let encode = encodeURIComponent;
 let RAMPOD = location.hostname.endsWith('.af.mil'),
     UPLOAD = false;
 
-let ELLSWORTH = 513,
-    DYESS = 524,
-    SYSTEM = 533;
+// System/network
+let A10 = 22439,
+    B1B = 533,
+    B2 = 6395,
+    F15 = 531,
+    F16 = 6228;
 
-let ALL = 'ALL',
-    ANY = 0,
-    ON = 'ON',
-    OFF = 'OFF',
-    AISFS = 598;
+// Location
+let AL_UDEID = 194,
+    DYESS = 524,
+    ELLSWORTH = 513,
+    ROBINS_MXS = 528,
+    ROBINS_WRALC = 145,
+    TINKER = 530;
+
+// Workcenter
+let ALL = 0,
+    A2SPC = 5665,
+    AAAIS = 584,
+    AACRD = 38550,
+    AAGE1 = 5458,
+    AASMU = 4874,
+    AAVAI = 6333,
+    AAVTS = 6512,
+    ACATS = 583,
+    ACCRD = 29312,
+    ACCRW = 33087,
+    ACRDD = 595,
+    ACREW = 46751,
+    ACRRD = 27737,
+    ACRRW = 594,
+    ACRTS = 596,
+    ACRWW = 34179,
+    AEEC7 = 32972,
+    AELME = 5571,
+    AEMCC = 5024,
+    AEMSR = 5054,
+    AFAIS = 6513,
+    AIATS = 599,
+    AISDA = 597,
+    AISFS = 598,
+    ALUD1 = 6403,
+    AMETT = 6577,
+    AMEWS = 581,
+    AMVFO = 582,
+    AMXPC = 45624,
+    AMXWR = 42115,
+    AOAS7 = 4886,
+    ARSPC = 5070,
+    ASTMT = 5766,
+    ATECH = 5814,
+    B1DEP = 6363,
+    B2DEP = 24989,
+    BATTS = 6492,
+    CAATS = 6502,
+    EAISI = 23291,
+    EAUTS = 6819,
+    GAISM = 5352,
+    HAISS = 6592,
+    KIAIS = 6486,
+    LAIS1 = 22521,
+    LMTCH = 44424,
+    LRAGE = 45071,
+    MIFIB = 3575,
+    OCALC = 5060,
+    WRALC = 534,
+    XAISS = 7811;
+
+let ON = 'ON',
+    OFF = 'OFF';
 
 const PARTS_PRODUCED = 'https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2/parts_produced.cfm';
 const RECEIVED_PARTS = 'https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2/received_reports.cfm';
@@ -366,17 +427,17 @@ let today = [day, Mon, year].join('-');
 let yesterday = [(day < 2? day: Day == 'Sun'? day - 2:day - 1), Mon, year].join('-');
 
 // Ellsworth → parts = partsProduced().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#offEquip')).then(@@<table>)...
-function partsProduced(location = ELLSWORTH, workCenter = AISFS) {
+function partsProduced(location = ELLSWORTH, workCenter = ALL) {
     let url = parseURL(PARTS_PRODUCED)
         .addSearch({
-            system: SYSTEM,
+            system: B1B,
             location,
             workCenter,
-            crewman: ALL,
+            crewman: 'ALL',
             partno: 0,
-            stationType: ALL,
+            stationType: 'ALL',
             lru: encode('%'),
-            status: ALL,
+            status: 'ALL',
             submitRange: 'Submit',
             startDate2: yesterday,
             endDate2: today,
@@ -395,7 +456,7 @@ function partsReceived(location = ELLSWORTH, workCenter = ALL) {
         .addSearch({
             loc_id: location,
             wc: workCenter,
-            sys_id: SYSTEM,
+            sys_id: B1B,
             startDate: yesterday,
             endDate: today,
             shiftStartTime: encode('00:00'),
@@ -426,7 +487,7 @@ let Book = XLSX.utils.book_new();
 Promise.allSettled([
     // 1. 24hr Prod
     // 2. E Pro
-    partsProduced(ELLSWORTH, AISFS).then(response => response.text()).then(parseHTML)
+    partsProduced(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
         .then(DOM => {
             let table = DOM.querySelector('#offEquip');
     
