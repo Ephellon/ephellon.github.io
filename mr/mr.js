@@ -66,6 +66,26 @@ Object.defineProperties($, {
     },
 });
 
+function range(range = 'A1') {
+    let field = [];
+    let [start, stop = start, skip = 1] = range.toUpperCase().split(':', 3),
+        [[_a, _1], [_z, _0]] = [start, stop].map(s => s.split(/(\d+)/, 2)),
+        library = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    let A = 0, Z = 0, i = 0, j = 0;
+    for(let c of _a)
+        A += ++i * -~library.indexOf(c);
+
+    for(let c of _z)
+        Z += ++j * -~library.indexOf(c);
+
+    for(let a = A - 1, c = library[a]; a < Z; c = library[++a])
+        for(let _ = +_1; _ <= _0; _ += +skip)
+            field[c+_] = field.push(c+_);
+
+    return field;
+}
+
 // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // //
@@ -116,21 +136,41 @@ let handle = {
         let reader = new FileReader;
 
         reader.onload = event => {
-            const data = event.target?.result;
+            const meta = event.target?.result;
 
-            let masterbook = XLSX.read(data, { type: 'binary' });
+            let masterbook = XLSX.read(meta, { type: 'binary' });
 
             // Get reports...
             fetch(`<RAMPOD URL>`).then(response => response.text()).then(html => (new DOMParser).parseFromString(html, 'text/html'))
                 .then(DOM => {
+                    // Modify a single cell → https://stackoverflow.com/a/51442854/4211612
+                    let name = '24hr Prod';
                     let table = $(`table`, DOM);
                     let sheet = XLSX.utils.table_to_sheet(table);
+                    let mastersheet = masterbook.Sheets[name];
 
-                    XLSX.utils.book_append_sheet(masterbook, sheet, 'Outside');
+                    // Append to the sheet
+                    let json = XLSX.utils.sheet_to_json(mastersheet),
+                        copy = [...json],
+                        data = XLSX.utils.sheet_to_json(sheet);
+
+                    // It's the 1st. Reset the sheet
+                    if(today == yesterday) {
+                        json = [];
+
+                        for(let cell of copy)
+                            if(cell.__rowNum__ in range('A1:M2'))
+                                json.push(cell);
+                    }
+
+                    // Append data to the sheet...
+                    json.push(...data);
+
+                    masterbook.Sheets[name] = XLSX.utils.json_to_sheet(json);
                 });
 
             // Then append to respective sheet(s)
-            XLSX.writeFile(masterbook, `Avionics Morning Report ${ today }.xlsx`);
+            XLSX.writeFile(masterbook, `Avionics Morning Report (${ today }).xlsx`);
         };
 
         reader.onerror = error => console.error(error);
