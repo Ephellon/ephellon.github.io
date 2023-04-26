@@ -474,7 +474,7 @@ let handle = {
             }
 
             // Overwrite table onto sheet
-            function layerTable(table, where = 'A1', ...names) {
+            function layerTable(table, where = 'A1' ...names) {
                 for(let name of names) {
                     let mastersheet = masterbook.Sheets[name];
                     let sheet = XLSX.utils.table_to_sheet(table);
@@ -561,3 +561,10 @@ let handle = {
         reader.readAsBinaryString(report);
     },
 };
+
+// Event listeners
+$('#old-report').addEventListener('drop', handle.drop);
+$('#old-report').addEventListener('dragover', handle.dragover);
+$('#report').addEventListener('change', handle.drop);
+$('#login').addEventListener('mouseup', handle.log);
+$('#generate').addEventListener('mouseup', handle.generate);
