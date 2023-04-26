@@ -454,6 +454,7 @@ let handle = {
         let [report] = $('#morning-report-file').files;
         let reader = new FileReader;
         let steps = 6;
+        let Book = XLSX.utils.book_new();
 
         reader.onload = event => {
             const meta = event.target?.result;
@@ -520,33 +521,41 @@ let handle = {
                 .then(DOM => {
                     let table = DOM.querySelector('#offEquip');
 
-                    layerTable(table, 'A2:O*', '24hr Prod');
-                    appendTable(table, 'A*', 'E Pro');
-                }).then(() => --steps);
+                    return XLSX.utils.table_to_sheet(table);
+                }).then(sheet => {
+                    XLSX.utils.book_append_sheet(Book, sheet, '24hr Prod');
+                    XLSX.utils.book_append_sheet(Book, sheet, 'E Pro');
+                });
 
             // 3. 24hr Recd
             partsReceived(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
                 .then(DOM => {
                     let table = DOM.querySelector('#receivedReport');
 
-                    layerTable(table, 'A2:N*', '24hr Recd');
-                }).then(() => --steps);
+                    return XLSX.utils.table_to_sheet(table);
+                }).then(sheet => {
+                    XLSX.utils.book_append_sheet(Book, sheet, '24hr Recd');
+                });
 
             // 4. Status Summary EAFB
             statusSummary(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
                 .then(DOM => {
                     let table = DOM.querySelector('#statusSummary');
 
-                    layerTable(table, 'A2:O*', 'Status Summary EAFB');
-                }).then(() => --steps);
+                    return XLSX.utils.table_to_sheet(table);
+                }).then(sheet => {
+                    XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary EAFB');
+                });
 
             // 5. D Pro
             partsProduced(DYESS, ALL).then(response => response.text()).then(parseHTML)
                 .then(DOM => {
                     let table = DOM.querySelector('#offEquip');
 
-                    layerTable(table, 'A7:O*', 'D Pro');
-                }).then(() => --steps);
+                    return XLSX.utils.table_to_sheet(table);
+                }).then(sheet => {
+                    XLSX.utils.book_append_sheet(Book, sheet, 'D Pro');
+                });
 
             // 6. Status Summary Dyess*
             statusSummary(DYESS, ALL).then(response => response.text()).then(parseHTML)
@@ -561,12 +570,14 @@ let handle = {
 
                     let table = DOM.querySelector('#statusSummary');
 
-                    layerTable(table, 'A2:O*', 'Status Summary Dyess');
-                }).then(() => --steps);
+                    return XLSX.utils.table_to_sheet(table);
+                }).then(sheet => {
+                    XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary Dyess');
+                });
 
             when(() => steps < 1).then(() => {
                 // Then append to respective sheet(s)
-                XLSX.writeFile(masterbook, `Avionics Morning Report (${ today }).xlsx`);
+                XLSX.writeFile(Book, `Avionics Morning Report - Changes - (${ today }).xlsx`);
             });
         };
 
@@ -580,4 +591,4 @@ let handle = {
 $('#old-morning-report').addEventListener('drop', handle.drop);
 $('#old-morning-report').addEventListener('dragover', handle.dragover);
 $('#morning-report-file').addEventListener('change', handle.drop);
-$('#generate-morning-report').addEventListener('mouseup', handle.generate); 
+$('#generate-morning-report').addEventListener('mouseup', handle.generate);
