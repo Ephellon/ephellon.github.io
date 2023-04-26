@@ -1,0 +1,136 @@
+[data-root^="ephellon.github.io"i] {
+    /* Variables */
+    --background: #607D8B;
+    --color: #29373E;
+
+    --background-dark: #203D4B;
+    --background-dark-lit: #405D6B;
+    --color-dark: #09070E;
+    --border-dark: #0001;
+
+    --background-light: #a0bDcB;
+    --background-light-dim: #809DaB;
+    --color-light: #69777E;
+    --border-light: #fff1;
+
+    --black: #000;
+    --black-lit: #222;
+    --black-75: #000c;
+    --black-50: #0008;
+    --black-25: #0004;
+
+    --white: #fff;
+    --white-dim: #ddd;
+    --white-75: #fffc;
+    --white-50: #fff8;
+    --white-25: #fff4;
+
+    --red: #f00;
+    --red-dim: #800;
+    --red-lit: #b00;
+    --red-75: #f00c;
+    --red-50: #f008;
+    --red-25: #f004;
+
+    --green: #0f0;
+    --green-dim: #080;
+    --green-lit: #0b0;
+    --green-75: #0f0c;
+    --green-50: #0f08;
+    --green-25: #0f04;
+
+    --blue: #00f;
+    --blue-dim: #008;
+    --blue-lit: #00b;
+    --blue-75: #00fc;
+    --blue-50: #00f8;
+    --blue-25: #00f4;
+
+    --grey: #888;
+    --grey-dim: #444;
+    --grey-lit: #bbb;
+    --gray: var(--grey);
+    --gray-dim: var(--grey-dim);
+    --gray-lit: var(--grey-lit);
+
+    --purple: #9147ff;
+    --purple-lit: #a970ff;
+    --purple-dark: #4700b3;
+    --purple-soft: #6262c2;
+
+    --igor-pink: #ff9ab4;
+    --baby-blue: #387aff;
+    --baby-gold: #f59b00;
+    --baby-grey: #9b9b9b;
+    --baby-gray: var(--baby-grey);
+
+    /* Main Styling */
+    background: var(--background);
+    color: var(--color);
+}
+
+[data-root^="ephellon.github.io"i] * {
+    font-family: system-ui, calibri, monospace, sans-serif !important;
+}
+
+[data-root^="ephellon.github.io"i] *:disabled {
+    cursor: not-allowed;
+    text-decoration: .25em line-through;
+
+    opacity: .5;
+}
+
+header {
+    text-align: center;
+}
+
+#auto-report-form {
+    text-align: center;
+
+    border: 3px solid var(--color);
+    border-radius: 5px;
+    padding: 1em;
+}
+
+#old-morning-report {
+    color: var(--white-50);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 3em;
+}
+
+#modify-report {
+    background: var(--red);
+    color: var(--white);
+}
+
+#modify-report[data-name] {
+    background: var(--green-50);
+    color: var(--color);
+}
+
+#modify-report[data-name]::after {
+    content: ": " attr(data-name);
+}
+
+#generate-morning-report {
+    background: var(--baby-blue);
+}
+
+button, a {
+    appearance: button;
+
+    background: white;
+    border-color: currentColor !important;
+    color: var(--color) !important;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+
+    border: 1px solid var(--color);
+    border-radius: 3px;
+}
+
+button:not(:disabled) {
+    cursor: pointer;
+}
