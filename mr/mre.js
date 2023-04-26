@@ -434,8 +434,8 @@ let handle = {
         event.preventDefault();
 
         let modifyReport = $('#modify-report');
-        let [report] = $('#report').files;
-        let generate = $('#generate');
+        let [report] = $('#morning-report-file').files;
+        let generate = $('#generate-morning-report');
 
         UPLOAD = report?.size > 0;
 
@@ -451,7 +451,7 @@ let handle = {
 
     generate(event) {
         // Load master-book (the one the user dropped in)
-        let [report] = $('#report').files;
+        let [report] = $('#morning-report-file').files;
         let reader = new FileReader;
         let steps = 6;
 
