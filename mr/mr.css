@@ -126,9 +126,10 @@ button, a {
 
     background: white;
     border-color: currentColor !important;
-    color: var(--color);
+    color: var(--color) !important;
     font-size: 1em;
     font-weight: bold;
+    text-decoration: none;
 
     border: 1px solid var(--color);
     border-radius: 3px;
