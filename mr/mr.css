@@ -121,7 +121,9 @@ header {
     background: var(--baby-blue);
 }
 
-button {
+button, a {
+    appearance: button;
+
     background: white;
     border-color: currentColor !important;
     color: var(--color);
