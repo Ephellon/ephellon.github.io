@@ -80,7 +80,7 @@
     opacity: .5;
 }
 
-header {
+[data-root^="ephellon.github.io"i] header {
     text-align: center;
 }
 
@@ -117,7 +117,7 @@ header {
     background: var(--baby-blue);
 }
 
-button, a {
+[data-root^="ephellon.github.io"i] :is(button, a) {
     appearance: button;
 
     background: white;
@@ -131,6 +131,6 @@ button, a {
     border-radius: 3px;
 }
 
-button:not(:disabled) {
+[data-root^="ephellon.github.io"i] :is(button:not(:disabled)) {
     cursor: pointer;
 }
