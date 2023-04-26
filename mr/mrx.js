@@ -363,7 +363,7 @@ const STATUS_SUMMARY = 'https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2/sta
 
 let [Day, Mon, day, year, time, offset] = (new Date + '').split(' ', 6);
 let today = [day, Mon, year].join('-');
-let yesterday = [(day < 2? day: day - 1), Mon, year].join('-');
+let yesterday = [(day < 2? day: Day == 'Sun'? day - 2:day - 1), Mon, year].join('-');
 
 // Ellsworth → parts = partsProduced().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#offEquip')).then(@@<table>)...
 function partsProduced(location = ELLSWORTH, workCenter = AISFS) {
