@@ -7,6 +7,31 @@ function nullish(value) {
     return value === null || value === undefined;
 }
 
+function parseBool(value = null) {
+    let stringified;
+    try {
+        stringified = JSON.stringify(value);
+    } catch(error) {
+        stringified = value.toString();
+    }
+
+    stringified = (stringified || typeof stringified).trim().replace(/^"([^"]*?)"$/, '$1');
+
+    switch(stringified) {
+        case undefined:
+        case 'false':
+        case 'null':
+        case '[]':
+        case '{}':
+        case '0':
+        case '':
+            return false;
+
+        default:
+            return (["bigint","number"].contains(typeof value)? !Number.isNaN(value): true);
+    }
+}
+
 async function when(callback, ms = 100, ...args) {
     return new Promise((resolve, reject) => {
         let interval = setInterval(async args => {
