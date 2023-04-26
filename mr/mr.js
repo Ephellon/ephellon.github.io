@@ -566,5 +566,5 @@ let handle = {
 $('#old-report').addEventListener('drop', handle.drop);
 $('#old-report').addEventListener('dragover', handle.dragover);
 $('#report').addEventListener('change', handle.drop);
-$('#login').addEventListener('mouseup', handle.log);
+$('#login').addEventListener('mouseup', handle.login);
 $('#generate').addEventListener('mouseup', handle.generate);
