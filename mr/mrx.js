@@ -1,3 +1,4 @@
+// XLSX.js imported from GitHub; see API reference here → https://docs.sheetjs.com/docs/api/
 // The following is just shared logic
 function defined(value) {
     return !nullish(value);
