@@ -451,139 +451,72 @@ let handle = {
 
     generate(event) {
         // Load master-book (the one the user dropped in)
-        let [report] = $('#morning-report-file').files;
-        let reader = new FileReader;
-        let steps = 6;
         let Book = XLSX.utils.book_new();
+        
+        // 1. 24hr Prod
+        // 2. E Pro
+        partsProduced(ELLSWORTH, AISFS).then(response => response.text()).then(parseHTML)
+            .then(DOM => {
+                let table = DOM.querySelector('#offEquip');
+        
+                return XLSX.utils.table_to_sheet(table);
+            }).then((sheet = {}) => {
+                XLSX.utils.book_append_sheet(Book, sheet, '24hr Prod');
+                XLSX.utils.book_append_sheet(Book, sheet, 'E Pro');
+            });
+        
+        // 3. 24hr Recd
+        partsReceived(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
+            .then(DOM => {
+                let table = DOM.querySelector('#receivedReport');
+        
+                return XLSX.utils.table_to_sheet(table);
+            }).then((sheet = {}) => {
+                XLSX.utils.book_append_sheet(Book, sheet, '24hr Recd');
+            });
+        
+        // 4. Status Summary EAFB
+        statusSummary(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
+            .then(DOM => {
+                let table = DOM.querySelector('#statusSummary');
+        
+                return XLSX.utils.table_to_sheet(table);
+            }).then((sheet = {}) => {
+                XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary EAFB');
+            });
+        
+        // 5. D Pro
+        partsProduced(DYESS, ALL).then(response => response.text()).then(parseHTML)
+            .then(DOM => {
+                let table = DOM.querySelector('#offEquip');
+        
+                return XLSX.utils.table_to_sheet(table);
+            }).then((sheet = {}) => {
+                XLSX.utils.book_append_sheet(Book, sheet, 'D Pro');
+            });
+        
+        // 6. Status Summary Dyess*
+        statusSummary(DYESS, ALL).then(response => response.text()).then(parseHTML)
+            .then(DOM => {
+                /* NOT USED. REMOVED `return` to run. */
+                /* NOT USED. REMOVED `return` to run. */
+                /* NOT USED. REMOVED `return` to run. */
+                             return;
+                /* NOT USED. REMOVED `return` to run. */
+                /* NOT USED. REMOVED `return` to run. */
+                /* NOT USED. REMOVED `return` to run. */
+        
+                let table = DOM.querySelector('#statusSummary');
+        
+                return XLSX.utils.table_to_sheet(table);
+            }).then((sheet = {}) => {
+                XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary Dyess');
+            })
 
-        reader.onload = event => {
-            const meta = event.target?.result;
-            const masterbook = XLSX.read(meta, { type: 'binary' });
-
-            // Push table to bottom of sheet
-            function appendTable(table, where = 'A*', ...names) {
-                // Modify a single cell → https://stackoverflow.com/a/51442854/4211612
-                for(let name of names) {
-                    let mastersheet = masterbook.Sheets[name];
-                    let sheet = XLSX.utils.table_to_sheet(table);
-
-                    // Append to the sheet
-                    let json = XLSX.utils.sheet_to_json(mastersheet),
-                        data = XLSX.utils.sheet_to_json(sheet),
-                        move = {};
-
-                    where = where.replace(/\*/g, json.length);
-
-                    // Keep headers and extra data...
-                    for(let cell in mastersheet)
-                      if(!cell in range(where))
-                          move[cell] = cell;
-
-                    // Append data to the sheet...
-                    for(let cell in sheet)
-                        if(cell in range(where))
-                            move[cell] = cell;
-
-                    masterbook.Sheets[name] = XLSX.utils.json_to_sheet(move);
-                }
-            }
-
-            // Overwrite table onto sheet
-            function layerTable(table, where = 'A1', ...names) {
-                for(let name of names) {
-                    let mastersheet = masterbook.Sheets[name];
-                    let sheet = XLSX.utils.table_to_sheet(table);
-
-                    // Append to the sheet
-                    let json = XLSX.utils.sheet_to_json(mastersheet),
-                        data = XLSX.utils.sheet_to_json(sheet),
-                        move = {};
-
-                    where = where.replace(/\*/g, json.length);
-
-                    // Keep headers and extra data...
-                    for(let cell in mastersheet)
-                      if(!cell in range(where))
-                          move[cell] = cell;
-
-                    // Append data to the sheet...
-                    for(let cell in sheet)
-                        if(cell in range(where))
-                            move[cell] = cell;
-
-                    masterbook.Sheets[name] = XLSX.utils.json_to_sheet(move);
-                }
-            }
-
-            // 1. 24hr Prod
-            // 2. E Pro
-            partsProduced(ELLSWORTH, AISFS).then(response => response.text()).then(parseHTML)
-                .then(DOM => {
-                    let table = DOM.querySelector('#offEquip');
-
-                    return XLSX.utils.table_to_sheet(table);
-                }).then(sheet => {
-                    XLSX.utils.book_append_sheet(Book, sheet, '24hr Prod');
-                    XLSX.utils.book_append_sheet(Book, sheet, 'E Pro');
-                });
-
-            // 3. 24hr Recd
-            partsReceived(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
-                .then(DOM => {
-                    let table = DOM.querySelector('#receivedReport');
-
-                    return XLSX.utils.table_to_sheet(table);
-                }).then(sheet => {
-                    XLSX.utils.book_append_sheet(Book, sheet, '24hr Recd');
-                });
-
-            // 4. Status Summary EAFB
-            statusSummary(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
-                .then(DOM => {
-                    let table = DOM.querySelector('#statusSummary');
-
-                    return XLSX.utils.table_to_sheet(table);
-                }).then(sheet => {
-                    XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary EAFB');
-                });
-
-            // 5. D Pro
-            partsProduced(DYESS, ALL).then(response => response.text()).then(parseHTML)
-                .then(DOM => {
-                    let table = DOM.querySelector('#offEquip');
-
-                    return XLSX.utils.table_to_sheet(table);
-                }).then(sheet => {
-                    XLSX.utils.book_append_sheet(Book, sheet, 'D Pro');
-                });
-
-            // 6. Status Summary Dyess*
-            statusSummary(DYESS, ALL).then(response => response.text()).then(parseHTML)
-                .then(DOM => {
-                    /* NOT USED. REMOVED `return` to run. */
-                    /* NOT USED. REMOVED `return` to run. */
-                    /* NOT USED. REMOVED `return` to run. */
-                                 return;
-                    /* NOT USED. REMOVED `return` to run. */
-                    /* NOT USED. REMOVED `return` to run. */
-                    /* NOT USED. REMOVED `return` to run. */
-
-                    let table = DOM.querySelector('#statusSummary');
-
-                    return XLSX.utils.table_to_sheet(table);
-                }).then(sheet => {
-                    XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary Dyess');
-                });
-
-            when(() => steps < 1).then(() => {
+            .then(() => {
                 // Then append to respective sheet(s)
                 XLSX.writeFile(Book, `Avionics Morning Report - Changes - (${ today }).xlsx`);
             });
-        };
-
-        reader.onerror = error => console.error(error);
-
-        reader.readAsBinaryString(report);
     },
 };
 
