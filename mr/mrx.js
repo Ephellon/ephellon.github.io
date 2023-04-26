@@ -479,5 +479,5 @@ Promise.allSettled([
     // 7. Add to new book
     .then(() => {
         // Then append to respective sheet(s)
-        XLSX.writeFile(Book, `Avionics Morning Report - Changes - (${ today }).xlsx`);
+        XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
     });
