@@ -428,6 +428,8 @@ let handle = {
         // Open RAMPOD Reports link (should prompt login)
         RAMPOD = true;
 
+        open(`https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2/`, '_blank');
+
         let generate = $('#generate');
 
         generate.disabled = !RAMPOD || !UPLOAD;
