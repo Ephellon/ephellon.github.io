@@ -436,7 +436,7 @@ function partsProduced(location = ELLSWORTH, workCenter = ALL) {
             crewman: 'ALL',
             partno: 0,
             stationType: 'ALL',
-            lru: encode('%'),
+            lru: '',
             status: 'ALL',
             submitRange: 'Submit',
             startDate2: yesterday,
@@ -446,8 +446,14 @@ function partsProduced(location = ELLSWORTH, workCenter = ALL) {
             squad: '',
             acft: '',
         }).href;
+    
+    let frame = document.createElement('iframe');
+    frame.src = url;
+    frame.dataset.location = [workCenter, location].join('@');
 
-    return fetch(url);
+    document.body.append(frame);
+
+    return when.defined(frame => $('.bodycontainer', frame.contentDocument), 100, frame);
 }
 
 // Ellsworth → parts = partsReceived().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#receivedReport')).then(@@<table>)...
@@ -461,14 +467,20 @@ function partsReceived(location = ELLSWORTH, workCenter = ALL) {
             endDate: today,
             shiftStartTime: encode('00:00'),
             shiftEndTime: encode('23:59'),
-            jobType: OFF,
-            type: 'R',
             acft: '',
             status: '',
-            lru: encode('%'),
+            jobType: OFF,
+            type: 'R',
+            lru: '',
         }).href;
+    
+    let frame = document.createElement('iframe');
+    frame.src = url;
+    frame.dataset.location = [workCenter, location].join('@');
 
-    return fetch(url);
+    document.body.append(frame);
+
+    return when.defined(frame => $('.bodycontainer', frame.contentDocument), 100, frame);
 }
 
 // Ellsworth → parts = statusSummary().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#statusSummary')).then(@@<table>)...
@@ -477,8 +489,14 @@ function statusSummary(location = ELLSWORTH, workCenter = ALL) {
         .addSearch({
             wc: workCenter,
         }).href;
+    
+    let frame = document.createElement('iframe');
+    frame.src = url;
+    frame.dataset.location = [workCenter, location].join('@');
 
-    return fetch(url);
+    document.body.append(frame);
+
+    return when.defined(frame => $('.bodycontainer', frame.contentDocument), 100, frame);
 }
 
 // Load master-book (the one the user dropped in)
@@ -487,9 +505,9 @@ let Book = XLSX.utils.book_new();
 Promise.allSettled([
     // 1. 24hr Prod
     // 2. E Pro
-    partsProduced(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
-        .then(DOM => {
-            let table = DOM.querySelector('#offEquip');
+    partsProduced(ELLSWORTH, AISFS)//.then(response => response.text()).then(parseHTML)
+        .then(body => {
+            let table = $('#offEquip', body);
     
             return XLSX.utils.table_to_sheet(table);
         }).then((sheet = {}) => {
@@ -498,9 +516,9 @@ Promise.allSettled([
         }),
     
     // 3. 24hr Recd
-    partsReceived(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
-        .then(DOM => {
-            let table = DOM.querySelector('#receivedReport');
+    partsReceived(ELLSWORTH, 'ALL')//.then(response => response.text()).then(parseHTML)
+        .then(body => {
+            let table = $('#receivedReport', body);
     
             return XLSX.utils.table_to_sheet(table);
         }).then((sheet = {}) => {
@@ -508,9 +526,9 @@ Promise.allSettled([
         }),
     
     // 4. Status Summary EAFB
-    statusSummary(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
-        .then(DOM => {
-            let table = DOM.querySelector('#statusSummary');
+    statusSummary(ELLSWORTH, 'ALL')//.then(response => response.text()).then(parseHTML)
+        .then(body => {
+            let table = $('#statusSummary', body);
     
             return XLSX.utils.table_to_sheet(table);
         }).then((sheet = {}) => {
@@ -518,9 +536,9 @@ Promise.allSettled([
         }),
     
     // 5. D Pro
-    partsProduced(DYESS, ALL).then(response => response.text()).then(parseHTML)
-        .then(DOM => {
-            let table = DOM.querySelector('#offEquip');
+    partsProduced(DYESS, 'ALL')//.then(response => response.text()).then(parseHTML)
+        .then(body => {
+            let table = $('#offEquip', body);
     
             return XLSX.utils.table_to_sheet(table);
         }).then((sheet = {}) => {
@@ -528,9 +546,9 @@ Promise.allSettled([
         }),
     
     // 6. Status Summary Dyess*
-    statusSummary(DYESS, ALL).then(response => response.text()).then(parseHTML)
-        .then(DOM => {
-            let table = DOM.querySelector('#statusSummary');
+    statusSummary(DYESS, 'ALL')//.then(response => response.text()).then(parseHTML)
+        .then(body => {
+            let table = $('#statusSummary', body);
     
             return XLSX.utils.table_to_sheet(table);
         }).then((sheet = {}) => {
