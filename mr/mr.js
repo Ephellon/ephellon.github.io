@@ -474,7 +474,7 @@ let handle = {
             }
 
             // Overwrite table onto sheet
-            function layerTable(table, where = 'A1' ...names) {
+            function layerTable(table, where = 'A1', ...names) {
                 for(let name of names) {
                     let mastersheet = masterbook.Sheets[name];
                     let sheet = XLSX.utils.table_to_sheet(table);
