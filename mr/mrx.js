@@ -423,59 +423,60 @@ function statusSummary(location = ELLSWORTH, workCenter = ALL) {
 // Load master-book (the one the user dropped in)
 let Book = XLSX.utils.book_new();
 
-// 1. 24hr Prod
-// 2. E Pro
-partsProduced(ELLSWORTH, AISFS).then(response => response.text()).then(parseHTML)
-    .then(DOM => {
-        let table = DOM.querySelector('#offEquip');
-
-        return XLSX.utils.table_to_sheet(table);
-    }).then((sheet = {}) => {
-        XLSX.utils.book_append_sheet(Book, sheet, '24hr Prod');
-        XLSX.utils.book_append_sheet(Book, sheet, 'E Pro');
-    });
-
-// 3. 24hr Recd
-partsReceived(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
-    .then(DOM => {
-        let table = DOM.querySelector('#receivedReport');
-
-        return XLSX.utils.table_to_sheet(table);
-    }).then((sheet = {}) => {
-        XLSX.utils.book_append_sheet(Book, sheet, '24hr Recd');
-    });
-
-// 4. Status Summary EAFB
-statusSummary(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
-    .then(DOM => {
-        let table = DOM.querySelector('#statusSummary');
-
-        return XLSX.utils.table_to_sheet(table);
-    }).then((sheet = {}) => {
-        XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary EAFB');
-    });
-
-// 5. D Pro
-partsProduced(DYESS, ALL).then(response => response.text()).then(parseHTML)
-    .then(DOM => {
-        let table = DOM.querySelector('#offEquip');
-
-        return XLSX.utils.table_to_sheet(table);
-    }).then((sheet = {}) => {
-        XLSX.utils.book_append_sheet(Book, sheet, 'D Pro');
-    });
-
-// 6. Status Summary Dyess*
-statusSummary(DYESS, ALL).then(response => response.text()).then(parseHTML)
-    .then(DOM => {
-        let table = DOM.querySelector('#statusSummary');
-
-        return XLSX.utils.table_to_sheet(table);
-    }).then((sheet = {}) => {
-        XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary Dyess');
-    })
-
-// 7. Add to new book
+Promise.allSettled([
+    // 1. 24hr Prod
+    // 2. E Pro
+    partsProduced(ELLSWORTH, AISFS).then(response => response.text()).then(parseHTML)
+        .then(DOM => {
+            let table = DOM.querySelector('#offEquip');
+    
+            return XLSX.utils.table_to_sheet(table);
+        }).then((sheet = {}) => {
+            XLSX.utils.book_append_sheet(Book, sheet, '24hr Prod');
+            XLSX.utils.book_append_sheet(Book, sheet, 'E Pro');
+        }),
+    
+    // 3. 24hr Recd
+    partsReceived(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
+        .then(DOM => {
+            let table = DOM.querySelector('#receivedReport');
+    
+            return XLSX.utils.table_to_sheet(table);
+        }).then((sheet = {}) => {
+            XLSX.utils.book_append_sheet(Book, sheet, '24hr Recd');
+        }),
+    
+    // 4. Status Summary EAFB
+    statusSummary(ELLSWORTH, ALL).then(response => response.text()).then(parseHTML)
+        .then(DOM => {
+            let table = DOM.querySelector('#statusSummary');
+    
+            return XLSX.utils.table_to_sheet(table);
+        }).then((sheet = {}) => {
+            XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary EAFB');
+        }),
+    
+    // 5. D Pro
+    partsProduced(DYESS, ALL).then(response => response.text()).then(parseHTML)
+        .then(DOM => {
+            let table = DOM.querySelector('#offEquip');
+    
+            return XLSX.utils.table_to_sheet(table);
+        }).then((sheet = {}) => {
+            XLSX.utils.book_append_sheet(Book, sheet, 'D Pro');
+        }),
+    
+    // 6. Status Summary Dyess*
+    statusSummary(DYESS, ALL).then(response => response.text()).then(parseHTML)
+        .then(DOM => {
+            let table = DOM.querySelector('#statusSummary');
+    
+            return XLSX.utils.table_to_sheet(table);
+        }).then((sheet = {}) => {
+            XLSX.utils.book_append_sheet(Book, sheet, 'Status Summary Dyess');
+        }),
+])
+    // 7. Add to new book
     .then(() => {
         // Then append to respective sheet(s)
         XLSX.writeFile(Book, `Avionics Morning Report - Changes - (${ today }).xlsx`);
