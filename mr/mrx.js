@@ -363,7 +363,7 @@ let AL_UDEID = 194,
     TINKER = 530;
 
 // Workcenter
-let ALL = 0,
+let ALL = 'ALL', ANY = 0,
     A2SPC = 5665,
     AAAIS = 584,
     AACRD = 38550,
@@ -427,17 +427,17 @@ let today = [day, Mon, year].join('-');
 let yesterday = [(day < 2? day: Day == 'Sun'? day - 2:day - 1), Mon, year].join('-');
 
 // Ellsworth → parts = partsProduced().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#offEquip')).then(@@<table>)...
-function partsProduced(location = ELLSWORTH, workCenter = ALL) {
+function partsProduced(location = ELLSWORTH, workCenter = ANY) {
     let url = parseURL(PARTS_PRODUCED)
         .addSearch({
             system: B1B,
             location,
             workCenter,
-            crewman: 'ALL',
+            crewman: ALL,
             partno: 0,
-            stationType: 'ALL',
+            stationType: ALL,
             lru: '',
-            status: 'ALL',
+            status: ALL,
             submitRange: 'Submit',
             startDate2: yesterday,
             endDate2: today,
@@ -457,7 +457,7 @@ function partsProduced(location = ELLSWORTH, workCenter = ALL) {
 }
 
 // Ellsworth → parts = partsReceived().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#receivedReport')).then(@@<table>)...
-function partsReceived(location = ELLSWORTH, workCenter = ALL) {
+function partsReceived(location = ELLSWORTH, workCenter = ANY) {
     let url = parseURL(RECEIVED_PARTS)
         .addSearch({
             loc_id: location,
@@ -484,7 +484,7 @@ function partsReceived(location = ELLSWORTH, workCenter = ALL) {
 }
 
 // Ellsworth → parts = statusSummary().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#statusSummary')).then(@@<table>)...
-function statusSummary(location = ELLSWORTH, workCenter = ALL) {
+function statusSummary(location = ELLSWORTH, workCenter = ANY) {
     let url = parseURL(STATUS_SUMMARY)
         .addSearch({
             wc: workCenter,
@@ -516,7 +516,7 @@ Promise.allSettled([
         }),
     
     // 3. 24hr Recd
-    partsReceived(ELLSWORTH, 'ALL')//.then(response => response.text()).then(parseHTML)
+    partsReceived(ELLSWORTH, ALL)//.then(response => response.text()).then(parseHTML)
         .then(body => {
             let table = $('#receivedReport', body);
     
@@ -526,7 +526,7 @@ Promise.allSettled([
         }),
     
     // 4. Status Summary EAFB
-    statusSummary(ELLSWORTH, 'ALL')//.then(response => response.text()).then(parseHTML)
+    statusSummary(ELLSWORTH, ALL)//.then(response => response.text()).then(parseHTML)
         .then(body => {
             let table = $('#statusSummary', body);
     
@@ -536,7 +536,7 @@ Promise.allSettled([
         }),
     
     // 5. D Pro
-    partsProduced(DYESS, 'ALL')//.then(response => response.text()).then(parseHTML)
+    partsProduced(DYESS, ALL)//.then(response => response.text()).then(parseHTML)
         .then(body => {
             let table = $('#offEquip', body);
     
@@ -546,7 +546,7 @@ Promise.allSettled([
         }),
     
     // 6. Status Summary Dyess*
-    statusSummary(DYESS, 'ALL')//.then(response => response.text()).then(parseHTML)
+    statusSummary(DYESS, ALL)//.then(response => response.text()).then(parseHTML)
         .then(body => {
             let table = $('#statusSummary', body);
     
