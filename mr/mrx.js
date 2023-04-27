@@ -488,7 +488,7 @@ Object.defineProperties(top, {
 REPORT_STATUS = 'Loading reports...|>yellow';
 
 function downloadReport() {
-    XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
+    return XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
 }
 
 Promise.allSettled([
@@ -514,7 +514,7 @@ Promise.allSettled([
         .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary Dyess']),
 ])
     // 7. Add to new book
-    .then((sheets = []) => sheets.map(sheet => sheet.value))
+    .then((sheets = []) => sheets.map(sheet => sheet?.value ?? {}))
     .then(sheets => {
         // Then append to respective sheet(s)
         for(let [sheet, ...names] of sheets)
