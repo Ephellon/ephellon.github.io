@@ -112,7 +112,7 @@
     color: var(--yellow);
 }
 
-[data-root^="ephellon.github.io"i] button, a {
+[data-root^="ephellon.github.io"i] :is(button, a) {
     appearance: button;
 
     background: white;
