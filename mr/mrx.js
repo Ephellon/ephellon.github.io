@@ -491,28 +491,43 @@ function downloadReport() {
     return XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
 }
 
-Promise.allSettled([
+let ACTIONS = [
     // 1. 24hr Prod - Append if not first workday of month; Overwrite otherwise
     // 2. E Pro - Overwrite
     partsProduced(ELLSWORTH, ANY)
+        .then(progress)
         .then(body => [table_to_sheet($('#offEquip', body)), '24hr Prod', 'E Pro']),
 
     // 3. 24hr Recd - Overwrite
     partsReceived(ELLSWORTH, ALL)
+        .then(progress)
         .then(body => [table_to_sheet($('#receivedReport', body)), '24hr Recd']),
 
     // 4. Status Summary EAFB - Overwrite
     statusSummary(ELLSWORTH, ALL)
+        .then(progress)
         .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary EAFB']),
 
     // 5. D Pro - Overwrite
     partsProduced(DYESS, ANY)
+        .then(progress)
         .then(body => [table_to_sheet($('#offEquip', body)), 'D Pro']),
 
     // 6. Status Summary Dyess* - Overwrite
     statusSummary(DYESS, ALL)
+        .then(progress)
         .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary Dyess']),
-])
+];
+
+let COMPLETE = 0;
+
+function progress(arg) {
+    REPORT_STATUS = `Loading reports... ${ ++COMPLETE }/${ ACTIONS.length }|>yellow`;
+
+    return arg;
+}
+
+Promise.allSettled(ACTIONS)
     // 7. Add to new book
     .then((sheets = []) => sheets.map(sheet => sheet?.value ?? {}))
     .then(sheets => {
