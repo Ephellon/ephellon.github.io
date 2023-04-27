@@ -469,6 +469,23 @@ function statusSummary(location = ELLSWORTH, workCenter = ANY) {
     return when.defined(frame => $('.bodycontainer', frame.contentDocument), 100, frame);
 }
 
+function changeLocation(location = ELLSWORTH, workCenter = ANY) {
+    let url = parseURL(STATUS_SUMMARY)
+        .addSearch({
+            loc: location,
+            wc: workCenter,
+            submitLocation: 'Submit',
+        }).href;
+
+    let frame = document.createElement('iframe');
+    frame.src = url;
+    frame.dataset.location = ['change-location', workCenter, location].join('/');
+
+    document.body.append(frame);
+
+    return when.defined(frame => $('.bodycontainer', frame.contentDocument), 100, frame);
+}
+
 // Load master-book (the one the user dropped in)
 let Book = XLSX.utils.book_new(),
     { table_to_sheet, book_append_sheet } = XLSX.utils;
@@ -491,7 +508,7 @@ function downloadReport() {
     return XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
 }
 
-let ACTIONS = [
+let ACTIONS_EAFB = [
     // 1. 24hr Prod - Append if not first workday of month; Overwrite otherwise
     // 2. E Pro - Overwrite
     partsProduced(ELLSWORTH, ANY)
@@ -507,7 +524,9 @@ let ACTIONS = [
     statusSummary(ELLSWORTH, ALL)
         .then(progress)
         .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary EAFB']),
+];
 
+let ACTIONS_DAFB = [
     // 5. D Pro - Overwrite
     partsProduced(DYESS, ANY)
         .then(progress)
@@ -521,23 +540,32 @@ let ACTIONS = [
 
 let COMPLETE = 0;
 
-function progress(arg) {
-    REPORT_STATUS = `Loading reports... ${ ++COMPLETE }/${ ACTIONS.length }|>yellow`;
+function progress(body) {
+    REPORT_STATUS = `Loading reports... ${ ++COMPLETE }/${ ACTIONS_EAFB.length + ACTIONS_DAFB.length }|>yellow`;
 
-    return arg;
+    return body;
 }
 
-Promise.allSettled(ACTIONS)
-    // 7. Add to new book
-    .then((sheets = []) => sheets.map(sheet => sheet?.value ?? {}))
-    .then(sheets => {
-        // Then append to respective sheet(s)
-        for(let [sheet, ...names] of sheets)
-            for(let name of names)
-                book_append_sheet(Book, sheet, name);
+// Load EAFB reports first...
+changeLocation(ELLSWORTH, ANY).then(success => {
+    Promise.allSettled(ACTIONS_EAFB)
+        .then(EAFB_Reports => {
+            // Load DAFB reports...
+            changeLocation(DYESS, ANY).then(success => {
+                Promise.allSettled(ACTIONS_DAFB)
+                    .then(DAFB_Reports => [...EAFB_Reports, ...DAFB_Reports])
+                    .then((sheets = []) => sheets.map(sheet => sheet?.value ?? {}))
+                    // 7. Add to new book
+                    .then(sheets => {
+                        for(let [sheet, ...names] of sheets)
+                            for(let name of names)
+                                book_append_sheet(Book, sheet, name);
 
-        REPORT_STATUS = 'Saving reports...|>green';
+                        REPORT_STATUS = 'Saving reports...|>green';
 
-        XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
-    })
-    .then(() => REPORT_STATUS = `Complete. If the report does not dowload within 10s, <a href=javascript:downloadReport()>click here</a>|>green`);
+                        XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
+                    })
+                    .then(() => REPORT_STATUS = `Complete. If the report does not dowload within 10s, <a href=javascript:downloadReport()>click here</a>|>green`);
+            });
+        });
+});
