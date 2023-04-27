@@ -513,7 +513,8 @@ Promise.allSettled([
         .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary Dyess']),
 ])
     // 7. Add to new book
-    .then((sheets = []) => {
+    .then((sheets = []) => sheets.map(sheet => sheet.value))
+    .then(sheets => {
         // Then append to respective sheet(s)
         for(let [sheet, ...names] of sheets)
             for(let name of names)
