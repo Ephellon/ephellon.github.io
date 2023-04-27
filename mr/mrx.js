@@ -483,7 +483,7 @@ Object.defineProperties(top, {
                 status = $('#report-status');
 
             status.style.color = `var(--${ color })`;
-            status.innerHTML = value;
+            status.innerHTML = text;
         },
     },
 });
