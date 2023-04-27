@@ -490,6 +490,10 @@ Object.defineProperties(top, {
 
 REPORT_STATUS = 'Loading reports...|>yellow';
 
+function downloadReport() {
+    XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
+}
+
 Promise.allSettled([
     // 1. 24hr Prod
     // 2. E Pro
@@ -524,4 +528,4 @@ Promise.allSettled([
 
         XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
     })
-    .then(() => REPORT_STATUS = 'Complete.|>green');
+    .then(() => REPORT_STATUS = `Complete. If the report does not dowload within 10s, <a href=javascript:downloadReport()>click here</a>|>green`);
