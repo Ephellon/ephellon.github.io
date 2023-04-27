@@ -1,4 +1,4 @@
-:root, html, body {
+[data-root^="ephellon.github.io"i] {
     /* Variables */
     --background: #607D8B;
     --color: #29373E;
@@ -85,22 +85,22 @@
     color: var(--color);
 }
 
-* {
+[data-root^="ephellon.github.io"i] * {
     font-family: system-ui, calibri, monospace, sans-serif !important;
 }
 
-*:disabled {
+[data-root^="ephellon.github.io"i] *:disabled {
     cursor: not-allowed;
     text-decoration: .25em line-through;
 
     opacity: .5;
 }
 
-header {
+[data-root^="ephellon.github.io"i] header {
     text-align: center;
 }
 
-#auto-report-form {
+[data-root^="ephellon.github.io"i] #auto-report-form {
     text-align: center;
 
     border: 3px solid var(--color);
@@ -108,11 +108,11 @@ header {
     padding: 1em;
 }
 
-#report-status {
+[data-root^="ephellon.github.io"i] #report-status {
     color: var(--yellow);
 }
 
-button, a {
+[data-root^="ephellon.github.io"i] button, a {
     appearance: button;
 
     background: white;
@@ -126,6 +126,6 @@ button, a {
     border-radius: 3px;
 }
 
-button:not(:disabled) {
+[data-root^="ephellon.github.io"i] button:not(:disabled) {
     cursor: pointer;
 }
