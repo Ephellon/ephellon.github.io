@@ -398,7 +398,6 @@ let [Day, Mon, day, year, time, offset] = (new Date + '').split(' ', 6);
 let today = [day, Mon, year].join('-');
 let yesterday = [(day < 2? day: Day == 'Sun'? day - 2:day - 1), Mon, year].join('-');
 
-// Ellsworth → parts = partsProduced().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#offEquip')).then(@@<table>)...
 function partsProduced(location = ELLSWORTH, workCenter = ANY) {
     let url = parseURL(PARTS_PRODUCED)
         .addSearch({
@@ -428,7 +427,6 @@ function partsProduced(location = ELLSWORTH, workCenter = ANY) {
     return when.defined(frame => $('.bodycontainer', frame.contentDocument), 100, frame);
 }
 
-// Ellsworth → parts = partsReceived().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#receivedReport')).then(@@<table>)...
 function partsReceived(location = ELLSWORTH, workCenter = ANY) {
     let url = parseURL(RECEIVED_PARTS)
         .addSearch({
@@ -455,7 +453,6 @@ function partsReceived(location = ELLSWORTH, workCenter = ANY) {
     return when.defined(frame => $('.bodycontainer', frame.contentDocument), 100, frame);
 }
 
-// Ellsworth → parts = statusSummary().then(r => r.text()).then(@@<HTML>).then(html => html.queryselector('#statusSummary')).then(@@<table>)...
 function statusSummary(location = ELLSWORTH, workCenter = ANY) {
     let url = parseURL(STATUS_SUMMARY)
         .addSearch({
@@ -495,24 +492,24 @@ function downloadReport() {
 }
 
 Promise.allSettled([
-    // 1. 24hr Prod
-    // 2. E Pro
-    partsProduced(ELLSWORTH, AISFS)
+    // 1. 24hr Prod - Append if not first workday of month; Overwrite otherwise
+    // 2. E Pro - Overwrite
+    partsProduced(ELLSWORTH, ANY)
         .then(body => [table_to_sheet($('#offEquip', body)), '24hr Prod', 'E Pro']),
 
-    // 3. 24hr Recd
+    // 3. 24hr Recd - Overwrite
     partsReceived(ELLSWORTH, ALL)
         .then(body => [table_to_sheet($('#receivedReport', body)), '24hr Recd']),
 
-    // 4. Status Summary EAFB
+    // 4. Status Summary EAFB - Overwrite
     statusSummary(ELLSWORTH, ALL)
         .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary EAFB']),
 
-    // 5. D Pro
-    partsProduced(DYESS, ALL)
+    // 5. D Pro - Overwrite
+    partsProduced(DYESS, ANY)
         .then(body => [table_to_sheet($('#offEquip', body)), 'D Pro']),
 
-    // 6. Status Summary Dyess*
+    // 6. Status Summary Dyess* - Overwrite
     statusSummary(DYESS, ALL)
         .then(body => [table_to_sheet($('#statusSummary', body)), 'Status Summary Dyess']),
 ])
