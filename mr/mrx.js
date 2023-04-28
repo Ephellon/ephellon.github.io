@@ -494,11 +494,14 @@ try {
     Object.defineProperties(top, {
         REPORT_STATUS: {
             set(value = '') {
-                let [text, color = 'whtie'] = value.split('|>', 2),
+                let [text, color = 'white'] = value.split('|>'),
                     status = $('#report-status');
-    
-                status.style.color = `var(--${ color })`;
-                status.innerHTML = text;
+
+                let html = '';
+                for(let i = 0, texts = text.split(/([\.!?]+)/).filter(s=>s.length), colors = color.split(/\s*,\s*/).filter(s=>s.length); i < texts.length; ++i)
+                    html += `<span style="color:var(--${ colors[i] || colors[0] })">${ texts[i] }</span>`;
+
+                status.innerHTML = html;
             },
         },
     });
@@ -543,7 +546,7 @@ let ACTIONS_DAFB = [
 let COMPLETE = 0;
 
 function progress(body) {
-    REPORT_STATUS = `Loading reports... ${ ++COMPLETE }/${ ACTIONS_EAFB.length + ACTIONS_DAFB.length }|>yellow`;
+    REPORT_STATUS = `Loading reports... ${ ++COMPLETE }/${ ACTIONS_EAFB.length + ACTIONS_DAFB.length }|>yellow,white`;
 
     return body;
 }
@@ -559,7 +562,6 @@ changeLocation(ELLSWORTH, ANY).then(success => {
                     .then((sheets = []) => sheets.map(sheet => sheet?.value ?? [{}]))
                     // 7. Add to new book
                     .then(sheets => {
-                        console.log(sheets)
                         for(let [sheet, ...names] of sheets)
                             for(let name of names)
                                 book_append_sheet(Book, sheet, name);
@@ -568,7 +570,7 @@ changeLocation(ELLSWORTH, ANY).then(success => {
 
                         XLSX.writeFile(Book, `Morning Report Changes (${ today }).xlsx`);
                     })
-                    .then(() => REPORT_STATUS = `Complete. If the report does not dowload within 10s, <a href=javascript:downloadReport()>click here</a>|>green`);
+                    .then(() => REPORT_STATUS = `Complete. If the report does not dowload within 10s, <a href=javascript:downloadReport()>click here</a>|>green,white`);
             });
         });
 });
