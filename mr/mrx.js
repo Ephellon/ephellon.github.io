@@ -490,17 +490,19 @@ function changeLocation(location = ELLSWORTH, workCenter = ANY) {
 let Book = XLSX.utils.book_new(),
     { table_to_sheet, book_append_sheet } = XLSX.utils;
 
-Object.defineProperties(top, {
-    REPORT_STATUS: {
-        set(value = '') {
-            let [text, color = 'whtie'] = value.split('|>', 2),
-                status = $('#report-status');
-
-            status.style.color = `var(--${ color })`;
-            status.innerHTML = text;
+try {
+    Object.defineProperties(top, {
+        REPORT_STATUS: {
+            set(value = '') {
+                let [text, color = 'whtie'] = value.split('|>', 2),
+                    status = $('#report-status');
+    
+                status.style.color = `var(--${ color })`;
+                status.innerHTML = text;
+            },
         },
-    },
-});
+    });
+} catch(e) {}
 
 REPORT_STATUS = 'Loading reports...|>yellow';
 
@@ -554,9 +556,10 @@ changeLocation(ELLSWORTH, ANY).then(success => {
             changeLocation(DYESS, ANY).then(success => {
                 Promise.allSettled(ACTIONS_DAFB)
                     .then(DAFB_Reports => [...EAFB_Reports, ...DAFB_Reports])
-                    .then((sheets = []) => sheets.map(sheet => sheet?.value ?? {}))
+                    .then((sheets = []) => sheets.map(sheet => sheet?.value ?? [{}]))
                     // 7. Add to new book
                     .then(sheets => {
+                        console.log(sheets)
                         for(let [sheet, ...names] of sheets)
                             for(let name of names)
                                 book_append_sheet(Book, sheet, name);
