@@ -316,8 +316,7 @@ let encode = encodeURIComponent;
 // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // //
 
-let RAMPOD = /RAMPOD/i.test(location.hostname) && location.hostname.endsWith('.af.mil'),
-    UPLOAD = false;
+let UPLOAD = false;
 
 // System/network
 let A10 = 22439,
