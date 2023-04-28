@@ -457,7 +457,7 @@ function partsReceived(location = ELLSWORTH, workCenter = ANY) {
 function statusSummary(location = ELLSWORTH, workCenter = ANY) {
     let url = parseURL(STATUS_SUMMARY)
         .addSearch({
-            loc_id: ELLSWORTH, // ← FIX-ME: not seen, change later
+            loc_id: ELLSWORTH,
             wc: workCenter,
         }).href;
 
