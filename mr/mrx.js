@@ -390,6 +390,7 @@ let ALL = 'ALL', ANY = 0,
 let ON = 'ON', OFF = 'OFF';
 
 const GLOBAL_EYE = 'https://rampod4.robins.af.mil/ReportsGen2/GlobalEye2';
+const RAMPOD = `${GLOBAL_EYE}/index.cfm`;
 const PARTS_PRODUCED = `${GLOBAL_EYE}/parts_produced.cfm`;
 const RECEIVED_PARTS = `${GLOBAL_EYE}/received_reports.cfm`;
 const STATUS_SUMMARY = `${GLOBAL_EYE}/status_summary.cfm`;
@@ -470,7 +471,7 @@ function statusSummary(location = ELLSWORTH, workCenter = ANY) {
 }
 
 function changeLocation(location = ELLSWORTH, workCenter = ANY) {
-    let url = parseURL(STATUS_SUMMARY)
+    let url = parseURL(RAMPOD)
         .addSearch({
             loc: location,
             wc: workCenter,
