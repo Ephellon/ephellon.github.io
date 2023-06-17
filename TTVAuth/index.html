@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>TTV Auth Redirect</title>
+
+    <style>
+        html, body {
+            background: #222;
+            color: #ddd;
+            font-family: consolas, monospace, arial;
+        }
+
+        body * {
+            color: inherit;
+            font-family: inherit;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <article>
+            <h2 class="response">Invalid query: No response given</h2>
+        </article>
+    </main>
+
+    <script type="text/javascript">
+        function $(query, container, all) {
+            if(!query)
+                throw "Empty query selector given";
+            container ||= document;
+            all ||= false;
+
+            if(all)
+                return container.querySelectorAll(query);
+            return container.querySelector(query);
+        }
+
+        if(location.search) {
+            var parameters = {};
+
+            location.search.slice(1).split('&').map(function(parameter) {
+                parameter = parameter.split('=');
+
+                var name = parameter[0];
+                var value = parameter[1] || null;
+
+                if(parameters[name]) {
+                    if(parameters[name] instanceof Array)
+                        parameters[name].push(value);
+                    else
+                        parameters[name] = [parameters[name], value];
+                } else {
+                    parameters[name] = value;
+                }
+            });
+
+            if(parameters.error) {
+                $('.response').textContent = parameters.error_description.replace(/\+/g, ' ');
+            } else {
+                $('.response').textContent = "Success! This window will close in 5s...";
+
+                setTimeout(close, 5000);
+            }
+        }
+    </script>
+</body>
+</html>
