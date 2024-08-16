@@ -82,6 +82,30 @@
 
     </div>
 
+    <script type="text/javascript">
+        if(location.search) {
+            var parameters = {};
+
+            location.search.slice(1).split('&').map(function(parameter) {
+                parameter = parameter.split('=');
+
+                var name = parameter[0];
+                var value = parameter[1] || null;
+
+                if(parameters[name]) {
+                    if(parameters[name] instanceof Array)
+                        parameters[name].push(value);
+                    else
+                        parameters[name] = [parameters[name], value];
+                } else {
+                    parameters[name] = value;
+                }
+            });
+
+            if(parameters.code && parameters.scope && parameters.state)
+                open('/TTVAuth' + location.search, '_self');
+        }
+    </script>
 
   </body>
 </html>
