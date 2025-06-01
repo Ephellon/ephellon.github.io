@@ -7,3 +7,4 @@ button[class*="interact"i] [style*="asset"i] < button < 3
 [href*="recap"i] < footer
 img[src*="bonus-round"i] < [class*="bonus-round"i]
 a[href*="tickets"i] < footer
+a[href*="allow-ads"i] < [class*="overlay"i]
