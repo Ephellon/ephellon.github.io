@@ -8,4 +8,4 @@ button[class*="interact"i] [style*="asset"i] < button < 3
 img[src*="bonus-round"i] < [class*="bonus-round"i]
 a[href*="tickets"i] < footer
 a[href*="allow-ads"i] < [class*="overlay"i]
-a[href*="/turbo"i] < [class*="player"i][class*="overlay"i]
+a[href*="/turbo"i] < section + div
