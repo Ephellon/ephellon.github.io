@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=240, height=320, user-scalable=no, initial-scale=1.0">
+    <title>Screen Monitor Pro</title>
+    <link rel='stylesheet' href='./style.css'>
+</head>
+<body class='state-idle'>
+    <div id='app'>
+        <div class='title'>SCREEN MONITOR</div>
+
+        <div id='status-icon'>📷</div>
+
+        <div id='status-text'>Standby</div>
+
+        <div id='brightness-container'>
+            <div id='brightness-bar'>
+                <div id='brightness-fill'></div>
+            </div>
+            <div id='brightness-label'>
+                <span>Luminance</span>
+                <span id='brightness-val'>0</span>
+            </div>
+        </div>
+
+        <div id='hint'>Tap the screen to enable</div>
+
+        <video id='video-feed' autoplay playsinline muted></video>
+    </div>
+    <script type='module' src='./main.js'></script>
+</body>
+</html>
