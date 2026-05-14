@@ -90,7 +90,7 @@ body {
     width: 100vw;
     height: 133.33vw;
     object-fit: cover;
-    opacity: 0.2;
+    opacity: 0;
     z-index: -1;
 }
 
