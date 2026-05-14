@@ -34,6 +34,7 @@ const elements = {
 async function saveThreshold() {
     if (typeof window.creationStorage !== 'undefined') {
         await window.creationStorage.plain.setItem('threshold', btoa(currentThreshold.toString()));
+        elements.max.innerText = currentThreshold;
     }
 }
 
@@ -42,6 +43,7 @@ async function loadThreshold() {
         const raw = await window.creationStorage.plain.getItem('threshold');
         if (raw) {
             currentThreshold = parseInt(atob(raw), 10);
+            elements.max.innerText = currentThreshold;
         }
     }
 }
@@ -184,7 +186,6 @@ function togglePower() {
 
 function adjustThreshold(delta) {
     currentThreshold = Math.max(5, Math.min(255, currentThreshold + delta));
-    elements.max.innerText = currentThreshold;
     saveThreshold();
 }
 
