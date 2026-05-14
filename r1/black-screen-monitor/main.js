@@ -26,6 +26,7 @@ const elements = {
     , hint: document.getElementById('hint')
     , fill: document.getElementById('brightness-fill')
     , val: document.getElementById('brightness-val')
+    , max: document.getElementById('threshold-val')
     , video: document.getElementById('video-feed')
 };
 
@@ -183,6 +184,7 @@ function togglePower() {
 
 function adjustThreshold(delta) {
     currentThreshold = Math.max(5, Math.min(255, currentThreshold + delta));
+    elements.max.innerText = currentThreshold;
     saveThreshold();
 }
 
