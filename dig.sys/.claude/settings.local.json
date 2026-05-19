@@ -10,7 +10,11 @@
       "Bash(Remove-Item \"M:\\\\Addenda\\\\Digital Sissy\\\\Digital Sissy \\(Scene Spec Template\\).md\" -ErrorAction Stop)",
       "Bash(Remove-Item \"M:\\\\Addenda\\\\Digital Sissy\\\\Digital Sissy \\(Writer Agent Brief Template\\).md\" -ErrorAction Stop)",
       "Bash(Remove-Item \"M:\\\\Addenda\\\\Digital Sissy\\\\Digital Sissy \\(Template Manager Brief Template\\).md\" -ErrorAction Stop)",
-      "Bash(Remove-Item \"M:\\\\Addenda\\\\Digital Sissy\\\\Digital Sissy \\(Brief Auditor Brief Template\\).md\" -ErrorAction Stop)"
+      "Bash(Remove-Item \"M:\\\\Addenda\\\\Digital Sissy\\\\Digital Sissy \\(Brief Auditor Brief Template\\).md\" -ErrorAction Stop)",
+      "Bash(Test-Path \"T:\\\\out\\\\writer.out.md\")",
+      "Bash(Start-Sleep -Seconds 5)",
+      "Bash(Write-Output \"writer.out.md READY\")",
+      "PowerShell($p = \"$env:USERPROFILE\\\\.claude\\\\projects\"; Test-Path $p; Get-ChildItem $p -Recurse | Select-Object -First 10 FullName)"
     ]
   }
 }
