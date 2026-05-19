@@ -552,7 +552,7 @@ const RESOURCES = [
 function Resources() {
   return (
     <section id="resources" style={{ padding: "56px 48px", borderTop: "1px solid var(--border)" }}>
-      <SectionHead num="05" label="Resources" kicker="EVERYTHING YOU NEED TO RUN IT" />
+      <SectionHead num="05" label="Resources · Coming Soon" kicker="EVERYTHING YOU NEED TO RUN IT" />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, marginTop: 22 }}>
         {RESOURCES.map(([t, d, tag]) => (
           <a key={t} href={"/assets/" + t.toLowerCase().replace(/[\s/]+/g, "-")} className="card" style={{
@@ -576,11 +576,11 @@ function Resources() {
                 <span className="headline" style={{ fontSize: 22 }}>{t}</span>
                 <span className="fld">{tag}</span>
               </div>
-              <div className="body" style={{ fontSize: 12, color: "var(--ink-mid)", marginTop: 2 }}>{d}</div>
+              <div className="body" style={{ fontSize: 12, color: "var(--ink-mid)", marginTop: 2, textDecoration: "line-through" }}>{d}</div>
             </div>
             <span style={{
-              fontFamily: "var(--ff-display)", fontSize: 12, color: "var(--accent)",
-              border: "1px solid var(--accent)", padding: "4px 10px", letterSpacing: "0.12em",
+              fontFamily: "var(--ff-display)", fontSize: 12, color: "var(--accent-dim)",
+              border: "1px solid var(--accent-dim)", padding: "4px 10px", letterSpacing: "0.12em",
             }}>GET →</span>
           </a>
         ))}
