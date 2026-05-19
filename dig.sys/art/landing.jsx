@@ -403,9 +403,9 @@ const LOCATIONS = [
   [11, "WASH-N-GO CAR WASH",   "Gravel lot. Rusted chain-link. Where deals happen at 11 PM. Where Becky's car is parked too often."],
   [12, "WEST ABANDONED WAREHOUSE", "Ted's territory, around the back."],
   [13, "EAST ABANDONED WAREHOUSE", "Jaw-man's people, when they need a room."],
-  [14, "ALEX'S APARTMENT",     "Small, cluttered, second floor. The site of the robbery in Ep 6. The lock has been wrong since she moved in."],
+  [14, "BECKY'S APARTMENT",    "Above the taco shop. The smell never leaves the carpet. Where most plans get hatched, badly."],
   [15, "ALEX'S MOM'S HOUSE",   "Cindy's. Stale-smelling, perpetually closed blinds. Forty years of a life lived in three rooms."],
-  [16, "BECKY'S APARTMENT",    "Above the taco shop. The smell never leaves the carpet. Where most plans get hatched, badly."],
+  [16, "ALEX'S APARTMENT",     "Small, cluttered, second floor. The site of the robbery in Ep 6. The lock has been wrong since she moved in."],
 ];
 
 function World() {
