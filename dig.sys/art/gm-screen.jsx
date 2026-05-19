@@ -680,12 +680,154 @@ function PanelFour({ done, toggleDone }) {
   );
 }
 
+// — panel V ————————————————————————————————————————————————————————
+
+const GMS_TIPS = [
+  {
+    section: "PACING",
+    items: [
+      "Three-act structure per session: trouble arrives, trouble deepens, trouble lands.",
+      "Sessions 1–2 establish. Session 3 is the turn. Sessions 4–5 are the fall.",
+      "If nothing has happened in 20 minutes, make a hard move.",
+      "Debt clock ticks once per session minimum — more if they stall.",
+    ],
+  },
+  {
+    section: "ALEX'S ARC",
+    items: [
+      "Alex is never a prop. She has her own beat at least once per session.",
+      "Her Using track advances when she's in crisis — not on a schedule.",
+      "Let a PC save her from something small. Let the big thing be harder.",
+      "She asks for help in a way that makes it easy to say no.",
+    ],
+  },
+  {
+    section: "TABLE SAFETY",
+    items: [
+      "Check the safety sheet before every session. Veil = skip the detail. Line = skip the scene.",
+      "If a player goes quiet, pull focus elsewhere first. Check in at the break.",
+      "X-card doesn't need explanation. Rewind, don't justify.",
+      "Debrief is mandatory. Five minutes. How are you, the person.",
+    ],
+  },
+  {
+    section: "TONE",
+    items: [
+      "Gulf Coast working-class. Specific language, specific places.",
+      "Drug use is mundane, not cinematic. Show the routine, not the high.",
+      "Violence has weight. Nobody shakes it off.",
+      "The best moments are two people talking about something other than the real thing.",
+    ],
+  },
+];
+
+const GMS_FIRST_SESSION = [
+  "Open on Alex — a small want, a small obstacle. Let PCs choose to help.",
+  "Name three locations before the session ends. Make each smell like something.",
+  "Introduce Jaw-man obliquely. A text. A car. Someone else's nervousness.",
+  "End with the debt clock visible. $10,000. Say it out loud.",
+];
+
+const GMS_BETWEEN_SESSIONS = [
+  "What did each PC do that fits their archetype? That's one XP trigger.",
+  "What did each PC bond say was true? Was it tested?",
+  "Did anyone miss a roll? That's XP. Did anyone roll a 10+? Note it.",
+  "Where is Alex's Using track? Where is the debt clock? Adjust Heat.",
+  "Pick one NPC who should have changed. How did they change?",
+];
+
+function PanelFive() {
+  return (
+    <div className="page" style={{
+      width: 816, padding: "26px 28px", boxSizing: "border-box",
+      display: "flex", flexDirection: "column",
+      borderRight: "1px solid var(--border)",
+    }}>
+      <GMSPanelHeader no="V" eyebrow="GM SCREEN · GUIDANCE" title={<>TIPS &amp;<br/>GUIDANCE</>} />
+
+      {/* Tips grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px", marginBottom: 16 }}>
+        {GMS_TIPS.map(({ section, items }) => (
+          <div key={section} style={{ marginBottom: 14 }}>
+            <div className="fld" style={{ marginBottom: 5 }}>{section}</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              {items.map(item => (
+                <div key={item} className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", display: "flex", gap: 6, lineHeight: 1.35 }}>
+                  <span style={{ color: "var(--accent)", flex: "0 0 auto", fontWeight: 700 }}>▸</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* First session */}
+      <div className="fld" style={{ marginBottom: 5 }}>FIRST SESSION CHECKLIST</div>
+      <div style={{
+        display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 20px",
+        marginBottom: 16,
+        padding: "10px 12px",
+        background: "var(--surface-2)",
+        borderLeft: "3px solid var(--accent)",
+      }}>
+        {GMS_FIRST_SESSION.map((item, i) => (
+          <div key={i} className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", display: "flex", gap: 8, lineHeight: 1.35 }}>
+            <span className="mono" style={{ fontSize: 9, color: "var(--accent)", flex: "0 0 auto" }}>0{i + 1}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Between sessions */}
+      <div className="fld" style={{ marginBottom: 5 }}>BETWEEN SESSIONS · QUESTIONS TO ANSWER</div>
+      <div style={{
+        display: "flex", flexDirection: "column", gap: 5,
+        padding: "10px 12px",
+        background: "var(--surface-2)",
+        borderLeft: "3px solid var(--ink-soft)",
+      }}>
+        {GMS_BETWEEN_SESSIONS.map((item, i) => (
+          <div key={i} className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", display: "flex", gap: 8, lineHeight: 1.35 }}>
+            <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", flex: "0 0 auto" }}>0{i + 1}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Quick reminder strip */}
+      <div style={{
+        marginTop: 16,
+        background: "var(--accent)", color: "var(--accent-on)",
+        padding: "10px 14px",
+        display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap",
+      }}>
+        {[
+          ["FORWARD", "Every scene must push toward or away from saving Alex."],
+          ["COST",    "Every 7–9 needs a real cost. If you can't name it, roll back."],
+          ["NAME IT", "Jaw-man's delivery. Ted's car. Becky's text. Make it specific."],
+        ].map(([k, v]) => (
+          <div key={k} style={{ display: "flex", gap: 7, alignItems: "baseline", flex: "1 1 180px" }}>
+            <span className="subhead" style={{ fontSize: 10, color: "var(--accent-on)", flexShrink: 0 }}>{k} ·</span>
+            <span className="body" style={{ fontSize: 10, color: "var(--accent-on)", opacity: 0.85, lineHeight: 1.3 }}>{v}</span>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 10 }}>
+        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 05 / 05</span>
+        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>THE TABLE IS ALSO THE GAME</span>
+      </div>
+    </div>
+  );
+}
+
 function GMScreenArtboard() {
   const [gm, setGm] = useLS('dig.sys.gm', { heat: 0, done: {}, notes: '' });
 
-  const setHeat  = (h) => setGm(s => ({ ...s, heat: h }));
+  const setHeat    = (h) => setGm(s => ({ ...s, heat: h }));
   const toggleDone = (k) => setGm(s => ({ ...s, done: { ...s.done, [k]: !s.done[k] } }));
-  const setNotes = (n) => setGm(s => ({ ...s, notes: n }));
+  const setNotes   = (n) => setGm(s => ({ ...s, notes: n }));
 
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column" }}>
@@ -693,6 +835,7 @@ function GMScreenArtboard() {
       <PanelTwo heat={gm.heat} setHeat={setHeat} notes={gm.notes} setNotes={setNotes} />
       <PanelThree />
       <PanelFour done={gm.done} toggleDone={toggleDone} />
+      <PanelFive />
     </div>
   );
 }

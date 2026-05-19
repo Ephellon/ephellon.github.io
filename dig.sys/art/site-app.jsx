@@ -247,7 +247,7 @@ function DiceRoller() {
       onClick={roll}
       title="Click to roll 2d6"
       style={{
-        position: 'fixed', right: 16, top: '50%', transform: 'translateY(-50%)',
+        position: 'fixed', right: 16, bottom: 16,
         zIndex: 500,
         background: '#ffffff',
         border: '1.5px solid #e0e0e0',
@@ -305,7 +305,16 @@ function SiteApp() {
   function page() {
     if (route === 'cover')   return <ScaledPage width={816}  height={1056}><CoverArtboard /></ScaledPage>;
     if (route === 'landing') return <ScaledPage width={1440}><LandingArtboard /></ScaledPage>;
-    if (route === 'gm')      return <ScaledPage width={816}><GMScreenArtboard /></ScaledPage>;
+    if (route === 'gm') return (
+      <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+        <div style={{ width: 816, flexShrink: 0, overflowX: 'hidden' }}>
+          <GMScreenArtboard />
+        </div>
+        <div style={{ flex: 1, minWidth: 300, position: 'sticky', top: 48, height: 'calc(100vh - 48px)' }}>
+          <EpisodeReader />
+        </div>
+      </div>
+    );
     if (route === 'items')   return <ScaledPage width={1240} height={780}><ItemsArtboard /></ScaledPage>;
     if (route === 'zero')    return <ScaledPage width={816}><SessionZeroArtboard /></ScaledPage>;
     if (route === 'crew')    return <ScaledPage width={1440} height={2940}><CrewArtboard /></ScaledPage>;
