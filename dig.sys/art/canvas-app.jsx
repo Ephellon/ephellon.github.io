@@ -1,4 +1,4 @@
-// art/canvas-app.jsx — wires Tweaks + DesignCanvas + artboards.
+﻿// art/canvas-app.jsx — wires Tweaks + DesignCanvas + artboards.
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "theme": "dark",
@@ -106,7 +106,7 @@ function App() {
         />
 
         <TweakSection label="About" />
-        <div style={{ fontSize: 10.5, color: "rgba(41,38,27,0.6)", lineHeight: 1.45 }}>
+        <div style={{ fontSize: 11, color: "rgba(41,38,27,0.6)", lineHeight: 1.45 }}>
           Six artboards for <b>Digital Sissy</b>. Onyx by default; Alice for daylight printouts.
           Logo is parked — drop yours into the brand artboard slots when ready.
         </div>

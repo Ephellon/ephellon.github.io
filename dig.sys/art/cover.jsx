@@ -1,4 +1,4 @@
-// art/cover.jsx — rulebook cover, letter portrait (816 × 1056). Onyx register.
+﻿// art/cover.jsx — rulebook cover, letter portrait (816 × 1056). Onyx register.
 
 function CoverArtboard() {
   return (
@@ -39,17 +39,17 @@ function CoverArtboard() {
         {/* eyebrow */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
           <span className="fld">A POWERED-BY-THE-APOCALYPSE TRAGEDY · 3–5 SESSIONS</span>
-          <span className="slug outline" style={{ fontSize: 10 }}>v0.4 · DRAFT</span>
+          <span className="slug outline" style={{ fontSize: 11 }}>v0.4 · DRAFT</span>
         </div>
 
         {/* brand mark */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div className="brand-mark" style={{ width: 52, height: 52 }} aria-label="dig.sys"/>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.22em" }}>
+            <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.22em" }}>
               DIG · SYS
             </span>
-            <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
+            <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
               CORE BOOK · 01
             </span>
           </div>
@@ -96,7 +96,7 @@ function CoverArtboard() {
         display: "flex", alignItems: "center", gap: 8,
       }}>
         <span style={{ width: 6, height: 6, background: "var(--accent)" }}/>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.2em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.2em" }}>
           ALEX · BLUEVILLE, AL · 2050s
         </span>
       </div>
@@ -108,10 +108,10 @@ function CoverArtboard() {
         padding: "12px 36px",
         display: "flex", justifyContent: "space-between", alignItems: "center",
       }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em", color: "var(--ink-dim)" }}>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em", color: "var(--ink-dim)" }}>
           BOOK 01 · CORE
         </span>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em", color: "var(--ink-dim)" }}>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em", color: "var(--ink-dim)" }}>
           EPHELLON · DIGITAL-SISSY
         </span>
       </div>

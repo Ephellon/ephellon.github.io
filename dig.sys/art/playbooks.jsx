@@ -1,4 +1,4 @@
-// art/playbooks.jsx — 12 interactive playbook character sheets.
+﻿// art/playbooks.jsx — 12 interactive playbook character sheets.
 // State persisted to localStorage under dig.sys.pb.<slug>.
 
 const STAT_KEYS = ["CHARM", "GRIT", "SLICK", "HEART", "COOL"];
@@ -508,7 +508,7 @@ function StatBox({ k, v }) {
       display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
     }}>
       <span className="mono" style={{
-        fontSize: 8.5, letterSpacing: "0.16em",
+        fontSize: 11, letterSpacing: "0.16em",
         color: isPeak ? "var(--accent-on)" : "var(--ink-mid)",
       }}>{k}</span>
       <span className="headline" style={{
@@ -534,7 +534,7 @@ function MoveBlock({ m, signature }) {
         <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
           {signature && (
             <span className="mono" style={{
-              fontSize: 7.5, letterSpacing: "0.18em",
+              fontSize: 11, letterSpacing: "0.18em",
               background: "var(--accent)", color: "var(--accent-on)",
               padding: "2px 5px 1px",
             }}>SIG</span>
@@ -542,23 +542,23 @@ function MoveBlock({ m, signature }) {
           <span className="headline" style={{ fontSize: 15, lineHeight: 1 }}>{m.name}</span>
         </div>
         <span className="mono" style={{
-          fontSize: 8, letterSpacing: "0.14em",
+          fontSize: 11, letterSpacing: "0.14em",
           color: m.roll && m.roll.startsWith("+") ? "var(--accent)" : "var(--ink-dim)",
           border: "1px solid " + (m.roll && m.roll.startsWith("+") ? "var(--accent)" : "var(--ink-faint)"),
           padding: "1px 5px", whiteSpace: "nowrap",
         }}>{m.roll}</span>
       </div>
-      <div className="body" style={{ fontSize: 10.5, color: "var(--ink-soft)", lineHeight: 1.4 }}>
+      <div className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.4 }}>
         {m.body}
       </div>
       {(m.a || m.b || m.c) && (
         <div style={{ display: "grid", gridTemplateColumns: "22px 1fr", gap: "1px 6px", marginTop: 1 }}>
-          {m.a && <><span className="mono" style={{ fontSize: 8.5, color: "var(--ink)" }}>10+</span>
-            <span className="body" style={{ fontSize: 10, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.a}</span></>}
-          {m.b && <><span className="mono" style={{ fontSize: 8.5, color: "var(--glitter)" }}>7–9</span>
-            <span className="body" style={{ fontSize: 10, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.b}</span></>}
-          {m.c && <><span className="mono" style={{ fontSize: 8.5, color: "var(--accent)" }}>6−</span>
-            <span className="body" style={{ fontSize: 10, color: "var(--ink-mid)", lineHeight: 1.3 }}>{m.c}</span></>}
+          {m.a && <><span className="mono" style={{ fontSize: 11, color: "var(--ink)" }}>10+</span>
+            <span className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.a}</span></>}
+          {m.b && <><span className="mono" style={{ fontSize: 11, color: "var(--glitter)" }}>7–9</span>
+            <span className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.b}</span></>}
+          {m.c && <><span className="mono" style={{ fontSize: 11, color: "var(--accent)" }}>6−</span>
+            <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.3 }}>{m.c}</span></>}
         </div>
       )}
     </div>
@@ -587,12 +587,12 @@ function AdvanceBlock({ m, checked, onToggle }) {
           {m.name}
         </span>
         <span className="mono" style={{
-          fontSize: 7.5, letterSpacing: "0.1em",
+          fontSize: 11, letterSpacing: "0.1em",
           color: m.roll && m.roll.startsWith("+") ? "var(--accent)" : "var(--ink-dim)",
           whiteSpace: "nowrap",
         }}>{m.roll}</span>
       </div>
-      <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", lineHeight: 1.35 }}>
+      <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.35 }}>
         {m.body}
       </div>
     </div>
@@ -617,7 +617,7 @@ function XpRow({ xp, setXp }) {
           }}
         />
       ))}
-      <span className="mono" style={{ fontSize: 9, color: "var(--ink-mid)", letterSpacing: "0.14em" }}>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-mid)", letterSpacing: "0.14em" }}>
         @ 5 → ADVANCE
       </span>
     </div>
@@ -657,13 +657,13 @@ function PlaybookSheet({ pb, slug }) {
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <div className="brand-mark" style={{ width: 44, height: 44, flexShrink: 0 }} aria-label="dig.sys"/>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em", opacity: 0.55 }}>
+            <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em", opacity: 0.55 }}>
               DIGITAL SISSY · PLAYBOOK {pb.no} / 12
             </span>
             <span className="headline" style={{ fontSize: 32, lineHeight: 0.95, color: "var(--surface)" }}>
               {pb.title}
             </span>
-            <span className="mono" style={{ fontSize: 9, letterSpacing: "0.18em", opacity: 0.65 }}>
+            <span className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", opacity: 0.65 }}>
               SOURCE · {pb.source}
             </span>
           </div>
@@ -722,7 +722,7 @@ function PlaybookSheet({ pb, slug }) {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
             <span className="fld">§ STATS · STANDARD ARRAY +2 / +1 / +1 / 0 / −1</span>
-            <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+            <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
               PEAK · {Object.entries(pb.stats).find(([k, v]) => v === 2)[0]}
             </span>
           </div>
@@ -735,7 +735,7 @@ function PlaybookSheet({ pb, slug }) {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
             <span className="fld">§ STARTING MOVES · YOU HAVE THESE FROM SESSION ONE</span>
-            <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+            <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
               SIG · {pb.starting[0].name}
             </span>
           </div>
@@ -750,7 +750,7 @@ function PlaybookSheet({ pb, slug }) {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
             <span className="fld">§ ADVANCEMENT MOVES · PICK ONE WHEN YOU ADVANCE</span>
-            <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+            <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
               CLICK TO CHECK
             </span>
           </div>
@@ -785,7 +785,7 @@ function PlaybookSheet({ pb, slug }) {
                     transition: "background 0.1s",
                   }} />
                   <span className="body" style={{
-                    fontSize: 10.5, lineHeight: 1.4,
+                    fontSize: 11, lineHeight: 1.4,
                     color: (st.gear[i] || false) ? "var(--ink-dim)" : "var(--ink-soft)",
                     textDecoration: (st.gear[i] || false) ? "line-through" : "none",
                   }}>{g}</span>
@@ -797,11 +797,11 @@ function PlaybookSheet({ pb, slug }) {
             <div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <span className="fld">§ BOND TO ALEX · +1 STARTING</span>
-                <span className="mono" style={{ fontSize: 8.5, color: "var(--accent)", letterSpacing: "0.14em" }}>
+                <span className="mono" style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.14em" }}>
                   CANON · LOVED-ONES-AS-MULES
                 </span>
               </div>
-              <div className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", lineHeight: 1.4, marginTop: 4, fontStyle: "italic" }}>
+              <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.4, marginTop: 4, fontStyle: "italic" }}>
                 {pb.bond}
               </div>
               <textarea
@@ -816,7 +816,7 @@ function PlaybookSheet({ pb, slug }) {
                   border: "1px solid var(--border)",
                   color: "var(--ink-soft)",
                   fontFamily: "var(--ff-body)",
-                  fontSize: 10,
+                  fontSize: 11,
                   lineHeight: 1.45,
                   padding: "4px 6px",
                   outline: "none",
@@ -846,10 +846,10 @@ function PlaybookSheet({ pb, slug }) {
         display: "flex", justifyContent: "space-between", alignItems: "center",
         borderTop: "4px solid var(--accent)", opacity: 0.95,
       }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em" }}>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
           DIGITAL · <span style={{ color: "var(--accent)" }}>SISSY</span> · PLAYBOOK {pb.no} · {pb.title}
         </span>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em" }}>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
           UNPICKED VARIANTS BECOME NPCs · CANON
         </span>
       </div>

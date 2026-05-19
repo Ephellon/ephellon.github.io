@@ -1,4 +1,4 @@
-// art/landing.jsx — static lore + resources hub. No marketing. Just the world,
+﻿// art/landing.jsx — static lore + resources hub. No marketing. Just the world,
 // the cast, and links to the documents.
 
 function LandingNav() {
@@ -55,7 +55,7 @@ function Hero() {
           and the people in her life who might pull her back. This page is the world she
           lives in and the documents you'll need to play it.
         </div>
-        <div className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.18em", marginTop: 4 }}>
+        <div className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em", marginTop: 4 }}>
           BLUEVILLE · ALABAMA · 2050s · CLIMATE-STRESSED COASTAL
         </div>
       </div>
@@ -71,7 +71,7 @@ function Hero() {
           display: "flex", alignItems: "center", gap: 8,
         }}>
           <span style={{ width: 6, height: 6, background: "var(--accent)" }}/>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>ALEX</span>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>ALEX</span>
         </div>
       </div>
     </section>
@@ -117,7 +117,7 @@ function SectionHead({ num, label, kicker }) {
         <span className="headline" style={{ fontSize: 28, letterSpacing: "0.02em" }}>{label}</span>
       </div>
       {kicker && (
-        <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>{kicker}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>{kicker}</span>
       )}
     </div>
   );
@@ -237,7 +237,7 @@ function CastCard({ c }) {
             <div style={{ display: "flex", alignItems: "baseline", gap: 10, minWidth: 0 }}>
               <span className="headline" style={{ fontSize: 26, lineHeight: 1 }}>{c.name}</span>
               {c.full && (
-                <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+                <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
                   · {c.full.toUpperCase()}
                 </span>
               )}
@@ -294,7 +294,7 @@ function Cast() {
         paddingBottom: 12, borderBottom: "1px solid var(--ink-hair)",
       }}>
         <span className="subhead" style={{ fontSize: 13 }}>ALSO NAMED · MINOR NPCs</span>
-        <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
           AMBIENT · OFF-PAGE
         </span>
       </div>
@@ -354,7 +354,7 @@ function CrewCard({ c }) {
           <span className="headline" style={{ fontSize: 22 }}>{c.name}</span>
           <span className="fld">{c.arch}</span>
         </div>
-        <span className={"slug " + (c.kind.startsWith("PC") ? "outline" : "muted")} style={{ fontSize: 9 }}>
+        <span className={"slug " + (c.kind.startsWith("PC") ? "outline" : "muted")} style={{ fontSize: 11 }}>
           {c.kind}
         </span>
       </div>
@@ -362,11 +362,11 @@ function CrewCard({ c }) {
       <div className="body" style={{ fontSize: 12, color: "var(--ink-soft)" }}>{c.body}</div>
       <div style={{ marginTop: "auto", display: "grid", gridTemplateColumns: "auto 1fr", gap: "4px 10px" }}>
         <span className="fld">VOICE</span>
-        <span className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)" }}>{c.voice}</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{c.voice}</span>
         {c.swap !== "—" && (
           <>
             <span className="fld">M-SWAP</span>
-            <span className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)" }}>{c.swap}</span>
+            <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{c.swap}</span>
           </>
         )}
       </div>
@@ -438,7 +438,7 @@ function World() {
           padding: "6px 10px", display: "flex", alignItems: "center", gap: 8,
         }}>
           <span style={{ width: 6, height: 6, background: "var(--accent)" }}/>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>
             MAP · v1 · ILLUSTRATED
           </span>
         </div>
@@ -484,7 +484,7 @@ function World() {
         <span className="body" style={{ fontSize: 13, color: "var(--ink-soft)" }}>
           Come for the history. Stay because you can't afford the gas.
         </span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.2em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.2em" }}>
           SIGN · HWY 90
         </span>
       </div>
@@ -637,10 +637,10 @@ function Footer() {
       padding: "26px 48px 48px", borderTop: "1px solid var(--border)",
       display: "flex", justifyContent: "space-between", alignItems: "center",
     }}>
-      <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.22em" }}>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.22em" }}>
         DIGITAL · <span style={{ color: "var(--accent)" }}>SISSY</span> · v0.4 · DRAFT
       </span>
-      <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.22em" }}>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.22em" }}>
         EPHELLON · BLUEVILLE LOCAL 14 · 2050
       </span>
     </footer>

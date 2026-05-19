@@ -1,4 +1,4 @@
-// art/session-zero.jsx — letter portrait 816 × 1056. Interactive with localStorage.
+﻿// art/session-zero.jsx — letter portrait 816 × 1056. Interactive with localStorage.
 
 function useLS(key, def) {
   const [v, sv] = React.useState(() => {
@@ -67,7 +67,7 @@ function CheckRow({ label, hint, value, onChange }) {
       }} />
       <div style={{ display: "flex", flexDirection: "column" }}>
         <span className="body" style={{ fontSize: 13, color: "var(--ink)", fontWeight: 500 }}>{label}</span>
-        {hint && <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>{hint}</span>}
+        {hint && <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>{hint}</span>}
       </div>
       {CHIPS.map(({ key, border, color, bgSel }) => {
         const sel = value === key;
@@ -77,7 +77,7 @@ function CheckRow({ label, hint, value, onChange }) {
             key={key}
             onClick={() => onChange(sel ? null : key)}
             style={{
-              fontFamily: "var(--ff-mono)", fontSize: 9, letterSpacing: "0.16em",
+              fontFamily: "var(--ff-mono)", fontSize: 11, letterSpacing: "0.16em",
               padding: "4px 8px",
               border: `1px solid ${border}`,
               color: sel && isLine ? "var(--accent-on)" : color,
@@ -126,8 +126,8 @@ function SigField({ label, nameVal, dateVal, onName, onDate }) {
         />
       </div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>{label}</span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>DATE</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>{label}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>DATE</span>
       </div>
     </div>
   );
@@ -158,7 +158,7 @@ function SessionZeroArtboard() {
         <div style={{ display: "flex", alignItems: "center", gap: 14, lineHeight: 1.1 }}>
           <div className="brand-mark" style={{ width: 44, height: 44, flexShrink: 0 }} aria-label="dig.sys"/>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em", opacity: 0.55 }}>
+            <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em", opacity: 0.55 }}>
               DIGITAL SISSY · SHEET 06 / 06
             </span>
             <span className="headline" style={{ fontSize: 30, color: "var(--surface)" }}>
@@ -217,9 +217,9 @@ function SessionZeroArtboard() {
               </div>
             </div>
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <span className="mono" style={{ fontSize: 9, letterSpacing: "0.16em", color: "var(--ink-dim)" }}>EVERYONE FILLS THIS OUT</span>
-              <span className="mono" style={{ fontSize: 9, letterSpacing: "0.16em", color: "var(--ink-dim)" }}>·</span>
-              <span className="mono" style={{ fontSize: 9, letterSpacing: "0.16em", color: "var(--accent)" }}>STRICTEST WINS</span>
+              <span className="mono" style={{ fontSize: 11, letterSpacing: "0.16em", color: "var(--ink-dim)" }}>EVERYONE FILLS THIS OUT</span>
+              <span className="mono" style={{ fontSize: 11, letterSpacing: "0.16em", color: "var(--ink-dim)" }}>·</span>
+              <span className="mono" style={{ fontSize: 11, letterSpacing: "0.16em", color: "var(--accent)" }}>STRICTEST WINS</span>
             </div>
           </div>
 
@@ -307,10 +307,10 @@ function SessionZeroArtboard() {
         borderTop: "4px solid var(--accent)",
         opacity: 0.95,
       }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em" }}>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
           DIGITAL · <span style={{ color: "var(--accent)" }}>SISSY</span> · SESSION ZERO · v0.4
         </span>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em" }}>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
           KEEP THIS SHEET · REVISIT BETWEEN SESSIONS
         </span>
       </div>

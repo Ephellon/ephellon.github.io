@@ -1,4 +1,4 @@
-// art/crew.jsx — crew sheet. 1440 × 2940.
+﻿// art/crew.jsx — crew sheet. 1440 × 2940.
 // Hero is the labeled class photo; below it, the twelve archetype pairs.
 
 const PB_SLUGS = ['tinkerer','roughneck','voice','faithful','wired','vet','clean','believer','outsider','grifter','touched','reader'];
@@ -145,7 +145,7 @@ function CrewHeader() {
       <div style={{ display: "flex", alignItems: "center", gap: 16, lineHeight: 1.1 }}>
         <div className="brand-mark" style={{ width: 52, height: 52, flexShrink: 0 }} aria-label="dig.sys"/>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <span className="mono" style={{ fontSize: 10, letterSpacing: "0.22em", opacity: 0.55 }}>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em", opacity: 0.55 }}>
             DIGITAL SISSY · SHEET 07 / 07 · REFERENCE
           </span>
           <span className="headline" style={{ fontSize: 38, color: "var(--surface)", letterSpacing: "0.005em" }}>
@@ -156,7 +156,7 @@ function CrewHeader() {
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4,
       }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: "0.2em", opacity: 0.55 }}>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.2em", opacity: 0.55 }}>
           BLUEVILLE · AL · WORKING CLASS · 20s
         </span>
         <span style={{
@@ -214,7 +214,7 @@ function ClassPhoto() {
           padding: "6px 10px", display: "flex", alignItems: "center", gap: 8,
         }}>
           <span style={{ width: 6, height: 6, background: "var(--accent)" }}/>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>
             CLASS PHOTO · KEY · LABELED
           </span>
         </div>
@@ -223,7 +223,7 @@ function ClassPhoto() {
           background: "var(--bg)", border: "1px solid var(--border)",
           padding: "6px 10px",
         }}>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>
             BACK LOT · BEHIND THE EAST WAREHOUSE · OVERCAST · 26 PEOPLE
           </span>
         </div>
@@ -231,10 +231,10 @@ function ClassPhoto() {
       <div style={{
         marginTop: 10, display: "flex", justifyContent: "space-between", alignItems: "baseline",
       }}>
-        <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
           24 ARCHETYPE SLOTS · 2 NO-CLASS · ALL HOLDING THEIR OWN GROUND
         </span>
-        <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
           ROW 1 ▸ STANDING · ROW 2 ▸ BENCH · ROW 3 ▸ GROUND
         </span>
       </div>
@@ -261,15 +261,15 @@ function ArchetypeCard({ a }) {
           }}>{a.n}</span>
           <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
             <span className="headline" style={{ fontSize: 22, letterSpacing: "0.01em", lineHeight: 1 }}>{a.pb}</span>
-            <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
+            <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
               SOURCE · {a.arch}
             </span>
           </div>
         </div>
         {a.canon ? (
-          <span className="slug" style={{ fontSize: 8.5, padding: "3px 7px" }}>CANON · {a.canon}</span>
+          <span className="slug" style={{ fontSize: 11, padding: "3px 7px" }}>CANON · {a.canon}</span>
         ) : (
-          <span className="slug muted" style={{ fontSize: 8.5, padding: "3px 7px" }}>UNWRITTEN</span>
+          <span className="slug muted" style={{ fontSize: 11, padding: "3px 7px" }}>UNWRITTEN</span>
         )}
       </div>
 
@@ -278,11 +278,11 @@ function ArchetypeCard({ a }) {
         <span className="subhead" style={{
           fontSize: 16, color: a.canon === a.m ? "var(--accent)" : "var(--ink)",
         }}>{a.m}</span>
-        <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", padding: "0 8px" }}>·</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", padding: "0 8px" }}>·</span>
         <span className="subhead" style={{
           fontSize: 16, color: a.canon === a.f ? "var(--accent)" : "var(--ink)",
         }}>{a.f}</span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.16em", marginLeft: "auto" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em", marginLeft: "auto" }}>
           M / F
         </span>
       </div>
@@ -309,11 +309,11 @@ function ArchetypeCard({ a }) {
 
       <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "3px 12px", marginTop: "auto" }}>
         <span className="fld">VOICE</span>
-        <span className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)" }}>{a.voice}</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{a.voice}</span>
         <span className="fld">LOOK</span>
-        <span className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)" }}>{a.look}</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{a.look}</span>
         <span className="fld">ICONOG.</span>
-        <span className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)" }}>{a.icons}</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{a.icons}</span>
       </div>
 
       {a.note && (
@@ -321,7 +321,7 @@ function ArchetypeCard({ a }) {
           marginTop: 2, padding: "6px 8px",
           border: "1px dashed var(--ink-faint)",
         }}>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>
             NOTE · {a.note}
           </span>
         </div>
@@ -340,7 +340,7 @@ function ArchetypeCard({ a }) {
           color: "var(--accent-on)",
           textDecoration: "none",
           fontFamily: "var(--ff-display)",
-          fontSize: 9.5,
+          fontSize: 11,
           letterSpacing: "0.14em",
         }}
       >
@@ -361,7 +361,7 @@ function ArchetypeGrid() {
             PLAYBOOKS · PICK A SLOT
           </div>
         </div>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
           M/F SWAP — UNSELECTED VARIANT BECOMES AN NPC · SEE SHEETS 09–20
         </span>
       </div>
@@ -389,7 +389,7 @@ function BackgroundPair() {
             KIM & MIA · IN THE PHOTO, OUT OF THE BOOK
           </div>
         </div>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
           {BACKGROUND_PAIR.status}
         </span>
       </div>
@@ -408,10 +408,10 @@ function BackgroundPair() {
           <span className="fld">UNCLASSED</span>
           <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
             <span className="headline" style={{ fontSize: 28 }}>{BACKGROUND_PAIR.m}</span>
-            <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)" }}>&nbsp;/&nbsp;</span>
+            <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)" }}>&nbsp;/&nbsp;</span>
             <span className="headline" style={{ fontSize: 28 }}>{BACKGROUND_PAIR.f}</span>
           </div>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
             CANON: PORTRAIT ONLY
           </span>
         </div>
@@ -454,10 +454,10 @@ function CrewFooter() {
       borderTop: "4px solid var(--accent)",
       opacity: 0.95,
     }}>
-      <span className="mono" style={{ fontSize: 10, letterSpacing: "0.22em" }}>
+      <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
         DIGITAL · <span style={{ color: "var(--accent)" }}>SISSY</span> · CREW SHEET · v0.4
       </span>
-      <span className="mono" style={{ fontSize: 10, letterSpacing: "0.22em" }}>
+      <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
         CHARACTER SHEETS v0.3 · MAJOR NPCs ON SHEET 03 · PORTRAITS PENDING
       </span>
     </div>

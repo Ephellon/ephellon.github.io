@@ -1,4 +1,4 @@
-// art/system.jsx — system spine. Interactive campaign tracker. Sheet 08.
+﻿// art/system.jsx — system spine. Interactive campaign tracker. Sheet 08.
 
 const STATS = [
   { k: "CHARM", g: "performance · pitch · glamour",      d: "the face you put on" },
@@ -132,7 +132,7 @@ function SectionTag({ no, label, kicker }) {
         <span className="headline" style={{ fontSize: 18, letterSpacing: "0.01em" }}>{label}</span>
       </div>
       {kicker && (
-        <span className="mono" style={{ fontSize: 8.5, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
           {kicker}
         </span>
       )}
@@ -165,7 +165,7 @@ function ResultRow({ tag, tone, title, body }) {
       </div>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "4px 0" }}>
         <span className="subhead" style={{ fontSize: 11 }}>{title}</span>
-        <span className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)" }}>{body}</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{body}</span>
       </div>
     </div>
   );
@@ -180,11 +180,11 @@ function StatCard({ k, g, d }) {
       minHeight: 78,
     }}>
       <span className="headline" style={{ fontSize: 17, lineHeight: 1 }}>{k}</span>
-      <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>
         +{Math.max(-1, 3)} TO −1
       </span>
-      <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>{g}</span>
-      <span className="body" style={{ fontSize: 9, color: "var(--ink-dim)", lineHeight: 1.3, marginTop: "auto", fontStyle: "italic" }}>
+      <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>{g}</span>
+      <span className="body" style={{ fontSize: 11, color: "var(--ink-dim)", lineHeight: 1.3, marginTop: "auto", fontStyle: "italic" }}>
         {d}
       </span>
     </div>
@@ -201,7 +201,7 @@ function MoveCard({ m }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 6 }}>
         <span className="headline" style={{ fontSize: 13, lineHeight: 1 }}>{m.n}</span>
         <span className="mono" style={{
-          fontSize: 7.5,
+          fontSize: 11,
           color: noRoll ? "var(--ink-dim)" : "var(--accent)",
           letterSpacing: "0.12em",
           border: "1px solid " + (noRoll ? "var(--ink-faint)" : "var(--accent)"),
@@ -211,16 +211,16 @@ function MoveCard({ m }) {
           {m.r}
         </span>
       </div>
-      <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", fontStyle: "italic" }}>
+      <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", fontStyle: "italic" }}>
         {m.t}
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "20px 1fr", gap: "2px 6px", marginTop: 2 }}>
-        <span className="mono" style={{ fontSize: 8.5, color: "var(--ink)", letterSpacing: "0.06em" }}>10+</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.a}</span>
-        <span className="mono" style={{ fontSize: 8.5, color: "var(--glitter)", letterSpacing: "0.06em" }}>7–9</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.b}</span>
-        <span className="mono" style={{ fontSize: 8.5, color: "var(--accent)", letterSpacing: "0.06em" }}>6−</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", lineHeight: 1.3 }}>{m.c}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink)", letterSpacing: "0.06em" }}>10+</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.a}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--glitter)", letterSpacing: "0.06em" }}>7–9</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.b}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.06em" }}>6−</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.3 }}>{m.c}</span>
       </div>
     </div>
   );
@@ -235,7 +235,7 @@ function DebtTrack({ debt, day, setSess }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span className="subhead" style={{ fontSize: 11 }}>DEBT · CAMPAIGN CLOCK</span>
-        <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>SHARED</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>SHARED</span>
       </div>
       <div style={{
         border: "1.5px solid var(--accent)",
@@ -244,7 +244,7 @@ function DebtTrack({ debt, day, setSess }) {
         gap: 12,
       }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <span className="mono" style={{ fontSize: 8, letterSpacing: "0.14em", color: "var(--ink-dim)" }}>DEBT REMAINING</span>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--ink-dim)" }}>DEBT REMAINING</span>
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <button style={BTN} onClick={() => setSess(s => ({ ...s, debt: Math.min(10000, s.debt + 500) }))}>▲</button>
             <span className="headline" style={{ fontSize: 22, color: "var(--accent)", lineHeight: 1, minWidth: 88, textAlign: "center" }}>
@@ -252,12 +252,12 @@ function DebtTrack({ debt, day, setSess }) {
             </span>
             <button style={BTN} onClick={() => setSess(s => ({ ...s, debt: Math.max(0, s.debt - 500) }))}>▼</button>
           </div>
-          <span className="mono" style={{ fontSize: 7.5, color: "var(--ink-dim)", letterSpacing: "0.1em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.1em" }}>
             {pct}% PAID — STEP $500
           </span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-          <span className="mono" style={{ fontSize: 8, letterSpacing: "0.14em", color: "var(--ink-dim)" }}>DAY</span>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--ink-dim)" }}>DAY</span>
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <button style={BTN} onClick={() => setSess(s => ({ ...s, day: Math.max(1, s.day - 1) }))}>−</button>
             <span className="headline" style={{ fontSize: 26, lineHeight: 1, minWidth: 38, textAlign: "center",
@@ -266,7 +266,7 @@ function DebtTrack({ debt, day, setSess }) {
             </span>
             <button style={BTN} onClick={() => setSess(s => ({ ...s, day: Math.min(30, s.day + 1) }))}>+</button>
           </div>
-          <span className="mono" style={{ fontSize: 7.5, letterSpacing: "0.1em",
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.1em",
             color: dayWarn ? "var(--accent)" : "var(--ink-dim)" }}>/ 30 DAYS</span>
         </div>
       </div>
@@ -275,12 +275,12 @@ function DebtTrack({ debt, day, setSess }) {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
         <div style={{ padding: "5px 8px", background: "var(--surface-2)", borderLeft: "3px solid var(--accent)" }}>
-          <span className="mono" style={{ fontSize: 8.5, color: "var(--accent)", letterSpacing: "0.12em" }}>DEBT &gt; $0 @ DAY 30</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}>Alex dies. Campaign ends.</div>
+          <span className="mono" style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.12em" }}>DEBT &gt; $0 @ DAY 30</span>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>Alex dies. Campaign ends.</div>
         </div>
         <div style={{ padding: "5px 8px", background: "var(--surface-2)", borderLeft: "3px solid var(--ink-soft)" }}>
-          <span className="mono" style={{ fontSize: 8.5, color: "var(--ink)", letterSpacing: "0.12em" }}>DEBT = $0 BEFORE 30</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}>Pyrrhic save. Cost is everything else.</div>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink)", letterSpacing: "0.12em" }}>DEBT = $0 BEFORE 30</span>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>Pyrrhic save. Cost is everything else.</div>
         </div>
       </div>
     </div>
@@ -292,7 +292,7 @@ function HeatTrack({ heat, setSess }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span className="subhead" style={{ fontSize: 11 }}>HEAT · PRESSURE TRACK</span>
-        <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>PARTY-SHARED</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>PARTY-SHARED</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 4 }}>
         {HEAT_STEPS.map(({ n, k, g }) => {
@@ -318,20 +318,20 @@ function HeatTrack({ heat, setSess }) {
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                <span style={{ fontFamily: "var(--ff-display)", fontSize: 10, letterSpacing: "0.04em", color: fg, opacity: 0.7 }}>{n}</span>
-                <span className="mono" style={{ fontSize: 7, letterSpacing: "0.12em", opacity: 0.6 }}>{isMax ? "END" : ""}</span>
+                <span style={{ fontFamily: "var(--ff-display)", fontSize: 11, letterSpacing: "0.04em", color: fg, opacity: 0.7 }}>{n}</span>
+                <span className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", opacity: 0.6 }}>{isMax ? "END" : ""}</span>
               </div>
               <span className="headline" style={{ fontSize: 13, lineHeight: 1, color: fg }}>{k}</span>
-              <span className="mono" style={{ fontSize: 7.5, letterSpacing: "0.04em", opacity: 0.72, lineHeight: 1.25 }}>{g}</span>
+              <span className="mono" style={{ fontSize: 11, letterSpacing: "0.04em", opacity: 0.72, lineHeight: 1.25 }}>{g}</span>
             </div>
           );
         })}
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>
           <b style={{ color: "var(--ink)" }}>UP:</b> exposure misses · noisy theft · certain GM moves.
         </span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>
           <b style={{ color: "var(--ink)" }}>DOWN:</b> lying low · pay someone off · sacrifice a relationship.
         </span>
       </div>
@@ -344,7 +344,7 @@ function HarmLadder({ name, steps, end, gloss }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span className="subhead" style={{ fontSize: 11 }}>{name}</span>
-        <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>{gloss}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>{gloss}</span>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {steps.map(([n, label, effect], i) => {
@@ -361,15 +361,15 @@ function HarmLadder({ name, steps, end, gloss }) {
                 width: 10, height: 10, border: "1px solid currentColor",
                 background: isEnd ? "var(--accent-on)" : "transparent",
               }} />
-              <span className="mono" style={{ fontSize: 8.5, letterSpacing: "0.08em" }}>{label}</span>
-              <span className="body" style={{ fontSize: 9.5, color: isEnd ? "var(--accent-on)" : "var(--ink-mid)", lineHeight: 1.3 }}>
+              <span className="mono" style={{ fontSize: 11, letterSpacing: "0.08em" }}>{label}</span>
+              <span className="body" style={{ fontSize: 11, color: isEnd ? "var(--accent-on)" : "var(--ink-mid)", lineHeight: 1.3 }}>
                 {effect}
               </span>
             </div>
           );
         })}
       </div>
-      <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.1em", marginTop: 2 }}>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.1em", marginTop: 2 }}>
         {end}
       </span>
     </div>
@@ -381,7 +381,7 @@ function UsingTrack() {
     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span className="subhead" style={{ fontSize: 11 }}>USING · GLITTER TRACK</span>
-        <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>PER PC · ONE PER DOSE</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>PER PC · ONE PER DOSE</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 4 }}>
         {[
@@ -405,14 +405,14 @@ function UsingTrack() {
                 <span className="headline" style={{ fontSize: 12, lineHeight: 1, color: isLast ? "#07111a" : "var(--ink)" }}>{k}</span>
                 {!isClean && <span className="glitter-star" style={{ width: 8, height: 8, opacity: isLast ? 0.85 : 0.6 }} />}
               </div>
-              <span className="body" style={{ fontSize: 8.5, color: isLast ? "#07111a" : "var(--ink-mid)", lineHeight: 1.3 }}>
+              <span className="body" style={{ fontSize: 11, color: isLast ? "#07111a" : "var(--ink-mid)", lineHeight: 1.3 }}>
                 {e}
               </span>
             </div>
           );
         })}
       </div>
-      <span className="body" style={{ fontSize: 9, color: "var(--ink-mid)", lineHeight: 1.35, marginTop: 2 }}>
+      <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.35, marginTop: 2 }}>
         <b style={{ color: "var(--ink)" }}>Getting clean:</b> declare a session of it · need another PC's presence · take 2 Wear · reduce 1 step at session end · failing locks the track 2 sessions.
       </span>
     </div>
@@ -449,7 +449,7 @@ function HarmBar({ value, labels, onChange, accentFull }) {
         })}
       </div>
       <span className="mono" style={{
-        fontSize: 7.5, letterSpacing: "0.08em",
+        fontSize: 11, letterSpacing: "0.08em",
         color: value === labels.length ? (accentFull || "var(--accent)") : value > 0 ? "var(--ink-mid)" : "var(--ink-dim)",
       }}>
         {value > 0 ? labels[value - 1] : "—"}
@@ -482,7 +482,7 @@ function UsingBar({ value, onChange }) {
         })}
       </div>
       <span className="mono" style={{
-        fontSize: 7.5, letterSpacing: "0.08em",
+        fontSize: 11, letterSpacing: "0.08em",
         color: value >= 2 ? "var(--glitter)" : value > 0 ? "var(--ink-mid)" : "var(--ink-dim)",
       }}>
         {USING_LABELS[value]}
@@ -511,7 +511,7 @@ function PCTracker({ pcs, setSess }) {
           border: "1px solid var(--border)",
         }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <span className="fld" style={{ fontSize: 8 }}>PC {i + 1}</span>
+            <span className="fld" style={{ fontSize: 11 }}>PC {i + 1}</span>
             <input
               value={pc.name}
               onChange={e => updatePC(i, 'name', e.target.value)}
@@ -531,7 +531,7 @@ function PCTracker({ pcs, setSess }) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <span className="fld" style={{ fontSize: 8 }}>BODY HARM</span>
+            <span className="fld" style={{ fontSize: 11 }}>BODY HARM</span>
             <HarmBar
               value={pc.body}
               labels={HARM_BODY_LABELS}
@@ -541,7 +541,7 @@ function PCTracker({ pcs, setSess }) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <span className="fld" style={{ fontSize: 8 }}>WEAR HARM</span>
+            <span className="fld" style={{ fontSize: 11 }}>WEAR HARM</span>
             <HarmBar
               value={pc.wear}
               labels={HARM_WEAR_LABELS}
@@ -551,7 +551,7 @@ function PCTracker({ pcs, setSess }) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <span className="fld" style={{ fontSize: 8 }}>USING</span>
+            <span className="fld" style={{ fontSize: 11 }}>USING</span>
             <UsingBar
               value={pc.using}
               onChange={v => updatePC(i, 'using', v)}
@@ -604,7 +604,7 @@ function S3_Moves() {
         display: "flex", gap: 10, alignItems: "baseline",
       }}>
         <span className="fld" style={{ flex: "0 0 auto" }}>READ A PERSON · ASK</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>
           {READ_QUESTIONS.join(" · ")}
         </span>
       </div>
@@ -660,21 +660,21 @@ function S5_Special() {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
         <div className="card" style={{ padding: "7px 9px", borderTop: "2px solid var(--accent)" }}>
           <span className="headline" style={{ fontSize: 13 }}>ALEX</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
             GM voices her. No sheet, no stats, no moves. Tracked state: <b>alive / dying / dead</b>.
             <b style={{ color: "var(--accent)" }}> Alex dies → campaign ends.</b>
           </div>
         </div>
         <div className="card" style={{ padding: "7px 9px", borderTop: "2px solid var(--accent)" }}>
           <span className="headline" style={{ fontSize: 13 }}>BECKY</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
             GM-voiced narrator. PCs interact through standard moves; she rolls none.
             <b style={{ color: "var(--accent)" }}> Becky dies → campaign ends.</b>
           </div>
         </div>
         <div className="card" style={{ padding: "7px 9px", borderTop: "2px solid var(--ink-soft)" }}>
           <span className="headline" style={{ fontSize: 13 }}>BONDS</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
             Per pair. Help: roll +bond, 10+ give +1, 7–9 share consequences.
             Every PC starts <b>+1 to Alex</b> (canon).
           </div>
@@ -693,14 +693,14 @@ function S6_PCTracker({ sess, setSess }) {
           <span className="headline" style={{ fontSize: 18, letterSpacing: "0.01em" }}>PC TRACKER</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span className="mono" style={{ fontSize: 8.5, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
             BODY · WEAR · USING · PER CHARACTER
           </span>
           <button
             onClick={() => setSess(SESSION_DEFAULT)}
             style={{
               fontFamily: "var(--ff-mono)",
-              fontSize: 8, letterSpacing: "0.12em",
+              fontSize: 11, letterSpacing: "0.12em",
               background: "transparent",
               border: "1px solid var(--border)",
               color: "var(--ink-dim)",
@@ -731,7 +731,7 @@ function SystemHeader() {
       <div style={{ display: "flex", alignItems: "center", gap: 14, lineHeight: 1.1 }}>
         <div className="brand-mark" style={{ width: 42, height: 42, flexShrink: 0 }} aria-label="dig.sys"/>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em", opacity: 0.55 }}>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em", opacity: 0.55 }}>
             DIGITAL SISSY · SHEET 08 · CORE · LEGAL 8.5×14
           </span>
           <span className="headline" style={{ fontSize: 28, color: "var(--surface)" }}>
@@ -757,10 +757,10 @@ function SystemFooter() {
       borderTop: "4px solid var(--accent)",
       opacity: 0.95,
     }}>
-      <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em" }}>
+      <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
         DIGITAL · <span style={{ color: "var(--accent)" }}>SISSY</span> · SYSTEM SPINE · v0.2
       </span>
-      <span className="mono" style={{ fontSize: 9, letterSpacing: "0.22em" }}>
+      <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em" }}>
         DEBT $10K · 30 DAYS · ALEX DIES OR DEBT CLEARS
       </span>
     </div>

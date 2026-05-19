@@ -1,4 +1,4 @@
-// art/items.jsx — print-and-cut handout cards (Glitter, Bills, Laser).
+﻿// art/items.jsx — print-and-cut handout cards (Glitter, Bills, Laser).
 
 function ItemCard({ no, kind, label, name, tag, accent, body, stats, footer, art }) {
   // Print-ready card — always renders on PURE WHITE so it prints clean
@@ -43,7 +43,7 @@ function ItemCard({ no, kind, label, name, tag, accent, body, stats, footer, art
         borderBottom: `1px solid ${BORDER_STRONG}`,
       }}>
         <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-          <span className="mono" style={{ fontSize: 9, letterSpacing: "0.18em", opacity: 0.85 }}>{kind}</span>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", opacity: 0.85 }}>{kind}</span>
           <span style={{ fontFamily: "var(--ff-display)", fontSize: 22, letterSpacing: "0.04em", color: headFg }}>{label}</span>
         </div>
         <span style={{
@@ -70,7 +70,7 @@ function ItemCard({ no, kind, label, name, tag, accent, body, stats, footer, art
       <div style={{ flex: 1, padding: "14px 16px", display: "flex", flexDirection: "column", gap: 10 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
           <span className="headline" style={{ fontSize: 22, lineHeight: 0.95, color: INK }}>{name}</span>
-          <span className="mono" style={{ fontSize: 9, color: INK_DIM, letterSpacing: "0.14em" }}>{tag}</span>
+          <span className="mono" style={{ fontSize: 11, color: INK_DIM, letterSpacing: "0.14em" }}>{tag}</span>
         </div>
 
         <div className="body" style={{ fontSize: 12, color: INK_MID }}>{body}</div>
@@ -81,7 +81,7 @@ function ItemCard({ no, kind, label, name, tag, accent, body, stats, footer, art
               display: "grid", gridTemplateColumns: "70px 1fr",
               gap: 8, paddingTop: 4, borderTop: `1px dashed ${INK_FAINT}`,
             }}>
-              <span className="mono" style={{ fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: INK_DIM }}>{k}</span>
+              <span className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: INK_DIM }}>{k}</span>
               <span className="body" style={{ fontSize: 11, color: INK }}>{v}</span>
             </div>
           ))}
@@ -93,9 +93,9 @@ function ItemCard({ no, kind, label, name, tag, accent, body, stats, footer, art
         background: INK, color: PAPER,
         padding: "8px 14px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8,
       }}>
-        <span className="mono" style={{ fontSize: 9, letterSpacing: "0.2em" }}>{footer}</span>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.2em" }}>{footer}</span>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="mono" style={{ fontSize: 9, letterSpacing: "0.2em", color: "var(--accent)" }}>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.2em", color: "var(--accent)" }}>
             DIG · SYS
           </span>
           <div className="brand-mark" style={{ width: 18, height: 18 }} aria-label=""/>
@@ -269,10 +269,10 @@ function ItemsArtboard() {
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.2em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.2em" }}>
           PRINT AT 100% · CUT ON DASHED LINE · DO NOT LAMINATE
         </span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.2em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.2em" }}>
           REVERSE: BLANK · WRITE YOUR PC'S NAME
         </span>
       </div>

@@ -1,4 +1,4 @@
-// art/site-app.jsx — hash-based site router. Replaces canvas-app.jsx.
+﻿// art/site-app.jsx — hash-based site router. Replaces canvas-app.jsx.
 
 const PB_SLUGS = ['tinkerer','roughneck','voice','faithful','wired','vet','clean','believer','outsider','grifter','touched','reader'];
 
@@ -149,7 +149,7 @@ function SiteNav({ route }) {
                     onClick={() => setPbOpen(false)}
                     style={{
                       fontFamily: 'var(--ff-display)',
-                      fontSize: 10, letterSpacing: '0.1em',
+                      fontSize: 11, letterSpacing: '0.1em',
                       padding: '8px 12px',
                       color: route === hash ? 'var(--accent)' : 'var(--ink-mid)',
                       background: route === hash ? 'var(--surface)' : 'transparent',
@@ -158,7 +158,7 @@ function SiteNav({ route }) {
                       borderBottom: '1px solid var(--border)',
                     }}
                   >
-                    <span style={{ color: 'var(--ink-dim)', minWidth: 22, fontSize: 9 }}>{no}</span>
+                    <span style={{ color: 'var(--ink-dim)', minWidth: 22, fontSize: 11 }}>{no}</span>
                     {label.toUpperCase()}
                   </a>
                 );
@@ -275,13 +275,13 @@ function DiceRoller() {
       {rolled && (
         <span style={{
           fontFamily: 'var(--ff-mono)',
-          fontSize: 8, color: '#aaa',
+          fontSize: 11, color: '#aaa',
           letterSpacing: '0.18em',
         }}>{dice[0]} + {dice[1]} = {total}</span>
       )}
       <span style={{
         fontFamily: 'var(--ff-mono)',
-        fontSize: 8, color: '#bbb',
+        fontSize: 11, color: '#bbb',
         letterSpacing: '0.16em',
       }}>CLICK · ROLL</span>
     </div>

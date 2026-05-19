@@ -1,4 +1,4 @@
-// art/gm-screen.jsx — four landscape panels. Total 3264 × 1056.
+﻿// art/gm-screen.jsx — four landscape panels. Total 3264 × 1056.
 
 function useLS(key, def) {
   const [v, sv] = React.useState(() => {
@@ -156,7 +156,7 @@ function GMSResultRow({ result, tone, title, body }) {
         border: tone === "ink" ? "1px solid var(--border-strong)" : "none",
       }}>
         <span className="headline" style={{ fontSize: 22, lineHeight: 1, color: fg }}>{result}</span>
-        <span className="mono" style={{ fontSize: 7, letterSpacing: "0.14em" }}>RESULT</span>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: "0.14em" }}>RESULT</span>
       </div>
       <div className="card" style={{
         padding: "8px 12px", display: "flex", flexDirection: "column", gap: 2,
@@ -177,7 +177,7 @@ function GMSStatChip({ k, g }) {
       display: "flex", flexDirection: "column", gap: 1,
     }}>
       <span className="headline" style={{ fontSize: 14, lineHeight: 1 }}>{k}</span>
-      <span className="mono" style={{ fontSize: 7.5, color: "var(--ink-dim)", letterSpacing: "0.08em", lineHeight: 1.3 }}>{g}</span>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.08em", lineHeight: 1.3 }}>{g}</span>
     </div>
   );
 }
@@ -192,18 +192,18 @@ function GMSMove({ m }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
         <span className="headline" style={{ fontSize: 14, lineHeight: 1 }}>{m.n}</span>
         <span className="mono" style={{
-          fontSize: 7.5, letterSpacing: "0.12em",
+          fontSize: 11, letterSpacing: "0.12em",
           color: m.r.startsWith("no") ? "var(--ink-dim)" : "var(--accent)",
           whiteSpace: "nowrap",
         }}>{m.r}</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "20px 1fr", gap: "1px 5px", marginTop: 1 }}>
-        {m.a && <><span className="mono" style={{ fontSize: 8, color: "var(--ink)" }}>10+</span>
-          <span className="body" style={{ fontSize: 10, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.a}</span></>}
-        {m.b && <><span className="mono" style={{ fontSize: 8, color: m.r.startsWith("no") ? "var(--ink-dim)" : "var(--glitter)" }}>{m.r.startsWith("no") ? "·" : "7–9"}</span>
-          <span className="body" style={{ fontSize: 10, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.b}</span></>}
-        {m.c && <><span className="mono" style={{ fontSize: 8, color: "var(--accent)" }}>6−</span>
-          <span className="body" style={{ fontSize: 10, color: "var(--ink-mid)", lineHeight: 1.3 }}>{m.c}</span></>}
+        {m.a && <><span className="mono" style={{ fontSize: 11, color: "var(--ink)" }}>10+</span>
+          <span className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.a}</span></>}
+        {m.b && <><span className="mono" style={{ fontSize: 11, color: m.r.startsWith("no") ? "var(--ink-dim)" : "var(--glitter)" }}>{m.r.startsWith("no") ? "·" : "7–9"}</span>
+          <span className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.b}</span></>}
+        {m.c && <><span className="mono" style={{ fontSize: 11, color: "var(--accent)" }}>6−</span>
+          <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.3 }}>{m.c}</span></>}
       </div>
     </div>
   );
@@ -314,7 +314,7 @@ function SectionTag({ no, label, kicker }) {
         <span className="fld">§ {no}</span>
         <span className="headline" style={{ fontSize: 18, letterSpacing: "0.01em" }}>{label}</span>
       </div>
-      {kicker && <span className="mono" style={{ fontSize: 8.5, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>{kicker}</span>}
+      {kicker && <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>{kicker}</span>}
     </div>
   );
 }
@@ -329,7 +329,7 @@ function ResultRow({ tag, tone, title, body }) {
       </div>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "4px 0" }}>
         <span className="subhead" style={{ fontSize: 11 }}>{title}</span>
-        <span className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)" }}>{body}</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{body}</span>
       </div>
     </div>
   );
@@ -339,9 +339,9 @@ function StatCard({ k, g, d }) {
   return (
     <div className="card" style={{ padding: "8px 10px", display: "flex", flexDirection: "column", gap: 2, borderTop: "2px solid var(--accent)", minHeight: 78 }}>
       <span className="headline" style={{ fontSize: 17, lineHeight: 1 }}>{k}</span>
-      <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>+2 TO −1</span>
-      <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>{g}</span>
-      <span className="body" style={{ fontSize: 9, color: "var(--ink-dim)", lineHeight: 1.3, marginTop: "auto", fontStyle: "italic" }}>{d}</span>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>+2 TO −1</span>
+      <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>{g}</span>
+      <span className="body" style={{ fontSize: 11, color: "var(--ink-dim)", lineHeight: 1.3, marginTop: "auto", fontStyle: "italic" }}>{d}</span>
     </div>
   );
 }
@@ -352,16 +352,16 @@ function MoveCard({ m }) {
     <div className="card" style={{ padding: "9px 11px 8px", display: "flex", flexDirection: "column", gap: 4 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 6 }}>
         <span className="headline" style={{ fontSize: 13, lineHeight: 1 }}>{m.n}</span>
-        <span className="mono" style={{ fontSize: 7.5, color: noRoll ? "var(--ink-dim)" : "var(--accent)", letterSpacing: "0.12em", border: "1px solid " + (noRoll ? "var(--ink-faint)" : "var(--accent)"), padding: "1px 5px", whiteSpace: "nowrap" }}>{m.r}</span>
+        <span className="mono" style={{ fontSize: 11, color: noRoll ? "var(--ink-dim)" : "var(--accent)", letterSpacing: "0.12em", border: "1px solid " + (noRoll ? "var(--ink-faint)" : "var(--accent)"), padding: "1px 5px", whiteSpace: "nowrap" }}>{m.r}</span>
       </div>
-      <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", fontStyle: "italic" }}>{m.t}</div>
+      <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", fontStyle: "italic" }}>{m.t}</div>
       <div style={{ display: "grid", gridTemplateColumns: "20px 1fr", gap: "2px 6px", marginTop: 2 }}>
-        <span className="mono" style={{ fontSize: 8.5, color: "var(--ink)", letterSpacing: "0.06em" }}>10+</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.a}</span>
-        <span className="mono" style={{ fontSize: 8.5, color: "var(--glitter)", letterSpacing: "0.06em" }}>7–9</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.b}</span>
-        <span className="mono" style={{ fontSize: 8.5, color: "var(--accent)", letterSpacing: "0.06em" }}>6−</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", lineHeight: 1.3 }}>{m.c}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink)", letterSpacing: "0.06em" }}>10+</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.a}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--glitter)", letterSpacing: "0.06em" }}>7–9</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.3 }}>{m.b}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.06em" }}>6−</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.3 }}>{m.c}</span>
       </div>
     </div>
   );
@@ -381,7 +381,7 @@ function HarmBar({ value, labels, onChange, accentFull }) {
           );
         })}
       </div>
-      <span className="mono" style={{ fontSize: 7.5, letterSpacing: "0.08em", color: value === labels.length ? (accentFull || "var(--accent)") : value > 0 ? "var(--ink-mid)" : "var(--ink-dim)" }}>
+      <span className="mono" style={{ fontSize: 11, letterSpacing: "0.08em", color: value === labels.length ? (accentFull || "var(--accent)") : value > 0 ? "var(--ink-mid)" : "var(--ink-dim)" }}>
         {value > 0 ? labels[value - 1] : "—"}
       </span>
     </div>
@@ -400,7 +400,7 @@ function UsingBar({ value, onChange }) {
           );
         })}
       </div>
-      <span className="mono" style={{ fontSize: 7.5, letterSpacing: "0.08em", color: value >= 2 ? "var(--glitter)" : value > 0 ? "var(--ink-mid)" : "var(--ink-dim)" }}>
+      <span className="mono" style={{ fontSize: 11, letterSpacing: "0.08em", color: value >= 2 ? "var(--glitter)" : value > 0 ? "var(--ink-mid)" : "var(--ink-dim)" }}>
         {USING_LABELS[value]}
       </span>
     </div>
@@ -414,19 +414,19 @@ function PCTracker({ pcs, setSess }) {
       {pcs.map((pc, i) => (
         <div key={i} style={{ display: "grid", gridTemplateColumns: "130px 1fr 1fr 1fr", gap: 10, alignItems: "end", padding: "9px 10px", background: "var(--surface)", border: "1px solid var(--border)" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <span className="fld" style={{ fontSize: 8 }}>PC {i + 1}</span>
+            <span className="fld" style={{ fontSize: 11 }}>PC {i + 1}</span>
             <input value={pc.name} onChange={e => updatePC(i, 'name', e.target.value)} placeholder="Name" style={{ background: "transparent", border: "none", borderBottom: "1px solid var(--border-strong)", color: "var(--ink)", fontFamily: "var(--ff-display)", fontSize: 13, letterSpacing: "0.06em", padding: "2px 0", outline: "none", width: "100%" }} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <span className="fld" style={{ fontSize: 8 }}>BODY HARM</span>
+            <span className="fld" style={{ fontSize: 11 }}>BODY HARM</span>
             <HarmBar value={pc.body} labels={HARM_BODY_LABELS} onChange={v => updatePC(i, 'body', v)} accentFull="var(--accent)" />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <span className="fld" style={{ fontSize: 8 }}>WEAR HARM</span>
+            <span className="fld" style={{ fontSize: 11 }}>WEAR HARM</span>
             <HarmBar value={pc.wear} labels={HARM_WEAR_LABELS} onChange={v => updatePC(i, 'wear', v)} accentFull="var(--glitter)" />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <span className="fld" style={{ fontSize: 8 }}>USING</span>
+            <span className="fld" style={{ fontSize: 11 }}>USING</span>
             <UsingBar value={pc.using} onChange={v => updatePC(i, 'using', v)} />
           </div>
         </div>
@@ -442,26 +442,26 @@ function DebtTrack({ debt, day, setSess }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span className="subhead" style={{ fontSize: 11 }}>DEBT · CAMPAIGN CLOCK</span>
-        <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>SHARED</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>SHARED</span>
       </div>
       <div style={{ border: "1.5px solid var(--accent)", padding: "10px 12px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <span className="mono" style={{ fontSize: 8, letterSpacing: "0.14em", color: "var(--ink-dim)" }}>DEBT REMAINING</span>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--ink-dim)" }}>DEBT REMAINING</span>
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <button style={BTN} onClick={() => setSess(s => ({ ...s, debt: Math.min(10000, s.debt + 500) }))}>▲</button>
             <span className="headline" style={{ fontSize: 22, color: "var(--accent)", lineHeight: 1, minWidth: 88, textAlign: "center" }}>${debt.toLocaleString()}</span>
             <button style={BTN} onClick={() => setSess(s => ({ ...s, debt: Math.max(0, s.debt - 500) }))}>▼</button>
           </div>
-          <span className="mono" style={{ fontSize: 7.5, color: "var(--ink-dim)", letterSpacing: "0.1em" }}>{pct}% PAID — STEP $500</span>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.1em" }}>{pct}% PAID — STEP $500</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-          <span className="mono" style={{ fontSize: 8, letterSpacing: "0.14em", color: "var(--ink-dim)" }}>DAY</span>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--ink-dim)" }}>DAY</span>
           <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <button style={BTN} onClick={() => setSess(s => ({ ...s, day: Math.max(1, s.day - 1) }))}>−</button>
             <span className="headline" style={{ fontSize: 26, lineHeight: 1, minWidth: 38, textAlign: "center", color: dayWarn ? "var(--accent)" : "var(--ink)" }}>{day}</span>
             <button style={BTN} onClick={() => setSess(s => ({ ...s, day: Math.min(30, s.day + 1) }))}>+</button>
           </div>
-          <span className="mono" style={{ fontSize: 7.5, letterSpacing: "0.1em", color: dayWarn ? "var(--accent)" : "var(--ink-dim)" }}>/ 30 DAYS</span>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", color: dayWarn ? "var(--accent)" : "var(--ink-dim)" }}>/ 30 DAYS</span>
         </div>
       </div>
       <div style={{ height: 4, background: "var(--surface-2)" }}>
@@ -469,12 +469,12 @@ function DebtTrack({ debt, day, setSess }) {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
         <div style={{ padding: "5px 8px", background: "var(--surface-2)", borderLeft: "3px solid var(--accent)" }}>
-          <span className="mono" style={{ fontSize: 8.5, color: "var(--accent)", letterSpacing: "0.12em" }}>DEBT &gt; $0 @ DAY 30</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}>Alex dies. Campaign ends.</div>
+          <span className="mono" style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.12em" }}>DEBT &gt; $0 @ DAY 30</span>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>Alex dies. Campaign ends.</div>
         </div>
         <div style={{ padding: "5px 8px", background: "var(--surface-2)", borderLeft: "3px solid var(--ink-soft)" }}>
-          <span className="mono" style={{ fontSize: 8.5, color: "var(--ink)", letterSpacing: "0.12em" }}>DEBT = $0 BEFORE 30</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}>Pyrrhic save. Cost is everything else.</div>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink)", letterSpacing: "0.12em" }}>DEBT = $0 BEFORE 30</span>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>Pyrrhic save. Cost is everything else.</div>
         </div>
       </div>
     </div>
@@ -486,7 +486,7 @@ function HeatTrack({ heat, setSess }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span className="subhead" style={{ fontSize: 11 }}>HEAT · PRESSURE TRACK</span>
-        <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>PARTY-SHARED</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>PARTY-SHARED</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 4 }}>
         {HEAT_STEPS.map(({ n, k, g }) => {
@@ -498,18 +498,18 @@ function HeatTrack({ heat, setSess }) {
           return (
             <div key={n} onClick={() => setSess(s => ({ ...s, heat: s.heat === n && n > 1 ? n - 1 : n }))} title={`Set heat to ${n}`} style={{ background: bg, color: fg, border: `1.5px solid ${isCurrent ? "var(--accent)" : active ? "var(--accent-mid)" : "var(--border-strong)"}`, padding: "6px 6px 5px", display: "flex", flexDirection: "column", gap: 1, minHeight: 58, cursor: "pointer", opacity: active ? 1 : 0.45, transition: "opacity 0.12s, border-color 0.12s" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                <span style={{ fontFamily: "var(--ff-display)", fontSize: 10, letterSpacing: "0.04em", color: fg, opacity: 0.7 }}>{n}</span>
-                <span className="mono" style={{ fontSize: 7, letterSpacing: "0.12em", opacity: 0.6 }}>{isMax ? "END" : ""}</span>
+                <span style={{ fontFamily: "var(--ff-display)", fontSize: 11, letterSpacing: "0.04em", color: fg, opacity: 0.7 }}>{n}</span>
+                <span className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", opacity: 0.6 }}>{isMax ? "END" : ""}</span>
               </div>
               <span className="headline" style={{ fontSize: 13, lineHeight: 1, color: fg }}>{k}</span>
-              <span className="mono" style={{ fontSize: 7.5, letterSpacing: "0.04em", opacity: 0.72, lineHeight: 1.25 }}>{g}</span>
+              <span className="mono" style={{ fontSize: 11, letterSpacing: "0.04em", opacity: 0.72, lineHeight: 1.25 }}>{g}</span>
             </div>
           );
         })}
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}><b style={{ color: "var(--ink)" }}>UP:</b> exposure misses · noisy theft · certain GM moves.</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}><b style={{ color: "var(--ink)" }}>DOWN:</b> lying low · pay someone off · sacrifice a relationship.</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}><b style={{ color: "var(--ink)" }}>UP:</b> exposure misses · noisy theft · certain GM moves.</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}><b style={{ color: "var(--ink)" }}>DOWN:</b> lying low · pay someone off · sacrifice a relationship.</span>
       </div>
     </div>
   );
@@ -520,7 +520,7 @@ function HarmLadder({ name, steps, end, gloss }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span className="subhead" style={{ fontSize: 11 }}>{name}</span>
-        <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>{gloss}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>{gloss}</span>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {steps.map(([n, label, effect], i) => {
@@ -528,13 +528,13 @@ function HarmLadder({ name, steps, end, gloss }) {
           return (
             <div key={n} style={{ display: "grid", gridTemplateColumns: "12px 56px 1fr", gap: 8, alignItems: "center", padding: "3px 6px", background: isEnd ? "var(--accent)" : "var(--surface-2)", color: isEnd ? "var(--accent-on)" : "var(--ink)" }}>
               <span style={{ width: 10, height: 10, border: "1px solid currentColor", background: isEnd ? "var(--accent-on)" : "transparent" }} />
-              <span className="mono" style={{ fontSize: 8.5, letterSpacing: "0.08em" }}>{label}</span>
-              <span className="body" style={{ fontSize: 9.5, color: isEnd ? "var(--accent-on)" : "var(--ink-mid)", lineHeight: 1.3 }}>{effect}</span>
+              <span className="mono" style={{ fontSize: 11, letterSpacing: "0.08em" }}>{label}</span>
+              <span className="body" style={{ fontSize: 11, color: isEnd ? "var(--accent-on)" : "var(--ink-mid)", lineHeight: 1.3 }}>{effect}</span>
             </div>
           );
         })}
       </div>
-      <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.1em", marginTop: 2 }}>{end}</span>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.1em", marginTop: 2 }}>{end}</span>
     </div>
   );
 }
@@ -544,7 +544,7 @@ function UsingTrack() {
     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <span className="subhead" style={{ fontSize: 11 }}>USING · GLITTER TRACK</span>
-        <span className="mono" style={{ fontSize: 8, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>PER PC · ONE PER DOSE</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>PER PC · ONE PER DOSE</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 4 }}>
         {[
@@ -561,12 +561,12 @@ function UsingTrack() {
                 <span className="headline" style={{ fontSize: 12, lineHeight: 1, color: isLast ? "#07111a" : "var(--ink)" }}>{k}</span>
                 {!isClean && <span className="glitter-star" style={{ width: 8, height: 8, opacity: isLast ? 0.85 : 0.6 }} />}
               </div>
-              <span className="body" style={{ fontSize: 8.5, color: isLast ? "#07111a" : "var(--ink-mid)", lineHeight: 1.3 }}>{e}</span>
+              <span className="body" style={{ fontSize: 11, color: isLast ? "#07111a" : "var(--ink-mid)", lineHeight: 1.3 }}>{e}</span>
             </div>
           );
         })}
       </div>
-      <span className="body" style={{ fontSize: 9, color: "var(--ink-mid)", lineHeight: 1.35, marginTop: 2 }}>
+      <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.35, marginTop: 2 }}>
         <b style={{ color: "var(--ink)" }}>Getting clean:</b> declare a session of it · need another PC's presence · take 2 Wear · reduce 1 step at session end · failing locks the track 2 sessions.
       </span>
     </div>
@@ -606,7 +606,7 @@ function S3_Moves() {
       </div>
       <div style={{ marginTop: 5, padding: "5px 9px", background: "var(--surface-2)", borderLeft: "3px solid var(--accent)", display: "flex", gap: 10, alignItems: "baseline" }}>
         <span className="fld" style={{ flex: "0 0 auto" }}>READ A PERSON · ASK</span>
-        <span className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)" }}>{READ_QUESTIONS.join(" · ")}</span>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{READ_QUESTIONS.join(" · ")}</span>
       </div>
     </div>
   );
@@ -640,21 +640,21 @@ function S5_Special() {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
         <div className="card" style={{ padding: "7px 9px", borderTop: "2px solid var(--accent)" }}>
           <span className="headline" style={{ fontSize: 13 }}>ALEX</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
             GM voices her. No sheet, no stats, no moves. Tracked state: <b>alive / dying / dead</b>.
             <b style={{ color: "var(--accent)" }}> Alex dies → campaign ends.</b>
           </div>
         </div>
         <div className="card" style={{ padding: "7px 9px", borderTop: "2px solid var(--accent)" }}>
           <span className="headline" style={{ fontSize: 13 }}>BECKY</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
             GM-voiced narrator. PCs interact through standard moves; she rolls none.
             <b style={{ color: "var(--accent)" }}> Becky dies → campaign ends.</b>
           </div>
         </div>
         <div className="card" style={{ padding: "7px 9px", borderTop: "2px solid var(--ink-soft)" }}>
           <span className="headline" style={{ fontSize: 13 }}>BONDS</span>
-          <div className="body" style={{ fontSize: 9.5, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
+          <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>
             Per pair. Help: roll +bond, 10+ give +1, 7–9 share consequences.
             Every PC starts <b>+1 to Alex</b> (canon).
           </div>
@@ -673,8 +673,8 @@ function S6_PCTracker({ sess, setSess }) {
           <span className="headline" style={{ fontSize: 18, letterSpacing: "0.01em" }}>PC TRACKER</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span className="mono" style={{ fontSize: 8.5, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>BODY · WEAR · USING · PER CHARACTER</span>
-          <button onClick={() => setSess(SESSION_DEFAULT)} style={{ fontFamily: "var(--ff-mono)", fontSize: 8, letterSpacing: "0.12em", background: "transparent", border: "1px solid var(--border)", color: "var(--ink-dim)", padding: "3px 8px", cursor: "pointer" }}>RESET SESSION</button>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>BODY · WEAR · USING · PER CHARACTER</span>
+          <button onClick={() => setSess(SESSION_DEFAULT)} style={{ fontFamily: "var(--ff-mono)", fontSize: 11, letterSpacing: "0.12em", background: "transparent", border: "1px solid var(--border)", color: "var(--ink-dim)", padding: "3px 8px", cursor: "pointer" }}>RESET SESSION</button>
         </div>
       </div>
       <PCTracker pcs={sess.pcs} setSess={setSess} />
@@ -701,8 +701,8 @@ function SystemPanel({ sess, setSess }) {
         <S6_PCTracker sess={sess} setSess={setSess} />
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16, paddingTop: 8 }}>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 01 / 05</span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>NO MOVE · NO ROLL</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 01 / 05</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>NO MOVE · NO ROLL</span>
       </div>
     </div>
   );
@@ -739,8 +739,8 @@ function PanelTwo({ notes, setNotes }) {
         }}
       />
       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 10 }}>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 02 / 05</span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>THE ARC TRENDS TOWARD BROKEN</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 02 / 05</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>THE ARC TRENDS TOWARD BROKEN</span>
       </div>
     </div>
   );
@@ -757,21 +757,21 @@ function NPCCard({ name, age, want, lever, tell, img }) {
         <div className="portrait" style={{ width: 72, height: 88, backgroundImage: `url('${img}')` }}/>
       ) : (
         <div className="plate" style={{ width: 72, height: 88 }}>
-          <div className="plate-cap" style={{ fontSize: 8 }}>{name}</div>
+          <div className="plate-cap" style={{ fontSize: 11 }}>{name}</div>
         </div>
       )}
       <div style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
           <span className="headline" style={{ fontSize: 16, lineHeight: 1 }}>{name}</span>
-          <span className="fld" style={{ fontSize: 8 }}>{age}</span>
+          <span className="fld" style={{ fontSize: 11 }}>{age}</span>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "42px 1fr", gap: "1px 6px", marginTop: 1 }}>
-          <span className="fld" style={{ fontSize: 8 }}>WANT</span>
-          <span className="body" style={{ fontSize: 10, color: "var(--ink)" }}>{want}</span>
-          <span className="fld" style={{ fontSize: 8 }}>LEVER</span>
-          <span className="body" style={{ fontSize: 10, color: "var(--ink)" }}>{lever}</span>
-          <span className="fld" style={{ fontSize: 8 }}>TELL</span>
-          <span className="body" style={{ fontSize: 10, color: "var(--ink-mid)", fontStyle: "italic" }}>{tell}</span>
+          <span className="fld" style={{ fontSize: 11 }}>WANT</span>
+          <span className="body" style={{ fontSize: 11, color: "var(--ink)" }}>{want}</span>
+          <span className="fld" style={{ fontSize: 11 }}>LEVER</span>
+          <span className="body" style={{ fontSize: 11, color: "var(--ink)" }}>{lever}</span>
+          <span className="fld" style={{ fontSize: 11 }}>TELL</span>
+          <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", fontStyle: "italic" }}>{tell}</span>
         </div>
       </div>
     </div>
@@ -834,15 +834,15 @@ function PanelThree() {
           ["WASH-N-GO", "Gravel lot. Where deals happen at 11pm."],
         ].map(([t, b]) => (
           <div key={t} className="card" style={{ padding: "7px 9px", borderLeft: "3px solid var(--accent)" }}>
-            <div className="subhead" style={{ fontSize: 10 }}>{t}</div>
-            <div className="body" style={{ fontSize: 10, color: "var(--ink-mid)" }}>{b}</div>
+            <div className="subhead" style={{ fontSize: 11 }}>{t}</div>
+            <div className="body" style={{ fontSize: 11, color: "var(--ink-mid)" }}>{b}</div>
           </div>
         ))}
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 10 }}>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 03 / 05</span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>EVERY NPC IS HER MIRROR</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 03 / 05</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>EVERY NPC IS HER MIRROR</span>
       </div>
     </div>
   );
@@ -861,16 +861,16 @@ function SchemeRow({ s }) {
       borderBottom: "1px dashed var(--ink-faint)",
     }}>
       <span className="headline" style={{ fontSize: 14, lineHeight: 1 }}>{s.n}</span>
-      <span className="mono" style={{ fontSize: 9.5, color: "var(--accent)", letterSpacing: "0.1em" }}>{s.stat}</span>
-      <span className="mono" style={{ fontSize: 10, color: "var(--ink)" }}>{s.yield}</span>
+      <span className="mono" style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.1em" }}>{s.stat}</span>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink)" }}>{s.yield}</span>
       <span className="mono" style={{
-        fontSize: 8.5, letterSpacing: "0.14em",
+        fontSize: 11, letterSpacing: "0.14em",
         color: isNoHeat ? "var(--ink-dim)" : isHighHeat ? "var(--accent)" : "var(--ink)",
         border: "1px solid " + (isNoHeat ? "var(--ink-faint)" : isHighHeat ? "var(--accent)" : "var(--ink-faint)"),
         padding: "2px 5px",
         textAlign: "center",
       }}>HEAT · {s.heat}</span>
-      <span className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", lineHeight: 1.3 }}>{s.body}</span>
+      <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.3 }}>{s.body}</span>
     </div>
   );
 }
@@ -891,8 +891,8 @@ function PanelFour({ done, toggleDone }) {
           marginTop: 6, padding: "6px 10px",
           background: "var(--surface-2)", borderLeft: "3px solid var(--accent)",
         }}>
-          <span className="mono" style={{ fontSize: 9, color: "var(--accent)", letterSpacing: "0.14em" }}>VETO</span>
-          <span className="body" style={{ fontSize: 10, color: "var(--ink-mid)", marginLeft: 8 }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.14em" }}>VETO</span>
+          <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginLeft: 8 }}>
             Online sex work is off the table — canon, Becky's line. Players invent new schemes; assign stat &amp; yield from fiction.
           </span>
         </div>
@@ -905,7 +905,7 @@ function PanelFour({ done, toggleDone }) {
         padding: "7px 10px",
         background: "var(--surface-2)",
       }}>
-        <span className="body" style={{ fontSize: 10, color: "var(--ink-mid)", lineHeight: 1.4 }}>
+        <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.4 }}>
           {GMS_READ_QS.join(" · ")}
         </span>
       </div>
@@ -917,7 +917,7 @@ function PanelFour({ done, toggleDone }) {
         marginBottom: 14,
       }}>
         {GMS_AGENDA.map(l => (
-          <div key={l} className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", display: "flex", gap: 6 }}>
+          <div key={l} className="body" style={{ fontSize: 11, color: "var(--ink-mid)", display: "flex", gap: 6 }}>
             <span style={{ color: "var(--accent)", flex: "0 0 auto", fontWeight: 700 }}>▸</span>
             <span>{l}</span>
           </div>
@@ -931,7 +931,7 @@ function PanelFour({ done, toggleDone }) {
         marginBottom: 14,
       }}>
         {GMS_HARD.map(l => (
-          <div key={l} className="body" style={{ fontSize: 10, color: "var(--ink-mid)", display: "flex", gap: 5 }}>
+          <div key={l} className="body" style={{ fontSize: 11, color: "var(--ink-mid)", display: "flex", gap: 5 }}>
             <span style={{ color: "var(--accent)", flex: "0 0 auto" }}>·</span>
             <span>{l}</span>
           </div>
@@ -962,15 +962,15 @@ function PanelFour({ done, toggleDone }) {
                 padding: "1px 4px", textAlign: "center",
               }}>{isDone ? "✓" : `0${i + 1}`}</span>
               <span className="subhead" style={{ fontSize: 11, textDecoration: isDone ? "line-through" : "none" }}>{s.k}</span>
-              <span className="body" style={{ fontSize: 10, color: "var(--ink-mid)", lineHeight: 1.3 }}>{s.b}</span>
+              <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.3 }}>{s.b}</span>
             </div>
           );
         })}
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 10 }}>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 04 / 05</span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>FARGO DOESN'T HAVE A CUSHION</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 04 / 05</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>FARGO DOESN'T HAVE A CUSHION</span>
       </div>
     </div>
   );
@@ -1048,7 +1048,7 @@ function PanelFive() {
             <div className="fld" style={{ marginBottom: 5 }}>{section}</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               {items.map(item => (
-                <div key={item} className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", display: "flex", gap: 6, lineHeight: 1.35 }}>
+                <div key={item} className="body" style={{ fontSize: 11, color: "var(--ink-mid)", display: "flex", gap: 6, lineHeight: 1.35 }}>
                   <span style={{ color: "var(--accent)", flex: "0 0 auto", fontWeight: 700 }}>▸</span>
                   <span>{item}</span>
                 </div>
@@ -1068,8 +1068,8 @@ function PanelFive() {
         borderLeft: "3px solid var(--accent)",
       }}>
         {GMS_FIRST_SESSION.map((item, i) => (
-          <div key={i} className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", display: "flex", gap: 8, lineHeight: 1.35 }}>
-            <span className="mono" style={{ fontSize: 9, color: "var(--accent)", flex: "0 0 auto" }}>0{i + 1}</span>
+          <div key={i} className="body" style={{ fontSize: 11, color: "var(--ink-mid)", display: "flex", gap: 8, lineHeight: 1.35 }}>
+            <span className="mono" style={{ fontSize: 11, color: "var(--accent)", flex: "0 0 auto" }}>0{i + 1}</span>
             <span>{item}</span>
           </div>
         ))}
@@ -1084,8 +1084,8 @@ function PanelFive() {
         borderLeft: "3px solid var(--ink-soft)",
       }}>
         {GMS_BETWEEN_SESSIONS.map((item, i) => (
-          <div key={i} className="body" style={{ fontSize: 10.5, color: "var(--ink-mid)", display: "flex", gap: 8, lineHeight: 1.35 }}>
-            <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", flex: "0 0 auto" }}>0{i + 1}</span>
+          <div key={i} className="body" style={{ fontSize: 11, color: "var(--ink-mid)", display: "flex", gap: 8, lineHeight: 1.35 }}>
+            <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", flex: "0 0 auto" }}>0{i + 1}</span>
             <span>{item}</span>
           </div>
         ))}
@@ -1104,15 +1104,15 @@ function PanelFive() {
           ["NAME IT", "Jaw-man's delivery. Ted's car. Becky's text. Make it specific."],
         ].map(([k, v]) => (
           <div key={k} style={{ display: "flex", gap: 7, alignItems: "baseline", flex: "1 1 180px" }}>
-            <span className="subhead" style={{ fontSize: 10, color: "var(--accent-on)", flexShrink: 0 }}>{k} ·</span>
-            <span className="body" style={{ fontSize: 10, color: "var(--accent-on)", opacity: 0.85, lineHeight: 1.3 }}>{v}</span>
+            <span className="subhead" style={{ fontSize: 11, color: "var(--accent-on)", flexShrink: 0 }}>{k} ·</span>
+            <span className="body" style={{ fontSize: 11, color: "var(--accent-on)", opacity: 0.85, lineHeight: 1.3 }}>{v}</span>
           </div>
         ))}
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 10 }}>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 05 / 05</span>
-        <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>THE TABLE IS ALSO THE GAME</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>PANEL 05 / 05</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>THE TABLE IS ALSO THE GAME</span>
       </div>
     </div>
   );

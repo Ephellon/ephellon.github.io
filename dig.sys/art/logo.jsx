@@ -1,4 +1,4 @@
-// art/logo.jsx — brand identity sheet. dig.sys mark + wordmark.
+﻿// art/logo.jsx — brand identity sheet. dig.sys mark + wordmark.
 
 function LogoArtboard() {
   return (
@@ -40,7 +40,7 @@ function LogoArtboard() {
             backgroundPosition: "center",
             border: "1px solid var(--border)",
           }}/>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
             CANONICAL · USE BY DEFAULT
           </span>
         </div>
@@ -59,7 +59,7 @@ function LogoArtboard() {
           }}>
             <div className="brand-mark" style={{ width: 180, height: 180 }} aria-label="dig.sys"/>
           </div>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
             PUNCHED INTO A LIGHT DISC · MIN 28PX
           </span>
         </div>
@@ -80,7 +80,7 @@ function LogoArtboard() {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
           }}/>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
             FLUSH · NO DISC REQUIRED
           </span>
         </div>
@@ -103,7 +103,7 @@ function LogoArtboard() {
             backgroundPosition: "center",
             border: "1px solid var(--border)",
           }}/>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
             HELD · NOT IN CURRENT DOCUMENTS
           </span>
         </div>
@@ -124,7 +124,7 @@ function LogoArtboard() {
             <img src="art/brand/logo.png" alt="" style={{ width: 72, height: 72 }} />
             <img src="art/brand/logo.png" alt="" style={{ width: 110, height: 110 }} />
           </div>
-          <span className="mono" style={{ fontSize: 9, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.14em" }}>
             28 · 48 · 72 · 110 · CLEAR SPACE = ¼ MARK
           </span>
         </div>
@@ -132,10 +132,10 @@ function LogoArtboard() {
 
       {/* usage notes */}
       <div className="card" style={{ padding: "12px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
           DO NOT RECOLOR · DO NOT REPLACE THE HEARTS · DO NOT FLATTEN THE DRIPS
         </span>
-        <span className="mono" style={{ fontSize: 10, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
+        <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.16em" }}>
           THE MARK IS SPRAY · THE PAGE IS QUIET
         </span>
       </div>
