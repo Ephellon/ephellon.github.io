@@ -30,10 +30,7 @@ function ScaledPage({ width, height, children }) {
   const scale = Math.min(1, vw / width);
 
   return (
-    <div style={height
-      ? { width: '100%', overflow: 'hidden', height: Math.round(height * scale) }
-      : { width: '100%', overflowX: 'hidden' }
-    }>
+    <div style={{ width: '100%', overflowX: 'hidden' }}>
       <div style={{ width, zoom: scale }}>
         {children}
       </div>
