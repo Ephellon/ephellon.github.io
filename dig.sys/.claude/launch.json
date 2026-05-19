@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dig-sys",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "54321"],
+      "port": 54321,
+      "autoPort": false
+    }
+  ]
+}

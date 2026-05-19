@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "PowerShell(cd \"C:\\\\Users\\\\ephel\\\\Development\\\\ephellon.github.io\\\\dig.sys\"; Start-Process python -ArgumentList \"-m\",\"http.server\",\"54321\" -WindowStyle Hidden; Start-Sleep -Milliseconds 1000; try { $r = Invoke-WebRequest -Uri \"http://localhost:54321/\" -UseBasicParsing -TimeoutSec 3; $r.StatusCode } catch { \"server not responding yet\" })",
+      "Bash(mkdir -p \"C:/Users/ephel/Development/ephellon.github.io/dig.sys/.claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "PowerShell(Get-NetTCPConnection -LocalPort 54321 -ErrorAction SilentlyContinue)",
+      "PowerShell(netstat -ano)"
+    ]
+  }
+}

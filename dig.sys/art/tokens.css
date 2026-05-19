@@ -1,0 +1,248 @@
+/* Digital Sissy — design tokens
+   Two themes:
+     [data-theme="dark"]   onyx — the default. Night register.
+     [data-theme="light"]  alice-blue — sober daylight document.
+   Accent is RED. Glitter is BLUE (rare, drug-specific). No yellow chrome. */
+
+:root {
+  /* Brand accents — shared across themes */
+  --accent:     #ff4444;        /* the red */
+  --accent-on:  #ffffff;
+  --accent-mid: rgba(255, 68, 68, 0.58);
+  --accent-dim: rgba(255, 68, 68, 0.22);
+
+  --glitter:    #2aa8ff;        /* the drug's signature blue — rare */
+  --warn:       #f0c84a;        /* extremely rare, in-world signage only */
+
+  /* Type */
+  --ff-display:  "Antonio", "Barlow Condensed", "Oswald", sans-serif;
+  --ff-cond:     "Barlow Condensed", "Antonio", sans-serif;
+  --ff-body:     "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --ff-mono:     "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+
+  --headline-weight: 700;
+}
+
+/* ── Dark / onyx (default) ────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:           #0a0b0d;       /* onyx */
+  --surface:      #14161a;       /* card */
+  --surface-2:    #1d2026;       /* inset */
+  --surface-3:    #262a32;       /* rarer inset */
+  --surface-inv:  #ebecee;       /* light-on-dark inversion */
+
+  --ink:          #ebecee;
+  --ink-soft:     #d6d8db;
+  --ink-mid:      rgba(235, 236, 238, 0.68);
+  --ink-dim:      rgba(235, 236, 238, 0.46);
+  --ink-faint:    rgba(235, 236, 238, 0.24);
+  --ink-hair:     rgba(235, 236, 238, 0.1);
+
+  --border:        rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.22);
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.04) inset,
+                 0 20px 40px -20px rgba(0,0,0,0.7);
+}
+
+/* ── Light / alice-blue ───────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:           #f0f8ff;       /* alice blue */
+  --surface:      #ffffff;
+  --surface-2:    #e6eef7;
+  --surface-3:    #d4dfee;
+  --surface-inv:  #0d1422;
+
+  --ink:          #0d1422;
+  --ink-soft:     #1a2236;
+  --ink-mid:      rgba(13, 20, 34, 0.68);
+  --ink-dim:      rgba(13, 20, 34, 0.46);
+  --ink-faint:    rgba(13, 20, 34, 0.24);
+  --ink-hair:     rgba(13, 20, 34, 0.1);
+
+  --border:        rgba(15, 30, 60, 0.12);
+  --border-strong: rgba(15, 30, 60, 0.24);
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.6) inset,
+                 0 12px 30px -16px rgba(15, 30, 60, 0.22);
+}
+
+/* ── Surfaces ─────────────────────────────────────────────────────────── */
+.surface     { background: var(--surface);   color: var(--ink); }
+.surface-2   { background: var(--surface-2); color: var(--ink); }
+.bg          { background: var(--bg);        color: var(--ink); }
+
+/* A page surface — full-bleed for an artboard */
+.page {
+  background: var(--bg);
+  color: var(--ink);
+  position: relative;
+}
+
+/* ── Components ───────────────────────────────────────────────────────── */
+
+/* Accent slug — small label chip. Default uses --accent. */
+.slug {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--ff-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--accent-on);
+  padding: 0.18em 0.6em 0.12em;
+  line-height: 1;
+}
+.slug.outline {
+  background: transparent;
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+.slug.glitter { background: var(--glitter); color: #07111a; }
+.slug.ink     { background: var(--ink);     color: var(--surface); }
+.slug.muted   { background: var(--surface-2); color: var(--ink-mid); box-shadow: inset 0 0 0 1px var(--border); }
+
+/* Field micro-label */
+.fld {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* The glitter star — only for the drug. */
+.glitter-star {
+  display: inline-block;
+  width: 0.7em; height: 0.7em;
+  background: var(--glitter);
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  box-shadow: 0 0 8px rgba(42, 168, 255, 0.45);
+  vertical-align: middle;
+}
+
+/* Card — generic surface with border + soft shadow */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+/* Placeholder image plate */
+.plate {
+  position: relative;
+  background: var(--surface-2);
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--ink-hair) 0 1px,
+    transparent 1px 12px
+  );
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-dim);
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.plate .plate-cap {
+  background: var(--surface);
+  padding: 4px 8px;
+  border: 1px solid var(--ink-faint);
+  max-width: 80%;
+}
+
+  /* Portrait — uses one of the real PNGs as background. Default crops to
+     where most portraits are framed (head-and-shoulders, upper third). */
+  .portrait {
+    background-size: cover;
+    background-position: center 22%;
+    background-color: var(--surface-2);
+    position: relative;
+  }
+.portrait::after {
+  /* subtle inset edge for separation against surface */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+/* Rules */
+.rule        { border: 0; border-top: 1px solid var(--border); margin: 0; }
+.rule.hair   { border-top-color: var(--ink-hair); }
+.rule.strong { border-top-color: var(--border-strong); border-top-width: 2px; }
+.rule.accent { border-top-color: var(--accent); border-top-width: 3px; }
+.rule.dashed { border-top-style: dashed; border-top-color: var(--ink-faint); }
+
+/* Typography combos */
+.headline {
+  font-family: var(--ff-display);
+  font-weight: var(--headline-weight, 700);
+  letter-spacing: -0.005em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.subhead {
+  font-family: var(--ff-cond);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.body {
+  font-family: var(--ff-body);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.mono {
+  font-family: var(--ff-mono);
+  letter-spacing: 0.04em;
+}
+.dim { color: var(--ink-mid); }
+.faint { color: var(--ink-dim); }
+
+/* Number tag — small numeric chip with a hairline border */
+.numtag {
+  font-family: var(--ff-display);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  padding: 2px 7px 1px;
+  border: 1px solid var(--ink-faint);
+  color: var(--ink);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Accent bar — vertical, for use as a left-accent on cards */
+.accent-bar {
+  width: 3px; align-self: stretch;
+  background: var(--accent);
+}
+
+/* Brand mark — the spray-paint smiley. Black ink + colored fills mean it
+   always wants a light surface behind it, regardless of the page theme.
+   Treat it as a sticker punched onto the document. */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f3ee;
+  background-image: url("brand/logo.png");
+  background-size: 78% 78%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,0.08),
+    0 2px 0 rgba(0,0,0,0.18);
+}
+.brand-mark.square {
+  border-radius: 4px;
+}
+.brand-mark.flush {
+  background-color: transparent;
+  box-shadow: none;
+}
+
