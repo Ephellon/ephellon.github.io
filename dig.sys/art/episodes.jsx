@@ -25,10 +25,11 @@ function EpisodeReader() {
   const bodyRef             = React.useRef(null);
   const toastTimer          = React.useRef(null);
 
-  const ep   = EPISODES[idx];
+  const ep      = EPISODES[idx];
   const hasPrev = idx > 0;
   const hasNext = idx < EPISODES.length - 1;
 
+  // Load episode content whenever idx changes
   React.useEffect(() => {
     setLoad(true);
     fetch(ep.file)
@@ -44,18 +45,23 @@ function EpisodeReader() {
       });
   }, [idx]);
 
-  const navigate = (i) => {
-    const target = EPISODES[i];
-    if (!target) return;
-    setIdx(i);
-    setMenu(false);
+  // Show branching toast when the NEXT episode is a branch (has a letter suffix)
+  React.useEffect(() => {
     clearTimeout(toastTimer.current);
-    if (/[a-z]$/i.test(target.num)) {
+    const nextEp = EPISODES[idx + 1];
+    if (nextEp && /[a-z]$/i.test(nextEp.num)) {
       setToast(true);
       toastTimer.current = setTimeout(() => setToast(false), 8000);
     } else {
       setToast(false);
     }
+  }, [idx]);
+
+  const navigate = (i) => {
+    const target = EPISODES[i];
+    if (!target) return;
+    setIdx(i);
+    setMenu(false);
   };
 
   const btn = (disabled) => ({
@@ -63,7 +69,7 @@ function EpisodeReader() {
     border: `1px solid ${disabled ? '#1e1e1e' : '#3a3a3a'}`,
     color: disabled ? '#2a2a2a' : '#666',
     fontFamily: 'var(--ff-mono)',
-    fontSize: 9,
+    fontSize: 13.5,
     letterSpacing: '0.16em',
     padding: '5px 12px',
     cursor: disabled ? 'default' : 'pointer',
@@ -76,16 +82,16 @@ function EpisodeReader() {
       {/* ── Header ─────────────────────────────────────────────────── */}
       <div style={{ padding: '10px 14px', borderBottom: '1px solid #1a1a1a', flexShrink: 0, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
         <div style={{ minWidth: 0 }}>
-          <div style={{ fontFamily: 'var(--ff-mono)', fontSize: 8, color: '#3a3a3a', letterSpacing: '0.2em' }}>
+          <div style={{ fontFamily: 'var(--ff-mono)', fontSize: 12, color: '#3a3a3a', letterSpacing: '0.2em' }}>
             EPISODE {idx + 1} / {EPISODES.length}
           </div>
-          <div style={{ fontFamily: 'var(--ff-display)', fontSize: 15, color: '#ffff00', letterSpacing: '0.1em', marginTop: 3, lineHeight: 1.1 }}>
+          <div style={{ fontFamily: 'var(--ff-display)', fontSize: 22, color: '#ffff00', letterSpacing: '0.1em', marginTop: 3, lineHeight: 1.1 }}>
             {ep.num.toUpperCase()} — {ep.title.toUpperCase()}
           </div>
         </div>
         <button
           onClick={() => setMenu(o => !o)}
-          style={{ ...btn(false), borderColor: menu ? '#777' : '#2a2a2a', color: menu ? '#ddd' : '#444', flexShrink: 0, fontSize: 10, padding: '4px 10px' }}
+          style={{ ...btn(false), borderColor: menu ? '#777' : '#2a2a2a', color: menu ? '#ddd' : '#444', flexShrink: 0, fontSize: 15, padding: '4px 10px' }}
         >LIST ▾</button>
       </div>
 
@@ -94,8 +100,8 @@ function EpisodeReader() {
         <div style={{ position: 'absolute', top: 54, right: 0, background: '#060606', border: '1px solid #222', zIndex: 60, minWidth: 230, maxHeight: 320, overflowY: 'auto' }}>
           {EPISODES.map((e, i) => (
             <div key={e.num} onClick={() => navigate(i)} style={{ padding: '8px 14px', display: 'flex', gap: 10, cursor: 'pointer', background: i === idx ? '#0e0e0e' : 'transparent', borderBottom: '1px solid #0e0e0e' }}>
-              <span style={{ fontFamily: 'var(--ff-mono)', fontSize: 9, color: '#3a3a3a', minWidth: 32 }}>{e.num}</span>
-              <span style={{ fontSize: 12, color: i === idx ? '#ffff00' : '#777' }}>{e.title}</span>
+              <span style={{ fontFamily: 'var(--ff-mono)', fontSize: 13.5, color: '#3a3a3a', minWidth: 32 }}>{e.num}</span>
+              <span style={{ fontSize: 18, color: i === idx ? '#ffff00' : '#777' }}>{e.title}</span>
             </div>
           ))}
         </div>
@@ -105,24 +111,24 @@ function EpisodeReader() {
       <div
         ref={bodyRef}
         className="episode-body"
-        style={{ flex: 1, overflowY: 'auto', padding: '18px 22px 24px', fontSize: 13.5, lineHeight: 1.7, color: '#ffffff' }}
+        style={{ flex: 1, overflowY: 'auto', padding: '18px 22px 24px', fontSize: 20, lineHeight: 1.7, color: '#ffffff' }}
         dangerouslySetInnerHTML={{ __html: loading
-          ? '<p style="color:#333;font-family:monospace;letter-spacing:0.14em;font-size:11px">LOADING…</p>'
+          ? '<p style="color:#333;font-family:monospace;letter-spacing:0.14em;font-size:16px">LOADING…</p>'
           : html
         }}
       />
 
       {/* ── Branching toast ────────────────────────────────────────── */}
       {toast && (
-        <div style={{ position: 'absolute', bottom: 56, left: 10, right: 10, border: '1px solid #88ff88', color: '#88ff88', padding: '10px 14px', fontFamily: 'var(--ff-mono)', fontSize: 10, letterSpacing: '0.1em', lineHeight: 1.45, background: 'rgba(0,5,0,0.97)', zIndex: 30 }}>
-          ▸ BRANCHING EPISODE — PAUSE. LET THE TABLE DECIDE WHICH PATH TO TAKE BEFORE READING.
+        <div style={{ position: 'absolute', bottom: 56, left: 10, right: 10, border: '1px solid #88ff88', color: '#88ff88', padding: '10px 14px', fontFamily: 'var(--ff-mono)', fontSize: 15, letterSpacing: '0.1em', lineHeight: 1.45, background: 'rgba(0,5,0,0.97)', zIndex: 30 }}>
+          ▸ NEXT EPISODE BRANCHES — PAUSE. LET THE TABLE DECIDE WHICH PATH TO TAKE BEFORE READING.
         </div>
       )}
 
       {/* ── Navigation ─────────────────────────────────────────────── */}
       <div style={{ padding: '8px 14px', borderTop: '1px solid #1a1a1a', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
         <button onClick={() => navigate(idx - 1)} disabled={!hasPrev} style={btn(!hasPrev)}>← PREV</button>
-        <span style={{ fontFamily: 'var(--ff-mono)', fontSize: 9, color: '#2a2a2a' }}>{idx + 1} / {EPISODES.length}</span>
+        <span style={{ fontFamily: 'var(--ff-mono)', fontSize: 13.5, color: '#2a2a2a' }}>{idx + 1} / {EPISODES.length}</span>
         {/* right margin reserves space for the floating dice widget */}
         <div style={{ marginRight: 178 }}>
           <button onClick={() => navigate(idx + 1)} disabled={!hasNext} style={btn(!hasNext)}>NEXT →</button>

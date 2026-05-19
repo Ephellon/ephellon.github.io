@@ -9,7 +9,6 @@ const NAV_PAGES = [
   { hash: 'items',   label: 'Handouts' },
   { hash: 'zero',    label: 'Session Zero' },
   { hash: 'crew',    label: 'Crew' },
-  { hash: 'system',  label: 'System ⚡' },
 ];
 
 function getRoute() {
@@ -318,7 +317,6 @@ function SiteApp() {
     if (route === 'items')   return <ScaledPage width={1240} height={780}><ItemsArtboard /></ScaledPage>;
     if (route === 'zero')    return <ScaledPage width={816}><SessionZeroArtboard /></ScaledPage>;
     if (route === 'crew')    return <ScaledPage width={1440} height={2940}><CrewArtboard /></ScaledPage>;
-    if (route === 'system')  return <ScaledPage width={816}><SystemArtboard /></ScaledPage>;
     if (route.startsWith('pb/')) {
       const slug = route.slice(3);
       const pb = PLAYBOOKS[slug];
@@ -331,7 +329,7 @@ function SiteApp() {
     return <ScaledPage width={816} height={1056}><CoverArtboard /></ScaledPage>;
   }
 
-  const showDice = route === 'gm' || route === 'system' || route.startsWith('pb/');
+  const showDice = route === 'gm' || route.startsWith('pb/');
 
   return (
     <>
