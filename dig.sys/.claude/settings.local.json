@@ -14,7 +14,20 @@
       "Bash(Test-Path \"T:\\\\out\\\\writer.out.md\")",
       "Bash(Start-Sleep -Seconds 5)",
       "Bash(Write-Output \"writer.out.md READY\")",
-      "PowerShell($p = \"$env:USERPROFILE\\\\.claude\\\\projects\"; Test-Path $p; Get-ChildItem $p -Recurse | Select-Object -First 10 FullName)"
+      "PowerShell($p = \"$env:USERPROFILE\\\\.claude\\\\projects\"; Test-Path $p; Get-ChildItem $p -Recurse | Select-Object -First 10 FullName)",
+      "Bash(cat)",
+      "Bash(echo \"Saved: $?\")",
+      "Bash(echo \"10b saved: $?\")",
+      "PowerShell(\\(Get-Item \"T:\\\\out\\\\writer.in.response.md\"\\).LastWriteTime; \\(Get-Item \"T:\\\\in\\\\writer.in.md\"\\).LastWriteTime)",
+      "Bash(Test-Path \"T:\\\\out\\\\qa.in.response.md\")",
+      "Bash(Start-Sleep -Seconds 2)",
+      "Bash(Get-Date -Format 'HH:mm:ss')",
+      "Bash(Write-Output \"QA verdict ready at $\\(Get-Date -Format 'HH:mm:ss'\\)\")",
+      "Bash(Test-Path \"T:\\\\out\\\\writer.in.response.md\")",
+      "Bash(Write-Output \"Qwen3 scene ready at $\\(Get-Date -Format 'HH:mm:ss'\\)\")",
+      "Bash(Write-Output \"Gemma4 audit ready at $\\(Get-Date -Format 'HH:mm:ss'\\)\")",
+      "Bash(Write-Output \"Gemma4 round-5 verdict ready at $\\(Get-Date -Format 'HH:mm:ss'\\)\")",
+      "Bash(echo \"Exit: $?\")"
     ]
   }
 }
