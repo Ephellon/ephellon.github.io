@@ -43,16 +43,16 @@ function Hero() {
       display: "grid", gridTemplateColumns: "1.05fr 1fr", gap: 56, alignItems: "center",
     }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-        <span className="fld">A POWERED-BY-THE-APOCALYPSE TRAGEDY · 3–5 SESSIONS</span>
+        <span className="fld">A POWERED-BY-THE-APOCALYPSE TRAGEDY · 5–10 SESSIONS</span>
         <div className="headline" style={{ fontSize: 92, lineHeight: 0.86 }}>
-          A YEAR ON THE
+          A MONTH ON THE
           <br />
           <span style={{ color: "var(--accent)" }}>WRONG PATH.</span>
         </div>
         <div className="body" style={{ fontSize: 18, lineHeight: 1.4, maxWidth: 560, color: "var(--ink-soft)" }}>
           <b style={{ color: "var(--ink)" }}>Digital Sissy</b> is a tabletop game about a
-          twenty-something woman named Alex, the bad year she's having on the Gulf Coast,
-          and the people in her life who might pull her back. This page is the world she
+          twenty-something woman named Alex, the bad month she's having on the Gulf Coast,
+          and the people in her life who might keep her from croaking. This page is the world she
           lives in and the documents you'll need to play it.
         </div>
         <div className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em", marginTop: 4 }}>
@@ -92,16 +92,15 @@ function Premise() {
         </div>
         <div className="body" style={{ fontSize: 15, color: "var(--ink-soft)", display: "flex", flexDirection: "column", gap: 12 }}>
           <p style={{ margin: 0 }}>
-            Alex is a fixed NPC. The campaign is the year she has left — a sister, a friend, an ex,
-            a boss, a neighbor. Whoever the PCs are, they know her name. The game's job is to make
-            that name cost something.
+            Alex is a fixed NPC. The campaign is the month she has left — a sister, a friend, an ex,
+            a boss, a neighbor. Whoever the PCs are, they know her name. Your job is to make
+            that name cost something. The ending is not promised.
           </p>
           <p style={{ margin: 0 }}>
-            The world she lives in shouts. The people inside it don't. Branded consumption keeps
-            yelling at people who are getting eaten alive by it; the camera stays on the people.
+            The world she lives in sucks. The people inside it do too.
           </p>
           <p style={{ margin: 0, color: "var(--ink-mid)" }}>
-            Three to five sessions, PbtA core, 2d6 + stat. The ending is not promised.
+            Five to ten sessions, PbtA core, 2d6 + stat.
           </p>
         </div>
       </div>
@@ -132,8 +131,8 @@ const CAST = [
     img: "art/portraits/alex.png",
     look: "20s · short messy brown hair · light grey eyes · faded band tee · dog tag on a cord",
     voice: "Soft, even in arguments. Sentences trail off rather than land. Brief when confident; briefer when overwhelmed.",
-    personality: "Naive in a specific way — not stupid, but unable to recognize a manipulation until it's already in motion. Loyal to a fault. Trusts Becky absolutely; trusts adults less. Quiet stubbornness under the softness. Carries her absent father's metal taste as identity — the loudest thing about her. Online handle Xph0n3__punkX is her armor.",
-    fn: "Every other character orbits her. Her death is the canonical climax; her survival is the Pyrrhic save. What happens to her is the spine of the story.",
+    personality: "Naive — not stupid, but unable to recognize manipulation until it's already in motion. Loyal to a fault. Trusts Becky absolutely; trusts older adults less. Quiet stubbornness under the softness. Carries her absent father's dog tags as a token — the loudest thing about her. Online handle Xph0n3__punkX is her armor.",
+    fn: "Every other character orbits her. What happens to her is the spine of the story.",
   },
   {
     name: "BECKY",
@@ -143,8 +142,8 @@ const CAST = [
     img: "art/portraits/becky.png",
     look: "20s · bleach-blonde with roots · green eyes · acrylics · 'Babygirl' necklace · permanent half-smirk",
     voice: "Casual cadence, fragments, dry observations. Calls Alex 'Al'. Curses with rhythm, not emphasis. Funniest at the worst moments.",
-    personality: "Street-smart in the way that's actually shallow — knows the corners of Blueville, doesn't know the world. Performatively unbothered. Has loved Alex and ruined her in parallel since middle school; both parts are real. Knows herself well enough to be unsettled, not well enough to change.",
-    fn: "Witness. The story is told through her eyes. Survives by default — the campaign ends if she dies. In the canonical tragic ending, she's present at Alex's death but doesn't die there. She lives carrying it.",
+    personality: "Street-smart in a shallow way — knows the corners of Blueville, doesn't know the world. Performatively unbothered. Has loved Alex and ruined her in parallel since middle school; both parts are real. Knows herself well enough to be unsettled, not well enough to change.",
+    fn: "Witness. The story is told through her eyes.",
   },
   {
     name: "JACOB",
@@ -153,20 +152,20 @@ const CAST = [
     role: "the kingpin who is also tired",
     img: "art/portraits/jaw-man.png",
     look: "30s · dark fitted polo · matte black watch · scarred knuckles · jaw shifted by an old helmet hit · black Silverado",
-    voice: "Plainspoken, brief, never theatrical. Says exactly what needs to be said and stops. Almost-says-things and doesn't.",
-    personality: "Carrying it. Not psychopathic — exhausted. Football star until the helmet accident broke his jaw and his lifeline. Painkillers became the trade became the empire. Answers to people above him whose names he doesn't give. Not the villain because he likes being the villain.",
-    fn: "Catalyst and mirror. Down payment hooks Alex; the $10K ultimatum starts the clock. He is the future she's running toward — what this trade does to people, in the long view.",
+    voice: "Plainspoken, brief, never theatrical. Says exactly what needs to be said and stops. Almost-says-things and still conveys a full picture.",
+    personality: "Not psychopathic — exhausted. Football star until the helmet accident broke his jaw and his lifeline. Painkillers became the trade became the empire. Answers to people above him whose names he doesn't give, or isn't privy to know. Not the villain because he likes being the villain.",
+    fn: "Catalyst and mirror. He is the future Alex is running toward — and what this trade does to people, in the long view.",
   },
   {
     name: "TED",
     full: "",
     tag: "ANTAGONIST · NAMED NPC",
-    role: "the hand that does the things",
+    role: "the hand that moves things",
     img: "art/portraits/ted.png",
     look: "30s · thrift-store windbreaker · forgettable everything · small faded blue ink blotch on the right wrist · the kind of face you'd swear you know from a gas station",
-    voice: "Flat affect. Says 'stay safe' after robbing her — banalities. Looks like a guy finishing a chore. The lack of menace IS the menace.",
+    voice: "Flat affect. Says 'stay safe' after robbing someone. Looks like a guy finishing a chore.",
     personality: "Forgettable specifically. Always around in high school, never anyone's friend or enemy. Bottom-feeder, mean when desperate. Not strategic, not stupid — small, in the way that makes him dangerous because he has nothing to lose and no plan to protect. Operates on the edges of Jaw-man's territory.",
-    fn: "Robs Alex in Ep 6 — steals the Glitter, sets the $10K deadline that drives the campaign clock. Kills her at the canonical climax. Not the architect of her death — the instrument. The system's personalized face when it finally reaches her. Recognition without relationship.",
+    fn: "Drives the campaign clock.",
   },
   {
     name: "QUENTIN",
@@ -177,7 +176,7 @@ const CAST = [
     look: "60s+ · weathered, carved-out-of-driftwood · behind the counter with a rag or a newspaper",
     voice: "Short sentences. Often doesn't speak. Nods at people he recognizes; doesn't nod at people he doesn't, even if they're in the room.",
     personality: "Knows everything that happens in his zip code, says nothing about any of it. Has watched two or three generations of dealers move through his back booth. Doesn't moralize. Soft-eyed in a way that has nothing to do with being soft. Small kindnesses, never the big ones.",
-    fn: "Hub. The Smoke Shop is the central convergence point for all three branches; Q runs it. His non-reaction is itself information. Candidate for one late-act break in the pattern — or for letting the climax happen.",
+    fn: "Hub. The Smoke Shop is the central convergence point for all major branches; Q runs it. His non-reaction is itself information.",
   },
   {
     name: "CINDY",
@@ -186,9 +185,9 @@ const CAST = [
     role: "the woman who was prom queen and got stuck",
     img: "art/portraits/cindy.png",
     look: "40s · oversized 20-year-old volleyball t-shirt · sweatpants or denim shorts · hair pulled back without care",
-    voice: "Voice goes thin rather than loud. Doesn't shout. Walks away from arguments. 'I can't do this anymore' — exhausted ultimatum, not enraged confrontation.",
-    personality: "Tired in the kind of way sleep doesn't fix. Chose Steve over Alex when forced to choose, and doesn't know she made the wrong choice. Sympathetic, failing, not a villain. Loves Alex but cannot afford to. Practices small cruelties without recognizing them.",
-    fn: "The eviction is the inciting incident — she accuses Alex of theft Alex didn't commit. (Steve did.) She does not learn the truth, canonically. Becomes peripheral after Ep 3; her absence from Alex's late life is part of the tragedy.",
+    voice: "Doesn't shout. Walks away from arguments. 'I can't do this anymore' — exhausted ultimatum, not enraged confrontation.",
+    personality: "Tired in the kind of way sleep doesn't fix. Sympathetic, failing, not a villain. Loves Alex but cannot afford to. Practices small cruelties without knowing.",
+    fn: "Her absence from Alex's life is its own tragedy.",
   },
   {
     name: "STEVE",
@@ -198,8 +197,8 @@ const CAST = [
     img: "art/portraits/steve.png",
     look: "40s · stained undershirt · warehouse-job build · Glitter-rimmed eyes · always in the recliner",
     voice: "Doesn't speak when he should. Mumbles when he does. Avoids eye contact.",
-    personality: "Peaked in high school harder than Cindy did. Coward, in the specific way of men who know they're cowards. Aware of his failures, unwilling to face them. Becomes Alex's best customer post-Ep 5 — the man who got her kicked out is now buying drugs from her. Sheepish about it. The arrangement is a small private violence neither names.",
-    fn: "He stole the $2k. The truth never surfaces to Cindy. The system Alex got pulled into is not even built on a real crime — she lost everything over a lie the man at home told. His silence in Ep 3 is his canonical character beat: could exonerate her with a sentence, doesn't.",
+    personality: "Peaked in high school harder than Cindy did. Coward amongst cowards. Aware of his failures, unwilling to face them.",
+    fn: "Could exonerate Alex with a sentence, doesn't.",
   },
 ];
 
@@ -214,7 +213,7 @@ const MINORS = [
     name: "MARCUS",
     tag: "AMBIENT · BLUEVILLE",
     body: "20s. Becky knows him from school. Wears his five-years-out-of-date varsity jacket like it's load-bearing. Bro-y but harmless. Talks about high school games like they happened last week.",
-    fn: "The project's living embodiment of the 'everyone peaks in high school' rule. Becky's canonical line: 'In Blueville, that jacket is a permanent residence.'",
+    fn: "The project's living embodiment of the 'everyone peaks in high school' ambience. Becky's canonical line: 'In Blueville, that jacket is a permanent residence.'",
   },
 ];
 

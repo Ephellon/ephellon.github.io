@@ -38,7 +38,7 @@ function CoverArtboard() {
       }}>
         {/* eyebrow */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <span className="fld">A POWERED-BY-THE-APOCALYPSE TRAGEDY · 3–5 SESSIONS</span>
+          <span className="fld">A POWERED-BY-THE-APOCALYPSE TRAGEDY · 5–10 SESSIONS</span>
           <span className="slug outline" style={{ fontSize: 11 }}>v0.4 · DRAFT</span>
         </div>
 
@@ -66,7 +66,7 @@ function CoverArtboard() {
 
         <div className="body" style={{ fontSize: 17, lineHeight: 1.32, maxWidth: 360, color: "var(--ink-soft)", textWrap: "balance" }}>
           A young woman is going down the wrong path on the Gulf Coast.
-          You are the ones who love her. You will probably fail.
+          You are the ones who can save her. You will probably fail.
         </div>
 
         {/* spec strip */}
@@ -74,12 +74,10 @@ function CoverArtboard() {
           <hr className="rule strong" />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", rowGap: 6, columnGap: 12 }}>
             {[
-              ["SYSTEM",   "Powered by the Apocalypse", "#system"],
-              ["SESSIONS", "Three to five",             "#zero"],
-              ["PLAYERS",  "GM + 2–4",                 "#crew"],
-              ["TONE",     "Grounded · particular · sad", "#landing"],
-              ["NEEDED",   "2d6 · pencils · honesty",  "#zero"],
-              ["RATING",   "Adults · content-warned",   "#zero"],
+              ["SYSTEM",   "Powered by the Apocalypse",     "#system"],
+              ["PLAYERS",  "GM + 2–4",                      "#crew"],
+              ["TONE",     "Grounded · particular · sad",   "#landing"],
+              ["SESSIONS", "Five to ten",                   "#zero"],
             ].map(([k, v, href]) => (
               <React.Fragment key={k}>
                 <a href={href} className="fld" style={{ textDecoration: "none", color: "inherit" }}>{k}</a>
@@ -112,7 +110,7 @@ function CoverArtboard() {
           BOOK 01 · CORE
         </span>
         <span className="mono" style={{ fontSize: 11, letterSpacing: "0.22em", color: "var(--ink-dim)" }}>
-          EPHELLON · DIGITAL-SISSY
+          EPHELLON · DIGITAL SISSY
         </span>
       </div>
     </div>

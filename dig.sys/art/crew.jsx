@@ -183,11 +183,10 @@ function CrewIntro() {
         </div>
       </div>
       <div className="body" style={{ fontSize: 13, color: "var(--ink-mid)", lineHeight: 1.5 }}>
-        Twelve playbooks — D&amp;D archetypes translated to Gulf Coast working-class shapes.
+        Twelve playbooks — D&amp;D archetypes translated to Gulf Coast working-class jobs.
         Each has an M/F pair; the unselected variant typically becomes an NPC. Five canon
         so far — <b>Beth</b>, <b>Carla</b>, <b>Diana</b>, <b>Roni</b>, <b>Sam</b>. The other
-        seven exist only in the class photo until a table picks them up. What signals
-        archetype is small wardrobe and behavioral cues, never costume.
+        seven exist only in the class photo until a table picks them up.
       </div>
     </div>
   );
@@ -215,7 +214,7 @@ function ClassPhoto() {
         }}>
           <span style={{ width: 6, height: 6, background: "var(--accent)" }}/>
           <span className="mono" style={{ fontSize: 11, color: "var(--ink-mid)", letterSpacing: "0.2em" }}>
-            CLASS PHOTO · KEY · LABELED
+            CLASS PHOTO
           </span>
         </div>
         <div style={{
@@ -232,7 +231,7 @@ function ClassPhoto() {
         marginTop: 10, display: "flex", justifyContent: "space-between", alignItems: "baseline",
       }}>
         <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
-          24 ARCHETYPE SLOTS · 2 NO-CLASS · ALL HOLDING THEIR OWN GROUND
+          24 ARCHETYPE SLOTS · 2 NO-CLASS · ALL HOLDING THEIR OWN
         </span>
         <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.18em" }}>
           ROW 1 ▸ STANDING · ROW 2 ▸ BENCH · ROW 3 ▸ GROUND
@@ -436,9 +435,9 @@ function ThroughlineNote() {
       <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <span className="subhead" style={{ fontSize: 11, color: "var(--accent-on)" }}>BRANDING THROUGHLINE</span>
         <span className="body" style={{ fontSize: 13.5, fontWeight: 500, color: "var(--accent-on)", lineHeight: 1.4 }}>
-          Everyone of consequence peaked in high school. Dress the crew like they're trying to be someone
+          Everyone in this damned town peaked in high school. Dress the crew like they're trying to be someone
           they were three years ago — or someone they think they might have been, if things had gone
-          differently. No designer clothing. No costumes. Hand-feel, not design-system-feel.
+          differently. No designer clothing. No costumes. These are "the poors" in this world.
         </span>
       </div>
     </div>
