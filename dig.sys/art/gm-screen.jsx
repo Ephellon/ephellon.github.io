@@ -985,7 +985,7 @@ const GMS_TIPS = [
     section: "PACING",
     items: [
       "Three-act structure per session: trouble arrives, trouble deepens, trouble lands.",
-      "Sessions 1–2 establish. Session 3 is the turn. Sessions 4–5 are the fall.",
+      "Sessions 1–2 establish. Session 3 is the turn. Sessions 4–10 are the fall.",
       "If nothing has happened in 20 minutes, make a hard move.",
       "Debt clock ticks once per session minimum — more if they stall.",
     ],
