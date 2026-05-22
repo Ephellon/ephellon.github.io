@@ -81,6 +81,8 @@ const SESSION_DEFAULT = {
     { name: '', body: 0, wear: 0, using: 0 },
     { name: '', body: 0, wear: 0, using: 0 },
     { name: '', body: 0, wear: 0, using: 0 },
+    { name: '', body: 0, wear: 0, using: 0 },
+    { name: '', body: 0, wear: 0, using: 0 },
   ],
 };
 
