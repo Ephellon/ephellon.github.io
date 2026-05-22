@@ -396,7 +396,7 @@ const LOCATIONS = [
   [5,  "BANK",                 "Closed by 4. The drive-through pneumatic tube still works."],
   [6,  "MECHANIC SHOP",        "The Silverado gets serviced here. So does most of the rolling stock in town."],
   [7,  "SMOKE SHOP",           "Q's. Red awning, blue OPEN sign, faded yellow signage. Central hub. Start here on a given evening."],
-  [8,  "GENTLEMAN'S CLUB",     "Blue Nile. Where some of Becky's older work happened. Where some of old friends still do."],
+  [8,  "GENTLEMAN'S CLUB",     "Blue Nile. Where some of Becky's older work happened. Where some of her old friends still do."],
   [9,  "DEFUNCT BLOCKBUSTER",  "Sign hasn't come down in 25 years. Sometimes there's a kid in the lot."],
   [10, "SEMI-EDIBLE TACO SHOP","Open until 4 AM, against all explanations. Where the post-shift crowd ends up."],
   [11, "WASH-N-GO CAR WASH",   "Gravel lot. Rusted chain-link. Where deals happen at 11 PM. Where Becky's car is parked too often."],
