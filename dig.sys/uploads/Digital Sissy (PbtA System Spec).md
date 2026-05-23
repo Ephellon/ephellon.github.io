@@ -2,7 +2,7 @@
 title: Digital Sissy
 subtitle: PbtA System Spec (Core)
 stamps:
-    - v0.1
+    - v0.2
     - DRAFT
     - SCOPE-CORE
 tags:
@@ -232,9 +232,34 @@ When you **interfere** with another PC, roll **+ your bond with them**. On 10+, 
 
 Every PC starts with at least **+1 bond to Alex** (canon — loved-ones-as-mules). This bond can be drawn on for narrative leverage when interacting with her, even though Alex has no sheet.
 
+### Starting gear and condition
+
+Every PC starts with the 5 items listed in their playbook. Each item is acquired in fiction during Session 0; see **Episode 0** for the procedure and the 1d6 condition roll table.
+
+In play, gear conditions shift:
+
+- **Fresh** items can be spent once per session for **+1 forward** on a meaningfully-relevant move; the item drops to Functional after the spend.
+- **Functional** items have no mechanical effect.
+- **Worn** items give the GM permission to introduce complications under stress.
+- **Failing** items can be called to fail at any dramatic moment without warning.
+
+The Tinkerer's **Jury-Rig** move can restore a Failing or Worn item to Functional for a scene. Permanent restoration requires fiction — a Workshop scene, a parts run, a beat dedicated to fixing.
+
 ---
 
 ## Session Structure
+
+### Beat & turn pacing
+
+PbtA is fiction-first: rolls happen when moves trigger. But within a session, the GM needs to know when to advance the scene. The rule of thumb:
+
+**A beat** is a discrete scene moment — an obstacle, an interaction, a decision point. **A turn** is one player's action and any resulting roll. Each beat gets approximately **2 player turns** before the GM advances. The GM advances when:
+
+- The beat resolves (clear success, clear failure, clear complication)
+- ~2 turns have run without resolution (the scene is dragging)
+- The fiction shifts the beat into a new one organically
+
+Tight pacing serves the campaign clock. Players have one month in fiction; the table has 5–10 sessions. Don't let a beat eat a half-hour of table time without resolving.
 
 A session opens with the GM declaring **days elapsed** since last session. Default 2–3; range 1–7 by fictional pacing.
 

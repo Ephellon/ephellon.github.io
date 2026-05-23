@@ -45,6 +45,8 @@ Visual canon (faces, builds, signature wardrobe) lives in the **Visual Style Gui
 
 **Branding cues:** Acrylic nails, jewelry, Valley Girl-aesthetic adjacent — but specifically the Gulf Coast working-class version of that look. The "Babygirl" necklace is canonical. Crop tops, jean shorts. Iconography: chipped nails, costume jewelry, phone screen. The visual register is "girl who has been the bad influence in every photo since age nine."
 
+- **Online presence.** Becky maintains active personal social media — handles, livestreams to ~80 followers, posts after midnight. Her online persona is brand-consistent with her in-person self: dryly funny, observant, slightly performative. PCs and other characters can interact with her online between scenes. At the table, this is handled through the campaign's Discord "Social Media" channel; in-fiction it functions like any other communication vector.
+
 ---
 
 ## Jacob "Jaw-man"
