@@ -3,6 +3,14 @@
 
 const STAT_KEYS = ["CHARM", "GRIT", "SLICK", "HEART", "COOL"];
 
+const STAT_META = {
+  CHARM: { dnd: "Charisma",          desc: "Likability, warmth, persuasion. Talk Fast, smoothing things over, getting a yes." },
+  GRIT:  { dnd: "Con + Str",         desc: "Toughness, endurance, physical resolve. Take a Hit, Hold the Line." },
+  SLICK: { dnd: "Dexterity",         desc: "Cunning, deception, sleight-of-hand, hustle. Run a Scheme, Move Product." },
+  HEART: { dnd: "Wisdom (empathy)",  desc: "Reading people, emotional radar, instinct about what someone's actually feeling. Read a Person." },
+  COOL:  { dnd: "Wisdom (composure)", desc: "Keeping it together under pressure. Not panicking, not flinching. The opposite of tilt." },
+};
+
 const PLAYBOOKS = {
   tinkerer: {
     no: "01",
@@ -498,6 +506,7 @@ function StatBox({ k, v }) {
   const isPeak = v === 2;
   const isDump = v === -1;
   const sign = v > 0 ? "+" + v : String(v);
+  const meta = STAT_META[k] || {};
   return (
     <div style={{
       flex: 1,
@@ -506,7 +515,8 @@ function StatBox({ k, v }) {
       color: isPeak ? "var(--accent-on)" : "var(--ink)",
       padding: "8px 6px 6px",
       display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
-    }}>
+      cursor: "default",
+    }} title={meta.desc}>
       <span className="mono" style={{
         fontSize: 11, letterSpacing: "0.16em",
         color: isPeak ? "var(--accent-on)" : "var(--ink-mid)",
@@ -515,6 +525,11 @@ function StatBox({ k, v }) {
         fontSize: 30, lineHeight: 1,
         color: isPeak ? "var(--accent-on)" : (isDump ? "var(--ink-dim)" : "var(--ink)"),
       }}>{sign}</span>
+      <span className="mono" style={{
+        fontSize: 11, letterSpacing: "0.06em", lineHeight: 1.2, textAlign: "center",
+        color: isPeak ? "var(--accent-on)" : "var(--ink-dim)",
+        opacity: isPeak ? 0.8 : 0.7,
+      }}>≈ {meta.dnd}</span>
     </div>
   );
 }

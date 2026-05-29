@@ -226,11 +226,11 @@ const SESSION_DEFAULT = {
 };
 
 const STATS = [
-  { k: "CHARM", g: "performance · pitch · glamour",      d: "the face you put on" },
-  { k: "GRIT",  g: "endurance · refusing to fold",       d: "the body that doesn't quit" },
-  { k: "SLICK", g: "finesse · deception · the angle",    d: "the move when the truth wouldn't help" },
-  { k: "HEART", g: "read · attune · know",               d: "seeing clearly when it hurts" },
-  { k: "COOL",  g: "composure under pressure",           d: "what's left when everything else broke" },
+  { k: "CHARM", g: "performance · pitch · glamour",    dnd: "Charisma",        d: "Likability, warmth, persuasion. Talk Fast, smoothing things over, getting a yes." },
+  { k: "GRIT",  g: "endurance · refusing to fold",     dnd: "Con + Str",       d: "Toughness, endurance, physical resolve. Take a Hit, Hold the Line." },
+  { k: "SLICK", g: "finesse · deception · the angle",  dnd: "Dexterity",       d: "Cunning, deception, sleight-of-hand, hustle. Run a Scheme, Move Product." },
+  { k: "HEART", g: "read · attune · know",             dnd: "Wisdom (empathy)", d: "Reading people, emotional radar, instinct about what someone's actually feeling. Read a Person." },
+  { k: "COOL",  g: "composure under pressure",         dnd: "Wisdom (composure)", d: "Keeping it together under pressure. Not panicking, not flinching. The opposite of tilt." },
 ];
 
 const MOVES = [
@@ -337,13 +337,15 @@ function ResultRow({ tag, tone, title, body }) {
   );
 }
 
-function StatCard({ k, g, d }) {
+function StatCard({ k, g, dnd, d }) {
   return (
-    <div className="card" style={{ padding: "8px 10px", display: "flex", flexDirection: "column", gap: 2, borderTop: "2px solid var(--accent)", minHeight: 78 }}>
-      <span className="headline" style={{ fontSize: 17, lineHeight: 1 }}>{k}</span>
-      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.12em" }}>+2 TO −1</span>
-      <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", marginTop: 2, lineHeight: 1.35 }}>{g}</span>
-      <span className="body" style={{ fontSize: 11, color: "var(--ink-dim)", lineHeight: 1.3, marginTop: "auto", fontStyle: "italic" }}>{d}</span>
+    <div className="card" style={{ padding: "8px 10px", display: "flex", flexDirection: "column", gap: 3, borderTop: "2px solid var(--accent)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 4 }}>
+        <span className="headline" style={{ fontSize: 17, lineHeight: 1 }}>{k}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.08em", opacity: 0.75, whiteSpace: "nowrap" }}>≈ {dnd}</span>
+      </div>
+      <span className="mono" style={{ fontSize: 11, color: "var(--ink-dim)", letterSpacing: "0.1em" }}>+2 TO −1 · {g}</span>
+      <span className="body" style={{ fontSize: 11, color: "var(--ink-mid)", lineHeight: 1.4 }}>{d}</span>
     </div>
   );
 }
