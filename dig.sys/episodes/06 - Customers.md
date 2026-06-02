@@ -1,5 +1,36 @@
-# 6 – Customers
-**POV: Becky**
+﻿
+# 6 — Customers
+<strong class="meta-line">POV  &bull;  Becky</strong>
+
+---
+
+Alex is leaning over the counter, a chipped thrift-store mug in one hand. She is staring at the black Glitter case. I am in the chair, feet up, watching the dust motes dance in the yellow light coming through the blinds. The afternoon heat presses through the window. The air is still, smelling of old grease and the damp concrete of the building's exterior.
+
+A knock. Not a loud one. Hesitant. Alex doesn't move for a second, then she sets the mug down and opens the door.
+
+Steve is there. He is a wall of a man in a white t-shirt with a yellow stain under the arm. He takes up the whole doorframe, pushing the humidity
+of the afternoon into the room with him. He doesn't look at her. He looks at the floor, then the peeling paint of the opposite wall.
+
+"Hey," he says. His voice is a low rumble. "The other guy... he's not picking up. I thought maybe you had some."
+
+Alex doesn't ask why the other guy is gone. She doesn't ask for a name. She just steps back and gestures to the counter. Steve follows, moving slow, his bulk making the small studio feel like a closet. He doesn't see me at first, and when he does, he gives a small nod. He doesn't say hello.
+
+Alex reaches into the case. Three vials. She sets them on the counter in a
+row. Then she holds out her hand.
+
+"One hundred and twenty," she says.
+
+I know the street rate. It is sixty for three. She is charging him double.
+I watch Steve's face. He doesn't blink. He doesn't even look at the vials.
+He just reaches into his pocket and pulls out the bills. He counts them out—crisp twenties—and lays them on the counter. He doesn't complain. He doesn't ask why the price changed.
+
+Neither of them looks the other in the eye. They just stand there, the air heavy, until the money changes hands.
+
+Steve scoops up the vials. He does not stay longer than the transaction requires. He turns and heads back out the door, his shoulder nearly brushing the frame.
+
+The door clicks shut.
+
+The apartment goes quiet. The jaundiced light stays on the counter, hitting the spot where the money was. Alex’s hand is still open, palm up.
 
 ---
 

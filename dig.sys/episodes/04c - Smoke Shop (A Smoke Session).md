@@ -11,7 +11,7 @@ The session is at T-Bone's place. T-Bone played center for the Blueville High Ti
 
 The music is some generic chart-topper, a synth-pop beat that Alex clearly hates. She doesn't say it, but she has that slight pinch in her brow. I lead her to a corner, leaning against the railing.
 
-Around us, the regulars are in various stages of fade. There's Marcus, still wearing a varsity jacket that's three sizes too small and ten years out of date. There's Sarah, who was the head cheerleader until she wasn't. They're all just ghosts of their senior year. A few of them have the Glitter in their eyes—tiny, shimmering stars dancing in their pupils, making them look at things that aren't there.
+Around us, the regulars are in various stages of fade. There's Marcus, still wearing a varsity jacket that's three sizes too small and ten years out of date — pristine, the leather still glossy, like he runs a comb over it every morning. There's Sarah, who was the head cheerleader until she wasn't. They're all just ghosts of their senior year. A few of them have the Glitter in their eyes—tiny, shimmering stars dancing in their pupils, making them look at things that aren't there.
 
 The dealer is a guy with a single gold tooth and a clean polo shirt. He doesn't push. He doesn't hustle. He just hangs out, leaning against the siding of the house, moving with the casual efficiency of a bartender. He hands over a small vial, takes a folded twenty, and gives a quick, professional nod. No one is shouting. No one is panicked. It's just business.
 

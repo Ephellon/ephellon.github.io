@@ -1,70 +1,66 @@
 ﻿
-# 11b – Tan Cap
+# 11b â€“ Tan Cap
 **POV: Becky**
 
 ---
 
-The air shimmers above the lot in heavy, distorting waves. It is mid-afternoon and the sun bakes the air into a blur, the kind that makes the horizon look like it is melting into the asphalt. We park the car on the shoulder, tires crunching over dry gravel. 
+It is mid-afternoon, and the air shimmers above the asphalt, blurring the edges of the lot into a grey, vibrating haze. This is the spot where the President's childhood home used to be. Now there is just a small bronze plaque bolted to a slab of granite and a flat expanse of graded dirt and pavement. Weeds push through the cracks at 
+the perimeter, dry and yellowed, leaning away from the sun. It is a quiet place. The only sound is the distant, rhythmic drone of a highway a few miles off. Pilgrims pull in, step out to take a photo of the plaque, and leave.
 
-This is the new spot. Diana’s map calls it a safe bet. It is just a corner 
-lot where the President’s childhood home used to be before the city tore it down to make room for a parking expansion that never happened. Now there is just a small bronze plaque bolted to a waist-high granite slab. Weeds push through the cracks in the pavement at the edges, gray and brittle. No trees. No shade. Just the sun and the stone.
+Diana has been keeping a map of these sites. She says this one is the safest. No school security, no crowded corridors, no one to ask why a group of twenty-somethings is hovering around a historical marker. Just a patch of sun and a piece of metal.
 
-Roni is the first one out. She doesn't step fully onto the asphalt; she lingers by the door, her head tilting, scanning the perimeter. She stops. Her gaze locks on something across the lot. 
+We approach the lot on foot. The soles of my sneakers feel soft, almost sticking to the surface of the road. Roni stops first. She doesn't pause for a full beat, but she shifts her weight, a small, sharp movement of her 
+head toward the curb.
 
-She doesn't shout. She doesn't even look back at us. She just makes a small, sharp movement with her chin, gesturing toward the far side of the plaque.
+"Him," she says. Her voice is low, barely a breath.
 
-"Tan cap," Roni says. Her voice is low, barely reaching us over the ticking of the cooling engine.
+I look. He is there. The man in the tan cap. He is sitting in a folding chair, the kind with rusted plastic slats and a sagging seat that looks like it has survived a decade of rain. He is positioned exactly as he was across from the high school, his back to the road, facing the plaque. He has his hands resting on his knees. His skin is the color of old luggage, cured by the sun, with deep, permanent creases around the eyes. The fabric 
+of his cap is stained with salt and sweat, the brim curling slightly at the edge. He doesn't move. He doesn't wave. He just sits in the shimmering 
+heat, watching.
 
-I look. He is already there. He sits in a metal folding chair, the kind with rusted joints and a peeling white coat. He wears a tan baseball cap pulled low, shadowing his eyes. His shirt is a faded cotton button-down, sun-bleached to a pale yellow. His hands rest on his knees, palms down, fingers still. He isn't moving. He is just sitting there, watching the approach.
+We don't stop. A silver SUV is already slowing down, turning into the lot with a slow, heavy crunch of gravel. Diana gives a quick look to the others. We keep moving. We set up our positions, the movements practiced and fast. We spread out, creating 
+a loose semi-circle around the plaque.
 
-Diana shifts the strap of her bag, her grip moving up and down the nylon. She doesn't say anything. We all stand there for a second, the heat pressing against our skin. He is in the same posture as the man from the high school. Same chair. Same cap. Same stillness.
+Roni doesn't move back to the edge of the lot to watch the road. She stays 
+where she is, her hands dropping from her hips to her sides in a slow, heavy movement. She doesn't look at us; she just watches the SUV pull to a 
+stop.
 
-A white SUV pulls into the lot, tires humming on the hot pavement. It is a 
-family—a man with a digital camera around his neck, a woman in a wide-brimmed hat, and a small child in a bright yellow t-shirt. The child is already pressing his face against the window, pointing at the plaque.
+Beth steps forward as the SUV doors open. A father in a white polo shirt, a mother with a camera strap around her neck, and two children with tablets in their hands step out into the glare. The children squint, the blue light of their screens still flickering in the shade of the car. Beth 
+begins her pitch. Her voice is different today. It is thinner, a frayed thread of a sound that seems like it might snap if the wind picks up.
 
-"We try," Diana says.
+"Welcome," Beth says. "If you're looking for the home site, we can show you where the original foundationâ€”"
 
-We move in. We don't talk about the man in the chair. We just drift toward 
-the SUV as the doors open. The heat is a physical wall now, smelling of hot tar and dust.
+The man in the tan cap stands.
 
-Beth steps forward first. She has the smile ready, the one she uses for the tourists. As the woman steps out of the SUV, Beth opens her mouth to start the pitch.
+He doesn't look at us. He doesn't acknowledge the crew. He simply moves. He walks with a steady, rhythmic pace, cutting across the asphalt. He steps directly into the space between Beth and the father, intercepting the family before Beth can finish her second sentence.
 
-"Hi there, sorry to bother you, we're actually local historians—"
+Beth freezes. She doesn't try to push past him. She doesn't try to recover 
+the pitch. She just stops, her arms hanging loose at her sides. She looks down at the cracks in the pavement, her gaze fixed on a cluster of dead weeds.
 
-Her voice is different. It sounds thin, lacking the push she had two days ago. She doesn't finish the sentence.
+The man speaks to the father. It is a short sentence. I can see his mouth move, the shape of the words brief and blunt, but the sound is swallowed by the hum of the idling SUV and the wind whipping across the open lot. The father listens. He doesn't look curious or confused. He looks at the man, then he looks back at us, then he looks at his children.
 
-The man in the tan cap stands. 
+"Back in the car," the father says.
 
-It is a smooth, efficient motion. No rush, no hesitation. He doesn't look at us. He doesn't acknowledge the crew at all. He simply walks a straight line across the asphalt, intercepting the family before Beth can find her second wind. 
+The family gets back into the SUV. They don't take a picture of the plaque. They don't look at the site. The vehicle pulls away, leaving a plume of heat and the smell of hot rubber hanging in the air.
 
-He stops a few feet from the woman. He says something. I can see his mouth 
-shape a few short words, but the wind and the idling SUV engine swallow the sound. He doesn't shout. He doesn't gesture. He just stands there, a pale yellow wall between us and the pilgrims.
+The man in the tan cap doesn't watch them go. He turns and walks back to his folding chair. He sits. Hands on knees.
 
-The woman looks at Beth. Then she looks at the man in the tan cap. She doesn't ask a question. She just nods once, a quick, decisive movement. She reaches back into the car and grabs the child's hand.
+I look at Alex. She hasn't said a word since we got out of the car. She is 
+standing still, her eyes locked on the man. She isn't blinking. She tracks 
+the way he settles into the chair, the way his shoulders hang, the way he breathes in the heavy air. She watches him for a long time, her gaze sharp 
+and focused, not moving even when Diana whispers something to Roni.
 
-The man with the camera lowers his device. He doesn't take a picture of the plaque. He doesn't look at us. He just climbs back into the passenger seat. 
+From the direction the man was watching, someone else appears.
 
-The SUV pulls away, tires kicking up a small cloud of gray dust that lingers in the stagnant air.
+Wade is walking toward us. He is wearing the faded varsity jacket, the wool heavy and out of place in the Alabama heat, the white leather sleeves 
+yellowed and peeling. He is walking slow. As he approaches, he doesn't look at any of us. His eyes stay on the road ahead, his line straight. He walks right past the crew, a few feet of empty space between him and Diana. He doesn't turn his head. He doesn't slow down.
 
-The man in the tan cap turns. He walks back to his folding chair and sits. 
-The metal groans under his weight. He places his hands back on his knees. Palms down. Still.
+He reaches the man in the chair.
 
-I look at Alex. She hasn't moved an inch. She isn't looking at the family, 
-and she isn't looking at the plaque. Her eyes are locked on the man in the 
-chair. She isn't watching his face—the cap keeps that hidden—she is watching his hands. Specifically, she is watching the knuckles. She doesn't blink. She tracks the way his fingers settle against the fabric of 
-his pants, counting them, timing the rhythm of his stillness.
+Wade and the man in the tan cap exchange a single, brief nod. No words. Just the movement of a chin.
 
-A few minutes pass. The silence, broken only by the distant sound of traffic from the main road.
+Wade stands next to the chair. The two of them stand there together, side by side, looking at the plaque. They don't look back at us.
 
-Then Wade appears.
+We turn and start walking away. We move in a line, the sound of our shoes on the asphalt the only thing filling the silence. Diana is in the lead, her thumb rubbing the edge of the map over and over. Roni follows her. Alex is beside me, her hands shoved deep into her pockets, her eyes still fixed on the lot behind us. I can feel the heat radiating off the ground through the soles of my sneakers.
 
-He comes from the east, walking along the edge of the lot. He is wearing the faded varsity jacket, the sleeves pushed up to his elbows. He doesn't stop to look at us. He doesn't slow down. He walks a wide arc, his eyes fixed forward, passing within ten feet of where we stand. He doesn't give us a glance, not even a sideways look.
-
-As he reaches the chair, Wade and the man in the tan cap exchange a single, brief nod. No words.
-
-Wade stops. He doesn't sit; he just stands beside the chair. The two of them stand there together, side by side, looking at the bronze plaque. Wade keeps his hands in his pockets.
-
-We turn and walk back to the car. No one speaks. Roni keeps her hands shoved deep in her pockets. Diana closes the case with a slow, metallic click. Beth keeps her eyes on the cracks in the sidewalk, her pace quickening as we hit the road.
-
-I look back over my shoulder one last time. The lot is a flat, shimmering void of gray asphalt. In the center, the two men remain, two still figures 
-flanking the plaque.
+Behind us, the two men remain. They are small figures against the flat, grey expanse of the lot, the plaque between them, the air shimmering and distorting their shapes.

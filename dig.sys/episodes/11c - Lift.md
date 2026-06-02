@@ -78,7 +78,7 @@ Roni holds up a driver's license. A man in his fifties, smiling in a way that lo
 "How was it?" I ask.
 
 "Too close," Diana says. She is leaning against the wall, her face flushed 
-from the heat. "We had the bag open, Sam was reaching in, and this SUV parked right next to us. A dog started barking from inside the car—just screaming. Sam almost jumped out of his skin. I thought the driver was going to open the door right on top of him."
+from the heat. "We had the bag open, Sam was reaching in, and this SUV parked right next to us. A dog started barking from inside the car—just screaming. Sam almost jumped out of their skin. I thought the driver was going to open the door right on top of them."
 
 Sam nods. "It was loud. I think I dropped the wallet once."
 

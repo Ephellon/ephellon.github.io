@@ -39,7 +39,7 @@ We stop at the Smoke Shop. The yellow signage is faded, the red awning sagging i
 
 Inside, Q is behind the counter. He's leaning back, reading a crumpled newspaper. He sees the employee walk in with two shaking girls. He doesn't look up. He doesn't say a word. He just turns a page, the sound of the paper crisp in the quiet shop. He's seen this a thousand times. To Q, we're just more inventory.
 
-A second man is waiting near the back, leaning against a rack of novelty lighters. He's older, wearing a polo shirt that's too tight across the shoulders. He looks like a guy who played varsity linebacker fifteen years ago and never found a reason to stop acting like it.
+A second man is waiting near the back, leaning against a rack of novelty lighters. He's older — pushing fifty, gray creeping into his beard, a button-down shirt rolled to the forearms. He looks like a guy who played varsity linebacker fifteen years ago and never found a reason to stop acting like it.
 
 "Put the phone on the counter," the man says.
 

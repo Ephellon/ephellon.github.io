@@ -27,7 +27,7 @@ I shrug. It's a small movement. I can see Caleb sitting in the far booth with th
 
 We walk over to the booth. The group is already there.
 
-"Told you it wouldn't last," says Marcus, leaning back with his arms spread across the vinyl seat. He’s wearing a varsity jacket from a school he graduated five years ago. In Blueville, that jacket is a permanent residence.
+"Told you it wouldn't last," says Marcus, leaning back with his arms spread across the vinyl seat. He’s wearing a varsity jacket from a school he graduated five years ago, the wool and leather kept like a shrine. In Blueville, that jacket is a permanent residence.
 
 Alex slides into the booth, the apron still tied around her waist. She looks small.
 
@@ -43,7 +43,7 @@ Alex lets out a short, dry sound. "The motor burned out."
 
 "Burned out?" Marcus looks at the others. "It exploded. It took out the front row of the choir. I still remember the look on the principal's face. Alex just stood there with her goggles on."
 
-I watch her. She’s smiling, but it doesn't reach her eyes. She stares at the table, her thumb tracing a circle in the spilled salt, a small, distant look on her face. That’s the Alex I know. The one who tries too hard at things that don't matter.
+I watch her. She's smiling, but it doesn't reach her eyes — the robot smile, the one she does when she remembers something working for three seconds. She stares at the table, her thumb tracing a circle in the spilled salt.
 
 "Your mom's gonna love this," I say.
 

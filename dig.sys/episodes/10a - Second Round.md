@@ -43,11 +43,11 @@ The father reaches into his wallet. He hands Beth a stack of bills.
 
 Two hundred dollars in total.
 
-Beth reaches into the pile and pulls out fifty dollars. She holds it out. Wade takes it without ceremony, sliding the bills into the pocket of the varsity jacket. He doesn't speak. He just watches them leave.
+Beth reaches into the pile and pulls out forty dollars. She holds it out. Wade takes it without ceremony, sliding the bills into the pocket of the varsity jacket. He doesn't speak. He just watches them leave.
 
 The crew walks back toward the apartment. Roni keeps her gaze on the road. Diana is already ahead of them, her pace quick.
 
-Beth stops and counts the money. One hundred and fifty dollars remains.
+Beth stops and counts the money. One hundred and sixty dollars remains.
 
 Alex looks at the bills. She smiles. The expression stays on her face. Her hand rests near the dog tag pendant, fingers loose. She does not look away from the money.
 
