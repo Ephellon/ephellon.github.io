@@ -32,19 +32,26 @@ const elements = {
 
 // --- Persistence Helpers ---
 async function saveThreshold() {
-    if (typeof window.creationStorage !== 'undefined') {
+    if (window.creationStorage != null) {
         await window.creationStorage.plain.setItem('threshold', btoa(currentThreshold.toString()));
+        elements.max.innerText = currentThreshold;
+    } else if(window.localStorage != null) {
+        window.localStorage.setItem('threshold', currentThreshold.toString());
         elements.max.innerText = currentThreshold;
     }
 }
 
 async function loadThreshold() {
-    if (typeof window.creationStorage !== 'undefined') {
-        const raw = await window.creationStorage.plain.getItem('threshold');
-        if (raw) {
-            currentThreshold = parseInt(atob(raw), 10);
-            elements.max.innerText = currentThreshold;
-        }
+    let raw;
+    if (window.creationStorage != null) {
+        raw = await window.creationStorage.plain.getItem('threshold');
+    } else if(window.localStorage != null) {
+        raw = window.localStorage.getItem('threshold');
+    }
+
+    if (raw) {
+        currentThreshold = parseInt(atob(raw), 10);
+        elements.max.innerText = currentThreshold;
     }
 }
 
@@ -203,7 +210,7 @@ elements.body.addEventListener('pointerdown', () => {
 });
 
 // Desktop Fallbacks
-if (typeof PluginMessageHandler === 'undefined') {
+if (window.PluginMessageHandler == null) {
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
             event.preventDefault();
