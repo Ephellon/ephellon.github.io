@@ -13,7 +13,7 @@ const CONFIG = {
     , sampleHeight: 45
 };
 
-let currentState = STATE.MONITORING;
+let currentState = STATE.IDLE;
 let currentThreshold = CONFIG.defaultThreshold;
 let blackFrameCount = 0;
 let audioCtx = null;
