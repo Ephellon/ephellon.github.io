@@ -72,7 +72,11 @@
       "Bash(awk '/^---$/{found++; next} found>=1{print}' /c/Users/ephel/AppData/Local/Temp/scene_11c_g3_cut.md)",
       "Bash(awk '/^---$/{found++; next} found>=1{print}' /c/Users/ephel/AppData/Local/Temp/scene_11c_final.md)",
       "Bash(awk '/^---$/{found++; next} found>=1{print}' /c/Users/ephel/AppData/Local/Temp/scene_11c_fixed.md)",
-      "Bash(awk '/^---$/{found++; next} found>=1{print}' /c/Users/ephel/AppData/Local/Temp/scene_11c_v3.md)"
+      "Bash(awk '/^---$/{found++; next} found>=1{print}' /c/Users/ephel/AppData/Local/Temp/scene_11c_v3.md)",
+      "Read(//c/Users/ephel/Development/ephellon.github.io/**)",
+      "Bash(gh pr create --title 'dig.sys: GM Screen overhaul, Episode reader, stat descriptions, and doc patches' --body ' *)",
+      "PowerShell(Get-Command gh -ErrorAction SilentlyContinue; \\(Get-Command git\\).Source)",
+      "Bash(python -c \"import spotdl.utils.lrc; print\\(dir\\(spotdl.utils.lrc\\)\\)\")"
     ]
   }
 }
