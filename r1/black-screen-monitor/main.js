@@ -13,7 +13,7 @@ const CONFIG = {
     , sampleHeight: 45
 };
 
-let currentState = STATE.IDLE;
+let currentState = STATE.MONITORING;
 let currentThreshold = CONFIG.defaultThreshold;
 let blackFrameCount = 0;
 let audioCtx = null;
@@ -60,6 +60,7 @@ async function initCamera() {
         });
         elements.video.srcObject = stream;
         await elements.video.play();
+        setAppState(STATE.MONITORING);
     } catch (e) {
         setAppState(STATE.ERROR, 'Camera Access Denied');
     }
@@ -217,6 +218,5 @@ if (typeof PluginMessageHandler === 'undefined') {
 (async () => {
     await loadThreshold();
     await initCamera();
-    setAppState(STATE.IDLE);
     setInterval(analyzeFrame, CONFIG.sampleInterval);
 })();
