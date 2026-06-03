@@ -2,7 +2,7 @@
 title: Digital Sissy
 subtitle: "Episode 0 — Session Zero (Bootstrap)"
 stamps:
-    - v0.1
+    - v0.2
     - DRAFT
     - PROJECT-SCOPED
     - GM-FACING
@@ -93,45 +93,63 @@ The PC answers in fiction. One short scene, one short memory, one short observat
 
 ---
 
-## Worked examples — Kevin (Vet) and Luigi (Tinkerer)
+## Worked examples — Frank (Vet), Adam (Tinkerer), and Carla (Faithful)
 
-These were the first two PCs at the table for the original Session 0 run. They are canon.
+These were the three PCs at the table for the original Session 0 run. They are canon.
 
-### Kevin
+### Frank
 
-> **Home.** A small house on the east side of town. Kept tidy. The Ford Ranger lives in the driveway. Kevin walks out to it at the start of the session.
+> **Home.** A small house on the east side of town. Kept tidy. The Ford Ranger lives in the driveway. Frank walks out to it at the start of the session.
 
-> **Vehicle — Ford Ranger** (Vet's "a vehicle that runs"). *Roll: 2.* Worn. Runs, but not well enough to make it to the next town over. Kevin notes this in fiction; the truck is a Blueville-only vehicle now.
+> **Vehicle — Ford Ranger** (Vet's "a vehicle that runs"). *Roll: 2.* Worn. Runs, but not well enough to make it to the next town over. Frank notes this in fiction; the truck is a Blueville-only vehicle now.
 
-> **Trip.** Kevin drives the Ranger to an abandoned warehouse on the east side. He used to use it as a private range. His remaining gear is locked in a footlocker there.
+> **Trip.** Frank drives the Ranger to an abandoned warehouse on the east side. He used to use it as a private range. His remaining gear is locked in a footlocker there.
 
 > **Sidearm — conventional pistol** (Vet's "a sidearm, laser or conventional, your pick"). *Roll: 4.* Functional. Oiled, loaded, no story.
 
-> **Folding knife** (Vet's "a folding knife you've sharpened too many times"). *Roll: 1.* Failing. The blade is short from sharpening. Kevin keeps it anyway.
+> **Folding knife** (Vet's "a folding knife you've sharpened too many times"). *Roll: 1.* Failing. The blade is short from sharpening. Frank keeps it anyway.
 
 > **Bag with three days of clothes** (Vet's "a bag with three days of clothes always packed"). *Roll: 1.* Failing. Tattered. Folded in the bag since the last time he packed. Some have holes. They smell wrong.
 
-> **Challenge coin** (Vet's "challenge coin or equivalent token from the unit/job/place"). *Roll: 6.* Fresh. Polished, displayed in a small velvet bag inside the footlocker. Kevin can spend the coin's freshness once per session for +1 forward on a move where the coin meaningfully figures.
+> **Challenge coin** (Vet's "challenge coin or equivalent token from the unit/job/place"). *Roll: 6.* Fresh. Polished, displayed in a small velvet bag inside the footlocker. Frank can spend the coin's freshness once per session for +1 forward on a move where the coin meaningfully figures.
 
-> **Bond to Alex.** Kevin watched Alex grow up at a distance, and came back from somewhere recently to find she was suddenly an adult. The last time he saw her: a grocery store run-in, three weeks ago. She was buying frozen peas. She nodded. He nodded back. That was the conversation.
+> **Bond to Alex.** Frank watched Alex grow up at a distance, and came back from somewhere recently to find she was suddenly an adult. The last time he saw her: a grocery store run-in, three weeks ago. She was buying frozen peas. She nodded. He nodded back. That was the conversation.
 
-### Luigi
+### Adam
 
-> **Home.** A "lake house" — a one-room cabin on the edge of one of the climate-stressed inland reservoirs. Kept livable, barely. Luigi wakes up and walks out.
+> **Home.** A "lake house" — a one-room cabin on the edge of one of the climate-stressed inland reservoirs. Kept livable, barely. Adam wakes up and walks out.
 
-> **Trip.** Luigi walks from the lake house to **the Gentleman's club**, where his workshop space is. The specific nature of the Gentleman's club is canon-open — strip club, actual gentleman's social club, gym, lodge. The GM and player together establish what kind of place it is, the first time it figures in play.
+> **Trip.** Adam walks from the lake house to **the Gentleman's club**, where his workshop space is. The specific nature of the Gentleman's club is canon-open — strip club, actual gentleman's social club, gym, lodge. The GM and player together establish what kind of place it is, the first time it figures in play.
 
 > **Multi-tool** (Tinkerer's "multi-tool, well-worn"). *Roll: 3.* Worn. Functional, used. The roll matches the playbook flavor exactly.
 
-> **Tablet running three OSes** (Tinkerer's "tablet, lifted or salvaged, runs three OSes"). *Roll: 2.* Worn. One of the three OSes is acting weird. Luigi is not sure how to fix it. The Tinkerer's Jury-Rig and Schematic Sight moves apply when he tries.
+> **Tablet running three OSes** (Tinkerer's "tablet, lifted or salvaged, runs three OSes"). *Roll: 2.* Worn. One of the three OSes is acting weird. Adam is not sure how to fix it. The Tinkerer's Jury-Rig and Schematic Sight moves apply when he tries.
 
 > **Cargo pants** (Tinkerer's "cargo pants with too many pockets"). *Roll: 5.* Functional. All pockets intact, nothing torn.
 
 > **Soldering iron** (Tinkerer's "soldering iron, 2050s spec"). *Roll: 4.* Functional. Still heats. Still works.
 
-> **Busted phone full of harvested parts** (Tinkerer's fifth item). *Not yet established.* Luigi did not retrieve this item during the original Session 0. When Luigi next has a beat with this phone, the GM calls the condition roll on the spot. Until rolled, the item is canonically unestablished.
+> **Busted phone full of harvested parts** (Tinkerer's fifth item). *Not yet established.* Adam did not retrieve this item during the original Session 0. When Adam next has a beat with this phone, the GM calls the condition roll on the spot. Until rolled, the item is canonically unestablished.
 
-> **Bond to Alex.** Luigi set Alex up with something digital once — a phone, an account, a connection. The specifics surface when Luigi's bond enters play.
+> **Bond to Alex.** Adam set Alex up with something digital once — a phone, an account, a connection. The specifics surface when Adam's bond enters play.
+
+### Carla
+
+> **Home.** A live-in arrangement at **Catherine's house** — Catherine is the elderly hospice patient Carla cares for full-time. The house is in town, modest, kept clean despite the medical equipment that has accumulated in the front rooms. Carla has a small bedroom off the hall.
+
+> **Trip.** Carla re-entered town via the **Semi-Edible Taco Shop** — she stopped there for a meal on her way back. Her gear is split between her quarters at Catherine's house and the things she carries every day on shift. The trip is mostly a series of small recoveries — pulling things from her bag, from the kitchen, from the closet.
+
+> **Phone** (Faithful's "a phone with everyone's birthdays and prescription schedules"). *Roll: 4.* Functional. Locked screen shows a wallpaper of a family photo Carla isn't in. Calendar is dense — three medication reminders fire during the session as Catherine's care interrupts the group.
+
+> **Tattered Bible** (Faithful's well-worn personal text). *Roll: 1.* Failing. Cover separated, pages dog-eared, margin notes in two different colors of pen. Held together with a rubber band. Carla doesn't carry it everywhere — it lives on the bedside table at Catherine's.
+
+> **Immaculate casserole** (Faithful's offering for the table). *Roll: 6.* Fresh. Carla baked it that morning. Wrapped in foil, still warm. She can spend the casserole's freshness once per session for +1 forward on a move where it's offered, shared, or otherwise figures meaningfully (Aid Another, Read a Person, social work). Once spent, it's reduced to leftovers — Functional.
+
+> **Worn food-stained blanket** (Faithful's comfort object). *Roll: 2.* Worn. Soft enough to still be useful, stained enough that Carla isn't precious about lending it out. Lives in her bag.
+
+> **Fifth item.** *Not yet established.* Carla did not retrieve this item during the original Session 0. When Carla next has a beat with the Faithful's fifth item, the GM calls the condition roll on the spot. Until rolled, the item is canonically unestablished.
+
+> **Bond to Alex.** Carla answered the Faithful's family-history prompt at character creation — there is a thread between Carla's family and Alex's family that runs deeper than school-aged friendship. The specifics surface when Carla's bond enters play.
 
 ---
 
@@ -145,13 +163,13 @@ When every PC has gear, condition, and bond surfaced:
 
 ---
 
-## Notes for v0.2
+## Notes for v0.3
 
 - **Other PCs' Session 0 sequences** canonize as they play. Each PC's home, gear locations, condition rolls, and bond surfacing become canon for their character.
 - **The 1d6 condition mechanic** is calibrated for texture, not load-bearing math. If play reveals the curve is wrong (too many Failing items, not enough Fresh ones), adjust the table.
 - **Bond confirmation** is currently asked in narration. If a more structured prompt list would help GMs run this consistently, codify in v0.2.
-- **The "Gentleman's club"** as a specific location — canonize once Luigi's player establishes its nature in play.
+- **The "Gentleman's club"** as a specific location — canonize once Adam's player establishes its nature in play.
 
 ---
 
-*Living document. Major changes route through Architect → CEO sign-off. The canon record of Kevin and Luigi's Session 0 sequences is locked at v0.1; subsequent PCs canonize on their own pass.*
+*Living document. Major changes route through Architect → CEO sign-off. The canon record of Frank's, Adam's, and Carla's Session 0 sequences is locked at v0.2; subsequent PCs canonize on their own pass.*
