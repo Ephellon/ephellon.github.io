@@ -299,11 +299,11 @@ function SiteApp() {
   }, [route]);
 
   function page() {
-    if (route === 'cover')   return <ScaledPage width={816}  height={1056}><CoverArtboard /></ScaledPage>;
+    if (route === 'cover')   return <ScaledPage width={875}  height={1056}><CoverArtboard /></ScaledPage>;
     if (route === 'landing') return <ScaledPage width={1440}><LandingArtboard /></ScaledPage>;
     if (route === 'gm') return (
       <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-        <div style={{ width: 816, flexShrink: 0, overflowX: 'hidden' }}>
+        <div style={{ width: 875, flexShrink: 0, overflowX: 'hidden' }}>
           <GMScreenArtboard />
         </div>
         <div style={{ flex: 1, minWidth: 300, position: 'sticky', top: 48, height: 'calc(100vh - 48px)' }}>
@@ -312,18 +312,18 @@ function SiteApp() {
       </div>
     );
     if (route === 'items')   return <ScaledPage width={1240} height={780}><ItemsArtboard /></ScaledPage>;
-    if (route === 'zero')    return <ScaledPage width={816}><SessionZeroArtboard /></ScaledPage>;
+    if (route === 'zero')    return <ScaledPage width={875}><SessionZeroArtboard /></ScaledPage>;
     if (route === 'crew')    return <ScaledPage width={1440} height={2940}><CrewArtboard /></ScaledPage>;
     if (route.startsWith('pb/')) {
       const slug = route.slice(3);
       const pb = PLAYBOOKS[slug];
       if (pb) return (
-        <ScaledPage width={816}>
+        <ScaledPage width={875}>
           <PlaybookSheet key={slug} pb={pb} slug={slug} />
         </ScaledPage>
       );
     }
-    return <ScaledPage width={816} height={1056}><CoverArtboard /></ScaledPage>;
+    return <ScaledPage width={875} height={1056}><CoverArtboard /></ScaledPage>;
   }
 
   const showDice = route === 'gm' || route.startsWith('pb/');
