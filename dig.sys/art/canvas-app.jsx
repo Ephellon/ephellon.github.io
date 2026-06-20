@@ -30,7 +30,7 @@ function App() {
         <DCArtboard id="logo" label="01 · Logo · pending" width={1200} height={640}>
           <LogoArtboard />
         </DCArtboard>
-        <DCArtboard id="cover" label="02 · Rulebook cover · 8.5×11" width={816} height={1056}>
+        <DCArtboard id="cover" label="02 · Rulebook cover · 8.5×11" width={875} height={1056}>
           <CoverArtboard />
         </DCArtboard>
       </DCSection>
@@ -48,7 +48,7 @@ function App() {
         <DCArtboard id="items" label="05 · Iconic handouts · print-and-cut" width={1240} height={780}>
           <ItemsArtboard />
         </DCArtboard>
-        <DCArtboard id="zero" label="06 · Session Zero · 8.5×11" width={816} height={1056}>
+        <DCArtboard id="zero" label="06 · Session Zero · 8.5×11" width={875} height={1056}>
           <SessionZeroArtboard />
         </DCArtboard>
         <DCArtboard id="crew" label="07 · Crew Sheet · 12 archetype pairs" width={1440} height={2940}>
@@ -57,24 +57,24 @@ function App() {
       </DCSection>
 
       <DCSection id="system" title="System · Core" subtitle="PbtA spine + playbooks">
-        <DCArtboard id="system-spine" label="08 · System Spine · legal portrait" width={816} height={1500}>
+        <DCArtboard id="system-spine" label="08 · System Spine · legal portrait" width={875} height={1500}>
           <SystemArtboard />
         </DCArtboard>
       </DCSection>
 
       <DCSection id="playbooks" title="Playbooks · 12 Character Sheets" subtitle="Letter-extended portrait, one per archetype">
-        <DCArtboard id="pb-tinkerer"  label="09 · The Tinkerer · Artificer"           width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.tinkerer} /></DCArtboard>
-        <DCArtboard id="pb-roughneck" label="10 · The Roughneck · Barbarian"          width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.roughneck} /></DCArtboard>
-        <DCArtboard id="pb-voice"     label="11 · The Voice · Bard"                   width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.voice} /></DCArtboard>
-        <DCArtboard id="pb-faithful"  label="12 · The Faithful · Cleric"              width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.faithful} /></DCArtboard>
-        <DCArtboard id="pb-wired"     label="13 · The Wired · Druid · Techno-Nerd"    width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.wired} /></DCArtboard>
-        <DCArtboard id="pb-vet"       label="14 · The Vet · Fighter"                  width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.vet} /></DCArtboard>
-        <DCArtboard id="pb-clean"     label="15 · The Clean · Monk"                   width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.clean} /></DCArtboard>
-        <DCArtboard id="pb-believer"  label="16 · The Believer · Paladin"             width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.believer} /></DCArtboard>
-        <DCArtboard id="pb-outsider"  label="17 · The Outsider · Ranger"              width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.outsider} /></DCArtboard>
-        <DCArtboard id="pb-grifter"   label="18 · The Grifter · Rogue"                width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.grifter} /></DCArtboard>
-        <DCArtboard id="pb-touched"   label="19 · The Touched · Sorcerer"             width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.touched} /></DCArtboard>
-        <DCArtboard id="pb-reader"    label="20 · The Reader · Wizard"                width={816} height={1200}><PlaybookSheet pb={PLAYBOOKS.reader} /></DCArtboard>
+        <DCArtboard id="pb-tinkerer"  label="09 · The Tinkerer · Artificer"           width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.tinkerer} /></DCArtboard>
+        <DCArtboard id="pb-roughneck" label="10 · The Roughneck · Barbarian"          width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.roughneck} /></DCArtboard>
+        <DCArtboard id="pb-voice"     label="11 · The Voice · Bard"                   width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.voice} /></DCArtboard>
+        <DCArtboard id="pb-faithful"  label="12 · The Faithful · Cleric"              width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.faithful} /></DCArtboard>
+        <DCArtboard id="pb-wired"     label="13 · The Wired · Druid · Techno-Nerd"    width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.wired} /></DCArtboard>
+        <DCArtboard id="pb-vet"       label="14 · The Vet · Fighter"                  width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.vet} /></DCArtboard>
+        <DCArtboard id="pb-clean"     label="15 · The Clean · Monk"                   width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.clean} /></DCArtboard>
+        <DCArtboard id="pb-believer"  label="16 · The Believer · Paladin"             width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.believer} /></DCArtboard>
+        <DCArtboard id="pb-outsider"  label="17 · The Outsider · Ranger"              width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.outsider} /></DCArtboard>
+        <DCArtboard id="pb-grifter"   label="18 · The Grifter · Rogue"                width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.grifter} /></DCArtboard>
+        <DCArtboard id="pb-touched"   label="19 · The Touched · Sorcerer"             width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.touched} /></DCArtboard>
+        <DCArtboard id="pb-reader"    label="20 · The Reader · Wizard"                width={875} height={1200}><PlaybookSheet pb={PLAYBOOKS.reader} /></DCArtboard>
       </DCSection>
 
       <TweaksPanel>

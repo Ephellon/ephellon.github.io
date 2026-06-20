@@ -691,7 +691,7 @@ function S6_PCTracker({ sess, setSess }) {
 function SystemPanel({ sess, setSess }) {
   return (
     <div className="page" style={{
-      width: 816, padding: "26px 28px", boxSizing: "border-box",
+      width: 875, padding: "26px 28px", boxSizing: "border-box",
       display: "flex", flexDirection: "column",
       borderRight: "1px solid var(--border)",
     }}>
@@ -717,7 +717,7 @@ function SystemPanel({ sess, setSess }) {
 function PanelTwo({ notes, setNotes }) {
   return (
     <div className="page" style={{
-      width: 816, padding: "26px 28px", boxSizing: "border-box",
+      width: 875, padding: "26px 28px", boxSizing: "border-box",
       display: "flex", flexDirection: "column",
       borderRight: "1px solid var(--border)",
     }}>
@@ -785,7 +785,7 @@ function NPCCard({ name, age, want, lever, tell, img }) {
 function PanelThree() {
   return (
     <div className="page" style={{
-      width: 816, height: 1056, padding: "26px 28px", boxSizing: "border-box",
+      width: 875, height: 1056, padding: "26px 28px", boxSizing: "border-box",
       display: "flex", flexDirection: "column",
       borderRight: "1px solid var(--border)",
     }}>
@@ -882,7 +882,7 @@ function SchemeRow({ s }) {
 function PanelFour({ done, toggleDone }) {
   return (
     <div className="page" style={{
-      width: 816, height: 1056, padding: "26px 28px", boxSizing: "border-box",
+      width: 875, height: 1056, padding: "26px 28px", boxSizing: "border-box",
       display: "flex", flexDirection: "column",
     }}>
       <GMSPanelHeader no="IV" eyebrow="GM SCREEN · INSIDE 04 / 05" title={<>SCHEMES<br/>&amp; GM CRAFT</>} />
@@ -1039,7 +1039,7 @@ const GMS_BETWEEN_SESSIONS = [
 function PanelFive() {
   return (
     <div className="page" style={{
-      width: 816, padding: "26px 28px", boxSizing: "border-box",
+      width: 875, padding: "26px 28px", boxSizing: "border-box",
       display: "flex", flexDirection: "column",
       borderRight: "1px solid var(--border)",
     }}>

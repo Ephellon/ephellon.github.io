@@ -1,4 +1,4 @@
-﻿// art/session-zero.jsx — letter portrait 816 × 1056. Interactive with localStorage.
+﻿// art/session-zero.jsx — letter portrait 875 × 1056. Interactive with localStorage.
 
 function useLS(key, def) {
   const [v, sv] = React.useState(() => {

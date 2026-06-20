@@ -1,4 +1,4 @@
-﻿// art/cover.jsx — rulebook cover, letter portrait (816 × 1056). Onyx register.
+﻿// art/cover.jsx — rulebook cover, letter portrait (875 × 1056). Onyx register.
 
 function CoverArtboard() {
   return (
