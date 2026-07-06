@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designer — Ephellon</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  :root { --bg: #dcd4c3; }
+  body { margin: 0; }
+  h1, h2, h3, h4, p, .t-lede, .t-h1 { font-family: var(--font-sans); }
+  a { font-family: var(--font-mono); }
+  .k-label { font-family:var(--font-sans);font-weight:var(--w-bold);font-size:11px;letter-spacing:var(--tr-widest);text-transform:uppercase;color:var(--fg-meta);margin:0 0 var(--space-4); }
+  .art-grid { display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:var(--space-5); }
+  .art-card { background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--radius-2);overflow:hidden; }
+  .art-card img { display:block;width:100%;height:220px;object-fit:cover;background:var(--paper-0); }
+  .art-card figcaption { padding:var(--space-3) var(--space-4) var(--space-4); }
+  .art-title { font-family:var(--font-sans);font-weight:var(--w-semi);font-size:var(--size-base);color:var(--fg-strong);margin:0 0 var(--space-2); }
+  .art-link { font-size:var(--size-sm);color:var(--oxblood); }
+  .contact-list { display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-6);list-style:none;margin:0;padding:0; }
+  .contact-list li a { color:var(--fg-strong); }
+</style>
+</head>
+<body>
+
+<div style="background:var(--bg);min-height:100vh;">
+  <div style="max-width:42rem;margin:0 auto;padding:var(--space-9) var(--space-6) var(--space-8);">
+
+    <a href="index.html" class="t-meta" style="color:var(--fg-meta);">← Archive</a>
+
+    <header style="display:flex;gap:var(--space-6);align-items:center;margin-top:var(--space-6);margin-bottom:var(--space-8);">
+      <img src="Designer/img/portrait.jpg" alt="Portrait of Ephellon Grey, as a toddler" style="width:104px;height:104px;object-fit:cover;object-position:center 15%;border-radius:var(--radius-2);border:1px solid var(--rule-strong);flex-shrink:0;">
+      <div>
+        <div class="t-meta" style="margin-bottom:var(--space-2);">Portfolio</div>
+        <h1 class="t-h1" style="margin:0 0 var(--space-2);font-size:var(--size-3xl);">Ephellon Grey</h1>
+        <p style="font-family:var(--font-sans);color:var(--fg-muted);margin:0;">I make things — software mostly, sometimes album art nobody asked for. This page is the latter.</p>
+      </div>
+    </header>
+
+    <hr class="strong">
+
+    <section style="margin-top:var(--space-7);">
+      <h4 class="k-label">Design work</h4>
+      <div class="art-grid">
+
+        <figure class="art-card">
+          <img src="Designer/img/ANTI.png" alt="Rihanna: ANTI (edited album art)">
+          <figcaption>
+            <p class="art-title">Rihanna — ANTI</p>
+            <a class="art-link" href="Designer/img/ANTI.png" target="_blank">View full image →</a>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card">
+          <img src="Designer/img/Bitch Better Have My Money.jpg" alt="Rihanna: Bitch Better Have My Money, edited single art">
+          <figcaption>
+            <p class="art-title">Rihanna — Bitch Better Have My Money</p>
+            <a class="art-link" href="Designer/img/Bitch Better Have My Money.jpg" target="_blank">View full image →</a>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card">
+          <img src="Designer/img/Forbidden Fruit.jpg" alt="J. Cole: Forbidden Fruit, edited single art">
+          <figcaption>
+            <p class="art-title">J. Cole — Forbidden Fruit</p>
+            <a class="art-link" href="Designer/img/Forbidden Fruit.jpg" target="_blank">View full image →</a>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card">
+          <img src="Designer/img/Dirty Diana.png" alt="Michael Jackson: Dirty Diana, edited single art">
+          <figcaption>
+            <p class="art-title">Michael Jackson — Dirty Diana</p>
+            <a class="art-link" href="Designer/img/Dirty Diana.png" target="_blank">View full image →</a>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card">
+          <img src="Designer/img/June v. Serena.png" alt="June v. Serena — an edited frame from The Handmaid's Tale">
+          <figcaption>
+            <p class="art-title">June v. Serena</p>
+            <a class="art-link" href="Designer/img/June v. Serena.png" target="_blank">View full image →</a>
+          </figcaption>
+        </figure>
+
+        <figure class="art-card">
+          <img src="Designer/img/Burn It All.png" alt="Burn It All — a Hope-poster parody starring my wife's dog">
+          <figcaption>
+            <p class="art-title">Burn It All</p>
+            <a class="art-link" href="Designer/img/Burn It All.png" target="_blank">View full image →</a>
+          </figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <hr style="margin-top:var(--space-8);">
+
+    <section style="margin-top:var(--space-7);">
+      <h4 class="k-label">Elsewhere</h4>
+      <ul class="contact-list">
+        <li><a href="mailto:minkcbos@gmail.com">Email</a></li>
+        <li><a href="https://github.com/ephellon" target="_blank">GitHub</a></li>
+        <li><a href="https://codepen.io/Ephellon/" target="_blank">CodePen</a></li>
+        <li><a href="https://www.linkedin.com/in/ephellon-dantzler-9641b6121/" target="_blank">LinkedIn</a></li>
+        <li><a href="https://twitter.com/ephellon" target="_blank">Twitter</a></li>
+      </ul>
+    </section>
+
+  </div>
+</div>
+
+</body>
+</html>
