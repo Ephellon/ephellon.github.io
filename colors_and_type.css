@@ -1,0 +1,398 @@
+/* =============================================================
+   Addenda — Colors & Type
+   -----------------------------------------------------------
+   A document-first system for a literary-archive project.
+   Two registers: "paper" (default, warm ivory) and "oxide"
+   (inverted, deep ink for horror/punchline beats).
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* ---------------------------------------------------------
+     COLORS — PAPER PALETTE (default register)
+     Warm archival paper, deep ink, restrained accents.
+     --------------------------------------------------------- */
+
+  /* Surfaces */
+  --paper-0: #f6f1e7;   /* deepest margin — tea-stained */
+  --paper-1: #fbf6ec;   /* page */
+  --paper-2: #fdfaf2;   /* quote/inset */
+  --paper-3: #ffffff;   /* brightest — almost never */
+
+  /* Ink */
+  --ink-0: #1a1712;     /* body text — soft black */
+  --ink-1: #2b2620;     /* headings */
+  --ink-2: #544b3f;     /* secondary */
+  --ink-3: #8a7f6f;     /* tertiary / meta */
+  --ink-4: #b8ae9c;     /* disabled / deep rule */
+  --ink-5: #ded4bf;     /* fine rule / divider */
+
+  /* Accents — all oxidized, never bright */
+  --oxblood: #7a2e24;        /* violence, warnings, « Archanese » */
+  --oxblood-soft: #9c4a3c;
+  --oxblood-bg: #f0dfd6;     /* for subtle inline highlights */
+
+  --ochre: #8a6a1f;          /* meta-tags, reference-guide register */
+  --ochre-soft: #b28b33;
+  --ochre-bg: #f2e7c9;
+
+  --moss: #4a5738;           /* canon / binding / approved */
+  --moss-soft: #6d7d54;
+  --moss-bg: #dde1cf;
+
+  --slate: #3e4a55;          /* structural / system / neutral info */
+  --slate-soft: #5e6c78;
+  --slate-bg: #d9dee3;
+
+  --aubergine: #4a2a3e;      /* "punchline register" / horror accent */
+  --aubergine-soft: #6b4059;
+  --aubergine-bg: #e5d5df;
+
+  /* ---------------------------------------------------------
+     SEMANTIC TOKENS — paper register
+     --------------------------------------------------------- */
+  --bg: var(--paper-1);
+  --bg-margin: var(--paper-0);
+  --bg-inset: var(--paper-2);
+
+  --fg: var(--ink-0);
+  --fg-strong: var(--ink-1);
+  --fg-muted: var(--ink-2);
+  --fg-meta: var(--ink-3);
+  --fg-disabled: var(--ink-4);
+
+  --rule: var(--ink-5);
+  --rule-strong: var(--ink-4);
+
+  /* Semantic accents */
+  --accent-canon: var(--moss);
+  --accent-contract: var(--ink-1);
+  --accent-warning: var(--oxblood);
+  --accent-reference: var(--ochre);
+  --accent-horror: var(--aubergine);
+  --accent-system: var(--slate);
+
+  /* ---------------------------------------------------------
+     TYPOGRAPHY
+     --------------------------------------------------------- */
+
+  /* Families */
+  --font-serif: 'EB Garamond', 'Iowan Old Style', 'Palatino', 'Georgia', serif;
+  --font-sans: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
+
+  /* Base scale — modular, 1.25 */
+  --size-xxs: 11px;
+  --size-xs:  12px;
+  --size-sm:  14px;
+  --size-base: 17px;
+  --size-md:  19px;
+  --size-lg:  22px;
+  --size-xl:  28px;
+  --size-2xl: 36px;
+  --size-3xl: 48px;
+  --size-4xl: 64px;
+  --size-5xl: 88px;
+
+  /* Line heights */
+  --lh-tight: 1.15;
+  --lh-snug:  1.3;
+  --lh-normal: 1.5;
+  --lh-prose: 1.65;
+  --lh-loose: 1.85;
+
+  /* Tracking */
+  --tr-tight: -0.01em;
+  --tr-normal: 0;
+  --tr-wide: 0.04em;
+  --tr-wider: 0.14em;     /* eyebrow labels */
+  --tr-widest: 0.22em;    /* small caps / stamps */
+
+  /* Weights */
+  --w-reg: 400;
+  --w-med: 500;
+  --w-semi: 600;
+  --w-bold: 700;
+
+  /* ---------------------------------------------------------
+     SPACING — in 4px grid, named by prose metaphors
+     --------------------------------------------------------- */
+  --space-hair: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;   /* line */
+  --space-5: 24px;   /* paragraph */
+  --space-6: 32px;
+  --space-7: 48px;   /* scene break */
+  --space-8: 64px;
+  --space-9: 96px;   /* chapter break */
+  --space-10: 128px;
+
+  /* ---------------------------------------------------------
+     RADII, BORDERS, SHADOWS
+     The system is nearly flat. Paper doesn't float.
+     --------------------------------------------------------- */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-2: 4px;      /* stamps, tags */
+  --radius-3: 8px;      /* rarely used */
+
+  --border-hair: 1px solid var(--rule);
+  --border-rule: 1px solid var(--rule-strong);
+  --border-ink: 1px solid var(--ink-2);
+
+  /* Shadows — only "page resting on page" */
+  --shadow-lift: 0 1px 0 rgba(26, 23, 18, 0.04), 0 2px 6px rgba(26, 23, 18, 0.04);
+  --shadow-page: 0 1px 0 rgba(26, 23, 18, 0.05), 0 4px 14px rgba(26, 23, 18, 0.06), 0 14px 40px rgba(26, 23, 18, 0.05);
+
+  /* Measure (reading column) */
+  --measure: 34rem;       /* ~66ch at base size */
+  --measure-tight: 28rem;
+  --measure-wide: 42rem;
+}
+
+/* =============================================================
+   INVERTED REGISTER — "oxide"
+   Used for punchline/horror beats, title slides, dark covers.
+   Opt in with [data-register="oxide"] or .oxide
+   ============================================================= */
+[data-register="oxide"],
+.oxide {
+  --bg: #14110d;
+  --bg-margin: #0d0b08;
+  --bg-inset: #1b1812;
+
+  --fg: #f1ead9;
+  --fg-strong: #faf3e1;
+  --fg-muted: #b8ae9c;
+  --fg-meta: #8a7f6f;
+  --fg-disabled: #544b3f;
+
+  --rule: #2b2620;
+  --rule-strong: #3d362c;
+
+  --oxblood-bg: #2a1614;
+  --ochre-bg: #2a2212;
+  --moss-bg: #1c2015;
+  --slate-bg: #171c21;
+  --aubergine-bg: #23141e;
+}
+
+/* =============================================================
+   BASE STYLES
+   ============================================================= */
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-serif);
+  font-size: var(--size-base);
+  line-height: var(--lh-prose);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga", "onum";
+}
+
+/* ---------------------------------------------------------
+   SEMANTIC TYPE ROLES
+   --------------------------------------------------------- */
+
+/* Display — chapter/section opener */
+.t-display {
+  font-family: var(--font-serif);
+  font-weight: var(--w-reg);
+  font-size: var(--size-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--fg-strong);
+}
+
+.t-display-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--w-reg);
+  font-size: var(--size-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--fg-strong);
+}
+
+/* H1 — work / document title */
+h1, .t-h1 {
+  font-family: var(--font-serif);
+  font-weight: var(--w-reg);
+  font-size: var(--size-3xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--fg-strong);
+  margin: 0 0 var(--space-5);
+}
+
+/* H2 — section */
+h2, .t-h2 {
+  font-family: var(--font-serif);
+  font-weight: var(--w-semi);
+  font-size: var(--size-2xl);
+  line-height: var(--lh-snug);
+  color: var(--fg-strong);
+  margin: var(--space-7) 0 var(--space-4);
+}
+
+/* H3 — sub-section */
+h3, .t-h3 {
+  font-family: var(--font-serif);
+  font-weight: var(--w-semi);
+  font-size: var(--size-xl);
+  line-height: var(--lh-snug);
+  color: var(--fg-strong);
+  margin: var(--space-6) 0 var(--space-3);
+}
+
+/* H4 — inline heading */
+h4, .t-h4 {
+  font-family: var(--font-sans);
+  font-weight: var(--w-semi);
+  font-size: var(--size-sm);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-wider);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+/* Body — prose */
+p, .t-p {
+  font-family: var(--font-serif);
+  font-size: var(--size-base);
+  line-height: var(--lh-prose);
+  color: var(--fg);
+  margin: 0 0 var(--space-4);
+  max-width: var(--measure);
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+/* Lede — first paragraph */
+.t-lede {
+  font-family: var(--font-serif);
+  font-size: var(--size-md);
+  line-height: var(--lh-prose);
+  color: var(--fg-strong);
+  font-style: italic;
+}
+
+/* Meta — sans eyebrow */
+.t-meta {
+  font-family: var(--font-sans);
+  font-size: var(--size-xxs);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-wider);
+  text-transform: uppercase;
+  color: var(--fg-meta);
+}
+
+/* Stamp — small caps, structural role label */
+.t-stamp {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-widest);
+  text-transform: uppercase;
+  color: var(--fg-meta);
+}
+
+/* Pull quote */
+.t-pull {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--w-reg);
+  font-size: var(--size-lg);
+  line-height: var(--lh-snug);
+  color: var(--fg-strong);
+  text-wrap: balance;
+}
+
+/* Structural code / POV markers / file paths */
+code, .t-code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  color: var(--fg-muted);
+  background: var(--bg-inset);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-1);
+}
+
+pre, .t-pre {
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  line-height: var(--lh-normal);
+  color: var(--fg);
+  background: var(--bg-inset);
+  padding: var(--space-4);
+  border-left: 2px solid var(--rule-strong);
+  overflow-x: auto;
+}
+
+/* Archanese — French-quoted dialogue */
+.t-archanese {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--oxblood);
+}
+
+/* POV label */
+.t-pov {
+  font-family: var(--font-sans);
+  font-weight: var(--w-bold);
+  font-size: var(--size-xs);
+  letter-spacing: var(--tr-wider);
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+/* Scene divider */
+.t-divider {
+  display: block;
+  text-align: center;
+  font-family: var(--font-serif);
+  color: var(--fg-meta);
+  letter-spacing: 1em;
+  margin: var(--space-7) 0;
+  font-size: var(--size-sm);
+}
+.t-divider::before { content: "— · —"; }
+
+/* ---------------------------------------------------------
+   LINKS
+   --------------------------------------------------------- */
+a {
+  color: var(--fg-strong);
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--rule-strong);
+  transition: text-decoration-color 120ms ease, color 120ms ease;
+}
+a:hover {
+  color: var(--oxblood);
+  text-decoration-color: var(--oxblood);
+}
+
+/* ---------------------------------------------------------
+   RULES
+   --------------------------------------------------------- */
+hr {
+  border: 0;
+  border-top: var(--border-hair);
+  margin: var(--space-6) 0;
+}
+hr.strong { border-top: var(--border-rule); }
+hr.ink { border-top: var(--border-ink); }
+
+/* ---------------------------------------------------------
+   UTILITY
+   --------------------------------------------------------- */
+.measure { max-width: var(--measure); }
+.measure-tight { max-width: var(--measure-tight); }
+.measure-wide { max-width: var(--measure-wide); }
