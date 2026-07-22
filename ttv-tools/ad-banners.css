@@ -15,3 +15,5 @@ a[href*="turbo"i] < [class*="player"i][class*="overlay"i][class*="darkness"i]
 
 a[href*="tickets"i] < footer
 img[src*="bonus-round"i] < [class*="bonus-round"i]
+
+[class*="upsell"i] < footer[id*="sticky"i]
