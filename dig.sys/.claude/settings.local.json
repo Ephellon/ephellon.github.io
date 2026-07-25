@@ -76,7 +76,8 @@
       "Read(//c/Users/ephel/Development/ephellon.github.io/**)",
       "Bash(gh pr create --title 'dig.sys: GM Screen overhaul, Episode reader, stat descriptions, and doc patches' --body ' *)",
       "PowerShell(Get-Command gh -ErrorAction SilentlyContinue; \\(Get-Command git\\).Source)",
-      "Bash(python -c \"import spotdl.utils.lrc; print\\(dir\\(spotdl.utils.lrc\\)\\)\")"
+      "Bash(python -c \"import spotdl.utils.lrc; print\\(dir\\(spotdl.utils.lrc\\)\\)\")",
+      "Bash(git -C /c/Users/ephel/Development/ephellon.github.io/dig.sys remote -v)"
     ]
   }
 }
