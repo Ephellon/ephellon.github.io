@@ -17,3 +17,5 @@ a[href*="tickets"i] < footer
 img[src*="bonus-round"i] < [class*="bonus-round"i]
 
 [class*="upsell"i] < footer[id*="sticky"i]
+
+button < [data-test-selector^="channel"i][data-test-selector*="ribbon"i]
