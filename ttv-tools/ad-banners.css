@@ -19,3 +19,5 @@ img[src*="bonus-round"i] < [class*="bonus-round"i]
 [class*="upsell"i] < footer[id*="sticky"i]
 
 button < [data-test-selector^="channel"i][data-test-selector*="ribbon"i]
+
+img[src*="sponsor"i] < button < div[class] < div
