@@ -8,6 +8,7 @@ button[class*="interact"i] [style*="asset"i] < button < 1
 [style*="turbo-ads"i] < button < 2
 a[href*="allow-ads"i] < [class*="overlay"i]
 a[href*="turbo"i] < [class*="player"i][class*="overlay"i][class*="darkness"i]
+a[href*="twitchcon"i] < [class*="upsell"i] < footer
 
 [class*="subtember"i] < 1
 [href*="subtember"i] < [class*="background"i] < 1
