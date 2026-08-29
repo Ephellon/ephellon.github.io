@@ -11,7 +11,7 @@ a[href*="turbo"i] < [class*="player"i][class*="overlay"i][class*="darkness"i]
 a[href*="twitchcon"i] < [class*="upsell"i] < footer
 
 [class*="subtember"i] < 1
-[href*="subtember"i] < [class*="background"i] < 1
+[href*="subtember"i] < :is([class*="background"i], [class*="gradient"i]) < 1
 [href*="subtember"i] < [style*="subtember"i] < 2
 
 a[href*="tickets"i] < footer
